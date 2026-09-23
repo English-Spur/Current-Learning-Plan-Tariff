@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Spur - Student Portal & Tariff Engine</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f172a;
+            color: #0f172a;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            overflow-y: auto !important;
+        }
+
+        /* Responsive Container Optimized for 1-Page Print */
+        .portal-wrapper {
+            width: 100%;
+            max-width: 210mm;
+            background: #ffffff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
+            padding: 8mm 10mm; /* Compact padding for 1-page fit */
+            border: 4px solid #1e3a8a;
+            border-radius: 8px;
+            margin: auto;
+        }
+
+        @media (min-width: 768px) {
+            .portal-wrapper {
+                padding: 10mm 12mm;
+                min-height: 297mm;
+            }
+        }
+
+        .inner-frame {
+            position: absolute;
+            top: 4px; left: 4px; right: 4px; bottom: 4px;
+            border: 1.5px solid #ea580c;
+            pointer-events: none;
+            opacity: 0.4;
+            border-radius: 6px;
+        }
+
+        .table-header-title { font-size: 12px !important; padding: 5px 8px !important; font-weight: 800 !important; }
+        .table-row-text { font-size: 11px !important; padding: 5px 8px !important; font-weight: 700 !important; }
+        .table-price-text { font-size: 13px !important; font-weight: 800 !important; }
+        .table-save-badge { font-size: 9px !important; font-weight: 700 !important; }
+
+        @media print {
+            @page { size: A4 portrait; margin: 0mm !important; }
+            html, body { background: #ffffff !important; width: 100% !important; height: auto !important; padding: 0 !important; margin: 0 !important; }
+            .portal-wrapper { box-shadow: none !important; border: none !important; width: 210mm !important; height: 297mm !important; padding: 8mm 10mm !important; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- STEP 1: STUDENT REGISTRATION MODAL -->
+    <div id="loginModal" class="fixed inset-0 bg-slate-950/85 z-50 flex justify-center items-center p-3 sm:p-6 overflow-y-auto">
+        <div class="bg-white rounded-2xl shadow-2xl p-5 sm:p-8 w-full max-w-lg border-t-8 border-blue-700 my-auto space-y-4">
+            
+            <div class="text-center flex flex-col items-center space-y-1">
+                <img src="logo.png" alt="English Spur Logo" class="h-14 w-auto object-contain mb-1" onerror="this.style.display='none'">
+                <h2 class="text-2xl sm:text-3xl font-black tracking-tight text-blue-700">ENGLISH <span class="text-orange-500">SPUR</span></h2>
+                <div class="inline-block bg-blue-50 text-blue-800 text-[10px] sm:text-xs font-extrabold uppercase px-3 py-1 rounded-full tracking-wider border border-blue-200 mt-1">
+                    Current Learning Plan Tariff & Portal Access
+                </div>
+            </div>
+
+            <div class="bg-red-50 border-l-4 border-red-600 p-3 rounded-r-lg text-xs text-red-950 shadow-xs space-y-1.5">
+                <p class="font-black text-red-700 uppercase tracking-wide text-[11px] flex items-center gap-1">
+                    <span>⚠️</span> IMPORTANT INSTRUCTIONS / জরুরি নির্দেশিকা:
+                </p>
+                <ul class="list-disc list-inside space-y-1 font-medium text-[11px] leading-relaxed">
+                    <li><strong>One-Time Discount:</strong> Valid <span class="underline">ONLY for first-time admission</span>.<br>
+                    <span class="text-slate-700 text-[10px] pl-4 block">(এই ডিসকাউন্টটি শুধুমাত্র প্রথমবার অ্যাডমিশন নেওয়ার ক্ষেত্রেই প্রযোজ্য।)</span></li>
+                    
+                    <li><strong>DO NOT REFRESH:</strong> Please <span class="underline">do not refresh or reload</span> this page.<br>
+                    <span class="text-slate-700 text-[10px] pl-4 block">(দয়া করে পেজটি রিফ্রেশ বা রিলোড করবেন না, তাহলে সমস্ত ডেটা মুছে যাবে।)</span></li>
+                </ul>
+            </div>
+
+            <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs text-slate-700 space-y-1">
+                <p class="font-bold text-slate-900 text-[11px] uppercase tracking-wide flex items-center gap-1">
+                    <span>📋</span> Admission Requirements / ভর্তির ডকুমেন্টস:
+                </p>
+                <ul class="list-disc list-inside space-y-0.5 text-[11px] font-medium text-slate-600">
+                    <li>Passport Size Photograph <span class="text-slate-500">(পাসপোর্ট সাইজ ছবি)</span></li>
+                    <li>Address Proof: Aadhar / Voter / School ID <span class="text-slate-500">(আধার, ভোটার বা স্কুল আইডি)</span></li>
+                </ul>
+            </div>
+
+            <form id="regForm" onsubmit="handleStudentLogin(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-700 uppercase mb-1 text-[11px]">Your Full Name / ছাত্র/ছাত্রীর নাম <span class="text-red-500">*</span></label>
+                    <input type="text" id="studentName" required placeholder="e.g. Rahul Sharma" class="w-full border border-slate-300 rounded-lg p-2.5 bg-slate-50 font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 uppercase mb-1 text-[11px]">Mobile Number / হোয়াটসঅ্যাপ নম্বর <span class="text-red-500">*</span></label>
+                    <input type="tel" id="studentMobile" required placeholder="e.g. 9876543210" class="w-full border border-slate-300 rounded-lg p-2.5 bg-slate-50 font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 uppercase mb-1 text-[11px]">Email Address / ইমেল আইডি <span class="text-red-500">*</span></label>
+                    <input type="email" id="studentEmail" required placeholder="e.g. student@gmail.com" class="w-full border border-slate-300 rounded-lg p-2.5 bg-slate-50 font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition">
+                </div>
+                <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black p-3 rounded-lg text-xs uppercase tracking-wider cursor-pointer transition shadow-md hover:shadow-lg mt-2">
+                    🚀 Enter Dashboard & View Tariffs
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- STEP 2: MAIN DASHBOARD & TARIFF PAGE -->
+    <div class="portal-wrapper" id="mainDashboard" style="display: none;">
+        <div class="inner-frame"></div>
+
+        <div class="absolute top-2 right-3 no-print flex gap-2 items-center">
+            <span id="welcomeStudentBadge" class="text-[11px] font-bold text-blue-900 bg-blue-50 px-2 py-0.5 rounded border border-blue-200"></span>
+            <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-0.5 rounded text-xs uppercase cursor-pointer transition shadow">🖨️ Print</button>
+        </div>
+
+        <!-- Corporate Branding Header (Pulled to Top Compact) -->
+        <div class="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-slate-200 pb-2 gap-2 z-15 mt-1">
+            <div class="flex items-center gap-2.5">
+                <img src="logo.png" alt="English Spur Logo" class="h-9 w-9 object-contain" onerror="this.style.display='none'">
+                <div>
+                    <div class="text-2xl sm:text-2xl font-black tracking-tight leading-none">
+                        <span class="text-blue-700">ENGLISH</span><span class="text-orange-500 ml-1">SPUR</span>
+                    </div>
+                    <div class="text-[8px] font-extrabold text-black uppercase tracking-widest mt-0.5 font-mono">
+                        ONLINE ENGLISH TRAINING ACADEMY
+                    </div>
+                </div>
+            </div>
+            <div class="text-left sm:text-right text-[10px] text-slate-600 font-medium space-y-0.2">
+                <p class="font-bold text-slate-800">📍 Kanaipur, Bantul, Bagnan, Howrah - 711312</p>
+                <p class="tracking-wide">📞 +91 9875340842 | ✉️ englishspur2020@gmail.com</p>
+            </div>
+        </div>
+
+        <!-- 4 Navigation Tabs -->
+        <div class="w-full grid grid-cols-2 sm:grid-cols-4 gap-1 mt-2 no-print z-10">
+            <button onclick="switchTab('all')" id="tab-all" class="bg-blue-700 text-white text-[11px] font-bold py-1.5 px-2 rounded cursor-pointer transition text-center shadow-xs">🌟 All Prospectus</button>
+            <button onclick="switchTab('1on1-adult')" id="tab-1on1-adult" class="bg-slate-200 text-slate-700 text-[11px] font-bold py-1.5 px-2 rounded cursor-pointer transition text-center shadow-xs">👑 1-on-1 Adults</button>
+            <button onclick="switchTab('1on1-kids')" id="tab-1on1-kids" class="bg-slate-200 text-slate-700 text-[11px] font-bold py-1.5 px-2 rounded cursor-pointer transition text-center shadow-xs">👶 1-on-1 Kids</button>
+            <button onclick="switchTab('group')" id="tab-group" class="bg-slate-200 text-slate-700 text-[11px] font-bold py-1.5 px-2 rounded cursor-pointer transition text-center shadow-xs">👥 Group Batches</button>
+        </div>
+
+        <!-- Coupon Code Bar -->
+        <div class="w-full bg-slate-50 border border-slate-200 p-1.5 my-1.5 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-1.5 z-10">
+            <p class="text-[10px] text-slate-700 font-medium leading-tight">
+                💡 <span class="font-bold text-blue-900">One-Time Offer:</span> Use <span class="bg-orange-100 text-orange-700 font-bold px-1 py-0.5 rounded">SPUR20</span> (20% Off on 1:1) or <span class="bg-orange-100 text-orange-700 font-bold px-1 py-0.5 rounded">SPUR10</span> (₹250 Off on Group Admission).
+            </p>
+            <div class="no-print flex items-center gap-1 w-full sm:w-auto justify-end" id="couponBoxContainer">
+                <input type="text" id="couponInput" placeholder="Enter Code" class="border border-slate-300 rounded px-2 py-0.5 text-[10px] uppercase font-bold w-20 focus:outline-none">
+                <button onclick="applyCoupon()" class="bg-orange-600 hover:bg-orange-700 text-white font-bold px-2.5 py-0.5 rounded text-[10px] cursor-pointer">Apply</button>
+            </div>
+        </div>
+
+        <!-- Dynamic Content Space -->
+        <div class="flex-1 w-full flex flex-col justify-start items-center my-0.5 overflow-hidden z-10">
+            <div id="contentContainer" class="w-full flex flex-col gap-1.5 overflow-y-auto"></div>
+        </div>
+
+        <!-- SELECTION SUMMARY & CONFIRMATION BOX -->
+        <div id="selectionBox" class="w-full bg-amber-50 border-2 border-amber-400 p-2.5 rounded-xl z-10 hidden mt-1.5 shadow-md">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <div class="space-y-0.5">
+                    <h4 class="text-[11px] font-black text-amber-900 uppercase">📌 Selected Plan Summary / নির্বাচিত প্ল্যানের বিবরণ:</h4>
+                    <p id="selectedPlanTitle" class="text-xs font-bold text-blue-900">None Selected</p>
+                    <p id="selectedPlanBreakdown" class="text-[10px] text-slate-700 font-medium"></p>
+                </div>
+                <button onclick="confirmAndBookWhatsApp()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-[11px] px-3.5 py-2 rounded-lg shadow transition uppercase tracking-wider flex items-center justify-center gap-1 cursor-pointer animate-pulse">
+                    💬 Confirm & Book via WhatsApp
+                </button>
+            </div>
+        </div>
+
+        <!-- Signature Footer -->
+        <div class="w-full border-t border-dashed border-slate-200 pt-1.5 mt-1.5 mb-1 text-center z-10">
+            <h3 class="text-[11px] italic text-slate-800 font-semibold">"Thank you for choosing English Spur as your trusted transformation partner."</h3>
+            <p class="text-[10px] font-black text-blue-700 uppercase tracking-wider mt-0.5">— Sovan Kapri, Founder & Lead Trainer</p>
+        </div>
+
+        <div class="w-full border-t border-slate-200 pt-1 text-[10px] text-slate-400 font-sans flex flex-col sm:flex-row justify-between items-center gap-1 z-10">
+            <span>© 2026 English Spur | Premium Educational Framework Suite</span>
+            <span class="font-bold text-blue-700 bg-slate-100 px-2 py-0.5 rounded">PAGE 1</span>
+        </div>
+    </div>
+
+    <!-- Scripting Logic -->
+    <script>
+        let studentData = { name: '', mobile: '', email: '' };
+        let currentTab = 'all';
+        let appliedCouponType = null;
+        let selectedPlanData = null;
+
+        window.onload = function() {
+            document.getElementById('loginModal').style.display = 'flex';
+            document.getElementById('mainDashboard').style.display = 'none';
+        };
+
+        function handleStudentLogin(e) {
+            e.preventDefault();
+            studentData.name = document.getElementById('studentName').value.trim();
+            studentData.mobile = document.getElementById('studentMobile').value.trim();
+            studentData.email = document.getElementById('studentEmail').value.trim();
+
+            initDashboard();
+        }
+
+        function initDashboard() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('mainDashboard').style.display = 'flex';
+            document.getElementById('welcomeStudentBadge').innerText = `👤 Welcome, ${studentData.name}`;
+            switchTab('all');
+        }
+
+        const basePrices = {
+            s1: 300, s8: 2000, s16: 4000, s24: 6200, s32: 7500,
+            groupAdm: 2500, group2d: 1500, group3d: 1900
+        };
+
+        function calc1on1(val) {
+            if (appliedCouponType !== 'SPUR20') return `₹${val.toLocaleString()}`;
+            const discounted = Math.round(val * 0.8);
+            return `<span class="text-emerald-700 font-extrabold">₹${discounted.toLocaleString()}</span> <span class="text-slate-400 line-through text-[11px]">₹${val.toLocaleString()}</span>`;
+        }
+
+        function calcGroupTotal(monthlyVal) {
+            const standardAdm = basePrices.groupAdm;
+            if (appliedCouponType !== 'SPUR10') {
+                const total = standardAdm + monthlyVal;
+                return `Admission: ₹${standardAdm.toLocaleString()} + Monthly: ₹${monthlyVal.toLocaleString()}<br><strong class="text-orange-600 text-[11px]">Total Payable: ₹${total.toLocaleString()}</strong>`;
+            } else {
+                const discountedAdm = standardAdm - 250;
+                const total = discountedAdm + monthlyVal;
+                return `Admission: <span class="text-emerald-700 font-bold">₹${discountedAdm.toLocaleString()}</span> <span class="text-slate-400 line-through text-[10px]">₹${standardAdm.toLocaleString()}</span> (10% Off) + Monthly: ₹${monthlyVal.toLocaleString()}<br><strong class="text-emerald-800 text-[11px]">Total Payable: ₹${total.toLocaleString()}</strong>`;
+            }
+        }
+
+        function selectPlan(planName, planCategory, baseValue) {
+            let breakdownText = "";
+            let finalPayable = 0;
+
+            if (planCategory === '1on1') {
+                if (appliedCouponType === 'SPUR20') {
+                    const discount = Math.round(baseValue * 0.2);
+                    finalPayable = baseValue - discount;
+                    breakdownText = `Standard: ₹${baseValue.toLocaleString()} | Discount (20% SPUR20): -₹${discount.toLocaleString()} | <strong>Final Payable: ₹${finalPayable.toLocaleString()}</strong>`;
+                } else {
+                    finalPayable = baseValue;
+                    breakdownText = `Standard Tariff: ₹${baseValue.toLocaleString()} | <strong>Final Payable: ₹${finalPayable.toLocaleString()}</strong>`;
+                }
+            } else if (planCategory === 'group') {
+                const stdAdm = basePrices.groupAdm;
+                const monthly = baseValue;
+                if (appliedCouponType === 'SPUR10') {
+                    const admDisc = 250;
+                    const finalAdm = stdAdm - admDisc;
+                    finalPayable = finalAdm + monthly;
+                    breakdownText = `Admission: ₹${finalAdm.toLocaleString()} (After ₹250 Off) + Monthly: ₹${monthly.toLocaleString()} | <strong>Final Payable: ₹${finalPayable.toLocaleString()}</strong>`;
+                } else {
+                    finalPayable = stdAdm + monthly;
+                    breakdownText = `Admission: ₹${stdAdm.toLocaleString()} + Monthly: ₹${monthly.toLocaleString()} | <strong>Final Payable: ₹${finalPayable.toLocaleString()}</strong>`;
+                }
+            }
+
+            selectedPlanData = { planName, planCategory, baseValue, finalPayable, breakdownText };
+
+            document.getElementById('selectionBox').style.display = 'block';
+            document.getElementById('selectedPlanTitle').innerText = `👉 ${planName} (${appliedCouponType ? appliedCouponType + ' Applied' : 'Standard Tariff'})`;
+            document.getElementById('selectedPlanBreakdown').innerHTML = breakdownText;
+
+            renderContent();
+        }
+
+        function render1on1Table(title) {
+            return `
+                <div class="w-full border border-slate-200 rounded-lg overflow-hidden shadow-2xs">
+                    <div class="bg-blue-800 text-white uppercase font-black text-center tracking-wide table-header-title flex justify-between items-center px-3">
+                        <span>${title}</span>
+                        <span class="text-[9px] bg-blue-900 px-2 py-0.5 rounded text-orange-300">Click to Select Plan</span>
+                    </div>
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-800 uppercase font-extrabold text-[10px] border-b border-slate-200">
+                                <th class="p-1.5 w-3/5">TRAINING DURATION</th>
+                                <th class="p-1.5 text-center">RATE TARIFF</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-black divide-y divide-slate-100 bg-white">
+                            ${renderRow(title + ' - Single Class', '1on1', basePrices.s1, 'Single Class (1 Day Routine)')}
+                            ${renderRow(title + ' - 8 Days Plan', '1on1', basePrices.s8, '8 Days Standard Plan (Save ₹400)', true)}
+                            ${renderRow(title + ' - 16 Days Plan', '1on1', basePrices.s16, '16 Days Advance Plan (Save ₹800)')}
+                            ${renderRow(title + ' - 24 Days Plan', '1on1', basePrices.s24, '24 Days Executive Plan (Save ₹1000)', true)}
+                            ${renderRow(title + ' - 32 Days Plan', '1on1', basePrices.s32, '32 Days Ultimate Master Plan (Save ₹2100)', false, true)}
+                        </tbody>
+                    </table>
+                </div>`;
+        }
+
+        function renderRow(fullName, cat, val, displayName, isAlt = false, isSpecial = false) {
+            const isSelected = selectedPlanData && selectedPlanData.planName === fullName;
+            const bgClass = isSelected ? 'bg-amber-100 ring-2 ring-amber-500' : (isSpecial ? 'bg-blue-50/60 font-bold' : (isAlt ? 'bg-slate-50/40' : ''));
+            const priceHtml = calc1on1(val);
+
+            return `
+                <tr onclick="selectPlan('${fullName}', '${cat}', ${val})" class="${bgClass} hover:bg-amber-50 cursor-pointer transition">
+                    <td class="table-row-text">${displayName} ${isSelected ? '✅ (Selected)' : ''}</td>
+                    <td class="table-row-text text-center text-orange-600 table-price-text">${priceHtml}</td>
+                </tr>`;
+        }
+
+        function renderGroupTable(segmentTitle, headerBgColor) {
+            const plan2d = `${segmentTitle} - Weekly 2 Days Plan`;
+            const plan3d = `${segmentTitle} - Weekly 3 Days Plan`;
+            const sel2d = selectedPlanData && selectedPlanData.planName === plan2d;
+            const sel3d = selectedPlanData && selectedPlanData.planName === plan3d;
+
+            return `
+                <div class="w-full border border-slate-200 rounded-lg overflow-hidden shadow-2xs mt-1">
+                    <div class="${headerBgColor} text-white uppercase font-black text-center tracking-wide table-header-title flex justify-between items-center px-3">
+                        <span>${segmentTitle}</span>
+                        <span class="text-[9px] bg-black/30 px-2 py-0.5 rounded text-white">Click to Select Plan</span>
+                    </div>
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-800 uppercase font-extrabold text-[10px] border-b border-slate-200">
+                                <th class="p-1.5 w-2/5">BATCH TYPE</th>
+                                <th class="p-1.5 text-center">FEE STRUCTURE & TOTAL PAYABLE</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-black divide-y divide-slate-100 bg-white">
+                            <tr onclick="selectPlan('${plan2d}', 'group', ${basePrices.group2d})" class="${sel2d ? 'bg-amber-100 ring-2 ring-amber-500' : ''} hover:bg-amber-50 cursor-pointer transition">
+                                <td class="table-row-text">🗓️ Weekly 2 Days Plan ${sel2d ? '✅ (Selected)' : ''}</td>
+                                <td class="table-row-text text-center text-slate-900 text-xs">${calcGroupTotal(basePrices.group2d)}</td>
+                            </tr>
+                            <tr onclick="selectPlan('${plan3d}', 'group', ${basePrices.group3d})" class="${sel3d ? 'bg-amber-100 ring-2 ring-amber-500' : ''} bg-slate-50/40 hover:bg-amber-50 cursor-pointer transition">
+                                <td class="table-row-text">🗓️ Weekly 3 Days Plan ${sel3d ? '✅ (Selected)' : ''}</td>
+                                <td class="table-row-text text-center text-slate-900 text-xs">${calcGroupTotal(basePrices.group3d)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>`;
+        }
+
+        function renderContent() {
+            let html = '';
+            if (currentTab === 'all' || currentTab === '1on1-adult') html += render1on1Table("👑 1-on-1 Power Speak (For Adults)");
+            if (currentTab === 'all' || currentTab === '1on1-kids') html += render1on1Table("👶 1-on-1 Fearless English For Kids (For Kids)");
+            if (currentTab === 'all' || currentTab === 'group') {
+                html += renderGroupTable("👥 Group Class: Power Speak (For Adults)", "bg-orange-600");
+                html += renderGroupTable("🧸 Group Class: Fearless English For Kids (For Kids)", "bg-emerald-700");
+            }
+            document.getElementById('contentContainer').innerHTML = html;
+        }
+
+        function switchTab(tabId) {
+            currentTab = tabId;
+            ['all', '1on1-adult', '1on1-kids', 'group'].forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                btn.className = (t === tabId) ? 
+                    "bg-blue-700 text-white text-[11px] font-bold py-1.5 px-2 rounded cursor-pointer transition text-center shadow-xs" : 
+                    "bg-slate-200 text-slate-700 text-[11px] font-bold py-1.5 px-2 rounded cursor-pointer transition text-center shadow-xs hover:bg-slate-300";
+            });
+            renderContent();
+        }
+
+        function applyCoupon() {
+            const code = document.getElementById('couponInput').value.trim().toUpperCase();
+            if (code === 'SPUR20') {
+                appliedCouponType = 'SPUR20';
+                alert('🎉 Success! SPUR20 activated (20% OFF on 1-on-1 plans).');
+                document.getElementById('couponBoxContainer').innerHTML = '<span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded border border-emerald-200">✔️ SPUR20 Applied</span>';
+                renderContent();
+                if(selectedPlanData) selectPlan(selectedPlanData.planName, selectedPlanData.planCategory, selectedPlanData.baseValue);
+            } else if (code === 'SPUR10') {
+                appliedCouponType = 'SPUR10';
+                alert('🎉 Success! SPUR10 activated (₹250 OFF on Group Admission fee).');
+                document.getElementById('couponBoxContainer').innerHTML = '<span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded border border-emerald-200">✔️ SPUR10 Applied</span>';
+                renderContent();
+                if(selectedPlanData) selectPlan(selectedPlanData.planName, selectedPlanData.planCategory, selectedPlanData.baseValue);
+            } else {
+                alert('❌ Invalid Coupon Code. Use "SPUR20" or "SPUR10".');
+            }
+        }
+
+        function confirmAndBookWhatsApp() {
+            if (!selectedPlanData) {
+                alert('⚠️ Please select a plan first by clicking on it from the list!');
+                return;
+            }
+
+            const phoneNumber = "919875340842";
+            let breakdownText = "";
+            let finalPayable = 0;
+            const baseValue = selectedPlanData.baseValue;
+
+            if (selectedPlanData.planCategory === '1on1') {
+                if (appliedCouponType === 'SPUR20') {
+                    const discount = Math.round(baseValue * 0.2);
+                    finalPayable = baseValue - discount;
+                    breakdownText = `• Standard Price: ₹${baseValue.toLocaleString()}\n• One-Time Discount (20% SPUR20): -₹${discount.toLocaleString()}`;
+                } else {
+                    finalPayable = baseValue;
+                    breakdownText = `• Standard Tariff Price: ₹${baseValue.toLocaleString()}\n• Discount: None`;
+                }
+            } else if (selectedPlanData.planCategory === 'group') {
+                const stdAdm = basePrices.groupAdm;
+                const monthly = baseValue;
+                if (appliedCouponType === 'SPUR10') {
+                    const admDisc = 250;
+                    const finalAdm = stdAdm - admDisc;
+                    finalPayable = finalAdm + monthly;
+                    breakdownText = `• Admission Fee: ₹${stdAdm.toLocaleString()}\n• One-Time Admission Discount (SPUR10): -₹${admDisc.toLocaleString()} (Effective Admission: ₹${finalAdm.toLocaleString()})\n• Monthly Subscription Fee: ₹${monthly.toLocaleString()}`;
+                } else {
+                    finalPayable = stdAdm + monthly;
+                    breakdownText = `• Admission Fee: ₹${stdAdm.toLocaleString()}\n• Monthly Subscription Fee: ₹${monthly.toLocaleString()}\n• Discount: None`;
+                }
+            }
+
+            const discountStatusText = appliedCouponType ? `Coupon Applied (${appliedCouponType})` : "Standard Tariff";
+
+            // Requested Exact WhatsApp Message Format with Breakdown & Documents
+            const message = `Hello,\nEnglish Spur English Training Academy / Sovan Kapri Sir,\n\nMy name is *${studentData.name}*.\nMobile: *${studentData.mobile}*\nEmail: ${studentData.email}\n\nI have reviewed the plan and want to enroll (First-Time Admission):\n*${selectedPlanData.planName}*\nStatus: ${discountStatusText}\n\n--- FEE BREAKDOWN ---\n${breakdownText}\n-------------------------\n*Final Total Payable Amount: ₹${finalPayable.toLocaleString()}*\n\n*I will submit the required Documents for Admission:* Passport Size Photograph & Standard Address Proof (Aadhar/Voter/School ID).\n\nPlease send me the payment link to pay ₹${finalPayable.toLocaleString()}`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
+        }
+    </script>
+</body>
+</html>
