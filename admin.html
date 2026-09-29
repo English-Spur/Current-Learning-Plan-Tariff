@@ -9,7 +9,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <style>
-    * { -webkit-tap-highlight-color: transparent; }
+    * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; margin: 0; padding: 10px; min-height: 100vh; color: #1e293b; }
     .tab-btn { padding: 9px 14px; font-weight: 700; font-size: 12px; border-radius: 10px; cursor: pointer; border: none; transition: all 0.2s; white-space: nowrap; }
     .tab-btn.active { background: #1d4ed8; color: #fff; box-shadow: 0 4px 10px rgba(29,78,216,0.3); }
@@ -34,9 +34,7 @@
 </head>
 <body>
 
-<!-- ============================================
-     LOGIN SCREEN
-     ============================================ -->
+<!-- LOGIN SCREEN -->
 <div id="loginScreen" class="max-w-md mx-auto bg-white rounded-2xl shadow-2xl mt-8 sm:mt-12 overflow-hidden fade-in">
     <div class="bg-gradient-to-r from-blue-700 to-blue-900 p-6 text-center">
         <img src="logo.png" alt="English Spur" class="brand-logo mx-auto mb-2 bg-white rounded-full p-1.5" onerror="this.style.display='none'">
@@ -72,9 +70,7 @@
     </div>
 </div>
 
-<!-- ============================================
-     ADMIN PANEL
-     ============================================ -->
+<!-- ADMIN PANEL -->
 <div id="adminPanel" class="max-w-6xl mx-auto hidden">
 
     <div class="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 mb-4">
@@ -278,7 +274,6 @@
 </div>
 
 <script>
-/* ============ FIREBASE CONFIG ============ */
 const firebaseConfig = {
   apiKey: "AIzaSyBAmO9v4NOOSSuM59yXY8JppFJzrZUGADM",
   authDomain: "es-tariff.firebaseapp.com",
@@ -641,7 +636,7 @@ function buildReceiptHTML(p) {
 }
 
 /* ============================================================
-   STUDENTS — Full control (Block + Coupon Access)
+   STUDENTS — with logoutCount fix + coupon access
    ============================================================ */
 let allStudents = [];
 
@@ -671,6 +666,7 @@ function renderStudents(students) {
         const loginCount = s.loginCount || 0;
         const logoutCount = s.logoutCount || 0;
         const lastLogin = formatDT(s.lastLoginAt);
+        const lastLogout = formatDT(s.lastLogoutAt);
         const createdDate = formatDT(s.createdAt);
 
         const div = document.createElement('div');
@@ -689,10 +685,11 @@ function renderStudents(students) {
                     <div class="mt-1.5 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-0.5">
                         <p class="text-[11px] text-slate-600 truncate">📱 ${s.mobile || '—'}</p>
                         <p class="text-[11px] text-slate-600 truncate">✉️ ${s.email || '—'}</p>
-                        <p class="text-[10px] text-slate-500">🔐 Logins: <strong>${loginCount}</strong></p>
-                        <p class="text-[10px] text-slate-500">🚪 Logouts: <strong>${logoutCount}</strong></p>
+                        <p class="text-[10px] text-slate-500">🔐 Logins: <strong class="text-green-700">${loginCount}</strong></p>
+                        <p class="text-[10px] text-slate-500">🚪 Logouts: <strong class="text-red-700">${logoutCount}</strong></p>
                         <p class="text-[10px] text-slate-500">📅 Joined: ${createdDate}</p>
                         <p class="text-[10px] text-slate-500">⏰ Last login: ${lastLogin}</p>
+                        ${s.lastLogoutAt ? `<p class="text-[10px] text-slate-500 sm:col-span-2">🚪 Last logout: ${lastLogout}</p>` : ''}
                     </div>
                 </div>
             </div>
@@ -786,7 +783,7 @@ async function viewActivity(studentId, studentName) {
         const typeIcons = { 'login': '🔓', 'logout': '🔒', 'first_visit': '🆕', 'page_close': '📄' };
         const typeColors = {
             'login': 'bg-green-50 border-green-300 text-green-900',
-            'logout': 'bg-slate-50 border-slate-300 text-slate-700',
+            'logout': 'bg-red-50 border-red-300 text-red-900',
             'first_visit': 'bg-blue-50 border-blue-300 text-blue-900',
             'page_close': 'bg-yellow-50 border-yellow-300 text-yellow-900'
         };
