@@ -9,7 +9,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-    * { -webkit-tap-highlight-color: transparent; }
+    * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
     body { font-family: 'Poppins', sans-serif; background: #0f172a; margin: 0; padding: 8px; min-height: 100vh; }
     @keyframes flashBorder { 0%,100% { box-shadow: 0 0 0 0 rgba(234,88,12,0.7); } 50% { box-shadow: 0 0 0 6px rgba(234,88,12,0); } }
     .flash-offer { animation: flashBorder 2s infinite; }
@@ -56,8 +56,8 @@
             </div>
             <div>
                 <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">WhatsApp <span class="text-red-500">*</span></label>
-                <div class="flex gap-2">
-                    <select id="countryCode" class="border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm w-[110px]">
+                <div class="flex gap-2 items-stretch">
+                    <select id="countryCode" class="border-2 border-slate-200 rounded-xl py-3 px-2 bg-slate-50 font-semibold text-xs sm:text-sm flex-shrink-0 w-[90px] sm:w-[110px]">
                         <option value="+91" selected>🇮🇳 +91</option>
                         <option value="+880">🇧🇩 +880</option>
                         <option value="+1">🇺🇸 +1</option>
@@ -71,7 +71,9 @@
                         <option value="+94">🇱🇰 +94</option>
                         <option value="+977">🇳🇵 +977</option>
                     </select>
-                    <input type="tel" id="studentMobile" required placeholder="9876543210" class="flex-1 border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    <input type="tel" id="studentMobile" required placeholder="9876543210" 
+                           class="flex-1 min-w-0 border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm" 
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
             </div>
             <div>
@@ -153,7 +155,6 @@
                     <span id="coTotal" class="text-lg font-black text-blue-900">₹0</span>
                 </div>
             </div>
-
             <div id="couponSection" class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-3 hidden">
                 <p class="text-[10px] font-black text-amber-900 uppercase mb-2">🎟️ Apply Coupon</p>
                 <div id="couponBox"></div>
@@ -161,7 +162,6 @@
                     💬 Request Coupon Code
                 </button>
             </div>
-
             <button onclick="proceedToPayment()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black p-3.5 rounded-xl text-xs sm:text-sm uppercase mb-2">
                 💳 Proceed to Payment
             </button>
@@ -171,9 +171,7 @@
     <!-- VIEW: PAYMENT -->
     <div id="view-payment" class="hidden">
         <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-5">
-            <div class="flex justify-between items-center mb-3">
-                <h2 class="text-base sm:text-lg font-black text-blue-900 text-center flex-1">💳 Payment</h2>
-            </div>
+            <h2 class="text-base sm:text-lg font-black text-blue-900 mb-3 text-center">💳 Payment</h2>
             <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-3">
                 <p id="payPlanName" class="text-xs font-bold text-blue-900 mb-1 leading-snug"></p>
                 <p id="payLines" class="text-[11px] text-slate-700 leading-snug"></p>
@@ -254,6 +252,7 @@ const ADMISSION_FEE = 2500;
 const STORAGE_KEY = 'englishSpurStudent';
 const PLAN_KEY = 'englishSpurSelectedPlan';
 const COUPON_KEY = 'englishSpurAppliedCoupon';
+const LOGOUT_FLAG = 'englishSpurLoggedOut';
 
 let currentStudent = null;
 let offerConfig = { regularRate: 500, offerRate: 300, active: true, endDateTime: null, title: '', description: '' };
@@ -351,16 +350,21 @@ async function logActivity(type) {
 
 /* ============ INIT ============ */
 window.addEventListener('DOMContentLoaded', () => {
-    // Check if we're in a logout state
-    let loggedOut = false;
-    try { loggedOut = sessionStorage.getItem('es_loggedOut') === '1'; } catch (e) {}
-    
-    if (loggedOut) {
-        // Clear the flag and show fresh info form
-        try { sessionStorage.removeItem('es_loggedOut'); } catch (e) {}
+    // ✅ Check logout flag FIRST
+    let wasLoggedOut = false;
+    try { wasLoggedOut = localStorage.getItem(LOGOUT_FLAG) === '1'; } catch (e) {}
+
+    if (wasLoggedOut) {
+        // Clear flag, clear any leftover data, show fresh info form
+        try { localStorage.removeItem(LOGOUT_FLAG); } catch (e) {}
+        clearAllStorage();
+        currentStudent = null;
+        selectedPlan = null;
+        appliedCoupon = null;
         document.getElementById('infoScreen').style.display = 'flex';
         document.getElementById('mainApp').classList.add('hidden');
         document.getElementById('blockedScreen').classList.add('hidden');
+        setupScreenshotUpload();
         return;
     }
 
@@ -372,29 +376,33 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('mainApp').classList.add('hidden');
     }
 
-    const si = document.getElementById('screenshotInput');
-    if (si) {
-        si.addEventListener('change', function(e) {
-            const file = e.target.files[0]; if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(ev) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    let w = img.width, h = img.height; const max = 800;
-                    if (w > h && w > max) { h = h * max / w; w = max; } else if (h > max) { w = w * max / h; h = max; }
-                    canvas.width = w; canvas.height = h;
-                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                    screenshotBase64 = canvas.toDataURL('image/jpeg', 0.6);
-                    document.getElementById('previewImg').src = screenshotBase64;
-                    document.getElementById('previewBox').classList.remove('hidden');
-                };
-                img.src = ev.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-    }
+    setupScreenshotUpload();
 });
+
+function setupScreenshotUpload() {
+    const si = document.getElementById('screenshotInput');
+    if (!si || si.dataset.bound === '1') return;
+    si.dataset.bound = '1';
+    si.addEventListener('change', function(e) {
+        const file = e.target.files[0]; if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                let w = img.width, h = img.height; const max = 800;
+                if (w > h && w > max) { h = h * max / w; w = max; } else if (h > max) { w = w * max / h; h = max; }
+                canvas.width = w; canvas.height = h;
+                canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                screenshotBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                document.getElementById('previewImg').src = screenshotBase64;
+                document.getElementById('previewBox').classList.remove('hidden');
+            };
+            img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
 
 /* ============ CHECK BLOCKED ============ */
 async function checkBlockedAndEnter() {
@@ -454,51 +462,47 @@ async function handleInfoSubmit(e) {
     logActivity('login');
 }
 
-/* ============ LOGOUT (FIXED) ============ */
+/* ============================================================
+   LOGOUT — FULLY FIXED
+   ============================================================ */
 function studentLogout() {
     if (!confirm('Logout?\n\nআপনি কি লগআউট করতে চান?\n(পরেরবার আবার আপনার তথ্য দিতে হবে)')) return;
 
-    // Set flag to prevent any re-entry
+    // 1) Set flags to stop every auto-redirect
     isLoggingOut = true;
+    try { localStorage.setItem(LOGOUT_FLAG, '1'); } catch (e) {}
 
-    // Log the activity (fire-and-forget)
+    // 2) Fire-and-forget logout log
     try { logActivity('logout'); } catch (e) {}
 
-    // ✅ Set session flag to prevent auto-login on reload
-    try { sessionStorage.setItem('es_loggedOut', '1'); } catch (e) {}
+    // 3) Stop the timer
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
 
-    // ✅ Clear ALL localStorage
-    try {
-        localStorage.removeItem(STORAGE_KEY);
-        localStorage.removeItem(PLAN_KEY);
-        localStorage.removeItem(COUPON_KEY);
-    } catch (e) {}
-
-    // ✅ Clear in-memory state
+    // 4) Clear in-memory state
     currentStudent = null;
     selectedPlan = null;
     appliedCoupon = null;
     studentListenerActive = false;
     offerExpiredHandled = false;
 
-    // ✅ Stop timer
-    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+    // 5) Clear localStorage EXCEPT the logout flag (we need it to survive reload)
+    try {
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(PLAN_KEY);
+        localStorage.removeItem(COUPON_KEY);
+    } catch (e) {}
 
-    // Show loading toast
+    // 6) Show toast
     showToast('🚪 Logging out...');
 
-    // ✅ Redirect after short delay to ensure log is sent
+    // 7) Reload after 400ms (log flag survives, everything else cleared)
     setTimeout(() => {
-        try {
-            // Replace current URL — prevents back button from showing old state
-            window.location.replace(window.location.pathname + window.location.search);
-        } catch (e) {
-            window.location.href = window.location.pathname;
-        }
-    }, 500);
+        window.location.reload();
+    }, 400);
 }
 
 function enterMainApp() {
+    if (isLoggingOut) return;
     document.getElementById('infoScreen').style.display = 'none';
     document.getElementById('mainApp').classList.remove('hidden');
     document.getElementById('welcomeName').textContent = currentStudent.name;
@@ -507,12 +511,10 @@ function enterMainApp() {
     startStudentListener();
     switchTab('all');
 
-    // ✅ Restore saved plan — direct to checkout
     const savedPlan = loadSelectedPlan();
     if (savedPlan && savedPlan.name) {
         selectedPlan = savedPlan;
         const savedCouponCode = loadAppliedCouponCode();
-        // Wait for coupons to load
         setTimeout(() => {
             if (savedCouponCode && coupons[savedCouponCode] && hasCouponAccess()) {
                 appliedCoupon = coupons[savedCouponCode];
@@ -916,7 +918,6 @@ async function submitPurchase() {
         const msg = `Hello,\nEnglish Spur English Training Academy / Sovan Kapri Sir,\n\nMy name is *${currentStudent.name}*.\nMobile: *${currentStudent.mobile}*\nEmail: ${currentStudent.email}\n\nI have reviewed the plan and want to enroll:\n*${cleanPlan}*\nStatus: ${statusText}\n\n--- FEE BREAKDOWN ---\n${breakdown}\n-------------------------\n*Final Total Payable Amount: ${money(p.final)}*\n\n*I will submit the required Documents for Admission:* Passport Size Photograph & Standard Address Proof (Aadhar/Voter/School ID).\n\nPlease confirm and I will complete the payment now.`;
         window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 
-        // Clear plan after submission
         selectedPlan = null;
         appliedCoupon = null;
         saveSelectedPlan();
