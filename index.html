@@ -3,1263 +3,993 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Spur — Student Portal, Tariff & Payment</title>
+<title>English Spur — Student Portal</title>
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-
-    body {
-        font-family: 'Poppins', sans-serif;
-        background-color: #0f172a;
-        color: #0f172a;
-        margin: 0;
-        padding: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        min-height: 100vh;
-        overflow-y: auto;
-    }
-
-    .portal-wrapper {
-        width: 100%;
-        max-width: 210mm;
-        background: #ffffff;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        box-shadow: 0 20px 35px rgba(0, 0, 0, 0.2);
-        box-sizing: border-box;
-        padding: 8mm 10mm;
-        border: 4px solid #1e3a8a;
-        border-radius: 8px;
-        margin: auto;
-    }
-    @media (min-width: 768px) {
-        .portal-wrapper { padding: 10mm 12mm; min-height: 297mm; }
-    }
-    .inner-frame {
-        position: absolute;
-        top: 4px; left: 4px; right: 4px; bottom: 4px;
-        border: 1.5px solid #ea580c;
-        pointer-events: none;
-        opacity: 0.4;
-        border-radius: 6px;
-    }
-    .table-header-title { font-size: 12px !important; padding: 5px 8px !important; font-weight: 800 !important; }
-    .table-row-text { font-size: 11px !important; padding: 6px 8px !important; font-weight: 700 !important; }
-    .table-price-text { font-size: 13px !important; font-weight: 800 !important; }
-
-    @keyframes flashBorder {
-        0%,100% { box-shadow: 0 0 0 0 rgba(234,88,12,0.7), inset 0 0 20px rgba(255,255,255,0.15); }
-        50%     { box-shadow: 0 0 0 8px rgba(234,88,12,0), inset 0 0 30px rgba(255,255,255,0.3); }
-    }
+    * { -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Poppins', sans-serif; background: #0f172a; margin: 0; padding: 8px; min-height: 100vh; }
+    @keyframes flashBorder { 0%,100% { box-shadow: 0 0 0 0 rgba(234,88,12,0.7); } 50% { box-shadow: 0 0 0 6px rgba(234,88,12,0); } }
     .flash-offer { animation: flashBorder 2s infinite; }
-
-    @keyframes pulseUrgent {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.02); }
-        100% { transform: scale(1); }
-    }
-    .pulse-urgent { animation: pulseUrgent 1.5s infinite; }
-
-    @keyframes timerPulse {
-        0%,100% { color: #fef08a; text-shadow: 0 0 10px rgba(254,240,138,0.6); }
-        50% { color: #ffffff; text-shadow: 0 0 20px rgba(255,255,255,0.9); }
-    }
+    @keyframes timerPulse { 0%,100% { color: #fef08a; } 50% { color: #ffffff; text-shadow: 0 0 20px rgba(255,255,255,0.9); } }
     .timer-low { animation: timerPulse 1s infinite; }
-
-    .checkout-view, #paymentView {
-        display: none; width: 100%; max-width: 460px; margin: auto;
-    }
-
-    .checkout-card, .pay-card {
-        background: #ffffff; padding: 22px; border-radius: 14px;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
-        border-top: 7px solid #1d4ed8;
-    }
-    .checkout-card { text-align: left; }
-    .pay-card { text-align: center; }
-
-    .checkout-logo img, .pay-logo img {
-        width: 60px; height: 60px; object-fit: contain;
-        border-radius: 50%;
-        display: block;
-        margin: 0 auto 6px auto;
-    }
-
-    .checkout-org, .pay-org { font-size: 15px; font-weight: 800; color: #1e293b; line-height: 1.3; }
-    .checkout-card h2, .pay-card h2 { font-size: 20px; margin: 8px 0 2px; color: #0f172a; font-weight: 800; }
-    .checkout-sub, .pay-sub { font-size: 12.5px; color: #64748b; font-weight: 600; margin-bottom: 14px; }
-
-    .checkout-student, .pay-student {
-        background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534;
-        padding: 8px 10px; border-radius: 8px; font-size: 13px; font-weight: 700;
-        margin-bottom: 12px; text-align: left;
-    }
-
-    .checkout-section {
-        background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px;
-        padding: 12px; margin-bottom: 12px; text-align: left;
-    }
-    .checkout-section h3 {
-        font-size: 12px; font-weight: 800; color: #1e3a8a;
-        text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px;
-    }
-    .breakdown-line {
-        display: flex; justify-content: space-between; font-size: 12px;
-        color: #334155; padding: 3px 0; font-weight: 600;
-    }
-    .breakdown-line.total {
-        border-top: 2px dashed #93c5fd; margin-top: 6px; padding-top: 8px;
-        font-size: 14px; font-weight: 900; color: #1e3a8a;
-    }
-
-    .coupon-section {
-        background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px;
-        padding: 12px; margin-bottom: 12px; text-align: left;
-    }
-    .coupon-section h3 {
-        font-size: 12px; font-weight: 800; color: #92400e;
-        text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px;
-    }
-    .coupon-input-row { display: flex; gap: 6px; }
-    .coupon-input-row input {
-        flex: 1; border: 1px solid #d1d5db; border-radius: 6px;
-        padding: 8px 10px; font-size: 12px; font-weight: 700;
-        text-transform: uppercase; font-family: inherit; outline: none;
-    }
-    .coupon-input-row input:focus { border-color: #f59e0b; }
-    .coupon-input-row button {
-        background: #ea580c; color: #fff; border: none; border-radius: 6px;
-        padding: 8px 14px; font-size: 12px; font-weight: 800;
-        text-transform: uppercase; cursor: pointer; font-family: inherit;
-        transition: background .2s;
-    }
-    .coupon-input-row button:hover { background: #c2410c; }
-
-    .coupon-applied {
-        background: #dcfce7; border: 1px solid #86efac; color: #166534;
-        padding: 8px 10px; border-radius: 6px; font-size: 12px;
-        font-weight: 700; display: flex; justify-content: space-between; align-items: center;
-    }
-    .coupon-applied button {
-        background: transparent; border: none; color: #b91c1c;
-        font-size: 11px; font-weight: 700; text-decoration: underline;
-        cursor: pointer; font-family: inherit;
-    }
-
-    .request-coupon-box {
-        background: #f0fdf4; border: 1.5px dashed #86efac; border-radius: 8px;
-        padding: 10px 12px; margin-top: 10px;
-    }
-    .request-coupon-box .rc-title {
-        font-size: 11.5px; font-weight: 800; color: #166534;
-        margin-bottom: 4px; line-height: 1.3;
-    }
-    .request-coupon-box .rc-desc {
-        font-size: 10.5px; color: #14532d; font-weight: 600;
-        line-height: 1.45; margin-bottom: 8px;
-    }
-    .request-coupon-btn {
-        display: flex; align-items: center; justify-content: center; gap: 6px;
-        background: #25D366; color: #fff; border: none; border-radius: 7px;
-        padding: 10px 14px; font-size: 12px; font-weight: 800;
-        text-transform: uppercase; letter-spacing: .03em;
-        text-decoration: none; cursor: pointer; font-family: inherit;
-        width: 100%; box-sizing: border-box;
-        transition: background .2s;
-    }
-    .request-coupon-btn:hover { background: #1ebe5d; }
-
-    .checkout-btn {
-        display: block; width: 100%; padding: 13px; border: none; border-radius: 8px;
-        font-size: 14.5px; font-weight: 800; text-decoration: none; cursor: pointer;
-        box-sizing: border-box; margin-bottom: 8px; font-family: inherit;
-        transition: background .25s;
-    }
-    .checkout-btn-proceed { background: #1d4ed8; color: #fff; }
-    .checkout-btn-proceed:hover { background: #1e40af; }
-    .checkout-btn-back { background: #e2e8f0; color: #334155; }
-    .checkout-btn-back:hover { background: #cbd5e1; }
-
-    .pay-amount {
-        background: linear-gradient(135deg, #1d4ed8, #1e40af);
-        color: #ffffff; border-radius: 10px; padding: 14px; margin-bottom: 14px;
-    }
-    .pay-amount .lbl { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; opacity: .88; font-weight: 700; }
-    .pay-amount .amt { font-size: 32px; font-weight: 900; line-height: 1.15; }
-    .pay-amount .note { font-size: 10.5px; opacity: .92; font-weight: 600; }
-
-    .pay-qr { background: #fafafa; border: 2px dashed #cbd5e1; padding: 10px; border-radius: 10px; margin: 0 auto 14px; width: fit-content; }
-    .pay-qr img { width: 250px; max-width: 100%; height: auto; display: block; border-radius: 6px; }
-
-    .pay-upi { background: #fff7ed; border: 2px solid #ffedd5; padding: 12px; border-radius: 8px; margin-bottom: 14px; }
-    .upi-label { font-size: 11px; color: #c2410c; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; }
-    .upi-wrapper { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; }
-    .upi-id { color: #9a3412; font-weight: 700; font-size: 14px; background: #ffedd5; padding: 6px 10px; border-radius: 4px; word-break: break-all; }
-    .copy-btn { background: #c2410c; color: #fff; border: none; padding: 7px 13px; font-size: 13px; font-weight: 700; border-radius: 4px; cursor: pointer; font-family: inherit; transition: background .2s; }
-    .copy-btn:hover { background: #9a3412; }
-
-    .pay-instruction { background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px 12px; border-radius: 8px; margin-bottom: 14px; text-align: left; }
-    .instruction-title { font-size: 12px; font-weight: 800; color: #334155; margin-bottom: 5px; }
-    .pay-instruction ol { margin: 0; padding-left: 18px; font-size: 11.5px; color: #475569; line-height: 1.5; }
-    .pay-instruction li { margin-bottom: 5px; }
-
-    .whatsapp-btn { background: #25D366; color: #fff; }
-    .whatsapp-btn:hover { background: #1ebe5d; }
-    .back-btn { background: #e2e8f0; color: #334155; }
-    .back-btn:hover { background: #cbd5e1; }
-
-    .thankyou-box {
-        background: linear-gradient(135deg, #dcfce7, #bbf7d0);
-        border: 2px solid #16a34a; border-radius: 12px;
-        padding: 18px; margin-top: 14px; text-align: center;
-        display: none;
-    }
-    .thankyou-box.show { display: block; }
-    .thankyou-box .ty-icon { font-size: 40px; line-height: 1; margin-bottom: 6px; }
-    .thankyou-box .ty-title {
-        font-size: 16px; font-weight: 900; color: #14532d;
-        text-transform: uppercase; letter-spacing: .04em;
-    }
-    .thankyou-box .ty-desc {
-        font-size: 12px; color: #166534; font-weight: 600;
-        margin-top: 8px; line-height: 1.55;
-    }
-
-    .footer-note { margin-top: 6px; font-size: 11px; color: #777; line-height: 1.4; }
-
-    @media print {
-        @page { size: A4 portrait; margin: 0mm !important; }
-        html, body { background: #ffffff !important; padding: 0 !important; margin: 0 !important; display: block !important; }
-        .portal-wrapper { box-shadow: none !important; border: none !important; width: 210mm !important; height: 297mm !important; padding: 8mm 10mm !important; }
-        .no-print { display: none !important; }
-    }
+    input:focus, select:focus { outline: none; border-color: #1d4ed8 !important; box-shadow: 0 0 0 3px rgba(29,78,216,0.15); }
+    .fade-in { animation: fadeIn 0.3s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .tab-active { background-color: #1d4ed8 !important; color: #ffffff !important; box-shadow: 0 4px 10px rgba(29,78,216,0.3); }
+    .tab-inactive { background-color: #e2e8f0; color: #334155; }
+    .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 200; background: #0f172a; color: #fff; padding: 12px 22px; border-radius: 999px; font-size: 13px; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.4); animation: slideDown 0.3s ease; max-width: 90%; text-align: center; }
+    @keyframes slideDown { from { opacity: 0; transform: translate(-50%, -20px); } to { opacity: 1; transform: translate(-50%, 0); } }
 </style>
 </head>
 <body>
 
-<!-- ============================================================
-     STEP 1 : LANDING PAGE
-     ============================================================ -->
-<div id="loginModal" class="fixed inset-0 bg-slate-950/85 z-50 flex justify-center items-center p-3 sm:p-6 overflow-y-auto">
-    <div class="bg-white rounded-2xl shadow-2xl p-5 sm:p-8 w-full max-w-lg border-t-8 border-blue-700 my-auto space-y-4">
+<!-- BLOCKED SCREEN -->
+<div id="blockedScreen" class="fixed inset-0 bg-red-950 z-[100] flex justify-center items-center p-3 hidden">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md border-t-8 border-red-600 text-center p-6">
+        <div class="text-5xl mb-3">🚫</div>
+        <h1 class="text-2xl font-black text-red-600 mb-2">Access Blocked</h1>
+        <p class="text-sm text-slate-600 mb-4">Your access has been blocked by admin.</p>
+        <p class="text-[11px] text-slate-500 mb-2">আপনার access বন্ধ করা হয়েছে।</p>
+        <a href="https://wa.me/919875340842?text=My%20access%20is%20blocked" target="_blank" class="inline-flex items-center gap-2 bg-[#25D366] text-white font-bold px-5 py-2.5 rounded-full mt-3 text-sm">💬 Contact Admin</a>
+    </div>
+</div>
 
-        <!-- 🕵️ HIDDEN RESET TRIGGER: 5 rapid taps on the logo/title block -->
-        <div class="text-center flex flex-col items-center space-y-1" id="secretResetZone" style="cursor: default; user-select: none;">
-            <img src="logo.png" alt="English Spur Logo" class="h-14 w-auto object-contain mb-1" onerror="this.style.display='none'">
-            <h2 class="text-2xl sm:text-3xl font-black tracking-tight text-blue-700">ENGLISH <span class="text-orange-500">SPUR</span></h2>
-            <div class="inline-block bg-blue-50 text-blue-800 text-[10px] sm:text-xs font-extrabold uppercase px-3 py-1 rounded-full tracking-wider border border-blue-200 mt-1">
-                Current Learning Plan Tariff &amp; Portal Access
-            </div>
+<!-- STUDENT INFO FORM -->
+<div id="infoScreen" class="fixed inset-0 bg-slate-950/85 z-50 flex justify-center items-start p-3 sm:p-6 overflow-y-auto">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg border-t-8 border-blue-700 my-auto fade-in">
+        <div class="text-center pt-5 pb-3 px-5 border-b border-slate-100">
+            <img src="logo.png" alt="English Spur" class="h-16 w-auto mx-auto mb-2 object-contain" onerror="this.style.display='none'">
+            <h1 class="text-2xl sm:text-3xl font-black text-blue-700 leading-none">ENGLISH <span class="text-orange-500">SPUR</span></h1>
+            <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1.5">Online English Training Academy</p>
         </div>
-
-        <div class="bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 text-white p-4 rounded-xl text-center shadow-lg flash-offer pulse-urgent">
-            <div class="text-[11px] font-extrabold tracking-widest uppercase">⏰ Today's Special Offer — Ending Soon</div>
-            <div class="my-1.5">
-                <div class="text-[10px] font-bold uppercase tracking-wider opacity-90">Offer expires in</div>
-                <div id="landingTimer" class="font-mono text-3xl sm:text-4xl font-black text-yellow-200 leading-none">30:00</div>
-            </div>
-            <p class="text-[11px] font-semibold mt-2 opacity-95 leading-snug">
-                Hurry up! Complete your details and enter the dashboard to grab today's special offer before it expires. Don't miss out!
-            </p>
+        <div class="bg-blue-50 border-l-4 border-blue-600 p-3 mx-4 mt-4 rounded-r-lg">
+            <p class="text-[11px] font-bold text-blue-900">👋 Welcome! Please fill your details</p>
+            <p class="text-[10px] text-slate-600 mt-1">আপনার তথ্য দিন — এরপর plans দেখতে ও কিনতে পারবেন।</p>
         </div>
-
-        <div class="bg-red-50 border-l-4 border-red-600 p-3 rounded-r-lg text-xs text-red-950 shadow-xs space-y-1.5">
-            <p class="font-black text-red-700 uppercase tracking-wide text-[11px] flex items-center gap-1">
-                <span>⚠️</span> IMPORTANT INSTRUCTIONS / জরুরি নির্দেশিকা:
-            </p>
-            <ul class="list-disc list-inside space-y-1 font-medium text-[11px] leading-relaxed">
-                <li><strong>One-Time Discount:</strong> Valid <span class="underline">ONLY for first-time admission</span>.<br>
-                    <span class="text-slate-700 text-[10px] pl-4 block">(এই ডিসকাউন্টটি শুধুমাত্র প্রথমবার অ্যাডমিশন নেওয়ার ক্ষেত্রেই প্রযোজ্য।)</span></li>
-                <li><strong>DO NOT REFRESH:</strong> Please <span class="underline">do not refresh or reload</span> this page.<br>
-                    <span class="text-slate-700 text-[10px] pl-4 block">(দয়া করে পেজটি রিফ্রেশ বা রিলোড করবেন না, তাহলে সমস্ত ডেটা মুছে যাবে।)</span></li>
-            </ul>
-        </div>
-
-        <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs text-slate-700 space-y-1">
-            <p class="font-bold text-slate-900 text-[11px] uppercase tracking-wide flex items-center gap-1">
-                <span>📋</span> Admission Requirements / ভর্তির ডকুমেন্টস:
-            </p>
-            <ul class="list-disc list-inside space-y-0.5 text-[11px] font-medium text-slate-600">
-                <li>Passport Size Photograph <span class="text-slate-500">(পাসপোর্ট সাইজ ছবি)</span></li>
-                <li>Address Proof: Aadhar / Voter / School ID <span class="text-slate-500">(আধার, ভোটার বা স্কুল আইডি)</span></li>
-            </ul>
-        </div>
-
-        <form id="regForm" onsubmit="handleStudentLogin(event)" class="space-y-3 text-xs">
+        <form id="infoForm" onsubmit="handleInfoSubmit(event)" class="p-5 space-y-4">
             <div>
-                <label class="block font-bold text-slate-700 uppercase mb-1 text-[11px]">Your Full Name / ছাত্র/ছাত্রীর নাম <span class="text-red-500">*</span></label>
-                <input type="text" id="studentName" required placeholder="e.g. Rahul Sharma" class="w-full border border-slate-300 rounded-lg p-2.5 bg-slate-50 font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition">
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Full Name / নাম <span class="text-red-500">*</span></label>
+                <input type="text" id="studentName" required placeholder="e.g. Rahul Sharma" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
             </div>
             <div>
-                <label class="block font-bold text-slate-700 uppercase mb-1 text-[11px]">Mobile Number / হোয়াটসঅ্যাপ নম্বর <span class="text-red-500">*</span></label>
-                <input type="tel" id="studentMobile" required placeholder="e.g. 9876543210" class="w-full border border-slate-300 rounded-lg p-2.5 bg-slate-50 font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition">
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">WhatsApp <span class="text-red-500">*</span></label>
+                <div class="flex gap-2">
+                    <select id="countryCode" class="border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm w-[110px]">
+                        <option value="+91" selected>🇮🇳 +91</option>
+                        <option value="+880">🇧🇩 +880</option>
+                        <option value="+1">🇺🇸 +1</option>
+                        <option value="+44">🇬🇧 +44</option>
+                        <option value="+971">🇦🇪 +971</option>
+                        <option value="+966">🇸🇦 +966</option>
+                        <option value="+65">🇸🇬 +65</option>
+                        <option value="+60">🇲🇾 +60</option>
+                        <option value="+61">🇦🇺 +61</option>
+                        <option value="+92">🇵🇰 +92</option>
+                        <option value="+94">🇱🇰 +94</option>
+                        <option value="+977">🇳🇵 +977</option>
+                    </select>
+                    <input type="tel" id="studentMobile" required placeholder="9876543210" class="flex-1 border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                </div>
             </div>
             <div>
-                <label class="block font-bold text-slate-700 uppercase mb-1 text-[11px]">Email Address / ইমেল আইডি <span class="text-red-500">*</span></label>
-                <input type="email" id="studentEmail" required placeholder="e.g. student@gmail.com" class="w-full border border-slate-300 rounded-lg p-2.5 bg-slate-50 font-bold text-slate-800 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition">
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Email <span class="text-red-500">*</span></label>
+                <input type="email" id="studentEmail" required placeholder="student@gmail.com" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm" oninput="this.value = this.value.toLowerCase()">
             </div>
-            <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black p-3 rounded-lg text-xs uppercase tracking-wider cursor-pointer transition shadow-md hover:shadow-lg mt-2">
-                🚀 Enter Dashboard &amp; View Tariffs
+            <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black p-3.5 rounded-xl text-xs uppercase tracking-wider shadow-md">
+                🚀 Continue
             </button>
         </form>
     </div>
 </div>
 
-<!-- ============================================================
-     STEP 2 : MAIN DASHBOARD
-     ============================================================ -->
-<div class="portal-wrapper" id="mainDashboard" style="display: none;">
-    <div class="inner-frame"></div>
-
-    <div class="absolute top-2 right-3 no-print flex gap-2 items-center z-20">
-        <span id="welcomeStudentBadge" class="text-[11px] font-bold text-blue-900 bg-blue-50 px-2 py-0.5 rounded border border-blue-200"></span>
-        <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2 py-0.5 rounded text-xs uppercase cursor-pointer transition shadow">🖨️ Print</button>
+<!-- MAIN APP -->
+<div id="mainApp" class="max-w-4xl mx-auto hidden">
+    <div class="bg-white rounded-2xl shadow-lg p-3 mb-3 flex justify-between items-center gap-2">
+        <div class="flex items-center gap-2 min-w-0">
+            <img src="logo.png" alt="Logo" class="h-10 w-10 flex-shrink-0 object-contain" onerror="this.style.display='none'">
+            <div class="min-w-0">
+                <p class="text-base sm:text-lg font-black text-blue-700 leading-none">ENGLISH <span class="text-orange-500">SPUR</span></p>
+                <p class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Student Portal</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-1.5 flex-shrink-0">
+            <button onclick="showView('history')" class="bg-blue-50 text-blue-700 font-bold text-[10px] sm:text-xs px-2.5 py-2 rounded-lg">📋 Orders</button>
+            <button onclick="studentLogout()" class="bg-red-500 hover:bg-red-600 text-white font-bold text-[10px] sm:text-xs px-2.5 py-2 rounded-lg">🚪 Logout</button>
+        </div>
     </div>
 
-    <div class="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center border-b-2 border-slate-200 pb-2 gap-2 z-15 mt-1">
-        <div class="flex items-center gap-2.5">
-            <img src="logo.png" alt="English Spur Logo" class="h-9 w-9 object-contain" onerror="this.style.display='none'">
-            <div>
-                <div class="text-2xl font-black tracking-tight leading-none">
-                    <span class="text-blue-700">ENGLISH</span><span class="text-orange-500 ml-1">SPUR</span>
+    <div class="bg-gradient-to-r from-blue-50 to-white rounded-2xl shadow-sm p-3 mb-3 border border-blue-100">
+        <p class="text-xs text-slate-600">👤 <span id="welcomeName" class="font-bold text-blue-900">Student</span></p>
+        <p id="welcomeMeta" class="text-[10px] text-slate-500 mt-0.5 truncate"></p>
+    </div>
+
+    <!-- VIEW: PLANS -->
+    <div id="view-plans">
+        <div id="offerBanner" class="w-full bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 text-white p-4 rounded-2xl mb-3 shadow-xl flash-offer">
+            <div class="text-center">
+                <div class="text-[10px] font-extrabold uppercase tracking-widest opacity-95">⏰ Limited Time Special Rate</div>
+                <div class="text-2xl sm:text-3xl font-black mt-1.5 leading-tight">
+                    Regular <span class="line-through opacity-75" id="bannerRegular">₹500</span>/class → NOW
+                    <span class="text-yellow-300" id="bannerOffer">₹300</span>/class
                 </div>
-                <div class="text-[8px] font-extrabold text-black uppercase tracking-widest mt-0.5 font-mono">
-                    ONLINE ENGLISH TRAINING ACADEMY
+                <div class="mt-3 text-[10px] font-bold uppercase tracking-wider opacity-95">⚡ Offer expires in</div>
+                <div id="countdown" class="font-mono text-3xl sm:text-4xl font-black text-yellow-200 leading-tight">--:--</div>
+                <div class="text-[10px] mt-1.5 font-semibold opacity-95 max-w-md mx-auto" id="bannerDesc">Book your plan today!</div>
+                <div class="mt-3 flex flex-wrap justify-center gap-2">
+                    <button onclick="contactViaWhatsApp()" class="bg-[#25D366] hover:bg-[#1ebe5d] text-white text-[10px] sm:text-[11px] font-black px-3.5 py-2 rounded-full shadow-lg flex items-center gap-1.5 uppercase">💬 WhatsApp Us</button>
+                    <a href="tel:+919875340842" class="bg-black/30 hover:bg-black/50 text-white text-[10px] sm:text-[11px] font-bold px-3.5 py-2 rounded-full flex items-center gap-1.5">📞 Call</a>
                 </div>
             </div>
         </div>
-        <div class="text-left sm:text-right text-[10px] text-slate-600 font-medium space-y-0.2">
-            <p class="font-bold text-slate-800">📍 Kanaipur, Bantul, Bagnan, Howrah - 711312</p>
-            <p class="tracking-wide">📞 +91 9875340842 | ✉️ englishspur2020@gmail.com</p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-3">
+            <button onclick="switchTab('all')" id="tab-all" class="text-[10px] sm:text-[11px] font-bold py-2.5 px-1.5 rounded-lg tab-active">🌟 All Plans</button>
+            <button onclick="switchTab('1on1-adult')" id="tab-1on1-adult" class="text-[10px] sm:text-[11px] font-bold py-2.5 px-1.5 rounded-lg tab-inactive">👑 1-on-1 Adult</button>
+            <button onclick="switchTab('1on1-kids')" id="tab-1on1-kids" class="text-[10px] sm:text-[11px] font-bold py-2.5 px-1.5 rounded-lg tab-inactive">👶 1-on-1 Kids</button>
+            <button onclick="switchTab('group')" id="tab-group" class="text-[10px] sm:text-[11px] font-bold py-2.5 px-1.5 rounded-lg tab-inactive">👥 Group</button>
+        </div>
+        <div id="plansContainer" class="space-y-3"></div>
+        <div class="mt-4 bg-white rounded-2xl shadow-lg p-4 text-center border border-slate-100">
+            <p class="text-xs text-slate-600 font-semibold mb-2">💬 Need help with admission?</p>
+            <button onclick="contactViaWhatsApp()" class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-black text-xs px-5 py-2.5 rounded-full shadow">💬 WhatsApp: 9875340842</button>
         </div>
     </div>
 
-    <div id="specialRateBanner" class="w-full bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 text-white p-3 sm:p-4 rounded-xl my-2 shadow-2xl flash-offer pulse-urgent z-10">
-        <div class="text-[10px] sm:text-[11px] font-extrabold tracking-widest uppercase text-center">⏰ Limited Time Special Rate — 30 Minutes Only ⏰</div>
-        <div class="text-2xl sm:text-3xl font-black tracking-tight mt-1 leading-tight text-center">
-            Regular <span class="line-through opacity-75">₹500</span>/class → NOW
-            <span class="text-yellow-300 drop-shadow">₹300</span>/class
-        </div>
-        <div class="text-center mt-2">
-            <div class="text-[10px] font-bold uppercase tracking-wider opacity-95">⚡ Offer expires in</div>
-            <div id="countdownTimer" class="font-mono text-3xl sm:text-4xl font-black text-yellow-200 my-0.5">30:00</div>
-            <div class="text-[10px] sm:text-[11px] font-semibold opacity-95 leading-snug max-w-lg mx-auto">
-                Don't waste your time — book your plan today with our special discount offer just for you!
-                We'll send your coupon code within 30 minutes. Confirm payment before the timer ends to lock this offer.
+    <!-- VIEW: CHECKOUT -->
+    <div id="view-checkout" class="hidden">
+        <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-5">
+            <div class="flex justify-between items-center mb-3 flex-wrap gap-2">
+                <h2 class="text-base sm:text-lg font-black text-blue-900">📋 Order Review</h2>
+                <button onclick="changePlan()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[10px] px-3 py-1.5 rounded-lg">🔄 Change Plan</button>
             </div>
-        </div>
-        <div class="text-center mt-2 flex justify-center items-center">
-            <span class="text-[11px] font-bold bg-black/30 px-3 py-1 rounded-full">📞 Helpline: 9875340842</span>
-        </div>
-    </div>
-
-    <div class="w-full grid grid-cols-2 sm:grid-cols-4 gap-1 mt-1 no-print z-10">
-        <button onclick="switchTab('all')" id="tab-all" class="bg-blue-700 text-white text-[11px] font-bold py-1.5 px-2 rounded cursor-pointer transition text-center shadow-xs">🌟 All Prospectus</button>
-        <button onclick="switchTab('1on1-adult')" id="tab-1on1-adult" class="bg-slate-200 text-slate-700 text-[11px] font-bold py-1.5 px-2 rounded cursor-pointer transition text-center shadow-xs">👑 1-on-1 Adults</button>
-        <button onclick="switchTab('1on1-kids')" id="tab-1on1-kids" class="bg-slate-200 text-slate-700 text-[11px] font-bold py-1.5 px-2 rounded cursor-pointer transition text-center shadow-xs">👶 1-on-1 Kids</button>
-        <button onclick="switchTab('group')" id="tab-group" class="bg-slate-200 text-slate-700 text-[11px] font-bold py-1.5 px-2 rounded cursor-pointer transition text-center shadow-xs">👥 Group Batches</button>
-    </div>
-
-    <div class="w-full bg-blue-50 border border-blue-200 p-2 my-1.5 rounded-lg text-center z-10">
-        <p class="text-[10.5px] text-blue-900 font-semibold leading-tight">
-            👆 Click on any plan below to see the full breakdown and request/apply your coupon code.
-            <span class="text-slate-600">(যেকোনো প্ল্যানে ক্লিক করুন — পরের পেজে breakdown ও coupon অপশন পাবেন।)</span>
-        </p>
-    </div>
-
-    <div class="flex-1 w-full flex flex-col justify-start items-center my-0.5 overflow-hidden z-10">
-        <div id="contentContainer" class="w-full flex flex-col gap-1.5 overflow-y-auto"></div>
-    </div>
-
-    <div class="w-full border-t border-dashed border-slate-200 pt-1.5 mt-1.5 mb-1 text-center z-10">
-        <h3 class="text-[11px] italic text-slate-800 font-semibold">"Thank you for choosing English Spur as your trusted transformation partner."</h3>
-        <p class="text-[10px] font-black text-blue-700 uppercase tracking-wider mt-0.5">— Sovan Kapri, Founder &amp; Lead Trainer</p>
-    </div>
-
-    <div class="w-full border-t border-slate-200 pt-1 text-[10px] text-slate-400 font-sans flex flex-col sm:flex-row justify-between items-center gap-1 z-10">
-        <span>© 2026 English Spur | Premium Educational Framework Suite</span>
-        <span class="font-bold text-blue-700 bg-slate-100 px-2 py-0.5 rounded">PAGE 1</span>
-    </div>
-</div>
-
-<!-- ============================================================
-     STEP 3 : CHECKOUT / ORDER REVIEW
-     ============================================================ -->
-<div class="checkout-view" id="checkoutView">
-    <div class="checkout-card">
-        <div class="checkout-logo text-center">
-            <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
-        </div>
-        <div class="text-center">
-            <div class="checkout-org">English Spur English Training Academy</div>
-            <h2>Order Review &amp; Coupon</h2>
-            <div class="checkout-sub">অর্ডার রিভিউ ও কুপন</div>
-        </div>
-
-        <div class="checkout-student">👤 Student: <span id="checkoutStudentName">—</span></div>
-
-        <div class="checkout-section">
-            <h3>📘 Selected Plan</h3>
-            <div id="checkoutPlanName" style="font-size:12.5px; font-weight:800; color:#1e3a8a; margin-bottom:8px;">—</div>
-            <div id="checkoutBreakdown"></div>
-            <div class="breakdown-line total">
-                <span>Total Payable</span>
-                <span id="checkoutTotal">₹0</span>
-            </div>
-        </div>
-
-        <div class="coupon-section">
-            <h3>🎟️ Apply Special Coupon Code</h3>
-            <div id="checkoutCouponBox"></div>
-
-            <div class="request-coupon-box" id="requestCouponBox">
-                <div class="rc-title">💬 Don't have a code yet?</div>
-                <div class="rc-desc">
-                    Click below to send us your details on WhatsApp. We'll review your plan and send you a special coupon code within a minute.
-                    <br><span style="color:#475569; font-weight:600;">(কোড না থাকলে নিচের বাটনে ক্লিক করুন — আপনার সব details আমাদের কাছে চলে যাবে, আমরা দেখে সাথে সাথে coupon code পাঠিয়ে দেবো।)</span>
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-3">
+                <p class="text-[10px] font-bold text-blue-700 uppercase mb-2">Selected Plan</p>
+                <p id="coPlanName" class="text-sm font-black text-slate-800 leading-snug"></p>
+                <div id="coBreakdown" class="mt-3 space-y-1 text-xs"></div>
+                <div class="mt-3 pt-3 border-t-2 border-dashed border-blue-300 flex justify-between items-center">
+                    <span class="font-black text-blue-900 text-sm">Total Payable:</span>
+                    <span id="coTotal" class="text-lg font-black text-blue-900">₹0</span>
                 </div>
-                <button type="button" class="request-coupon-btn" onclick="requestCouponViaWhatsApp()">
-                    💬 Request Coupon Code on WhatsApp
+            </div>
+
+            <div id="couponSection" class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-3 hidden">
+                <p class="text-[10px] font-black text-amber-900 uppercase mb-2">🎟️ Apply Coupon</p>
+                <div id="couponBox"></div>
+                <button onclick="requestCouponViaWhatsApp()" class="w-full mt-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-black text-[11px] px-4 py-2.5 rounded-xl shadow flex items-center justify-center gap-2 uppercase">
+                    💬 Request Coupon Code
                 </button>
             </div>
-        </div>
 
-        <button onclick="proceedToPayment()" class="checkout-btn checkout-btn-proceed">
-            💳 Proceed to Payment &amp; Send Details on WhatsApp
-        </button>
-        <button onclick="backToDashboard()" class="checkout-btn checkout-btn-back">
-            ← Back to Plans
-        </button>
-
-        <div class="footer-note text-center">
-            On proceeding, your order details will be sent to English Spur on WhatsApp <strong>9875340842</strong>, and then you'll see the QR code &amp; UPI ID for payment.
+            <button onclick="proceedToPayment()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black p-3.5 rounded-xl text-xs sm:text-sm uppercase mb-2">
+                💳 Proceed to Payment
+            </button>
         </div>
     </div>
-</div>
 
-<!-- ============================================================
-     STEP 4 : PAYMENT PORTAL
-     ============================================================ -->
-<div id="paymentView">
-    <div class="pay-card">
-        <div class="pay-logo">
-            <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
-        </div>
-        <div class="pay-org">English Spur English Training Academy</div>
-
-        <h2>Fee Payment Portal</h2>
-        <div class="pay-sub">ফি পেমেন্ট পোর্টাল</div>
-
-        <div class="pay-student">👤 Student: <span id="payStudentName">—</span></div>
-
-        <div class="pay-plan" style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px 12px; text-align:left; margin-bottom:12px; font-size:11.5px; color:#1e3a8a; line-height:1.6;">
-            <div class="pay-plan-title" id="payPlanName" style="font-weight:800; font-size:12.5px; margin-bottom:4px;">—</div>
-            <div id="payPlanLines"></div>
-        </div>
-
-        <div class="pay-amount">
-            <div class="lbl">Total Payable Amount / মোট প্রদেয়</div>
-            <div class="amt" id="payAmount">₹0</div>
-            <div class="note" id="payAmountNote"></div>
-        </div>
-
-        <div class="pay-msg" style="background:#f0fdf4; border:1px solid #bbf7d0; padding:10px; border-radius:8px; margin-bottom:14px; text-align:left;">
-            <p style="margin:6px 0; font-size:12px; color:#166534; line-height:1.45; font-weight:600;">
-                ✅ Your order details have been sent to our WhatsApp <strong>9875340842</strong>.
-            </p>
-            <p style="margin:6px 0; font-size:11.5px; color:#166534; line-height:1.45;">
-                আপনার অর্ডার ডিটেইলস আমাদের হোয়াটসঅ্যাপে পাঠানো হয়েছে। এখন নিচের QR / UPI দিয়ে পেমেন্ট করুন।
-            </p>
-        </div>
-
-        <div class="pay-msg" style="background:#fdfdfd; border:1px solid #e2e8f0; padding:10px; border-radius:8px; margin-bottom:14px; text-align:left;">
-            <p style="margin:6px 0; font-size:12px; color:#444; line-height:1.45;">
-                Pay using the QR code or copy the UPI ID below.
-            </p>
-            <p style="margin:6px 0; font-size:12px; color:#444; line-height:1.45;">
-                নিচের QR কোড স্ক্যান করুন, অথবা UPI আইডি কপি করে পেমেন্ট করুন।
-            </p>
-        </div>
-
-        <a id="payNowBtn" class="checkout-btn checkout-btn-proceed" href="#">💳 Pay via UPI App</a>
-
-        <div class="pay-qr">
-            <img src="SOVAN KAPRI GOOGLE PAY.jpg" alt="Payment QR Code">
-        </div>
-
-        <div class="pay-upi">
-            <div class="upi-label">UPI ID (কপি করতে Copy ID এ ক্লিক করুন)</div>
-            <div class="upi-wrapper">
-                <span class="upi-id" id="upiText">sovankapri-1@okhdfcbank</span>
-                <button class="copy-btn" onclick="copyUpiId()">Copy ID</button>
+    <!-- VIEW: PAYMENT -->
+    <div id="view-payment" class="hidden">
+        <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-5">
+            <div class="flex justify-between items-center mb-3">
+                <h2 class="text-base sm:text-lg font-black text-blue-900 text-center flex-1">💳 Payment</h2>
             </div>
-        </div>
-
-        <div class="pay-instruction">
-            <div class="instruction-title">How to Pay / পেমেন্ট করার নিয়ম:</div>
-            <ol>
-                <li>Open Google Pay, PhonePe, or Paytm app. <br>(আপনার Google Pay, PhonePe বা Paytm অ্যাপ খুলুন।)</li>
-                <li>Use 'Scan QR' to scan the above QR code OR paste the copied UPI ID. <br>(উপরের QR কোড স্ক্যান করুন অথবা কপি করা UPI আইডি পেস্ট করে পেমেন্ট করুন।)</li>
-                <li>Pay exactly <strong id="payAmountInline">₹0</strong> and <strong class="text-red-700">share the screenshot on WhatsApp</strong>. <br>(ঠিক <strong id="payAmountInline2">₹0</strong> টাকা পেমেন্ট করে <strong class="text-red-700">অবশ্যই</strong> স্ক্রিনশট হোয়াটসঅ্যাপে পাঠান।)</li>
-            </ol>
-        </div>
-
-        <button id="payScreenshotBtn" class="checkout-btn whatsapp-btn" onclick="sendScreenshotOnWhatsApp()">📸 Send Payment Screenshot on WhatsApp</button>
-        <button class="checkout-btn back-btn" onclick="backToCheckout()">← Back to Order Review</button>
-
-        <div id="thankYouBox" class="thankyou-box">
-            <div class="ty-icon">🎉</div>
-            <div class="ty-title">Thank You!</div>
-            <div class="ty-desc">
-                Your payment screenshot has been sent to English Spur.<br>
-                Our team will verify your payment and send your <strong>official receipt</strong> on WhatsApp shortly.
-                <br><br>
-                <span style="color:#14532d;">(আপনার পেমেন্টের স্ক্রিনশট পাঠানো হয়েছে। আমরা verify করে অফিসিয়াল receipt WhatsApp-এ পাঠিয়ে দেবো।)</span>
-                <br><br>
-                📞 For any queries: <strong>9875340842</strong>
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-3">
+                <p id="payPlanName" class="text-xs font-bold text-blue-900 mb-1 leading-snug"></p>
+                <p id="payLines" class="text-[11px] text-slate-700 leading-snug"></p>
             </div>
-        </div>
-
-        <div class="footer-note">
-            After payment, please send the screenshot to WhatsApp: <strong>9875340842</strong><br>
-            পেমেন্ট করার পর স্ক্রিনশটটি হোয়াটসঅ্যাপে পাঠিয়ে দেওয়া আবশ্যক।
-        </div>
-    </div>
-</div>
-
-<!-- ============================================================
-     SCRIPTING LOGIC
-     ============================================================ -->
-<script>
-/* ================= CONFIG ================= */
-const PHONE            = '919875340842';
-const UPI_ID           = 'sovankapri-1@okhdfcbank';
-const UPI_PAYEE_NAME   = 'English Spur';
-const ADMISSION_FEE    = 2500;
-
-const SINGLE_REGULAR = 500;
-const SINGLE_SPECIAL = 300;
-
-const oneOnOnePlans = [
-    { key: 's1',  sessions: 1,  specialPrice: 300,  label: 'Single Class (1 Day Routine)' },
-    { key: 's8',  sessions: 8,  specialPrice: 2000, label: '8 Days Standard Plan' },
-    { key: 's16', sessions: 16, specialPrice: 4000, label: '16 Days Advance Plan' },
-    { key: 's24', sessions: 24, specialPrice: 6200, label: '24 Days Executive Plan' },
-    { key: 's32', sessions: 32, specialPrice: 7500, label: '32 Days Ultimate Master Plan' }
-];
-
-const groupPrices = { group2d: 1500, group3d: 1900 };
-
-const COUPONS = {
-    'SPURX':   { code:'SPURX',   appliesTo:'1on1',  type:'flat',    value:150, allowedPlans:['s8','s16','s24','s32'] },
-    'SPURY':   { code:'SPURY',   appliesTo:'1on1',  type:'flat',    value:250, allowedPlans:['s8','s16','s24','s32'] },
-    'SPURG':   { code:'SPURG',   appliesTo:'group', type:'flat',    value:150, target:'admission' },
-    'SPURS':   { code:'SPURS',   appliesTo:'group', type:'flat',    value:250, target:'admission' },
-    'SPURES':  { code:'SPURES',  appliesTo:'1on1',  type:'percent', value:20,  allowedPlans:['s24','s32'] },
-    'SPURESX': { code:'SPURESX', appliesTo:'group', type:'percent', value:20,  target:'admission' }
-};
-
-/* ================= STATE ================= */
-let studentData    = { name: '', mobile: '', email: '' };
-let currentTab     = 'all';
-let appliedCoupon  = null;
-let selectedPlan   = null;
-let offerExpiredHandled = false;
-
-const money = n => '₹' + Number(n).toLocaleString('en-IN');
-
-/* ================================================================
-   30-MINUTE OFFER TIMER
-   ================================================================ */
-const OFFER_KEY = 'englishSpurOfferDeadline_v2';
-const OFFER_DURATION_MS = 30 * 60 * 1000;
-
-function getOrInitOfferDeadline() {
-    try {
-        const stored = localStorage.getItem(OFFER_KEY);
-        if (stored) {
-            const t = parseInt(stored, 10);
-            if (!isNaN(t) && t > 0) return t;
-        }
-        const newDeadline = Date.now() + OFFER_DURATION_MS;
-        localStorage.setItem(OFFER_KEY, String(newDeadline));
-        return newDeadline;
-    } catch (e) {
-        return Date.now() + OFFER_DURATION_MS;
-    }
-}
-
-let offerDeadline;
-
-function initOfferTimer() {
-    try {
-        const params = new URLSearchParams(window.location.search);
-        if (params.get('reset') === '1') {
-            localStorage.removeItem(OFFER_KEY);
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-    } catch (e) {}
-    offerDeadline = getOrInitOfferDeadline();
-}
-
-/* ============================================================
-   🕵️ HIDDEN RESET TIMER
-   Admin: tap/click the "ENGLISH SPUR" logo block 5 times within 3 seconds.
-   ============================================================ */
-let secretTapCount = 0;
-let secretTapTimer = null;
-const SECRET_TAP_TARGET = 5;
-const SECRET_TAP_WINDOW = 3000; // 3 seconds
-
-function handleSecretTap() {
-    secretTapCount++;
-
-    clearTimeout(secretTapTimer);
-    secretTapTimer = setTimeout(() => {
-        secretTapCount = 0;
-    }, SECRET_TAP_WINDOW);
-
-    if (secretTapCount >= SECRET_TAP_TARGET) {
-        secretTapCount = 0;
-        clearTimeout(secretTapTimer);
-        performHiddenReset();
-    }
-}
-
-function performHiddenReset() {
-    // Reset deadline
-    try { localStorage.removeItem(OFFER_KEY); } catch (e) {}
-    offerDeadline = Date.now() + OFFER_DURATION_MS;
-    try { localStorage.setItem(OFFER_KEY, String(offerDeadline)); } catch (e) {}
-
-    offerExpiredHandled = false;
-    appliedCoupon = null;
-
-    // Restore banner if it was in "expired" state
-    const banner = document.getElementById('specialRateBanner');
-    if (banner) {
-        banner.className = 'w-full bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 text-white p-3 sm:p-4 rounded-xl my-2 shadow-2xl flash-offer pulse-urgent z-10';
-        banner.innerHTML = `
-            <div class="text-[10px] sm:text-[11px] font-extrabold tracking-widest uppercase text-center">⏰ Limited Time Special Rate — 30 Minutes Only ⏰</div>
-            <div class="text-2xl sm:text-3xl font-black tracking-tight mt-1 leading-tight text-center">
-                Regular <span class="line-through opacity-75">₹500</span>/class → NOW
-                <span class="text-yellow-300 drop-shadow">₹300</span>/class
+            <div class="bg-gradient-to-r from-blue-700 to-blue-900 text-white rounded-xl p-4 text-center mb-3">
+                <div class="text-[10px] font-bold uppercase tracking-widest opacity-90">Amount to Pay</div>
+                <div id="payAmount" class="text-3xl font-black mt-1">₹0</div>
             </div>
-            <div class="text-center mt-2">
-                <div class="text-[10px] font-bold uppercase tracking-wider opacity-95">⚡ Offer expires in</div>
-                <div id="countdownTimer" class="font-mono text-3xl sm:text-4xl font-black text-yellow-200 my-0.5">30:00</div>
-                <div class="text-[10px] sm:text-[11px] font-semibold opacity-95 leading-snug max-w-lg mx-auto">
-                    Don't waste your time — book your plan today with our special discount offer just for you!
-                    We'll send your coupon code within 30 minutes. Confirm payment before the timer ends to lock this offer.
+            <div class="bg-green-50 border border-green-200 rounded-lg p-3 text-xs text-green-900 mb-3">
+                <p class="font-bold mb-1 text-[11px]">📌 How to pay:</p>
+                <ol class="list-decimal list-inside space-y-0.5 text-[10.5px]">
+                    <li>Scan QR code below OR copy UPI ID</li>
+                    <li>Pay exactly <strong id="payAmountInline">₹0</strong></li>
+                    <li>Take screenshot</li>
+                    <li>Upload below</li>
+                </ol>
+            </div>
+            <div class="bg-white border-2 border-dashed border-slate-300 rounded-2xl p-4 sm:p-5 text-center mb-3">
+                <p class="text-[11px] font-bold text-slate-600 uppercase mb-3">📱 Scan QR Code to Pay</p>
+                <img src="SOVAN KAPRI GOOGLE PAY.jpg" alt="QR Code" class="mx-auto w-full max-w-[320px] sm:max-w-[420px] rounded-xl shadow-md cursor-pointer active:scale-95" onclick="window.open(this.src, '_blank')" onerror="this.style.display='none'">
+                <p class="text-[10px] text-slate-500 mt-3">👆 Tap the QR to zoom</p>
+            </div>
+            <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-3">
+                <p class="text-[11px] font-bold text-amber-900 mb-1">UPI ID:</p>
+                <div class="flex items-center gap-2">
+                    <span class="flex-1 bg-white rounded px-2 py-1.5 text-[11px] font-bold text-amber-900 break-all" id="upiIdText">sovankapri-1@okhdfcbank</span>
+                    <button onclick="copyUpi()" class="bg-amber-600 text-white text-[10px] font-bold px-3 py-1.5 rounded">Copy</button>
                 </div>
             </div>
-            <div class="text-center mt-2 flex justify-center items-center">
-                <span class="text-[11px] font-bold bg-black/30 px-3 py-1 rounded-full">📞 Helpline: 9875340842</span>
+            <div class="bg-green-50 border border-green-200 rounded-xl p-3 mb-3">
+                <p class="text-[11px] font-black text-green-900 uppercase mb-2">📸 Upload Payment Screenshot *</p>
+                <input type="file" id="screenshotInput" accept="image/*" class="w-full text-xs file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-green-600 file:text-white file:font-bold file:text-xs">
+                <div id="previewBox" class="mt-2 hidden">
+                    <img id="previewImg" class="max-w-full max-h-48 rounded-lg border-2 border-green-300 mx-auto">
+                </div>
             </div>
-        `;
-    }
+            <button onclick="submitPurchase()" class="w-full bg-green-600 hover:bg-green-700 text-white font-black p-3.5 rounded-xl text-xs sm:text-sm uppercase mb-2">
+                ✅ Submit Order
+            </button>
+            <button onclick="showView('checkout')" class="w-full bg-slate-200 text-slate-700 font-bold p-3 rounded-xl text-xs sm:text-sm hover:bg-slate-300">
+                ← Back to Review
+            </button>
+            <div id="thankYouBox" class="hidden mt-3 bg-gradient-to-br from-green-100 to-emerald-100 border-2 border-green-500 rounded-xl p-4 text-center">
+                <div class="text-4xl mb-1">🎉</div>
+                <p class="font-black text-green-900 uppercase text-sm">Thank You!</p>
+                <p class="text-[11px] text-green-800 font-semibold mt-2">Order submitted. Our team will verify and send receipt on WhatsApp.</p>
+            </div>
+        </div>
+    </div>
 
-    renderContent();
-    if (selectedPlan) refreshCheckoutView();
-    tickCountdown();
+    <!-- VIEW: HISTORY -->
+    <div id="view-history" class="hidden">
+        <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-5">
+            <h2 class="text-base sm:text-lg font-black text-blue-900 mb-3">📋 My Orders</h2>
+            <div id="historyList" class="space-y-3"></div>
+            <button onclick="showView('plans')" class="w-full bg-slate-200 text-slate-700 font-bold p-3 rounded-xl text-xs sm:text-sm mt-3 hover:bg-slate-300">
+                ← Back to Plans
+            </button>
+        </div>
+    </div>
+</div>
 
-    alert('✅ Timer reset to 30:00');
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyBAmO9v4NOOSSuM59yXY8JppFJzrZUGADM",
+  authDomain: "es-tariff.firebaseapp.com",
+  projectId: "es-tariff",
+  storageBucket: "es-tariff.firebasestorage.app",
+  messagingSenderId: "113483091618",
+  appId: "1:113483091618:web:1bb7cfb608ba85382011fb"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+const PHONE = '919875340842';
+const UPI_ID = 'sovankapri-1@okhdfcbank';
+const ADMISSION_FEE = 2500;
+const STORAGE_KEY = 'englishSpurStudent';
+const PLAN_KEY = 'englishSpurSelectedPlan';
+const COUPON_KEY = 'englishSpurAppliedCoupon';
+
+let currentStudent = null;
+let offerConfig = { regularRate: 500, offerRate: 300, active: true, endDateTime: null, title: '', description: '' };
+let coupons = {};
+let offerDeadline = 0;
+let currentTab = 'all';
+let selectedPlan = null;
+let appliedCoupon = null;
+let screenshotBase64 = null;
+let timerInterval = null;
+let offerExpiredHandled = false;
+let studentListenerActive = false;
+let isLoggingOut = false;
+
+const oneOnOnePlans = [
+    { key: 's1',  sessions: 1,  price: 300,  label: 'Single Class (1 Day Routine)' },
+    { key: 's8',  sessions: 8,  price: 2000, label: '8 Days Standard Plan' },
+    { key: 's16', sessions: 16, price: 4000, label: '16 Days Advance Plan' },
+    { key: 's24', sessions: 24, price: 6200, label: '24 Days Executive Plan' },
+    { key: 's32', sessions: 32, price: 7500, label: '32 Days Ultimate Master Plan' }
+];
+const groupPrices = { group2d: 1500, group3d: 1900 };
+const money = n => '₹' + Number(n).toLocaleString('en-IN');
+
+function cleanPlanName(name) {
+    if (!name) return '';
+    return name.replace(/[\u{1F000}-\u{1FFFF}]/gu, '').replace(/[\u{2600}-\u{27BF}]/gu, '').replace(/[\u{2190}-\u{21FF}]/gu, '').replace(/[\u{FE00}-\u{FE0F}]/gu, '').replace(/[👑👶👥🧸📘🎟️⏰⚡🎉💬📞📸🚀✅❌⚠️🔒🔄]/g, '').replace(/\s+/g, ' ').trim();
 }
 
-function isOfferActive() { return offerDeadline > Date.now(); }
+function hasCouponAccess() { return currentStudent && currentStudent.couponAccess === true; }
 
-function formatMMSS(ms) {
-    const totalSec = Math.max(0, Math.floor(ms / 1000));
-    const m = Math.floor(totalSec / 60);
-    const s = totalSec % 60;
-    return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+/* ============ TOAST ============ */
+function showToast(message) {
+    const existing = document.getElementById('realtimeToast');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.id = 'realtimeToast';
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.style.transition = 'opacity 0.3s';
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+    }, 2500);
 }
 
-function tickCountdown() {
-    const diff = offerDeadline - Date.now();
-    const txt = diff <= 0 ? '00:00' : formatMMSS(diff);
-
-    const dashEl = document.getElementById('countdownTimer');
-    if (dashEl) {
-        dashEl.textContent = txt;
-        if (diff <= 2 * 60 * 1000 && diff > 0) dashEl.classList.add('timer-low');
-        else dashEl.classList.remove('timer-low');
+/* ============ SAVE/LOAD PLAN ============ */
+function saveSelectedPlan() {
+    if (selectedPlan) {
+        try { localStorage.setItem(PLAN_KEY, JSON.stringify(selectedPlan)); } catch (e) {}
+    } else {
+        try { localStorage.removeItem(PLAN_KEY); } catch (e) {}
     }
-
-    const landEl = document.getElementById('landingTimer');
-    if (landEl) {
-        landEl.textContent = txt;
-        if (diff <= 2 * 60 * 1000 && diff > 0) landEl.classList.add('timer-low');
-        else landEl.classList.remove('timer-low');
-    }
-
-    if (diff <= 0 && !offerExpiredHandled) {
-        offerExpiredHandled = true;
-        handleOfferExpiry();
+    if (appliedCoupon) {
+        try { localStorage.setItem(COUPON_KEY, appliedCoupon.code); } catch (e) {}
+    } else {
+        try { localStorage.removeItem(COUPON_KEY); } catch (e) {}
     }
 }
-setInterval(tickCountdown, 1000);
+function loadSelectedPlan() {
+    try {
+        const data = localStorage.getItem(PLAN_KEY);
+        if (!data) return null;
+        return JSON.parse(data);
+    } catch (e) { return null; }
+}
+function loadAppliedCouponCode() {
+    try { return localStorage.getItem(COUPON_KEY); } catch (e) { return null; }
+}
+function clearAllStorage() {
+    try {
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(PLAN_KEY);
+        localStorage.removeItem(COUPON_KEY);
+    } catch (e) {}
+}
 
-function handleOfferExpiry() {
-    const banner = document.getElementById('specialRateBanner');
+/* ============ LOG ACTIVITY ============ */
+async function logActivity(type) {
+    if (!currentStudent) return;
+    try {
+        await db.collection('logs').add({
+            studentId: currentStudent.id, studentName: currentStudent.name,
+            studentEmail: currentStudent.email, studentMobile: currentStudent.mobile,
+            type: type, timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            userAgent: navigator.userAgent.substring(0, 200)
+        });
+        const updates = {};
+        if (type === 'login') { updates.loginCount = firebase.firestore.FieldValue.increment(1); updates.lastLoginAt = firebase.firestore.FieldValue.serverTimestamp(); }
+        else if (type === 'logout') { updates.logoutCount = firebase.firestore.FieldValue.increment(1); updates.lastLogoutAt = firebase.firestore.FieldValue.serverTimestamp(); }
+        await db.collection('students').doc(currentStudent.id).update(updates);
+    } catch (err) { console.error(err); }
+}
+
+/* ============ INIT ============ */
+window.addEventListener('DOMContentLoaded', () => {
+    // Check if we're in a logout state
+    let loggedOut = false;
+    try { loggedOut = sessionStorage.getItem('es_loggedOut') === '1'; } catch (e) {}
+    
+    if (loggedOut) {
+        // Clear the flag and show fresh info form
+        try { sessionStorage.removeItem('es_loggedOut'); } catch (e) {}
+        document.getElementById('infoScreen').style.display = 'flex';
+        document.getElementById('mainApp').classList.add('hidden');
+        document.getElementById('blockedScreen').classList.add('hidden');
+        return;
+    }
+
+    currentStudent = loadStudentFromStorage();
+    if (currentStudent && currentStudent.id && currentStudent.name) {
+        checkBlockedAndEnter();
+    } else {
+        document.getElementById('infoScreen').style.display = 'flex';
+        document.getElementById('mainApp').classList.add('hidden');
+    }
+
+    const si = document.getElementById('screenshotInput');
+    if (si) {
+        si.addEventListener('change', function(e) {
+            const file = e.target.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let w = img.width, h = img.height; const max = 800;
+                    if (w > h && w > max) { h = h * max / w; w = max; } else if (h > max) { w = w * max / h; h = max; }
+                    canvas.width = w; canvas.height = h;
+                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                    screenshotBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                    document.getElementById('previewImg').src = screenshotBase64;
+                    document.getElementById('previewBox').classList.remove('hidden');
+                };
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+});
+
+/* ============ CHECK BLOCKED ============ */
+async function checkBlockedAndEnter() {
+    if (isLoggingOut) return;
+    try {
+        const doc = await db.collection('students').doc(currentStudent.id).get();
+        if (doc.exists) {
+            const data = doc.data();
+            if (data.blocked === true) {
+                document.getElementById('blockedScreen').classList.remove('hidden');
+                document.getElementById('infoScreen').style.display = 'none';
+                document.getElementById('mainApp').classList.add('hidden');
+                return;
+            }
+            currentStudent = { ...currentStudent, ...data };
+            saveStudentToStorage(currentStudent);
+        }
+        enterMainApp();
+    } catch (err) { console.error(err); enterMainApp(); }
+}
+
+function generateStudentId() { return 'stu_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 9); }
+function loadStudentFromStorage() { try { const data = localStorage.getItem(STORAGE_KEY); return data ? JSON.parse(data) : null; } catch (e) { return null; } }
+function saveStudentToStorage(s) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch (e) {} }
+
+async function handleInfoSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('studentName').value.trim();
+    const countryCode = document.getElementById('countryCode').value;
+    const mobileNumber = document.getElementById('studentMobile').value.trim();
+    const email = document.getElementById('studentEmail').value.trim().toLowerCase();
+    if (!name || mobileNumber.length < 6 || !email) { alert('⚠️ Please fill all fields.'); return; }
+
+    const student = {
+        id: generateStudentId(), name, countryCode, mobileNumber,
+        mobile: countryCode + ' ' + mobileNumber, email,
+        blocked: false, couponAccess: false,
+        loginCount: 1, logoutCount: 0,
+        createdAt: new Date().toISOString(), lastLoginAt: new Date().toISOString()
+    };
+
+    saveStudentToStorage(student);
+    currentStudent = student;
+    try {
+        await db.collection('students').doc(student.id).set({
+            ...student,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        await db.collection('logs').add({
+            studentId: student.id, studentName: student.name,
+            studentEmail: student.email, studentMobile: student.mobile,
+            type: 'first_visit', timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    } catch (err) { console.error(err); }
+    enterMainApp();
+    logActivity('login');
+}
+
+/* ============ LOGOUT (FIXED) ============ */
+function studentLogout() {
+    if (!confirm('Logout?\n\nআপনি কি লগআউট করতে চান?\n(পরেরবার আবার আপনার তথ্য দিতে হবে)')) return;
+
+    // Set flag to prevent any re-entry
+    isLoggingOut = true;
+
+    // Log the activity (fire-and-forget)
+    try { logActivity('logout'); } catch (e) {}
+
+    // ✅ Set session flag to prevent auto-login on reload
+    try { sessionStorage.setItem('es_loggedOut', '1'); } catch (e) {}
+
+    // ✅ Clear ALL localStorage
+    try {
+        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(PLAN_KEY);
+        localStorage.removeItem(COUPON_KEY);
+    } catch (e) {}
+
+    // ✅ Clear in-memory state
+    currentStudent = null;
+    selectedPlan = null;
+    appliedCoupon = null;
+    studentListenerActive = false;
+    offerExpiredHandled = false;
+
+    // ✅ Stop timer
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+
+    // Show loading toast
+    showToast('🚪 Logging out...');
+
+    // ✅ Redirect after short delay to ensure log is sent
+    setTimeout(() => {
+        try {
+            // Replace current URL — prevents back button from showing old state
+            window.location.replace(window.location.pathname + window.location.search);
+        } catch (e) {
+            window.location.href = window.location.pathname;
+        }
+    }, 500);
+}
+
+function enterMainApp() {
+    document.getElementById('infoScreen').style.display = 'none';
+    document.getElementById('mainApp').classList.remove('hidden');
+    document.getElementById('welcomeName').textContent = currentStudent.name;
+    document.getElementById('welcomeMeta').textContent = currentStudent.email + ' · ' + currentStudent.mobile;
+    loadData();
+    startStudentListener();
+    switchTab('all');
+
+    // ✅ Restore saved plan — direct to checkout
+    const savedPlan = loadSelectedPlan();
+    if (savedPlan && savedPlan.name) {
+        selectedPlan = savedPlan;
+        const savedCouponCode = loadAppliedCouponCode();
+        // Wait for coupons to load
+        setTimeout(() => {
+            if (savedCouponCode && coupons[savedCouponCode] && hasCouponAccess()) {
+                appliedCoupon = coupons[savedCouponCode];
+            }
+            refreshCheckout();
+            showView('checkout');
+            showToast('📌 আপনার selected plan এ ফিরে এসেছি');
+        }, 600);
+    } else {
+        showView('plans');
+    }
+}
+
+/* ============ CHANGE PLAN ============ */
+function changePlan() {
+    if (!confirm('Change your plan?\n\nআপনি কি আপনার selected plan পরিবর্তন করতে চান?')) return;
+    selectedPlan = null;
+    appliedCoupon = null;
+    saveSelectedPlan();
+    showView('plans');
+    showToast('🔄 এখন নতুন plan select করুন');
+}
+
+/* ============ REAL-TIME STUDENT LISTENER ============ */
+function startStudentListener() {
+    if (studentListenerActive || !currentStudent || isLoggingOut) return;
+    studentListenerActive = true;
+
+    db.collection('students').doc(currentStudent.id).onSnapshot(doc => {
+        if (isLoggingOut) return;
+        if (!doc.exists) return;
+        const data = doc.data();
+
+        const wasBlocked = currentStudent.blocked === true;
+        const hadCouponAccess = currentStudent.couponAccess === true;
+
+        currentStudent = { ...currentStudent, ...data };
+        saveStudentToStorage(currentStudent);
+
+        if (data.blocked === true && !wasBlocked) {
+            document.getElementById('blockedScreen').classList.remove('hidden');
+            document.getElementById('infoScreen').style.display = 'none';
+            document.getElementById('mainApp').classList.add('hidden');
+            return;
+        }
+        if (data.blocked !== true && wasBlocked) {
+            document.getElementById('blockedScreen').classList.add('hidden');
+            document.getElementById('infoScreen').style.display = 'none';
+            document.getElementById('mainApp').classList.remove('hidden');
+            loadData();
+        }
+        if (data.blocked === true) return;
+
+        const newCouponAccess = data.couponAccess === true;
+        if (newCouponAccess !== hadCouponAccess) {
+            if (!newCouponAccess && appliedCoupon) {
+                appliedCoupon = null;
+                saveSelectedPlan();
+            }
+            const checkoutVisible = !document.getElementById('view-checkout').classList.contains('hidden');
+            if (checkoutVisible && selectedPlan) refreshCheckout();
+            showToast(newCouponAccess ? '🎟️ Coupon access granted!' : '🚫 Coupon access revoked');
+        }
+    }, err => console.error('Listener error:', err));
+}
+
+/* ============ LOAD DATA ============ */
+async function loadData() {
+    db.collection('coupons').onSnapshot(snap => {
+        coupons = {};
+        snap.forEach(d => { const c = d.data(); if (c.active !== false && c.code) coupons[c.code.toUpperCase().trim()] = c; });
+    });
+
+    db.collection('config').doc('offer').onSnapshot(offerDoc => {
+        if (offerDoc.exists) {
+            offerConfig = offerDoc.data();
+            updateOfferDeadline();
+            const bR = document.getElementById('bannerRegular');
+            const bO = document.getElementById('bannerOffer');
+            const bD = document.getElementById('bannerDesc');
+            if (bR) bR.textContent = money(offerConfig.regularRate || 500);
+            if (bO) bO.textContent = money(offerConfig.offerRate || 300);
+            if (bD && offerConfig.description) bD.textContent = offerConfig.description;
+            if (offerDeadline > Date.now() && offerExpiredHandled) { offerExpiredHandled = false; renderBannerActive(); }
+            renderPlans();
+            if (selectedPlan) refreshCheckout();
+            tickTimer();
+        }
+    });
+    startTimer();
+}
+
+function updateOfferDeadline() {
+    if (!offerConfig.active) { offerDeadline = Date.now() - 1; return; }
+    if (offerConfig.endDateTime) {
+        const endDate = new Date(offerConfig.endDateTime);
+        if (!isNaN(endDate.getTime())) { offerDeadline = endDate.getTime(); return; }
+    }
+    offerDeadline = Date.now() - 1;
+}
+
+function startTimer() { if (timerInterval) clearInterval(timerInterval); tickTimer(); timerInterval = setInterval(tickTimer, 1000); }
+function tickTimer() {
+    const diff = Math.max(0, offerDeadline - Date.now());
+    const el = document.getElementById('countdown');
+    if (el) {
+        el.textContent = formatDuration(diff);
+        if (diff <= 5 * 60 * 1000 && diff > 0) el.classList.add('timer-low');
+        else el.classList.remove('timer-low');
+    }
+    if (diff <= 0 && !offerExpiredHandled) { offerExpiredHandled = true; handleExpiry(); }
+}
+function formatDuration(ms) {
+    if (ms <= 0) return '00:00';
+    const s = Math.floor(ms / 1000); const d = Math.floor(s / 86400); const h = Math.floor((s % 86400) / 3600);
+    const m = Math.floor((s % 3600) / 60); const sc = s % 60;
+    if (d > 0) return `${d}d ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+    if (h > 0) return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+    return `${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+}
+function isOfferActive() { return offerDeadline > Date.now() && offerConfig.active !== false; }
+
+function handleExpiry() {
+    const banner = document.getElementById('offerBanner');
     if (banner) {
-        banner.className = 'w-full bg-gradient-to-r from-slate-600 to-slate-700 text-white p-3 rounded-xl my-2 text-center shadow-xl z-10';
-        banner.innerHTML = `
-            <div class="text-sm sm:text-base font-black uppercase tracking-widest">⛔ Offer Expired — 30 Minutes Over</div>
-            <div class="text-[12px] mt-1 font-bold">The special rate window has ended. Regular rates now apply (₹500/class).</div>
-            <div class="text-[11px] mt-1 opacity-95">📞 Contact helpline <strong>9875340842</strong> for any assistance or to request a new offer.</div>
-        `;
+        banner.className = 'w-full bg-gradient-to-r from-slate-600 to-slate-700 text-white p-4 rounded-2xl mb-3 text-center shadow-xl';
+        banner.innerHTML = `<div class="text-sm font-black uppercase tracking-widest">⛔ Offer Expired</div><div class="text-[12px] mt-1 font-bold">Special rate window has ended.</div><div class="text-[11px] mt-1 opacity-95">📞 Helpline: <strong>9875340842</strong></div>`;
     }
     appliedCoupon = null;
-    renderContent();
-    if (selectedPlan) refreshCheckoutView();
-
-    const paymentVisible = document.getElementById('paymentView').style.display === 'block';
-    if (paymentVisible) {
-        alert('⛔ The 30-minute offer window has expired.\nRegular rates now apply. Please review the updated price.');
-        backToCheckout();
-    }
+    renderPlans();
+    if (selectedPlan) refreshCheckout();
 }
 
-/* ================= LOGIN ================= */
-window.onload = function () {
-    initOfferTimer();
-    document.getElementById('loginModal').style.display = 'flex';
-    document.getElementById('mainDashboard').style.display = 'none';
-    document.getElementById('checkoutView').style.display = 'none';
-    document.getElementById('paymentView').style.display = 'none';
-    tickCountdown();
-
-    // Attach hidden reset trigger to the logo/title block
-    const zone = document.getElementById('secretResetZone');
-    if (zone) {
-        zone.addEventListener('click', handleSecretTap);
-        zone.addEventListener('touchstart', handleSecretTap, { passive: true });
-    }
-};
-
-function handleStudentLogin(e) {
-    e.preventDefault();
-    studentData.name   = document.getElementById('studentName').value.trim();
-    studentData.mobile = document.getElementById('studentMobile').value.trim();
-    studentData.email  = document.getElementById('studentEmail').value.trim();
-    initDashboard();
+function renderBannerActive() {
+    const banner = document.getElementById('offerBanner');
+    if (!banner) return;
+    banner.className = 'w-full bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 text-white p-4 rounded-2xl mb-3 shadow-xl flash-offer';
+    banner.innerHTML = `
+        <div class="text-center">
+            <div class="text-[10px] font-extrabold uppercase tracking-widest opacity-95">⏰ Limited Time Special Rate</div>
+            <div class="text-2xl sm:text-3xl font-black mt-1.5 leading-tight">
+                Regular <span class="line-through opacity-75" id="bannerRegular">${money(offerConfig.regularRate || 500)}</span>/class → NOW
+                <span class="text-yellow-300" id="bannerOffer">${money(offerConfig.offerRate || 300)}</span>/class
+            </div>
+            <div class="mt-3 text-[10px] font-bold uppercase tracking-wider opacity-95">⚡ Offer expires in</div>
+            <div id="countdown" class="font-mono text-3xl sm:text-4xl font-black text-yellow-200 leading-tight">--:--</div>
+            <div class="text-[10px] mt-1.5 font-semibold opacity-95 max-w-md mx-auto" id="bannerDesc">${offerConfig.description || 'Book your plan today!'}</div>
+            <div class="mt-3 flex flex-wrap justify-center gap-2">
+                <button onclick="contactViaWhatsApp()" class="bg-[#25D366] hover:bg-[#1ebe5d] text-white text-[10px] sm:text-[11px] font-black px-3.5 py-2 rounded-full shadow-lg flex items-center gap-1.5 uppercase">💬 WhatsApp Us</button>
+                <a href="tel:+919875340842" class="bg-black/30 hover:bg-black/50 text-white text-[10px] sm:text-[11px] font-bold px-3.5 py-2 rounded-full flex items-center gap-1.5">📞 Call</a>
+            </div>
+        </div>`;
+    tickTimer();
 }
 
-function initDashboard() {
-    document.getElementById('loginModal').style.display = 'none';
-    document.getElementById('mainDashboard').style.display = 'flex';
-    document.getElementById('welcomeStudentBadge').innerText = `👤 Welcome, ${studentData.name}`;
-    switchTab('all');
-}
-
-/* ================= COUPON VALIDATION ================= */
-function validateCoupon(c, plan) {
-    if (!plan) return { ok:false, msg:'⚠️ Please select a plan first.' };
-    if (c.appliesTo !== plan.category) {
-        return { ok:false, msg:`❌ Code "${c.code}" is only for ${c.appliesTo === '1on1' ? '1-on-1' : 'Group'} plans.` };
-    }
-    if (c.allowedPlans && plan.planKey && !c.allowedPlans.includes(plan.planKey)) {
-        return { ok:false, msg:`❌ Code "${c.code}" is not valid for this plan. It only applies to selected 1-on-1 packages (8/16/24/32 classes).` };
-    }
-    return { ok:true };
-}
-
-/* ================= PRICING ENGINE ================= */
-function getPlanPricing(plan) {
-    const offerActive = isOfferActive();
-
+function getPricing(plan) {
+    const active = isOfferActive();
     if (plan.category === '1on1') {
-        const sessions = plan.sessions || 1;
-        const regularTotal = SINGLE_REGULAR * sessions;
-        const specialRateTotal = SINGLE_SPECIAL * sessions;
-        const planPrice = offerActive ? plan.baseValue : regularTotal;
-
-        const builtInSave = offerActive ? Math.max(0, specialRateTotal - planPrice) : 0;
-        const totalSave   = offerActive ? Math.max(0, regularTotal - planPrice)    : 0;
-
-        let couponDisc = 0;
-        let couponApplicable = false;
-        if (offerActive && appliedCoupon && appliedCoupon.appliesTo === '1on1') {
-            const v = validateCoupon(appliedCoupon, plan);
-            if (v.ok) {
-                couponApplicable = true;
-                couponDisc = appliedCoupon.type === 'percent'
-                    ? Math.round(planPrice * appliedCoupon.value / 100)
-                    : appliedCoupon.value;
+        const regularTotal = (offerConfig.regularRate || 500) * plan.sessions;
+        const specialTotal = (offerConfig.offerRate || 300) * plan.sessions;
+        const planPrice = active ? plan.baseValue : regularTotal;
+        const builtInSave = active ? Math.max(0, specialTotal - planPrice) : 0;
+        const totalSave = active ? Math.max(0, regularTotal - planPrice) : 0;
+        let couponDisc = 0, couponOk = false;
+        if (active && hasCouponAccess() && appliedCoupon && appliedCoupon.appliesTo === '1on1') {
+            if (!appliedCoupon.allowedPlans || !plan.planKey || appliedCoupon.allowedPlans.includes(plan.planKey)) {
+                couponOk = true;
+                couponDisc = appliedCoupon.type === 'percent' ? Math.round(planPrice * appliedCoupon.value / 100) : appliedCoupon.value;
                 couponDisc = Math.min(couponDisc, planPrice);
             }
         }
-        const final = planPrice - couponDisc;
-        return {
-            kind: '1on1', offerActive,
-            sessions, regularTotal, specialRateTotal, planPrice,
-            builtInSave, totalSave, couponDisc, couponApplicable, final
-        };
+        return { kind: '1on1', active, sessions: plan.sessions, regularTotal, specialTotal, planPrice, builtInSave, totalSave, couponDisc, couponOk, final: planPrice - couponDisc };
     }
-
     const admStd = ADMISSION_FEE;
-    let admDisc = 0;
-    let couponApplicable = false;
-    if (offerActive && appliedCoupon && appliedCoupon.appliesTo === 'group') {
-        const v = validateCoupon(appliedCoupon, plan);
-        if (v.ok) {
-            couponApplicable = true;
-            admDisc = appliedCoupon.type === 'percent'
-                ? Math.round(admStd * appliedCoupon.value / 100)
-                : appliedCoupon.value;
-            admDisc = Math.min(admDisc, admStd);
-        }
+    let admDisc = 0, couponOk = false;
+    if (active && hasCouponAccess() && appliedCoupon && appliedCoupon.appliesTo === 'group') {
+        couponOk = true;
+        admDisc = appliedCoupon.type === 'percent' ? Math.round(admStd * appliedCoupon.value / 100) : appliedCoupon.value;
+        admDisc = Math.min(admDisc, admStd);
     }
     const admFinal = admStd - admDisc;
-    const monthly  = plan.baseValue;
-    return {
-        kind: 'group', offerActive,
-        admStd, admDisc, admFinal, monthly,
-        couponApplicable,
-        totalSave: admDisc,
-        final: admFinal + monthly
-    };
+    return { kind: 'group', active, admStd, admDisc, admFinal, monthly: plan.baseValue, couponOk, totalSave: admDisc, final: admFinal + plan.baseValue };
 }
 
-function breakdownRows(p) {
-    if (p.kind === '1on1') {
-        let rows = '';
-        if (p.offerActive) {
-            rows += `<div class="breakdown-line"><span>Regular Rate (₹${SINGLE_REGULAR} × ${p.sessions})</span><span class="line-through text-slate-400">${money(p.regularTotal)}</span></div>`;
-            rows += `<div class="breakdown-line"><span>Special Rate (₹${SINGLE_SPECIAL} × ${p.sessions})</span><span class="text-emerald-700 font-bold">${money(p.specialRateTotal)}</span></div>`;
-            rows += `<div class="breakdown-line"><span>Package Price</span><span class="font-bold">${money(p.planPrice)}</span></div>`;
-        } else {
-            rows += `<div class="breakdown-line"><span>Regular Rate (₹${SINGLE_REGULAR} × ${p.sessions})</span><span class="font-bold">${money(p.regularTotal)}</span></div>`;
-            rows += `<div class="text-[10px] text-red-600 font-bold">⛔ Offer expired — regular rate applied</div>`;
-        }
-        if (p.couponDisc > 0) {
-            rows += `<div class="breakdown-line text-emerald-700 font-bold"><span>🎟️ Coupon (${appliedCoupon.code})</span><span>− ${money(p.couponDisc)}</span></div>`;
-        }
-        if (p.totalSave + p.couponDisc > 0) {
-            rows += `<div class="text-[10.5px] text-emerald-700 font-bold pt-1">🎉 Total Savings: ${money(p.totalSave + p.couponDisc)}</div>`;
-        }
-        return rows;
-    }
-    let rows = '';
-    if (p.admDisc > 0) {
-        rows += `<div class="breakdown-line"><span>Admission Fee</span><span><span class="line-through text-slate-400">${money(p.admStd)}</span> <span class="text-emerald-700 font-bold">${money(p.admFinal)}</span></span></div>`;
-        rows += `<div class="breakdown-line text-emerald-700 font-bold"><span>🎟️ Coupon (${appliedCoupon.code})</span><span>− ${money(p.admDisc)}</span></div>`;
-    } else {
-        rows += `<div class="breakdown-line"><span>Admission Fee</span><span class="font-bold">${money(p.admStd)}</span></div>`;
-    }
-    rows += `<div class="breakdown-line"><span>Monthly Tuition</span><span class="font-bold">${money(p.monthly)}</span></div>`;
-    return rows;
-}
-
-function breakdownPlain(p) {
-    if (p.kind === '1on1') {
-        const lines = [];
-        if (p.offerActive) {
-            lines.push(`• Regular Rate: ₹${SINGLE_REGULAR} × ${p.sessions} = ${money(p.regularTotal)}`);
-            lines.push(`• Special Rate: ₹${SINGLE_SPECIAL} × ${p.sessions} = ${money(p.specialRateTotal)}`);
-            lines.push(`• Package Price: ${money(p.planPrice)}  (built-in save ${money(p.builtInSave)})`);
-        } else {
-            lines.push(`• Regular Rate (offer expired): ₹${SINGLE_REGULAR} × ${p.sessions} = ${money(p.regularTotal)}`);
-        }
-        if (p.couponDisc > 0) lines.push(`• Coupon ${appliedCoupon.code}: -${money(p.couponDisc)}`);
-        lines.push(`• Final Total Payable: ${money(p.final)}  (Total Save ${money(p.totalSave + p.couponDisc)})`);
-        return lines.join('\n');
-    }
-    const lines = [];
-    lines.push(`• Admission Fee: ${money(p.admStd)}`);
-    if (p.admDisc > 0) lines.push(`• Coupon ${appliedCoupon.code}: -${money(p.admDisc)}  →  Effective Admission: ${money(p.admFinal)}`);
-    lines.push(`• Monthly Tuition Fee: ${money(p.monthly)}`);
-    lines.push(`• Final Total Payable: ${money(p.final)}`);
-    return lines.join('\n');
-}
-
-/* ================= TABLE RENDERING ================= */
-function render1on1Table(title) {
-    return `
-        <div class="w-full border border-slate-200 rounded-lg overflow-hidden shadow-2xs">
-            <div class="bg-blue-800 text-white uppercase font-black text-center tracking-wide table-header-title flex justify-between items-center px-3">
-                <span>${title}</span>
-                <span class="text-[9px] bg-blue-900 px-2 py-0.5 rounded text-orange-300">Click to Select Plan</span>
-            </div>
-            <table class="w-full text-left">
-                <thead>
-                    <tr class="bg-slate-100 text-slate-800 uppercase font-extrabold text-[10px] border-b border-slate-200">
-                        <th class="p-1.5 w-3/5">TRAINING DURATION</th>
-                        <th class="p-1.5 text-center">RATE TARIFF</th>
-                    </tr>
-                </thead>
-                <tbody class="text-black divide-y divide-slate-100 bg-white">
-                    ${oneOnOnePlans.map((plan, idx) => render1on1Row(title, plan, idx)).join('')}
-                </tbody>
-            </table>
-        </div>`;
-}
-
-function render1on1Row(tableTitle, plan, index) {
-    const fullName = `${tableTitle} - ${plan.label}`;
-    const offerActive = isOfferActive();
-    const isAlt = index % 2 === 1;
-    const isSpecial = plan.key === 's32';
-    const bgClass = isSpecial ? 'bg-blue-50/60 font-bold' : (isAlt ? 'bg-slate-50/40' : '');
-
-    const p = getPlanPricing({ category: '1on1', baseValue: plan.specialPrice, sessions: plan.sessions, planKey: plan.key });
-
-    let rateCompare = '';
-    if (offerActive) {
-        rateCompare = `<div class="text-[9px] font-semibold mt-0.5 flex items-center gap-1 flex-wrap">
-            <span class="text-slate-400 line-through">₹${SINGLE_REGULAR}</span>
-            <span class="text-slate-400">→</span>
-            <span class="text-emerald-700 font-extrabold">₹${SINGLE_SPECIAL}/class</span>
-            <span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded text-[8.5px]">Save ${money(p.totalSave)}</span>
-        </div>`;
-    } else {
-        rateCompare = `<div class="text-[9px] font-semibold mt-0.5 flex items-center gap-1 flex-wrap">
-            <span class="text-slate-500">Regular rate</span>
-            <span class="text-slate-400">₹${SINGLE_REGULAR}/class</span>
-            <span class="bg-red-100 text-red-700 px-1.5 py-0.5 rounded text-[8.5px]">⛔ Offer expired</span>
-        </div>`;
-    }
-
-    let priceHtml = '';
-    if (offerActive) {
-        priceHtml = `<div class="font-black text-[14px] text-orange-600 leading-tight">${money(p.final)}</div>`;
-        priceHtml += `<div class="text-[9.5px] text-slate-400 line-through">${money(p.regularTotal)}</div>`;
-    } else {
-        priceHtml = `<div class="font-black text-[14px] text-slate-700 leading-tight">${money(p.final)}</div>`;
-        priceHtml += `<div class="text-[9px] text-slate-400">Regular rate</div>`;
-    }
-
-    return `
-        <tr onclick="selectPlan('${fullName}', '1on1', ${plan.specialPrice}, '${plan.key}', ${plan.sessions})" class="${bgClass} hover:bg-amber-50 cursor-pointer transition">
-            <td class="table-row-text">
-                <div>${plan.label}</div>
-                ${rateCompare}
-            </td>
-            <td class="table-row-text text-center table-price-text">${priceHtml}</td>
-        </tr>`;
-}
-
-function renderGroupTable(segmentTitle, headerBgColor) {
-    const plan2d = `${segmentTitle} - Weekly 2 Days Plan`;
-    const plan3d = `${segmentTitle} - Weekly 3 Days Plan`;
-
-    const p2 = getPlanPricing({ category: 'group', baseValue: groupPrices.group2d });
-    const p3 = getPlanPricing({ category: 'group', baseValue: groupPrices.group3d });
-
-    const cell = (p) => {
-        const admLine = p.admDisc > 0
-            ? `Admission: <span class="text-emerald-700 font-bold">${money(p.admFinal)}</span> <span class="text-slate-400 line-through text-[10px]">${money(p.admStd)}</span> + Monthly: ${money(p.monthly)}`
-            : `Admission: ${money(p.admStd)} + Monthly: ${money(p.monthly)}`;
-        const totalLine = p.admDisc > 0
-            ? `<strong class="text-emerald-800 text-[11px]">Total Payable: ${money(p.final)}</strong>`
-            : `<strong class="text-orange-600 text-[11px]">Total Payable: ${money(p.final)}</strong>`;
-        return `${admLine}<br>${totalLine}`;
-    };
-
-    return `
-        <div class="w-full border border-slate-200 rounded-lg overflow-hidden shadow-2xs mt-1">
-            <div class="${headerBgColor} text-white uppercase font-black text-center tracking-wide table-header-title flex justify-between items-center px-3">
-                <span>${segmentTitle}</span>
-                <span class="text-[9px] bg-black/30 px-2 py-0.5 rounded text-white">Click to Select Plan</span>
-            </div>
-            <table class="w-full text-left">
-                <thead>
-                    <tr class="bg-slate-100 text-slate-800 uppercase font-extrabold text-[10px] border-b border-slate-200">
-                        <th class="p-1.5 w-2/5">BATCH TYPE</th>
-                        <th class="p-1.5 text-center">FEE STRUCTURE &amp; TOTAL PAYABLE</th>
-                    </tr>
-                </thead>
-                <tbody class="text-black divide-y divide-slate-100 bg-white">
-                    <tr onclick="selectPlan('${plan2d}', 'group', ${groupPrices.group2d})" class="hover:bg-amber-50 cursor-pointer transition">
-                        <td class="table-row-text">🗓️ Weekly 2 Days Plan</td>
-                        <td class="table-row-text text-center text-slate-900 text-xs">${cell(p2)}</td>
-                    </tr>
-                    <tr onclick="selectPlan('${plan3d}', 'group', ${groupPrices.group3d})" class="bg-slate-50/40 hover:bg-amber-50 cursor-pointer transition">
-                        <td class="table-row-text">🗓️ Weekly 3 Days Plan</td>
-                        <td class="table-row-text text-center text-slate-900 text-xs">${cell(p3)}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>`;
-}
-
-function renderContent() {
+function renderPlans() {
     let html = '';
-    if (currentTab === 'all' || currentTab === '1on1-adult') html += render1on1Table("👑 1-on-1 Power Speak (For Adults)");
-    if (currentTab === 'all' || currentTab === '1on1-kids')  html += render1on1Table("👶 1-on-1 Fearless English For Kids (For Kids)");
+    if (currentTab === 'all' || currentTab === '1on1-adult') html += render1on1Table('👑 1-on-1 Power Speak (For Adults)');
+    if (currentTab === 'all' || currentTab === '1on1-kids') html += render1on1Table('👶 1-on-1 Fearless English (For Kids)');
     if (currentTab === 'all' || currentTab === 'group') {
-        html += renderGroupTable("👥 Group Class: Power Speak (For Adults)", "bg-orange-600");
-        html += renderGroupTable("🧸 Group Class: Fearless English For Kids (For Kids)", "bg-emerald-700");
+        html += renderGroupTable('👥 Group Class: Power Speak (For Adults)', 'bg-orange-600');
+        html += renderGroupTable('🧸 Group Class: Fearless English (For Kids)', 'bg-emerald-700');
     }
-    document.getElementById('contentContainer').innerHTML = html;
+    document.getElementById('plansContainer').innerHTML = html;
 }
 
-function switchTab(tabId) {
-    currentTab = tabId;
+function render1on1Table(title) {
+    return `<div class="bg-white rounded-2xl overflow-hidden shadow-lg">
+        <div class="bg-blue-800 text-white font-black text-[11px] sm:text-xs text-center py-2.5 px-3 uppercase">${title}</div>
+        <table class="w-full text-left">
+            <thead><tr class="bg-slate-100 text-[10px] font-extrabold uppercase border-b"><th class="p-2.5 w-3/5">Duration</th><th class="p-2.5 text-center">Price</th></tr></thead>
+            <tbody class="divide-y divide-slate-100">${oneOnOnePlans.map(p => render1on1Row(title, p)).join('')}</tbody>
+        </table></div>`;
+}
+
+function render1on1Row(title, plan) {
+    const p = getPricing({ category: '1on1', baseValue: plan.price, sessions: plan.sessions, planKey: plan.key });
+    const fullName = `${title} - ${plan.label}`;
+    const active = isOfferActive();
+    return `<tr onclick="selectPlan('${fullName}', '1on1', ${plan.price}, '${plan.key}', ${plan.sessions})" class="hover:bg-amber-50 cursor-pointer active:bg-amber-100">
+        <td class="p-3"><div class="text-[11px] sm:text-xs font-bold">${plan.label}</div>
+        <div class="text-[9px] mt-0.5">${active ? `<span class="text-slate-400 line-through">₹${offerConfig.regularRate}</span> → <span class="text-green-700 font-bold">₹${offerConfig.offerRate}/class</span> · <span class="text-green-700">Save ${money(p.totalSave)}</span>` : `<span class="text-red-600">⛔ Offer expired</span>`}</div></td>
+        <td class="p-3 text-center"><div class="text-sm font-black text-orange-600">${money(p.final)}</div>${active ? `<div class="text-[9px] text-slate-400 line-through">${money(p.regularTotal)}</div>` : ''}</td>
+    </tr>`;
+}
+
+function renderGroupTable(title, headerClass) {
+    const p2 = getPricing({ category: 'group', baseValue: groupPrices.group2d });
+    const p3 = getPricing({ category: 'group', baseValue: groupPrices.group3d });
+    const cell = (p) => `<div class="text-[10px] leading-relaxed">Admission: ${money(p.admFinal)}${p.admDisc > 0 ? ` <span class="line-through text-slate-400">${money(p.admStd)}</span>` : ''}<br>Monthly: ${money(p.monthly)}<br><strong class="text-[11px]">Total: ${money(p.final)}</strong></div>`;
+    return `<div class="bg-white rounded-2xl overflow-hidden shadow-lg">
+        <div class="${headerClass} text-white font-black text-[11px] sm:text-xs text-center py-2.5 px-3 uppercase">${title}</div>
+        <table class="w-full text-left">
+            <thead><tr class="bg-slate-100 text-[10px] font-extrabold uppercase border-b"><th class="p-2.5 w-2/5">Batch</th><th class="p-2.5 text-center">Fee Structure</th></tr></thead>
+            <tbody class="divide-y divide-slate-100">
+                <tr onclick="selectPlan('${title} - Weekly 2 Days Plan', 'group', ${groupPrices.group2d})" class="hover:bg-amber-50 cursor-pointer active:bg-amber-100"><td class="p-3 text-[11px] font-bold">🗓️ 2 Days/Week</td><td class="p-3 text-center">${cell(p2)}</td></tr>
+                <tr onclick="selectPlan('${title} - Weekly 3 Days Plan', 'group', ${groupPrices.group3d})" class="bg-slate-50/40 hover:bg-amber-50 cursor-pointer active:bg-amber-100"><td class="p-3 text-[11px] font-bold">🗓️ 3 Days/Week</td><td class="p-3 text-center">${cell(p3)}</td></tr>
+            </tbody>
+        </table></div>`;
+}
+
+function switchTab(tab) {
+    currentTab = tab;
     ['all', '1on1-adult', '1on1-kids', 'group'].forEach(t => {
-        const btn = document.getElementById(`tab-${t}`);
-        btn.className = (t === tabId)
-            ? "bg-blue-700 text-white text-[11px] font-bold py-1.5 px-2 rounded cursor-pointer transition text-center shadow-xs"
-            : "bg-slate-200 text-slate-700 text-[11px] font-bold py-1.5 px-2 rounded cursor-pointer transition text-center shadow-xs hover:bg-slate-300";
+        const btn = document.getElementById('tab-' + t);
+        if (!btn) return;
+        if (t === tab) btn.className = 'text-[10px] sm:text-[11px] font-bold py-2.5 px-1.5 rounded-lg tab-active';
+        else btn.className = 'text-[10px] sm:text-[11px] font-bold py-2.5 px-1.5 rounded-lg tab-inactive hover:bg-slate-300';
     });
-    renderContent();
+    renderPlans();
 }
 
-function selectPlan(planName, category, baseValue, planKey = null, sessions = 1) {
-    selectedPlan = { planName, category, baseValue, planKey, sessions };
-    appliedCoupon = null;
-
-    document.getElementById('mainDashboard').style.display = 'none';
-    document.getElementById('checkoutView').style.display = 'block';
-    document.getElementById('paymentView').style.display = 'none';
+function showView(v) {
+    ['plans', 'checkout', 'payment', 'history'].forEach(x => document.getElementById('view-' + x).classList.add('hidden'));
+    document.getElementById('view-' + v).classList.remove('hidden');
+    document.getElementById('view-' + v).classList.add('fade-in');
+    if (v === 'history') loadHistory();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    refreshCheckoutView();
 }
 
-function refreshCheckoutView() {
+function selectPlan(name, category, baseValue, planKey = null, sessions = 1) {
+    selectedPlan = { name, category, baseValue, planKey, sessions };
+    appliedCoupon = null;
+    saveSelectedPlan();
+    refreshCheckout();
+    showView('checkout');
+}
+
+function refreshCheckout() {
     if (!selectedPlan) return;
-    const p = getPlanPricing(selectedPlan);
-    const offerActive = isOfferActive();
+    const p = getPricing(selectedPlan);
+    document.getElementById('coPlanName').textContent = selectedPlan.name;
 
-    document.getElementById('checkoutStudentName').innerText = studentData.name || '—';
-    document.getElementById('checkoutPlanName').innerText = selectedPlan.planName;
-    document.getElementById('checkoutBreakdown').innerHTML = breakdownRows(p);
-    document.getElementById('checkoutTotal').innerText = money(p.final);
-
-    const couponBox = document.getElementById('checkoutCouponBox');
-    const requestBox = document.getElementById('requestCouponBox');
-
-    if (!offerActive) {
-        couponBox.innerHTML = `<div class="text-[11px] text-red-700 font-bold bg-red-50 border border-red-200 rounded p-2">
-            ⛔ The 30-minute offer has expired. Coupons are no longer valid.
-        </div>`;
-        if (requestBox) requestBox.style.display = 'none';
-    } else if (appliedCoupon && p.couponApplicable) {
-        couponBox.innerHTML = `<div class="coupon-applied">
-            <span>✔️ ${appliedCoupon.code} Applied</span>
-            <button onclick="removeCouponCheckout()">Remove</button>
-        </div>`;
-        if (requestBox) requestBox.style.display = 'none';
+    let rows = '';
+    if (p.kind === '1on1') {
+        if (p.active) {
+            rows += `<div class="flex justify-between"><span>Regular (₹${offerConfig.regularRate} × ${p.sessions})</span><span class="line-through text-slate-400">${money(p.regularTotal)}</span></div>`;
+            rows += `<div class="flex justify-between"><span>Special (₹${offerConfig.offerRate} × ${p.sessions})</span><span class="text-green-700 font-bold">${money(p.specialTotal)}</span></div>`;
+            rows += `<div class="flex justify-between"><span>Package Price</span><span class="font-bold">${money(p.planPrice)}</span></div>`;
+        } else {
+            rows += `<div class="flex justify-between"><span>Regular Rate × ${p.sessions}</span><span class="font-bold">${money(p.regularTotal)}</span></div>`;
+        }
+        if (p.couponDisc > 0) rows += `<div class="flex justify-between text-green-700 font-bold"><span>🎟️ ${appliedCoupon.code}</span><span>− ${money(p.couponDisc)}</span></div>`;
     } else {
-        couponBox.innerHTML = `
-            <div class="coupon-input-row">
-                <input type="text" id="checkoutCouponInput" placeholder="Enter Code" autocomplete="off">
-                <button onclick="applyCouponCheckout()">Apply</button>
-            </div>
-            <p class="text-[10.5px] text-amber-800 font-semibold mt-2 leading-snug">
-                Already have a code? Enter it above to reduce your amount.
-                <span class="text-slate-600">(কোড থাকলে উপরে লিখে Apply করুন।)</span>
-            </p>`;
-        if (requestBox) requestBox.style.display = 'block';
+        rows += `<div class="flex justify-between"><span>Admission Fee</span><span>${money(p.admStd)}</span></div>`;
+        if (p.admDisc > 0) rows += `<div class="flex justify-between text-green-700 font-bold"><span>🎟️ ${appliedCoupon.code}</span><span>− ${money(p.admDisc)}</span></div>`;
+        rows += `<div class="flex justify-between"><span>Monthly Tuition</span><span>${money(p.monthly)}</span></div>`;
+    }
+    document.getElementById('coBreakdown').innerHTML = rows;
+    document.getElementById('coTotal').textContent = money(p.final);
+
+    const couponSection = document.getElementById('couponSection');
+    if (hasCouponAccess()) {
+        couponSection.classList.remove('hidden');
+        const box = document.getElementById('couponBox');
+        if (!isOfferActive()) {
+            box.innerHTML = `<div class="text-[11px] text-red-700 font-bold bg-red-50 border border-red-200 rounded p-2">⛔ Offer expired.</div>`;
+        } else if (appliedCoupon && p.couponOk) {
+            box.innerHTML = `<div class="bg-green-100 border border-green-300 rounded-lg p-2.5 flex justify-between items-center text-[11px] font-bold text-green-800"><span>✅ ${appliedCoupon.code} Applied</span><button onclick="removeCoupon()" class="text-red-600 underline">Remove</button></div>`;
+        } else {
+            box.innerHTML = `<div class="flex gap-2"><input type="text" id="couponInput" placeholder="Enter code" class="flex-1 border-2 border-slate-200 rounded-lg p-2.5 text-xs font-bold uppercase"><button onclick="applyCoupon()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[11px] px-4 rounded-lg">Apply</button></div><p class="text-[10px] text-amber-800 font-semibold mt-2">Enter your special code</p>`;
+        }
+    } else {
+        couponSection.classList.add('hidden');
     }
 }
 
-/* ================= REQUEST COUPON VIA WHATSAPP ================= */
-function requestCouponViaWhatsApp() {
-    if (!selectedPlan) { alert('⚠️ Please select a plan first.'); return; }
-    if (!isOfferActive()) {
-        alert('⛔ The 30-minute offer has expired. Coupon requests are no longer available.');
-        return;
-    }
-
-    const p = getPlanPricing(selectedPlan);
-
-    const message =
-`🎟️ COUPON REQUEST — English Spur
-
-*Student Details:*
-• Name: *${studentData.name}*
-• WhatsApp: *${studentData.mobile}*
-• Email: ${studentData.email}
-
-*Selected Plan:*
-*${selectedPlan.planName}*
-
-*Current Fee Breakdown:*
-${breakdownPlain(p)}
--------------------------
-*Current Total Payable: ${money(p.final)}*
-
-Please review my details and send me a Special Coupon Code so I can get an additional discount. I will apply it and proceed with the payment immediately.
-
-Thank you!`;
-
-    window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`, '_blank');
-}
-
-/* ================= APPLY / REMOVE COUPON ================= */
-function applyCouponCheckout() {
-    if (!isOfferActive()) {
-        alert('⛔ The 30-minute offer has expired. Coupon codes are no longer valid.');
-        return;
-    }
-    const input = document.getElementById('checkoutCouponInput');
+async function applyCoupon() {
+    if (!hasCouponAccess()) { alert('🚫 Coupon access required. Contact admin.'); return; }
+    if (!isOfferActive()) { alert('Offer expired.'); return; }
+    const input = document.getElementById('couponInput');
     const code = (input ? input.value : '').trim().toUpperCase();
+    if (!code) { alert('Enter a code'); return; }
 
-    if (!code) { alert('⚠️ Please enter your discount code.'); return; }
-
-    const c = COUPONS[code];
+    let c = coupons[code];
     if (!c) {
-        alert('❌ Invalid coupon code.\nPlease use the code shared by English Spur on WhatsApp.');
-        return;
+        try {
+            const snap = await db.collection('coupons').where('code', '==', code).limit(1).get();
+            if (!snap.empty) {
+                const fresh = snap.docs[0].data();
+                if (fresh.active !== false) { c = fresh; coupons[code] = fresh; }
+            }
+        } catch (err) { console.error(err); }
     }
-    const v = validateCoupon(c, selectedPlan);
-    if (!v.ok) { alert(v.msg); return; }
+
+    if (!c) { alert('❌ Invalid coupon code: "' + code + '"'); return; }
+    if (c.appliesTo !== selectedPlan.category) { alert(`❌ This coupon is only for ${c.appliesTo === '1on1' ? '1-on-1' : 'Group'} plans.`); return; }
+    if (c.allowedPlans && selectedPlan.planKey && !c.allowedPlans.includes(selectedPlan.planKey)) { alert('❌ Not valid for this specific plan.'); return; }
 
     appliedCoupon = c;
-    refreshCheckoutView();
-    alert(`🎉 Coupon ${c.code} applied successfully! Your payment amount has been reduced.`);
+    saveSelectedPlan();
+    refreshCheckout();
+    alert('🎉 Coupon "' + c.code + '" applied!');
+}
+function removeCoupon() { appliedCoupon = null; saveSelectedPlan(); refreshCheckout(); }
+
+function contactViaWhatsApp() {
+    const cleanPlan = selectedPlan ? cleanPlanName(selectedPlan.name) : '';
+    const planLine = cleanPlan ? `\n*Interested Plan:*\n*${cleanPlan}*\n` : '';
+    const msg = `💬 CONTACT REQUEST - English Spur\n\n*Student Details:*\n• Name: *${currentStudent.name}*\n• WhatsApp: *${currentStudent.mobile}*\n• Email: ${currentStudent.email}\n${planLine}\nPlease help me with the course details.\n\nThank you!`;
+    window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
-function removeCouponCheckout() {
-    appliedCoupon = null;
-    refreshCheckoutView();
+function requestCouponViaWhatsApp() {
+    if (!hasCouponAccess()) { alert('🚫 Coupon access required. Contact admin.'); return; }
+    if (!selectedPlan) { alert('⚠️ Please select a plan first.'); return; }
+    if (!isOfferActive()) { alert('⛔ Offer expired.'); return; }
+    const p = getPricing(selectedPlan);
+    const cleanPlan = cleanPlanName(selectedPlan.name);
+    let breakdown = '';
+    if (p.kind === '1on1') {
+        breakdown = `• Regular Rate: ₹${offerConfig.regularRate} × ${p.sessions} = ${money(p.regularTotal)}\n• Special Rate: ₹${offerConfig.offerRate} × ${p.sessions} = ${money(p.specialTotal)}\n• Package Price: ${money(p.planPrice)}\n• Final Total Payable: ${money(p.final)}`;
+    } else {
+        breakdown = `• Admission Fee: ${money(p.admStd)}\n• Monthly Tuition Fee: ${money(p.monthly)}\n• Final Total Payable: ${money(p.final)}`;
+    }
+    const msg = `🎟️ COUPON REQUEST — English Spur\n\n*Student Details:*\n• Name: *${currentStudent.name}*\n• WhatsApp: *${currentStudent.mobile}*\n• Email: ${currentStudent.email}\n\n*Selected Plan:*\n*${cleanPlan}*\n\n*Current Fee Breakdown:*\n${breakdown}\n-------------------------\n*Current Total Payable: ${money(p.final)}*\n\nPlease review my details and send me a Special Coupon Code.\n\nThank you!`;
+    window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
-/* ================= PROCEED TO PAYMENT ================= */
 function proceedToPayment() {
-    if (!selectedPlan) {
-        alert('⚠️ Please select a plan first.');
-        backToDashboard();
-        return;
+    if (!selectedPlan) { alert('⚠️ Please select a plan.'); return; }
+    const p = getPricing(selectedPlan);
+    document.getElementById('payPlanName').textContent = '📘 ' + selectedPlan.name;
+    let lines = '';
+    if (p.kind === '1on1') {
+        lines = `Regular: ${money(p.regularTotal)} | Package: ${money(p.planPrice)}`;
+        if (p.couponDisc > 0) lines += ` | Coupon ${appliedCoupon.code}: − ${money(p.couponDisc)}`;
+    } else {
+        lines = `Admission: ${money(p.admStd)} | Monthly: ${money(p.monthly)}`;
+        if (p.admDisc > 0) lines += ` | Coupon ${appliedCoupon.code}: − ${money(p.admDisc)}`;
     }
-    if (!isOfferActive()) {
-        alert('⛔ The 30-minute special rate offer has expired.\nRegular rates now apply. Please review the updated price.');
-    }
-
-    const p = getPlanPricing(selectedPlan);
-    const offerActive = isOfferActive();
-    const discountStatusText = (appliedCoupon && p.couponApplicable)
-        ? `Coupon Applied (${appliedCoupon.code})`
-        : (offerActive ? 'Special 30-Min Rate' : 'Regular Rate (Offer Expired)');
-
-    const message =
-`Hello,
-English Spur English Training Academy / Sovan Kapri Sir,
-
-My name is *${studentData.name}*.
-Mobile: *${studentData.mobile}*
-Email: ${studentData.email}
-
-I have reviewed the plan and want to enroll (First-Time Admission):
-*${selectedPlan.planName}*
-Status: ${discountStatusText}
-
---- FEE BREAKDOWN ---
-${breakdownPlain(p)}
--------------------------
-*Final Total Payable Amount: ${money(p.final)}*
-
-*I will submit the required Documents for Admission:* Passport Size Photograph & Standard Address Proof (Aadhar/Voter/School ID).
-
-Please confirm and I will complete the payment now.`;
-
-    window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`, '_blank');
-
-    showPaymentView();
+    document.getElementById('payLines').textContent = lines;
+    document.getElementById('payAmount').textContent = money(p.final);
+    document.getElementById('payAmountInline').textContent = money(p.final);
+    screenshotBase64 = null;
+    document.getElementById('previewBox').classList.add('hidden');
+    document.getElementById('screenshotInput').value = '';
+    document.getElementById('thankYouBox').classList.add('hidden');
+    showView('payment');
 }
 
-function showPaymentView() {
-    const p = getPlanPricing(selectedPlan);
-    const offerActive = isOfferActive();
-    const couponTag = appliedCoupon && p.couponApplicable
-        ? `${appliedCoupon.code} Applied`
-        : (offerActive ? 'Special 30-Min Rate' : 'Regular Rate (Offer Expired)');
+function copyUpi() { navigator.clipboard.writeText(UPI_ID).then(() => alert('✅ UPI ID copied!')); }
 
-    document.getElementById('payStudentName').innerText = studentData.name;
-    document.getElementById('payPlanName').innerText = `📘 ${selectedPlan.planName}`;
-    document.getElementById('payPlanLines').innerHTML = `Status: <strong>${couponTag}</strong><div class="mt-1 space-y-0.5">${breakdownRows(p)}</div>`;
-    document.getElementById('payAmount').innerText = money(p.final);
-    document.getElementById('payAmountInline').innerText = money(p.final);
-    document.getElementById('payAmountInline2').innerText = money(p.final);
+async function submitPurchase() {
+    if (!screenshotBase64) { alert('⚠️ Please upload payment screenshot!'); return; }
+    const p = getPricing(selectedPlan);
+    const cleanPlan = cleanPlanName(selectedPlan.name);
+    const order = {
+        studentId: currentStudent.id, studentName: currentStudent.name,
+        studentMobile: currentStudent.mobile, studentEmail: currentStudent.email,
+        planName: selectedPlan.name, planCategory: selectedPlan.category,
+        planKey: selectedPlan.planKey || null, sessions: selectedPlan.sessions || 1,
+        baseAmount: p.kind === '1on1' ? p.planPrice : p.admStd + p.monthly,
+        couponCode: appliedCoupon ? appliedCoupon.code : null,
+        couponDiscount: p.kind === '1on1' ? p.couponDisc : p.admDisc,
+        finalAmount: p.final, screenshot: screenshotBase64, status: 'pending',
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    try {
+        await db.collection('purchases').add(order);
+        let breakdown = '';
+        if (p.kind === '1on1') {
+            breakdown = `• Regular Rate: ₹${offerConfig.regularRate} × ${p.sessions} = ${money(p.regularTotal)}\n• Special Rate: ₹${offerConfig.offerRate} × ${p.sessions} = ${money(p.specialTotal)}\n• Package Price: ${money(p.planPrice)}\n`;
+            if (p.couponDisc > 0) breakdown += `• Coupon ${appliedCoupon.code}: -${money(p.couponDisc)}\n`;
+            breakdown += `• Final Total Payable: ${money(p.final)}`;
+        } else {
+            breakdown = `• Admission Fee: ${money(p.admStd)}\n`;
+            if (p.admDisc > 0) breakdown += `• Coupon ${appliedCoupon.code}: -${money(p.admDisc)}  →  Effective Admission: ${money(p.admFinal)}\n`;
+            breakdown += `• Monthly Tuition Fee: ${money(p.monthly)}\n• Final Total Payable: ${money(p.final)}`;
+        }
+        const statusText = appliedCoupon ? `Coupon Applied (${appliedCoupon.code})` : 'Standard Package Price';
+        const msg = `Hello,\nEnglish Spur English Training Academy / Sovan Kapri Sir,\n\nMy name is *${currentStudent.name}*.\nMobile: *${currentStudent.mobile}*\nEmail: ${currentStudent.email}\n\nI have reviewed the plan and want to enroll:\n*${cleanPlan}*\nStatus: ${statusText}\n\n--- FEE BREAKDOWN ---\n${breakdown}\n-------------------------\n*Final Total Payable Amount: ${money(p.final)}*\n\n*I will submit the required Documents for Admission:* Passport Size Photograph & Standard Address Proof (Aadhar/Voter/School ID).\n\nPlease confirm and I will complete the payment now.`;
+        window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 
-    const totalSave = p.kind === '1on1' ? (p.totalSave + p.couponDisc) : p.totalSave;
-    document.getElementById('payAmountNote').innerText = totalSave > 0
-        ? `🎉 You saved ${money(totalSave)} in total`
-        : (offerActive ? `Standard rate — no discount applied` : `Offer expired — regular rate applied`);
+        // Clear plan after submission
+        selectedPlan = null;
+        appliedCoupon = null;
+        saveSelectedPlan();
 
-    const upiLink = 'upi://pay?pa=' + encodeURIComponent(UPI_ID)
-        + '&pn=' + encodeURIComponent(UPI_PAYEE_NAME)
-        + '&am=' + p.final
-        + '&cu=INR'
-        + '&tn=' + encodeURIComponent('English Spur Fee - ' + studentData.name);
-    const payBtn = document.getElementById('payNowBtn');
-    payBtn.href = upiLink;
-    payBtn.innerText = `💳 Pay ${money(p.final)} via UPI App`;
-
-    document.getElementById('thankYouBox').classList.remove('show');
-
-    document.getElementById('mainDashboard').style.display = 'none';
-    document.getElementById('checkoutView').style.display = 'none';
-    document.getElementById('paymentView').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function backToDashboard() {
-    document.getElementById('checkoutView').style.display = 'none';
-    document.getElementById('paymentView').style.display = 'none';
-    document.getElementById('mainDashboard').style.display = 'flex';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function backToCheckout() {
-    document.getElementById('paymentView').style.display = 'none';
-    document.getElementById('checkoutView').style.display = 'block';
-    refreshCheckoutView();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function copyUpiId() {
-    const upiText = document.getElementById('upiText').innerText.trim();
-    navigator.clipboard.writeText(upiText).then(() => {
-        const btn = document.querySelector('.copy-btn');
-        btn.innerText = 'Copied!';
-        btn.style.backgroundColor = '#166534';
         setTimeout(() => {
-            btn.innerText = 'Copy ID';
-            btn.style.backgroundColor = '#c2410c';
-        }, 2000);
-    }).catch(() => alert('Failed to copy UPI ID'));
+            document.getElementById('thankYouBox').classList.remove('hidden');
+            document.getElementById('thankYouBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 350);
+    } catch (err) { alert('❌ Error: ' + err.message); }
 }
 
-/* ================= SEND SCREENSHOT ON WHATSAPP ================= */
-function sendScreenshotOnWhatsApp() {
-    if (!selectedPlan) {
-        alert('⚠️ Please select a plan first.');
-        return;
-    }
+async function loadHistory() {
+    if (!currentStudent) return;
+    try {
+        const snap = await db.collection('purchases').where('studentId', '==', currentStudent.id).get();
+        const list = document.getElementById('historyList');
+        list.innerHTML = '';
+        if (snap.empty) { list.innerHTML = '<p class="text-center text-slate-500 py-6 text-sm">No orders yet.</p>'; return; }
+        const items = [];
+        snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+        items.sort((a, b) => { const ta = a.createdAt ? a.createdAt.toDate().getTime() : 0; const tb = b.createdAt ? b.createdAt.toDate().getTime() : 0; return tb - ta; });
+        items.forEach(p => {
+            const colors = { pending: 'bg-yellow-100 text-yellow-800 border-yellow-300', approved: 'bg-green-100 text-green-800 border-green-300', rejected: 'bg-red-100 text-red-800 border-red-300' };
+            const icons = { pending: '⏳', approved: '✅', rejected: '❌' };
+            const div = document.createElement('div');
+            div.className = `border-2 rounded-xl p-3.5 ${colors[p.status] || 'bg-slate-50'}`;
+            div.innerHTML = `<div class="flex justify-between items-start gap-2 flex-wrap"><div class="flex-1 min-w-0"><p class="font-bold text-xs">${p.planName}</p><p class="text-[10px] text-slate-600 mt-0.5">Amount: <strong>${money(p.finalAmount)}</strong>${p.couponCode ? ` · ${p.couponCode}` : ''}</p>${p.receiptNo ? `<p class="text-[10px] text-green-700 font-bold mt-0.5">🧾 ${p.receiptNo}</p>` : ''}${p.rejectionReason ? `<p class="text-[10px] text-red-700 mt-0.5">Reason: ${p.rejectionReason}</p>` : ''}</div><span class="text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap">${icons[p.status]} ${p.status.toUpperCase()}</span></div>${p.status === 'approved' ? `<button onclick="viewReceipt('${p.id}')" class="mt-3 w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2.5 rounded-lg text-[11px]">📄 View Receipt</button>` : ''}`;
+            list.appendChild(div);
+        });
+    } catch (e) { console.error(e); }
+}
 
-    const p = getPlanPricing(selectedPlan);
+async function viewReceipt(id) {
+    const doc = await db.collection('purchases').doc(id).get();
+    if (!doc.exists) return;
+    const p = doc.data();
+    const html = buildReceipt(p);
+    const w = window.open('', '_blank');
+    w.document.write(html);
+    w.document.close();
+}
 
-    const message =
-`📸 PAYMENT SCREENSHOT — English Spur
-
-*Student Details:*
-• Name: *${studentData.name}*
-• WhatsApp: *${studentData.mobile}*
-• Email: ${studentData.email}
-
-*Plan:*
-*${selectedPlan.planName}*
-
-*Amount Paid:* ${money(p.final)}
-
-Sir, I have completed the payment. Here is my payment screenshot. Please verify and send me the official receipt.
-
-Thank you!`;
-
-    window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`, '_blank');
-
-    setTimeout(() => {
-        document.getElementById('thankYouBox').classList.add('show');
-        document.getElementById('thankYouBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 350);
+function buildReceipt(p) {
+    const date = p.verifiedAt ? new Date(p.verifiedAt.toDate()).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }) : new Date().toLocaleDateString('en-IN');
+    return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Receipt ${p.receiptNo}</title>
+    <style>* { box-sizing: border-box; } body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 15px; margin: 0; }
+    .paper { max-width: 620px; margin: auto; background: #fff; border: 2px solid #16a34a; border-radius: 12px; padding: 22px; }
+    .header { text-align: center; padding-bottom: 12px; border-bottom: 2px dashed #94a3b8; }
+    .brand { font-size: 22px; font-weight: 900; color: #1d4ed8; } .brand span { color: #ea580c; }
+    .org { font-size: 12px; font-weight: 800; color: #334155; margin-top: 3px; }
+    .addr { font-size: 10px; color: #64748b; margin-top: 2px; }
+    .title { text-align: center; margin: 16px 0; } .title h2 { font-size: 17px; font-weight: 900; letter-spacing: 2px; margin: 0; } .title p { font-size: 11px; color: #64748b; margin: 2px 0; }
+    .meta { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 14px; flex-wrap: wrap; gap: 6px; }
+    .section { margin-bottom: 14px; } .section h3 { font-size: 11px; font-weight: 900; color: #1d4ed8; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin-bottom: 6px; text-transform: uppercase; }
+    .row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; gap: 8px; } .row span:last-child { text-align: right; word-break: break-word; }
+    .total { background: linear-gradient(135deg, #1d4ed8, #1e40af); color: #fff; border-radius: 8px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; margin: 14px 0; }
+    .total .lbl { font-size: 11px; font-weight: 700; } .total .amt { font-size: 20px; font-weight: 900; }
+    .footer { text-align: center; margin-top: 16px; padding-top: 12px; border-top: 2px dashed #94a3b8; }
+    .footer p { font-size: 11px; color: #475569; margin: 3px 0; }
+    .noprint { text-align: center; margin-top: 18px; } .noprint button { background: #1d4ed8; color: #fff; border: none; padding: 12px 22px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
+    @media print { body { background: #fff; padding: 0; } .noprint { display: none; } }</style></head><body>
+    <div class="paper">
+        <div class="header"><div class="brand">ENGLISH <span>SPUR</span></div><div class="org">English Spur English Training Academy</div><div class="addr">Kanaipur, Bantul, Bagnan, Howrah - 711312</div><div class="addr">📞 +91 9875340842 · ✉️ englishspur2020@gmail.com</div></div>
+        <div class="title"><h2>PAYMENT RECEIPT</h2><p>পেমেন্ট রসিদ</p></div>
+        <div class="meta"><div><strong>Receipt:</strong> ${p.receiptNo}</div><div><strong>Date:</strong> ${date}</div></div>
+        <div class="section"><h3>Student Details</h3><div class="row"><span>Name</span><strong>${p.studentName}</strong></div><div class="row"><span>Mobile</span><strong>${p.studentMobile}</strong></div><div class="row"><span>Email</span><strong>${p.studentEmail}</strong></div></div>
+        <div class="section"><h3>Plan Enrolled</h3><div style="font-size:13px; font-weight:800; color:#1e3a8a;">${p.planName}</div></div>
+        <div class="total"><span class="lbl">AMOUNT PAID</span><span class="amt">${money(p.finalAmount)}</span></div>
+        <div class="section"><h3>Payment Info</h3><div class="row"><span>Method</span><strong>UPI</strong></div><div class="row"><span>Status</span><strong style="color:#16a34a;">✅ Verified</strong></div></div>
+        <div class="footer"><p>Thank you for choosing English Spur!</p><p style="font-weight:800; color:#1d4ed8;">— Sovan Kapri, Founder & Lead Trainer</p></div>
+    </div>
+    <div class="noprint"><button onclick="window.print()">🖨️ Print / Save as PDF</button></div>
+    </body></html>`;
 }
 </script>
 </body>

@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Spur — Admin Panel</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<style>
+    * { -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; margin: 0; padding: 10px; min-height: 100vh; color: #1e293b; }
+    .tab-btn { padding: 9px 14px; font-weight: 700; font-size: 12px; border-radius: 10px; cursor: pointer; border: none; transition: all 0.2s; white-space: nowrap; }
+    .tab-btn.active { background: #1d4ed8; color: #fff; box-shadow: 0 4px 10px rgba(29,78,216,0.3); }
+    .tab-btn.inactive { background: #e2e8f0; color: #475569; }
+    .tab-btn.inactive:hover { background: #cbd5e1; }
+    .screenshot-img { max-width: 100%; max-height: 380px; border-radius: 10px; border: 2px solid #cbd5e1; cursor: pointer; }
+    .student-card { background: #fff; border: 2px solid #e2e8f0; border-radius: 12px; padding: 14px; transition: box-shadow 0.2s; }
+    .student-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: #1d4ed8; }
+    .student-card.blocked { border-color: #dc2626; background: #fef2f2; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: #1d4ed8 !important; box-shadow: 0 0 0 3px rgba(29,78,216,0.1); }
+    .brand-logo { width: 56px; height: 56px; object-fit: contain; }
+    .brand-logo-sm { width: 40px; height: 40px; object-fit: contain; }
+    .fade-in { animation: fadeIn 0.3s ease-in; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .eye-btn { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: transparent; border: none; cursor: pointer; font-size: 18px; padding: 4px; line-height: 1; }
+    .badge-red { background: #dc2626; color: #fff; }
+    .badge-green { background: #16a34a; color: #fff; }
+    .badge-yellow { background: #eab308; color: #fff; }
+    .badge-purple { background: #9333ea; color: #fff; }
+    @media print { .noprint { display: none !important; } }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     LOGIN SCREEN
+     ============================================ -->
+<div id="loginScreen" class="max-w-md mx-auto bg-white rounded-2xl shadow-2xl mt-8 sm:mt-12 overflow-hidden fade-in">
+    <div class="bg-gradient-to-r from-blue-700 to-blue-900 p-6 text-center">
+        <img src="logo.png" alt="English Spur" class="brand-logo mx-auto mb-2 bg-white rounded-full p-1.5" onerror="this.style.display='none'">
+        <h1 class="text-2xl font-black text-white">ENGLISH <span class="text-orange-400">SPUR</span></h1>
+        <p class="text-blue-100 text-xs mt-1 font-semibold">Admin Control Panel</p>
+    </div>
+
+    <div class="p-5 sm:p-6">
+        <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-5">
+            <p class="text-[11px] font-bold text-blue-900">🔐 Admin Access Only</p>
+            <p class="text-[10px] text-slate-600 mt-0.5">Please login with your admin credentials</p>
+        </div>
+
+        <div class="space-y-3">
+            <div>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Admin Email</label>
+                <input type="email" id="adminEmail" placeholder="admin@email.com" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm transition" autocomplete="email">
+            </div>
+            <div>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Password</label>
+                <div class="relative">
+                    <input type="password" id="adminPassword" placeholder="••••••••" class="w-full border-2 border-slate-200 rounded-xl p-3 pr-12 bg-slate-50 font-semibold text-sm transition" onkeydown="if(event.key==='Enter')adminLogin()" autocomplete="current-password">
+                    <button type="button" onclick="togglePassword()" class="eye-btn" title="Show/Hide Password">
+                        <span id="eyeIcon">👁️</span>
+                    </button>
+                </div>
+            </div>
+            <button onclick="adminLogin()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black p-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-md">
+                🔐 Login to Admin Panel
+            </button>
+            <p id="loginError" class="text-red-600 text-xs text-center font-semibold hidden p-2 bg-red-50 rounded-lg"></p>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================
+     ADMIN PANEL
+     ============================================ -->
+<div id="adminPanel" class="max-w-6xl mx-auto hidden">
+
+    <div class="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 mb-4">
+
+        <div class="flex justify-between items-center mb-5 pb-4 border-b-2 border-slate-100 flex-wrap gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+                <img src="logo.png" alt="English Spur" class="brand-logo-sm flex-shrink-0" onerror="this.style.display='none'">
+                <div class="min-w-0">
+                    <h1 class="text-lg sm:text-xl font-black text-blue-700 leading-tight">⚙️ English Spur Admin</h1>
+                    <p id="adminEmailDisplay" class="text-[10px] sm:text-[11px] text-slate-500 font-semibold truncate"></p>
+                </div>
+            </div>
+            <button onclick="adminLogout()" class="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex-shrink-0">
+                🚪 Logout
+            </button>
+        </div>
+
+        <div class="flex flex-wrap gap-2 mb-5">
+            <button onclick="switchTab('offer')" id="tab-offer" class="tab-btn active">🎯 Offer</button>
+            <button onclick="switchTab('coupons')" id="tab-coupons" class="tab-btn inactive">🎟️ Coupons</button>
+            <button onclick="switchTab('pending')" id="tab-pending" class="tab-btn inactive">⏳ Pending <span id="pendingBadge"></span></button>
+            <button onclick="switchTab('all')" id="tab-all" class="tab-btn inactive">📋 Purchases</button>
+            <button onclick="switchTab('students')" id="tab-students" class="tab-btn inactive">👥 Students <span id="studentsBadge"></span></button>
+            <button onclick="switchTab('logs')" id="tab-logs" class="tab-btn inactive">📊 Activity Logs</button>
+        </div>
+
+        <!-- TAB: OFFER -->
+        <div id="content-offer" class="tab-content fade-in">
+            <div class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 rounded-xl p-4 sm:p-5">
+                <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                    <h2 class="text-base sm:text-lg font-black text-blue-900">🎯 Offer Settings</h2>
+                    <span id="offerStatusBadge" class="text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-slate-200 text-slate-700">Loading...</span>
+                </div>
+
+                <label class="flex items-center gap-3 mb-5 p-3 bg-white rounded-lg border-2 border-slate-200 cursor-pointer">
+                    <input type="checkbox" id="offerActive" class="w-5 h-5 accent-blue-700">
+                    <div>
+                        <p class="font-bold text-slate-800 text-sm">Offer Active</p>
+                        <p class="text-[10px] text-slate-500">Uncheck to stop offer for everyone</p>
+                    </div>
+                </label>
+
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <div>
+                        <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">Regular Rate (₹)</label>
+                        <input type="number" id="regularRate" value="500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                    </div>
+                    <div>
+                        <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">Offer Rate (₹)</label>
+                        <input type="number" id="offerRate" value="300" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">⏰ Offer End Date & Time <span class="text-red-500">*</span></label>
+                    <input type="datetime-local" id="offerEndDateTime" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                    <p class="text-[10px] text-slate-500 mt-1">এই সময় পর্যন্ত offer চলবে — সব student একসাথে expire দেখবে</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 mb-3">
+                    <div>
+                        <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">Quick Set</label>
+                        <select id="quickSetSelect" onchange="applyQuickSet()" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                            <option value="">-- Select --</option>
+                            <option value="30m">+ 30 minutes</option>
+                            <option value="1h">+ 1 hour</option>
+                            <option value="6h">+ 6 hours</option>
+                            <option value="12h">+ 12 hours</option>
+                            <option value="1d">+ 1 day</option>
+                            <option value="3d">+ 3 days</option>
+                            <option value="7d">+ 7 days</option>
+                            <option value="30d">+ 30 days</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">Offer Title</label>
+                        <input type="text" id="offerTitle" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                    </div>
+                </div>
+
+                <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">Description</label>
+                <textarea id="offerDescription" rows="2" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm mb-4"></textarea>
+
+                <button onclick="saveOffer()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold p-3.5 rounded-xl transition shadow-md text-sm">
+                    💾 Save Offer Settings
+                </button>
+                <p id="offerSaveMsg" class="text-green-700 text-sm text-center mt-3 hidden font-bold p-2 bg-green-50 rounded-lg">✅ Saved!</p>
+            </div>
+        </div>
+
+        <!-- TAB: COUPONS -->
+        <div id="content-coupons" class="tab-content hidden fade-in">
+            <div class="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-200 rounded-xl p-4 sm:p-5">
+                <h2 class="text-base sm:text-lg font-black text-amber-900 mb-4">🎟️ Coupon Management</h2>
+
+                <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-4">
+                    <p class="text-[11px] font-bold text-blue-900">ℹ️ Note: Coupons only work for students with coupon access</p>
+                    <p class="text-[10px] text-slate-600 mt-0.5">Students tab থেকে নির্দিষ্ট student কে coupon access দিন।</p>
+                </div>
+
+                <div class="bg-white border-2 border-slate-200 rounded-xl p-4 mb-4">
+                    <p class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase mb-3">➕ Add New Coupon</p>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
+                        <input type="text" id="newCouponCode" placeholder="CODE" class="border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm uppercase">
+                        <select id="newCouponAppliesTo" class="border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm">
+                            <option value="1on1">1-on-1</option>
+                            <option value="group">Group</option>
+                        </select>
+                        <select id="newCouponType" class="border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm">
+                            <option value="flat">Flat ₹</option>
+                            <option value="percent">Percent %</option>
+                        </select>
+                        <input type="number" id="newCouponValue" placeholder="Value" class="border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm">
+                    </div>
+
+                    <div id="allowedPlansRow" class="bg-blue-50 rounded-lg p-3 mb-3">
+                        <p class="text-[10px] sm:text-xs font-bold text-blue-900 mb-2">Allowed Plans (only for 1-on-1):</p>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                            <label class="text-[11px] font-bold flex items-center gap-1"><input type="checkbox" class="plan-check" value="s8"> 8 Days</label>
+                            <label class="text-[11px] font-bold flex items-center gap-1"><input type="checkbox" class="plan-check" value="s16"> 16 Days</label>
+                            <label class="text-[11px] font-bold flex items-center gap-1"><input type="checkbox" class="plan-check" value="s24"> 24 Days</label>
+                            <label class="text-[11px] font-bold flex items-center gap-1"><input type="checkbox" class="plan-check" value="s32"> 32 Days</label>
+                        </div>
+                    </div>
+
+                    <button onclick="addCoupon()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold p-3 rounded-xl transition text-sm">➕ Add Coupon</button>
+                </div>
+
+                <div id="couponsList" class="space-y-2"></div>
+            </div>
+        </div>
+
+        <!-- TAB: PENDING -->
+        <div id="content-pending" class="tab-content hidden fade-in">
+            <h2 class="text-base sm:text-lg font-black text-blue-900 mb-4">⏳ Pending Payments</h2>
+            <div id="pendingList" class="space-y-3"></div>
+        </div>
+
+        <!-- TAB: ALL PURCHASES -->
+        <div id="content-all" class="tab-content hidden fade-in">
+            <h2 class="text-base sm:text-lg font-black text-blue-900 mb-4">📋 All Purchases</h2>
+            <div id="allPurchasesList" class="space-y-3"></div>
+        </div>
+
+        <!-- TAB: STUDENTS -->
+        <div id="content-students" class="tab-content hidden fade-in">
+            <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                <h2 class="text-base sm:text-lg font-black text-blue-900">👥 Students — Full Control</h2>
+                <div class="flex gap-2 items-center flex-wrap">
+                    <input type="text" id="studentSearch" oninput="filterStudents()" placeholder="🔍 Search name/email/mobile" class="border-2 border-slate-200 rounded-lg p-2 text-xs w-48">
+                    <span id="studentsCount" class="text-xs font-bold bg-blue-100 text-blue-800 px-3 py-1 rounded-full whitespace-nowrap"></span>
+                </div>
+            </div>
+            <div id="studentsList" class="space-y-2"></div>
+        </div>
+
+        <!-- TAB: LOGS -->
+        <div id="content-logs" class="tab-content hidden fade-in">
+            <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                <h2 class="text-base sm:text-lg font-black text-blue-900">📊 Activity Logs</h2>
+                <div class="flex gap-2 items-center">
+                    <select id="logFilter" onchange="loadLogs()" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold">
+                        <option value="100">Last 100</option>
+                        <option value="500">Last 500</option>
+                        <option value="1000">Last 1000</option>
+                    </select>
+                    <button onclick="loadLogs()" class="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3 py-2 rounded-lg">🔄 Refresh</button>
+                </div>
+            </div>
+            <div id="logsList" class="space-y-2"></div>
+        </div>
+
+    </div>
+</div>
+
+<!-- RECEIPT MODAL -->
+<div id="receiptModal" class="fixed inset-0 bg-black/70 z-50 hidden overflow-y-auto p-3 sm:p-4">
+    <div class="max-w-2xl mx-auto bg-white rounded-2xl p-4 sm:p-6 my-6 sm:my-8">
+        <div id="receiptContent"></div>
+        <div class="flex gap-2 mt-4 noprint">
+            <button onclick="window.print()" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 rounded-xl transition text-sm">🖨️ Print</button>
+            <button onclick="closeReceiptModal()" class="flex-1 bg-slate-300 hover:bg-slate-400 text-slate-700 font-bold py-3 rounded-xl transition text-sm">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- ACTIVITY LOG MODAL -->
+<div id="activityModal" class="fixed inset-0 bg-black/70 z-50 hidden overflow-y-auto p-3 sm:p-4">
+    <div class="max-w-3xl mx-auto bg-white rounded-2xl p-4 sm:p-6 my-6">
+        <div class="flex justify-between items-center mb-4 pb-3 border-b-2 border-slate-100">
+            <div>
+                <h3 class="text-lg font-black text-blue-900">📊 Activity History</h3>
+                <p id="activityStudentName" class="text-xs text-slate-500"></p>
+            </div>
+            <button onclick="closeActivityModal()" class="text-slate-400 hover:text-red-600 text-2xl font-bold leading-none">&times;</button>
+        </div>
+        <div id="activityContent" class="space-y-2 max-h-[70vh] overflow-y-auto"></div>
+        <button onclick="closeActivityModal()" class="w-full mt-4 bg-slate-300 hover:bg-slate-400 text-slate-700 font-bold py-3 rounded-xl transition text-sm">Close</button>
+    </div>
+</div>
+
+<script>
+/* ============ FIREBASE CONFIG ============ */
+const firebaseConfig = {
+  apiKey: "AIzaSyBAmO9v4NOOSSuM59yXY8JppFJzrZUGADM",
+  authDomain: "es-tariff.firebaseapp.com",
+  projectId: "es-tariff",
+  storageBucket: "es-tariff.firebasestorage.app",
+  messagingSenderId: "113483091618",
+  appId: "1:113483091618:web:1bb7cfb608ba85382011fb"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+const ADMIN_EMAIL = 'englishspur2020@gmail.com';
+const money = n => '₹' + Number(n).toLocaleString('en-IN');
+
+function formatDT(ts) {
+    if (!ts) return '—';
+    try {
+        const d = ts.toDate ? ts.toDate() : new Date(ts);
+        if (isNaN(d.getTime())) return '—';
+        return d.toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    } catch (e) { return '—'; }
+}
+
+function togglePassword() {
+    const inp = document.getElementById('adminPassword');
+    const icon = document.getElementById('eyeIcon');
+    if (inp.type === 'password') { inp.type = 'text'; icon.textContent = '🙈'; }
+    else { inp.type = 'password'; icon.textContent = '👁️'; }
+}
+
+/* ============ AUTH ============ */
+auth.onAuthStateChanged(user => {
+    if (user && user.email === ADMIN_EMAIL) {
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('adminPanel').classList.remove('hidden');
+        document.getElementById('adminEmailDisplay').textContent = 'Logged in: ' + user.email;
+        loadOffer();
+        loadCoupons();
+        loadPending();
+        loadAllPurchases();
+        loadStudents();
+        loadLogs();
+    } else {
+        if (user) auth.signOut();
+        document.getElementById('loginScreen').classList.remove('hidden');
+        document.getElementById('adminPanel').classList.add('hidden');
+    }
+});
+
+function adminLogin() {
+    const email = document.getElementById('adminEmail').value.trim().toLowerCase();
+    const pass = document.getElementById('adminPassword').value;
+    const errEl = document.getElementById('loginError');
+    errEl.classList.add('hidden');
+
+    if (email !== ADMIN_EMAIL) {
+        errEl.textContent = '❌ This is not the admin email.';
+        errEl.classList.remove('hidden');
+        return;
+    }
+
+    auth.signInWithEmailAndPassword(email, pass).catch(err => {
+        let msg = err.message;
+        if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') msg = 'Invalid email or password.';
+        errEl.textContent = '❌ ' + msg;
+        errEl.classList.remove('hidden');
+    });
+}
+function adminLogout() {
+    if (confirm('Logout from admin panel?')) auth.signOut();
+}
+
+function switchTab(tab) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+    document.getElementById('content-' + tab).classList.remove('hidden');
+    ['offer', 'coupons', 'pending', 'all', 'students', 'logs'].forEach(t => {
+        document.getElementById('tab-' + t).className = (t === tab) ? 'tab-btn active' : 'tab-btn inactive';
+    });
+    if (tab === 'logs') loadLogs();
+}
+
+/* ============ OFFER ============ */
+let currentOffer = null;
+
+function formatDateTimeLocal(date) {
+    const pad = n => String(n).padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+function loadOffer() {
+    db.collection('config').doc('offer').onSnapshot(doc => {
+        if (doc.exists) {
+            const d = doc.data();
+            currentOffer = d;
+            document.getElementById('offerActive').checked = d.active !== false;
+            document.getElementById('regularRate').value = d.regularRate || 500;
+            document.getElementById('offerRate').value = d.offerRate || 300;
+            document.getElementById('offerTitle').value = d.title || '';
+            document.getElementById('offerDescription').value = d.description || '';
+            if (d.endDateTime) {
+                document.getElementById('offerEndDateTime').value = d.endDateTime;
+            } else {
+                const def = new Date(Date.now() + 30 * 60 * 1000);
+                document.getElementById('offerEndDateTime').value = formatDateTimeLocal(def);
+            }
+            updateStatusBadge(d);
+        }
+    });
+}
+
+function applyQuickSet() {
+    const sel = document.getElementById('quickSetSelect');
+    const val = sel.value;
+    if (!val) return;
+    const now = Date.now();
+    const map = { '30m': 30*60*1000, '1h': 60*60*1000, '6h': 6*60*60*1000, '12h': 12*60*60*1000, '1d': 24*60*60*1000, '3d': 3*24*60*60*1000, '7d': 7*24*60*60*1000, '30d': 30*24*60*60*1000 };
+    if (map[val]) {
+        const target = new Date(now + map[val]);
+        document.getElementById('offerEndDateTime').value = formatDateTimeLocal(target);
+    }
+    sel.value = '';
+}
+
+function updateStatusBadge(d) {
+    const badge = document.getElementById('offerStatusBadge');
+    if (!badge) return;
+    if (!d.active) { badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-slate-200 text-slate-700'; badge.textContent = '⚪ OFF'; return; }
+    if (!d.endDateTime) { badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-amber-200 text-amber-800'; badge.textContent = '⏸️ No end'; return; }
+    const remaining = new Date(d.endDateTime).getTime() - Date.now();
+    if (remaining <= 0) { badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-red-200 text-red-800'; badge.textContent = '⛔ Expired'; return; }
+    const days = Math.floor(remaining / 86400000);
+    const hours = Math.floor((remaining % 86400000) / 3600000);
+    const mins = Math.floor((remaining % 3600000) / 60000);
+    let t = days > 0 ? `${days}d ${hours}h` : hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
+    badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-green-200 text-green-800';
+    badge.textContent = `🟢 Live · ${t}`;
+}
+
+function saveOffer() {
+    const endDT = document.getElementById('offerEndDateTime').value;
+    if (!endDT) { alert('⚠️ Please select Offer End Date & Time.'); return; }
+    const endDate = new Date(endDT);
+    if (isNaN(endDate.getTime())) { alert('⚠️ Invalid date/time.'); return; }
+
+    const data = {
+        active: document.getElementById('offerActive').checked,
+        regularRate: Number(document.getElementById('regularRate').value),
+        offerRate: Number(document.getElementById('offerRate').value),
+        endDateTime: endDT,
+        title: document.getElementById('offerTitle').value,
+        description: document.getElementById('offerDescription').value,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    db.collection('config').doc('offer').set(data, { merge: true }).then(() => {
+        const msg = document.getElementById('offerSaveMsg');
+        msg.textContent = '✅ Saved! All students will see this.';
+        msg.classList.remove('hidden');
+        setTimeout(() => msg.classList.add('hidden'), 2500);
+    }).catch(err => alert('Error: ' + err.message));
+}
+setInterval(() => { if (currentOffer) updateStatusBadge(currentOffer); }, 30000);
+
+/* ============ COUPONS ============ */
+document.getElementById('newCouponAppliesTo').addEventListener('change', function() {
+    document.getElementById('allowedPlansRow').style.display = (this.value === '1on1') ? 'block' : 'none';
+});
+
+function loadCoupons() {
+    db.collection('coupons').onSnapshot(snap => {
+        const list = document.getElementById('couponsList');
+        list.innerHTML = '';
+        if (snap.empty) { list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No coupons yet.</p>'; return; }
+        snap.forEach(doc => {
+            const c = doc.data();
+            const planLabel = c.allowedPlans ? ` (${c.allowedPlans.join('/')})` : '';
+            const div = document.createElement('div');
+            div.className = 'flex justify-between items-center bg-white border-2 border-slate-200 rounded-xl p-3 hover:border-amber-400 transition';
+            div.innerHTML = `
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center text-amber-700 font-black text-xs flex-shrink-0">${c.type === 'flat' ? '₹' : '%'}</div>
+                    <div class="min-w-0">
+                        <p class="font-black text-amber-700 text-sm">${c.code}</p>
+                        <p class="text-[10px] text-slate-500 truncate">${c.appliesTo === '1on1' ? '👑 1-on-1' : '👥 Group'} · ${c.type === 'flat' ? '₹' + c.value + ' off' : c.value + '% off'}${planLabel}</p>
+                    </div>
+                </div>
+                <button onclick="deleteCoupon('${doc.id}')" class="text-red-600 hover:text-red-800 font-bold text-[10px] sm:text-xs px-2.5 py-1.5 rounded-lg hover:bg-red-50 transition flex-shrink-0">🗑️</button>
+            `;
+            list.appendChild(div);
+        });
+    });
+}
+
+function addCoupon() {
+    const code = document.getElementById('newCouponCode').value.trim().toUpperCase();
+    const appliesTo = document.getElementById('newCouponAppliesTo').value;
+    const type = document.getElementById('newCouponType').value;
+    const value = Number(document.getElementById('newCouponValue').value);
+    if (!code || !value) { alert('⚠️ Please fill code and value.'); return; }
+    if (value <= 0) { alert('⚠️ Value must be > 0.'); return; }
+    const data = { code, appliesTo, type, value, active: true };
+    if (appliesTo === '1on1') {
+        const plans = Array.from(document.querySelectorAll('.plan-check:checked')).map(c => c.value);
+        if (plans.length > 0) data.allowedPlans = plans;
+    }
+    db.collection('coupons').add(data).then(() => {
+        document.getElementById('newCouponCode').value = '';
+        document.getElementById('newCouponValue').value = '';
+        document.querySelectorAll('.plan-check').forEach(c => c.checked = false);
+        alert('✅ Coupon added!\n\nNote: Students need coupon access to use this.');
+    }).catch(err => alert('Error: ' + err.message));
+}
+
+function deleteCoupon(id) {
+    if (confirm('Delete this coupon?')) db.collection('coupons').doc(id).delete();
+}
+
+/* ============ PENDING ============ */
+function loadPending() {
+    db.collection('purchases').where('status', '==', 'pending').onSnapshot(snap => {
+        const list = document.getElementById('pendingList');
+        list.innerHTML = '';
+        const badge = document.getElementById('pendingBadge');
+        if (snap.empty) {
+            list.innerHTML = '<div class="text-center py-10 bg-green-50 border-2 border-green-200 rounded-xl"><p class="text-4xl mb-2">🎉</p><p class="text-slate-600 font-bold text-sm">No pending payments!</p></div>';
+            badge.textContent = '';
+            return;
+        }
+        badge.textContent = `(${snap.size})`;
+        badge.className = 'bg-red-500 text-white text-[9px] rounded-full px-1.5 py-0.5 ml-1 inline-block';
+        snap.forEach(doc => {
+            const p = doc.data();
+            const div = document.createElement('div');
+            div.className = 'bg-yellow-50 border-2 border-yellow-300 rounded-xl p-3.5';
+            div.innerHTML = `
+                <div class="flex justify-between items-start flex-wrap gap-2 mb-3">
+                    <div class="min-w-0">
+                        <p class="font-black text-base text-blue-900 truncate">${p.studentName}</p>
+                        <p class="text-[11px] text-slate-600 truncate">📱 ${p.studentMobile}</p>
+                        <p class="text-[11px] text-slate-600 truncate">✉️ ${p.studentEmail}</p>
+                    </div>
+                    <span class="bg-yellow-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap">⏳ PENDING</span>
+                </div>
+                <div class="bg-white rounded-lg p-3 mb-3">
+                    <p class="text-sm font-bold text-slate-800 leading-snug">📘 ${p.planName}</p>
+                    <p class="text-[11px] text-slate-500 mt-1">Amount: <strong class="text-orange-600">${money(p.finalAmount)}</strong>${p.couponCode ? ` · Coupon: <strong>${p.couponCode}</strong>` : ''}</p>
+                </div>
+                ${p.screenshot ? `<div class="mb-3"><p class="text-[10px] text-slate-600 font-bold uppercase mb-1.5">Payment Screenshot:</p><img src="${p.screenshot}" class="screenshot-img mx-auto" onclick="window.open(this.src)"></div>` : ''}
+                <div class="flex gap-2">
+                    <button onclick="approvePurchase('${doc.id}')" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg transition text-xs">✅ Approve</button>
+                    <button onclick="rejectPurchase('${doc.id}')" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-lg transition text-xs">❌ Reject</button>
+                </div>
+            `;
+            list.appendChild(div);
+        });
+    });
+}
+
+function approvePurchase(id) {
+    if (!confirm('Approve this payment?')) return;
+    const receiptNo = 'ES-' + Date.now().toString().slice(-8);
+    db.collection('purchases').doc(id).update({
+        status: 'approved',
+        receiptNo: receiptNo,
+        verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => alert('✅ Approved! Receipt: ' + receiptNo));
+}
+
+function rejectPurchase(id) {
+    const reason = prompt('Reason for rejection (optional):') || '';
+    db.collection('purchases').doc(id).update({
+        status: 'rejected',
+        rejectionReason: reason,
+        verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => alert('❌ Rejected.'));
+}
+
+/* ============ ALL PURCHASES ============ */
+function loadAllPurchases() {
+    db.collection('purchases').orderBy('createdAt', 'desc').limit(100).onSnapshot(snap => {
+        const list = document.getElementById('allPurchasesList');
+        list.innerHTML = '';
+        if (snap.empty) { list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No purchases yet.</p>'; return; }
+        snap.forEach(doc => {
+            const p = doc.data();
+            const statusColors = { pending: 'bg-yellow-100 text-yellow-800 border-yellow-300', approved: 'bg-green-100 text-green-800 border-green-300', rejected: 'bg-red-100 text-red-800 border-red-300' };
+            const icons = { pending: '⏳', approved: '✅', rejected: '❌' };
+            const div = document.createElement('div');
+            div.className = `border-2 rounded-xl p-3 ${statusColors[p.status] || 'bg-slate-50 border-slate-200'}`;
+            div.innerHTML = `
+                <div class="flex justify-between items-center flex-wrap gap-2">
+                    <div class="min-w-0 flex-1">
+                        <p class="font-bold text-slate-800 text-xs sm:text-sm truncate">${p.studentName}</p>
+                        <p class="text-[10px] text-slate-600 mt-0.5 truncate">${p.planName}</p>
+                        <p class="text-[10px] text-slate-600 mt-0.5">${money(p.finalAmount)}${p.couponCode ? ' · ' + p.couponCode : ''}</p>
+                        <p class="text-[10px] text-slate-400 mt-0.5">📅 ${formatDT(p.createdAt)}</p>
+                        ${p.receiptNo ? `<p class="text-[10px] text-slate-500 mt-0.5">🧾 ${p.receiptNo}</p>` : ''}
+                    </div>
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">${icons[p.status]} ${p.status.toUpperCase()}</span>
+                        ${p.status === 'approved' ? `<button onclick="viewReceipt('${doc.id}')" class="text-blue-700 font-bold text-[10px] underline">View</button>` : ''}
+                    </div>
+                </div>
+            `;
+            list.appendChild(div);
+        });
+    });
+}
+
+function viewReceipt(id) {
+    db.collection('purchases').doc(id).get().then(doc => {
+        if (!doc.exists) return;
+        document.getElementById('receiptContent').innerHTML = buildReceiptHTML(doc.data());
+        document.getElementById('receiptModal').classList.remove('hidden');
+    });
+}
+function closeReceiptModal() {
+    document.getElementById('receiptModal').classList.add('hidden');
+}
+
+function buildReceiptHTML(p) {
+    const date = p.verifiedAt ? new Date(p.verifiedAt.toDate()).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }) : '—';
+    return `
+        <div style="border: 2px solid #16a34a; border-radius: 12px; padding: 18px; font-family: 'Segoe UI', sans-serif;">
+            <div style="text-align: center; padding-bottom: 12px; border-bottom: 2px dashed #94a3b8;">
+                <div style="font-size: 22px; font-weight: 900; color: #1d4ed8;">ENGLISH <span style="color: #ea580c;">SPUR</span></div>
+                <div style="font-size: 12px; font-weight: 800; color: #334155;">English Spur English Training Academy</div>
+                <div style="font-size: 10px; color: #64748b; margin-top: 2px;">Kanaipur, Bantul, Bagnan, Howrah - 711312</div>
+                <div style="font-size: 10px; color: #64748b;">📞 +91 9875340842 · ✉️ englishspur2020@gmail.com</div>
+            </div>
+            <div style="text-align: center; margin: 14px 0;">
+                <div style="font-size: 17px; font-weight: 900; letter-spacing: 2px;">PAYMENT RECEIPT</div>
+                <div style="font-size: 11px; color: #64748b;">পেমেন্ট রসিদ</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 12px; flex-wrap: wrap; gap: 6px;">
+                <div><strong>Receipt:</strong> ${p.receiptNo || '—'}</div>
+                <div><strong>Date:</strong> ${date}</div>
+            </div>
+            <div style="margin-bottom: 12px;">
+                <div style="font-size: 11px; font-weight: 900; color: #1d4ed8; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 6px;">STUDENT DETAILS</div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; gap: 8px;"><span>Name</span><strong>${p.studentName}</strong></div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; gap: 8px;"><span>Mobile</span><strong>${p.studentMobile}</strong></div>
+                <div style="display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; gap: 8px; word-break: break-all;"><span>Email</span><strong>${p.studentEmail}</strong></div>
+            </div>
+            <div style="margin-bottom: 12px;">
+                <div style="font-size: 11px; font-weight: 900; color: #1d4ed8; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 6px;">PLAN ENROLLED</div>
+                <div style="font-size: 13px; font-weight: 800; color: #1e3a8a; line-height: 1.4;">${p.planName}</div>
+            </div>
+            <div style="background: linear-gradient(135deg, #1d4ed8, #1e40af); color: white; border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; margin: 12px 0;">
+                <span style="font-size: 11px; font-weight: 700;">AMOUNT PAID</span>
+                <span style="font-size: 20px; font-weight: 900;">${money(p.finalAmount)}</span>
+            </div>
+            <div style="text-align: center; margin-top: 12px; padding-top: 10px; border-top: 2px dashed #94a3b8;">
+                <p style="font-size: 11px; color: #475569; margin: 3px 0;">Thank you for choosing English Spur!</p>
+                <p style="font-size: 11px; font-weight: 800; color: #1d4ed8; margin: 3px 0;">— Sovan Kapri, Founder & Lead Trainer</p>
+            </div>
+        </div>
+    `;
+}
+
+/* ============================================================
+   STUDENTS — Full control (Block + Coupon Access)
+   ============================================================ */
+let allStudents = [];
+
+function loadStudents() {
+    db.collection('students').orderBy('createdAt', 'desc').onSnapshot(snap => {
+        allStudents = [];
+        snap.forEach(doc => allStudents.push({ id: doc.id, ...doc.data() }));
+        renderStudents(allStudents);
+        const countEl = document.getElementById('studentsCount');
+        if (countEl) countEl.textContent = `${allStudents.length} total`;
+        const badge = document.getElementById('studentsBadge');
+        if (badge) badge.textContent = allStudents.length > 0 ? `(${allStudents.length})` : '';
+    });
+}
+
+function renderStudents(students) {
+    const list = document.getElementById('studentsList');
+    list.innerHTML = '';
+    if (students.length === 0) {
+        list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No students found.</p>';
+        return;
+    }
+    students.forEach(s => {
+        const initial = (s.name || '?')[0].toUpperCase();
+        const isBlocked = s.blocked === true;
+        const hasCoupon = s.couponAccess === true;
+        const loginCount = s.loginCount || 0;
+        const logoutCount = s.logoutCount || 0;
+        const lastLogin = formatDT(s.lastLoginAt);
+        const createdDate = formatDT(s.createdAt);
+
+        const div = document.createElement('div');
+        div.className = 'student-card ' + (isBlocked ? 'blocked' : '');
+        div.innerHTML = `
+            <div class="flex items-start gap-3 flex-wrap">
+                <div class="w-12 h-12 rounded-full ${isBlocked ? 'bg-gradient-to-br from-red-500 to-red-700' : 'bg-gradient-to-br from-blue-500 to-blue-700'} flex items-center justify-center text-white font-black text-lg flex-shrink-0">
+                    ${isBlocked ? '🚫' : initial}
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <p class="font-black text-slate-800 text-sm truncate">${s.name || '—'}</p>
+                        ${isBlocked ? '<span class="badge-red text-[9px] font-bold px-2 py-0.5 rounded-full">BLOCKED</span>' : '<span class="badge-green text-[9px] font-bold px-2 py-0.5 rounded-full">ACTIVE</span>'}
+                        ${hasCoupon ? '<span class="badge-purple text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ COUPON</span>' : ''}
+                    </div>
+                    <div class="mt-1.5 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-0.5">
+                        <p class="text-[11px] text-slate-600 truncate">📱 ${s.mobile || '—'}</p>
+                        <p class="text-[11px] text-slate-600 truncate">✉️ ${s.email || '—'}</p>
+                        <p class="text-[10px] text-slate-500">🔐 Logins: <strong>${loginCount}</strong></p>
+                        <p class="text-[10px] text-slate-500">🚪 Logouts: <strong>${logoutCount}</strong></p>
+                        <p class="text-[10px] text-slate-500">📅 Joined: ${createdDate}</p>
+                        <p class="text-[10px] text-slate-500">⏰ Last login: ${lastLogin}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-3 pt-3 border-t border-slate-200 flex flex-wrap gap-2">
+                <button onclick="viewActivity('${s.id}', '${(s.name || '').replace(/'/g, "\\'")}')" class="flex-1 min-w-[110px] bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg text-[11px] transition">📊 View Activity</button>
+                <button onclick="toggleBlock('${s.id}', ${isBlocked})" class="flex-1 min-w-[100px] ${isBlocked ? 'bg-green-600 hover:bg-green-700' : 'bg-orange-600 hover:bg-orange-700'} text-white font-bold py-2 rounded-lg text-[11px] transition">
+                    ${isBlocked ? '✅ Unblock' : '🚫 Block'}
+                </button>
+                <button onclick="toggleCouponAccess('${s.id}', ${hasCoupon})" class="flex-1 min-w-[140px] ${hasCoupon ? 'bg-red-600 hover:bg-red-700' : 'bg-purple-600 hover:bg-purple-700'} text-white font-bold py-2 rounded-lg text-[11px] transition">
+                    ${hasCoupon ? '🚫 Revoke Coupon' : '🎟️ Grant Coupon Access'}
+                </button>
+                <button onclick="deleteStudent('${s.id}', '${(s.name || '').replace(/'/g, "\\'")}')" class="flex-1 min-w-[100px] bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg text-[11px] transition">🗑️ Delete</button>
+            </div>
+        `;
+        list.appendChild(div);
+    });
+}
+
+function filterStudents() {
+    const q = (document.getElementById('studentSearch').value || '').toLowerCase().trim();
+    if (!q) { renderStudents(allStudents); return; }
+    const filtered = allStudents.filter(s =>
+        (s.name || '').toLowerCase().includes(q) ||
+        (s.email || '').toLowerCase().includes(q) ||
+        (s.mobile || '').toLowerCase().includes(q)
+    );
+    renderStudents(filtered);
+}
+
+async function toggleBlock(id, currentlyBlocked) {
+    const action = currentlyBlocked ? 'UNBLOCK' : 'BLOCK';
+    if (!confirm(`${action} this student?\n\n${currentlyBlocked ? 'Student can access portal again.' : 'Student will not be able to access portal.'}`)) return;
+    try {
+        await db.collection('students').doc(id).update({
+            blocked: !currentlyBlocked,
+            blockedAt: !currentlyBlocked ? firebase.firestore.FieldValue.serverTimestamp() : null,
+            blockedBy: !currentlyBlocked ? ADMIN_EMAIL : null
+        });
+        alert(`✅ Student ${action === 'BLOCK' ? 'blocked' : 'unblocked'}!`);
+    } catch (err) { alert('Error: ' + err.message); }
+}
+
+async function toggleCouponAccess(id, currentlyHasAccess) {
+    const action = currentlyHasAccess ? 'REVOKE' : 'GRANT';
+    if (!confirm(`${action} coupon access for this student?\n\n${currentlyHasAccess ? 'Student will NOT be able to use any coupon.' : 'Student will be able to use coupon codes.'}`)) return;
+    try {
+        await db.collection('students').doc(id).update({
+            couponAccess: !currentlyHasAccess,
+            couponAccessUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            couponAccessUpdatedBy: ADMIN_EMAIL
+        });
+        alert(`✅ Coupon access ${currentlyHasAccess ? 'revoked' : 'granted'}!`);
+    } catch (err) { alert('Error: ' + err.message); }
+}
+
+async function deleteStudent(id, name) {
+    if (!confirm(`⚠️ DELETE ${name}?\n\nThis will permanently delete:\n• Student record\n• All activity logs\n• (Purchases will remain)`)) return;
+    if (!confirm(`⚠️ FINAL CONFIRMATION\n\nAre you sure? This CANNOT be undone!`)) return;
+    try {
+        await db.collection('students').doc(id).delete();
+        const logsSnap = await db.collection('logs').where('studentId', '==', id).get();
+        const batch = db.batch();
+        logsSnap.forEach(doc => batch.delete(doc.ref));
+        await batch.commit();
+        alert('🗑️ Student and all logs deleted.');
+    } catch (err) { alert('Error: ' + err.message); }
+}
+
+/* ============ ACTIVITY LOG MODAL ============ */
+async function viewActivity(studentId, studentName) {
+    document.getElementById('activityStudentName').textContent = studentName;
+    document.getElementById('activityContent').innerHTML = '<p class="text-center text-slate-500 py-4">Loading...</p>';
+    document.getElementById('activityModal').classList.remove('hidden');
+
+    try {
+        const snap = await db.collection('logs').where('studentId', '==', studentId).limit(200).get();
+        const logs = [];
+        snap.forEach(d => logs.push({ id: d.id, ...d.data() }));
+        logs.sort((a, b) => {
+            const ta = a.timestamp ? a.timestamp.toDate().getTime() : 0;
+            const tb = b.timestamp ? b.timestamp.toDate().getTime() : 0;
+            return tb - ta;
+        });
+
+        const content = document.getElementById('activityContent');
+        if (logs.length === 0) {
+            content.innerHTML = '<p class="text-center text-slate-500 py-6">No activity yet.</p>';
+            return;
+        }
+
+        const typeIcons = { 'login': '🔓', 'logout': '🔒', 'first_visit': '🆕', 'page_close': '📄' };
+        const typeColors = {
+            'login': 'bg-green-50 border-green-300 text-green-900',
+            'logout': 'bg-slate-50 border-slate-300 text-slate-700',
+            'first_visit': 'bg-blue-50 border-blue-300 text-blue-900',
+            'page_close': 'bg-yellow-50 border-yellow-300 text-yellow-900'
+        };
+
+        content.innerHTML = logs.map(log => `
+            <div class="border-2 rounded-lg p-3 ${typeColors[log.type] || 'bg-slate-50 border-slate-300'}">
+                <div class="flex justify-between items-start flex-wrap gap-2">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">${typeIcons[log.type] || '•'}</span>
+                        <div>
+                            <p class="font-bold text-xs">${(log.type || 'unknown').toUpperCase().replace('_', ' ')}</p>
+                            <p class="text-[10px] opacity-75">${formatDT(log.timestamp)}</p>
+                        </div>
+                    </div>
+                    <button onclick="deleteLog('${log.id}')" class="text-red-600 hover:text-red-800 text-[10px] font-bold underline">Delete</button>
+                </div>
+                ${log.userAgent ? `<p class="text-[9px] mt-1 opacity-60 truncate">🖥️ ${log.userAgent}</p>` : ''}
+            </div>
+        `).join('');
+    } catch (err) {
+        document.getElementById('activityContent').innerHTML = '<p class="text-center text-red-500 py-4">Error: ' + err.message + '</p>';
+    }
+}
+
+function closeActivityModal() {
+    document.getElementById('activityModal').classList.add('hidden');
+}
+
+async function deleteLog(id) {
+    if (!confirm('Delete this log entry?')) return;
+    try {
+        await db.collection('logs').doc(id).delete();
+        const name = document.getElementById('activityStudentName').textContent;
+        const s = allStudents.find(x => x.name === name);
+        if (s) viewActivity(s.id, s.name);
+    } catch (err) { alert('Error: ' + err.message); }
+}
+
+/* ============ ALL LOGS ============ */
+function loadLogs() {
+    const limit = Number(document.getElementById('logFilter').value) || 100;
+    db.collection('logs').orderBy('timestamp', 'desc').limit(limit).onSnapshot(snap => {
+        const list = document.getElementById('logsList');
+        list.innerHTML = '';
+        if (snap.empty) {
+            list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No logs yet.</p>';
+            return;
+        }
+        const typeIcons = { 'login': '🔓', 'logout': '🔒', 'first_visit': '🆕', 'page_close': '📄' };
+        snap.forEach(doc => {
+            const log = doc.data();
+            const div = document.createElement('div');
+            div.className = 'bg-white border-2 border-slate-200 rounded-xl p-3 hover:border-blue-400 transition';
+            div.innerHTML = `
+                <div class="flex justify-between items-start flex-wrap gap-2">
+                    <div class="min-w-0 flex-1">
+                        <p class="font-bold text-slate-800 text-xs truncate">
+                            ${typeIcons[log.type] || '•'} ${log.studentName || 'Unknown'}
+                            <span class="text-[10px] font-normal text-slate-500 ml-2">${(log.type || '').toUpperCase()}</span>
+                        </p>
+                        <p class="text-[10px] text-slate-500 mt-0.5 truncate">📱 ${log.studentMobile || '—'} · ✉️ ${log.studentEmail || '—'}</p>
+                        <p class="text-[10px] text-slate-400 mt-0.5">📅 ${formatDT(log.timestamp)}</p>
+                    </div>
+                    <button onclick="deleteLogFromList('${doc.id}')" class="text-red-600 hover:text-red-800 text-[10px] font-bold underline flex-shrink-0">Delete</button>
+                </div>
+            `;
+            list.appendChild(div);
+        });
+    });
+}
+
+async function deleteLogFromList(id) {
+    if (!confirm('Delete this log entry?')) return;
+    try { await db.collection('logs').doc(id).delete(); } catch (err) { alert('Error: ' + err.message); }
+}
+</script>
+</body>
+</html>
