@@ -331,31 +331,12 @@ function clearAllStorage() {
     } catch (e) {}
 }
 
-/* ============ LOG ACTIVITY ============ */
-async function logActivity(type) {
-    if (!currentStudent) return;
-    try {
-        await db.collection('logs').add({
-            studentId: currentStudent.id, studentName: currentStudent.name,
-            studentEmail: currentStudent.email, studentMobile: currentStudent.mobile,
-            type: type, timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            userAgent: navigator.userAgent.substring(0, 200)
-        });
-        const updates = {};
-        if (type === 'login') { updates.loginCount = firebase.firestore.FieldValue.increment(1); updates.lastLoginAt = firebase.firestore.FieldValue.serverTimestamp(); }
-        else if (type === 'logout') { updates.logoutCount = firebase.firestore.FieldValue.increment(1); updates.lastLogoutAt = firebase.firestore.FieldValue.serverTimestamp(); }
-        await db.collection('students').doc(currentStudent.id).update(updates);
-    } catch (err) { console.error(err); }
-}
-
 /* ============ INIT ============ */
 window.addEventListener('DOMContentLoaded', () => {
-    // ✅ Check logout flag FIRST
     let wasLoggedOut = false;
     try { wasLoggedOut = localStorage.getItem(LOGOUT_FLAG) === '1'; } catch (e) {}
 
     if (wasLoggedOut) {
-        // Clear flag, clear any leftover data, show fresh info form
         try { localStorage.removeItem(LOGOUT_FLAG); } catch (e) {}
         clearAllStorage();
         currentStudent = null;
@@ -428,6 +409,7 @@ function generateStudentId() { return 'stu_' + Date.now().toString(36) + '_' + M
 function loadStudentFromStorage() { try { const data = localStorage.getItem(STORAGE_KEY); return data ? JSON.parse(data) : null; } catch (e) { return null; } }
 function saveStudentToStorage(s) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch (e) {} }
 
+/* ============ LOGIN / REGISTER ============ */
 async function handleInfoSubmit(e) {
     e.preventDefault();
     const name = document.getElementById('studentName').value.trim();
@@ -446,37 +428,50 @@ async function handleInfoSubmit(e) {
 
     saveStudentToStorage(student);
     currentStudent = student;
+
     try {
+        // Save student record with loginCount = 1
         await db.collection('students').doc(student.id).set({
             ...student,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
         });
+
+        // Log first visit
         await db.collection('logs').add({
             studentId: student.id, studentName: student.name,
             studentEmail: student.email, studentMobile: student.mobile,
-            type: 'first_visit', timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            type: 'first_visit', timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            userAgent: navigator.userAgent.substring(0, 200)
+        });
+
+        // Log login
+        await db.collection('logs').add({
+            studentId: student.id, studentName: student.name,
+            studentEmail: student.email, studentMobile: student.mobile,
+            type: 'login', timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            userAgent: navigator.userAgent.substring(0, 200)
         });
     } catch (err) { console.error(err); }
+
     enterMainApp();
-    logActivity('login');
 }
 
 /* ============================================================
-   LOGOUT — FULLY FIXED
+   LOGOUT — FULLY FIXED (logoutCount properly incremented)
    ============================================================ */
 function studentLogout() {
     if (!confirm('Logout?\n\nআপনি কি লগআউট করতে চান?\n(পরেরবার আবার আপনার তথ্য দিতে হবে)')) return;
 
-    // 1) Set flags to stop every auto-redirect
+    // 1) Set flags to prevent any auto-redirect
     isLoggingOut = true;
     try { localStorage.setItem(LOGOUT_FLAG, '1'); } catch (e) {}
 
-    // 2) Fire-and-forget logout log
-    try { logActivity('logout'); } catch (e) {}
+    // 2) Save student info before clearing
+    const studentToLog = currentStudent ? { ...currentStudent } : null;
 
-    // 3) Stop the timer
-    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+    // 3) Show toast
+    showToast('🚪 Logging out...');
 
     // 4) Clear in-memory state
     currentStudent = null;
@@ -485,20 +480,48 @@ function studentLogout() {
     studentListenerActive = false;
     offerExpiredHandled = false;
 
-    // 5) Clear localStorage EXCEPT the logout flag (we need it to survive reload)
+    // 5) Stop timer
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+
+    // 6) Clear localStorage EXCEPT logout flag
     try {
         localStorage.removeItem(STORAGE_KEY);
         localStorage.removeItem(PLAN_KEY);
         localStorage.removeItem(COUPON_KEY);
     } catch (e) {}
 
-    // 6) Show toast
-    showToast('🚪 Logging out...');
+    // 7) ⚡ CRITICAL: Log + increment logoutCount BEFORE reload
+    if (studentToLog) {
+        (async () => {
+            try {
+                // Add logout log entry
+                await db.collection('logs').add({
+                    studentId: studentToLog.id,
+                    studentName: studentToLog.name,
+                    studentEmail: studentToLog.email,
+                    studentMobile: studentToLog.mobile,
+                    type: 'logout',
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    userAgent: navigator.userAgent.substring(0, 200)
+                });
 
-    // 7) Reload after 400ms (log flag survives, everything else cleared)
-    setTimeout(() => {
+                // Increment logoutCount in student document
+                await db.collection('students').doc(studentToLog.id).update({
+                    logoutCount: firebase.firestore.FieldValue.increment(1),
+                    lastLogoutAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                console.log('✅ Logout logged successfully');
+            } catch (err) {
+                console.error('❌ Logout log error:', err);
+            }
+
+            // Reload after log is confirmed
+            window.location.reload();
+        })();
+    } else {
         window.location.reload();
-    }, 400);
+    }
 }
 
 function enterMainApp() {
