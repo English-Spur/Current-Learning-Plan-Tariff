@@ -52,7 +52,10 @@
         <form id="infoForm" onsubmit="handleInfoSubmit(event)" class="p-5 space-y-4">
             <div>
                 <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Full Name / নাম <span class="text-red-500">*</span></label>
-                <input type="text" id="studentName" required placeholder="e.g. Rahul Sharma" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
+                <input type="text" id="studentName" required placeholder="e.g. RAHUL SHARMA" maxlength="50"
+                       class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm uppercase" 
+                       oninput="this.value = this.value.toUpperCase()">
+                <p class="text-[10px] text-slate-500 mt-1 pl-1">📝 Name will be in CAPITAL LETTERS</p>
             </div>
             <div>
                 <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">WhatsApp <span class="text-red-500">*</span></label>
@@ -71,14 +74,20 @@
                         <option value="+94">🇱🇰 +94</option>
                         <option value="+977">🇳🇵 +977</option>
                     </select>
-                    <input type="tel" id="studentMobile" required placeholder="9876543210" 
+                    <input type="tel" id="studentMobile" required placeholder="9876543210" maxlength="10"
                            class="flex-1 min-w-0 border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm" 
-                           oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10); updateMobileCounter();">
+                </div>
+                <div class="flex justify-between items-center mt-1 pl-1">
+                    <p id="mobileError" class="text-red-600 text-[10px] hidden font-bold">⚠️ Exactly 10 digits required</p>
+                    <span id="mobileCounter" class="text-[9px] text-slate-400 font-bold ml-auto">0/10</span>
                 </div>
             </div>
             <div>
                 <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Email <span class="text-red-500">*</span></label>
-                <input type="email" id="studentEmail" required placeholder="student@gmail.com" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm" oninput="this.value = this.value.toLowerCase()">
+                <input type="email" id="studentEmail" required placeholder="student@gmail.com" 
+                       class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm" 
+                       oninput="this.value = this.value.toLowerCase()">
             </div>
             <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black p-3.5 rounded-xl text-xs uppercase tracking-wider shadow-md">
                 🚀 Continue
@@ -104,7 +113,7 @@
     </div>
 
     <div class="bg-gradient-to-r from-blue-50 to-white rounded-2xl shadow-sm p-3 mb-3 border border-blue-100">
-        <p class="text-xs text-slate-600">👤 <span id="welcomeName" class="font-bold text-blue-900">Student</span></p>
+        <p class="text-xs text-slate-600">👤 <span id="welcomeName" class="font-bold text-blue-900 uppercase">Student</span></p>
         <p id="welcomeMeta" class="text-[10px] text-slate-500 mt-0.5 truncate"></p>
     </div>
 
@@ -284,6 +293,19 @@ function cleanPlanName(name) {
 
 function hasCouponAccess() { return currentStudent && currentStudent.couponAccess === true; }
 
+/* ============ MOBILE COUNTER ============ */
+function updateMobileCounter() {
+    const input = document.getElementById('studentMobile');
+    const counter = document.getElementById('mobileCounter');
+    if (counter && input) {
+        const len = input.value.length;
+        counter.textContent = len + '/10';
+        counter.className = len === 10 
+            ? 'text-[9px] text-green-600 font-bold' 
+            : 'text-[9px] text-slate-400 font-bold';
+    }
+}
+
 /* ============ TOAST ============ */
 function showToast(message) {
     const existing = document.getElementById('realtimeToast');
@@ -409,35 +431,61 @@ function generateStudentId() { return 'stu_' + Date.now().toString(36) + '_' + M
 function loadStudentFromStorage() { try { const data = localStorage.getItem(STORAGE_KEY); return data ? JSON.parse(data) : null; } catch (e) { return null; } }
 function saveStudentToStorage(s) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch (e) {} }
 
-/* ============ LOGIN / REGISTER ============ */
+/* ============ REGISTER ============ */
 async function handleInfoSubmit(e) {
     e.preventDefault();
-    const name = document.getElementById('studentName').value.trim();
+    const name = document.getElementById('studentName').value.trim().toUpperCase();
     const countryCode = document.getElementById('countryCode').value;
     const mobileNumber = document.getElementById('studentMobile').value.trim();
     const email = document.getElementById('studentEmail').value.trim().toLowerCase();
-    if (!name || mobileNumber.length < 6 || !email) { alert('⚠️ Please fill all fields.'); return; }
+    const mobileError = document.getElementById('mobileError');
+
+    mobileError.classList.add('hidden');
+
+    // Validation
+    if (!name || name.length < 2) {
+        alert('⚠️ Please enter your full name.');
+        return;
+    }
+
+    // ✅ Exactly 10 digits validation
+    if (mobileNumber.length !== 10) {
+        mobileError.classList.remove('hidden');
+        mobileError.textContent = '⚠️ Exactly 10 digits required (' + mobileNumber.length + ' entered)';
+        alert('⚠️ WhatsApp number must be exactly 10 digits.\n\nYou entered ' + mobileNumber.length + ' digit(s).');
+        return;
+    }
+
+    if (!email || !email.includes('@') || !email.includes('.')) {
+        alert('⚠️ Please enter a valid email address.');
+        return;
+    }
 
     const student = {
-        id: generateStudentId(), name, countryCode, mobileNumber,
-        mobile: countryCode + ' ' + mobileNumber, email,
-        blocked: false, couponAccess: false,
-        loginCount: 1, logoutCount: 0,
-        createdAt: new Date().toISOString(), lastLoginAt: new Date().toISOString()
+        id: generateStudentId(),
+        name: name,
+        countryCode: countryCode,
+        mobileNumber: mobileNumber,
+        mobile: countryCode + ' ' + mobileNumber,
+        email: email,
+        blocked: false,
+        couponAccess: false,
+        loginCount: 1,
+        logoutCount: 0,
+        createdAt: new Date().toISOString(),
+        lastLoginAt: new Date().toISOString()
     };
 
     saveStudentToStorage(student);
     currentStudent = student;
 
     try {
-        // Save student record with loginCount = 1
         await db.collection('students').doc(student.id).set({
             ...student,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        // Log first visit
         await db.collection('logs').add({
             studentId: student.id, studentName: student.name,
             studentEmail: student.email, studentMobile: student.mobile,
@@ -445,7 +493,6 @@ async function handleInfoSubmit(e) {
             userAgent: navigator.userAgent.substring(0, 200)
         });
 
-        // Log login
         await db.collection('logs').add({
             studentId: student.id, studentName: student.name,
             studentEmail: student.email, studentMobile: student.mobile,
@@ -458,43 +505,35 @@ async function handleInfoSubmit(e) {
 }
 
 /* ============================================================
-   LOGOUT — FULLY FIXED (logoutCount properly incremented)
+   LOGOUT — with logoutCount increment
    ============================================================ */
 function studentLogout() {
     if (!confirm('Logout?\n\nআপনি কি লগআউট করতে চান?\n(পরেরবার আবার আপনার তথ্য দিতে হবে)')) return;
 
-    // 1) Set flags to prevent any auto-redirect
     isLoggingOut = true;
     try { localStorage.setItem(LOGOUT_FLAG, '1'); } catch (e) {}
 
-    // 2) Save student info before clearing
     const studentToLog = currentStudent ? { ...currentStudent } : null;
 
-    // 3) Show toast
     showToast('🚪 Logging out...');
 
-    // 4) Clear in-memory state
     currentStudent = null;
     selectedPlan = null;
     appliedCoupon = null;
     studentListenerActive = false;
     offerExpiredHandled = false;
 
-    // 5) Stop timer
     if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
 
-    // 6) Clear localStorage EXCEPT logout flag
     try {
         localStorage.removeItem(STORAGE_KEY);
         localStorage.removeItem(PLAN_KEY);
         localStorage.removeItem(COUPON_KEY);
     } catch (e) {}
 
-    // 7) ⚡ CRITICAL: Log + increment logoutCount BEFORE reload
     if (studentToLog) {
         (async () => {
             try {
-                // Add logout log entry
                 await db.collection('logs').add({
                     studentId: studentToLog.id,
                     studentName: studentToLog.name,
@@ -505,7 +544,6 @@ function studentLogout() {
                     userAgent: navigator.userAgent.substring(0, 200)
                 });
 
-                // Increment logoutCount in student document
                 await db.collection('students').doc(studentToLog.id).update({
                     logoutCount: firebase.firestore.FieldValue.increment(1),
                     lastLogoutAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -516,7 +554,6 @@ function studentLogout() {
                 console.error('❌ Logout log error:', err);
             }
 
-            // Reload after log is confirmed
             window.location.reload();
         })();
     } else {
