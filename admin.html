@@ -30,6 +30,182 @@
     .badge-yellow { background: #eab308; color: #fff; }
     .badge-purple { background: #9333ea; color: #fff; }
     @media print { .noprint { display: none !important; } }
+
+    /* ============ LIVE PREVIEW PANEL ============ */
+    #previewPanel {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        width: 380px;
+        max-height: 95vh;
+        background: #ffffff;
+        border: 3px solid #1d4ed8;
+        border-radius: 14px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        z-index: 1000;
+        display: none;
+        overflow: hidden;
+    }
+    #previewPanel.show { display: block; }
+
+    .preview-header {
+        background: linear-gradient(135deg, #1d4ed8, #1e40af);
+        color: #fff;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+    }
+    .preview-header .preview-title {
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .preview-header .preview-toggle {
+        background: rgba(255,255,255,0.2);
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-weight: 700;
+    }
+    .preview-body {
+        padding: 12px;
+        overflow-y: auto;
+        max-height: calc(95vh - 55px);
+        background: #f8fafc;
+    }
+
+    .preview-banner {
+        background: linear-gradient(135deg, #f97316, #dc2626);
+        color: #fff;
+        padding: 12px;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .preview-banner .pb-title {
+        font-size: 9px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        opacity: 0.95;
+    }
+    .preview-banner .pb-rate {
+        font-size: 16px;
+        font-weight: 900;
+        margin-top: 4px;
+        line-height: 1.2;
+    }
+    .preview-banner .pb-timer {
+        font-family: 'Courier New', monospace;
+        font-size: 20px;
+        font-weight: 900;
+        color: #fef08a;
+        margin-top: 6px;
+    }
+
+    .preview-plan-table {
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .preview-plan-header {
+        background: #1e40af;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        padding: 8px;
+        text-align: center;
+        letter-spacing: 0.05em;
+    }
+    .preview-plan-header.orange { background: #ea580c; }
+    .preview-plan-header.green { background: #047857; }
+
+    .preview-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 10px;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 11px;
+    }
+    .preview-row:last-child { border-bottom: none; }
+    .preview-row .pr-name {
+        font-weight: 700;
+        color: #1e293b;
+        flex: 1;
+    }
+    .preview-row .pr-price {
+        font-weight: 900;
+        color: #ea580c;
+        font-size: 12px;
+        text-align: right;
+    }
+    .preview-row .pr-old {
+        font-size: 9px;
+        color: #94a3b8;
+        text-decoration: line-through;
+        display: block;
+    }
+
+    .preview-actions {
+        display: flex;
+        gap: 6px;
+        margin-top: 10px;
+    }
+    .preview-actions button {
+        flex: 1;
+        padding: 8px;
+        font-size: 11px;
+        font-weight: 700;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    .preview-refresh-btn { background: #1d4ed8; color: #fff; }
+    .preview-refresh-btn:hover { background: #1e40af; }
+    .preview-close-btn { background: #e2e8f0; color: #334155; }
+    .preview-close-btn:hover { background: #cbd5e1; }
+
+    #previewToggleBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #1d4ed8, #1e40af);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(29,78,216,0.4);
+        font-size: 24px;
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s;
+    }
+    #previewToggleBtn:hover { transform: scale(1.08); }
+    #previewToggleBtn.hidden { display: none; }
+
+    @media (max-width: 768px) {
+        #previewPanel {
+            width: calc(100vw - 20px);
+            right: 10px;
+            left: 10px;
+            max-height: 90vh;
+        }
+    }
 </style>
 </head>
 <body>
@@ -89,7 +265,7 @@
         </div>
 
         <div class="flex flex-wrap gap-2 mb-5">
-            <button onclick="switchTab('offer')" id="tab-offer" class="tab-btn active">🎯 Offer</button>
+            <button onclick="switchTab('offer')" id="tab-offer" class="tab-btn active">🎯 Offer &amp; Pricing</button>
             <button onclick="switchTab('coupons')" id="tab-coupons" class="tab-btn inactive">🎟️ Coupons</button>
             <button onclick="switchTab('pending')" id="tab-pending" class="tab-btn inactive">⏳ Pending <span id="pendingBadge"></span></button>
             <button onclick="switchTab('all')" id="tab-all" class="tab-btn inactive">📋 Purchases</button>
@@ -97,11 +273,11 @@
             <button onclick="switchTab('logs')" id="tab-logs" class="tab-btn inactive">📊 Activity Logs</button>
         </div>
 
-        <!-- TAB: OFFER -->
+        <!-- TAB: OFFER & PRICING -->
         <div id="content-offer" class="tab-content fade-in">
             <div class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 rounded-xl p-4 sm:p-5">
                 <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
-                    <h2 class="text-base sm:text-lg font-black text-blue-900">🎯 Offer Settings</h2>
+                    <h2 class="text-base sm:text-lg font-black text-blue-900">🎯 Offer &amp; Pricing Control</h2>
                     <span id="offerStatusBadge" class="text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-slate-200 text-slate-700">Loading...</span>
                 </div>
 
@@ -113,25 +289,10 @@
                     </div>
                 </label>
 
-                <div class="grid grid-cols-2 gap-3 mb-3">
-                    <div>
-                        <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">Regular Rate (₹)</label>
-                        <input type="number" id="regularRate" value="500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
-                    </div>
-                    <div>
-                        <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">Offer Rate (₹)</label>
-                        <input type="number" id="offerRate" value="300" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
-                    </div>
-                </div>
-
                 <div class="mb-3">
-                    <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">⏰ Offer End Date & Time <span class="text-red-500">*</span></label>
+                    <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">⏰ Offer End Date &amp; Time <span class="text-red-500">*</span></label>
                     <input type="datetime-local" id="offerEndDateTime" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
-                    <p class="text-[10px] text-slate-500 mt-1">এই সময় পর্যন্ত offer চলবে — সব student একসাথে expire দেখবে</p>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3 mb-3">
-                    <div>
+                    <div class="mt-2">
                         <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">Quick Set</label>
                         <select id="quickSetSelect" onchange="applyQuickSet()" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
                             <option value="">-- Select --</option>
@@ -145,19 +306,80 @@
                             <option value="30d">+ 30 days</option>
                         </select>
                     </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
                     <div>
                         <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">Offer Title</label>
                         <input type="text" id="offerTitle" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
                     </div>
+                    <div>
+                        <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">Description</label>
+                        <input type="text" id="offerDescription" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                    </div>
                 </div>
 
-                <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">Description</label>
-                <textarea id="offerDescription" rows="2" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm mb-4"></textarea>
+                <!-- DYNAMIC PLAN PRICING -->
+                <div class="bg-green-50 border-2 border-green-300 rounded-xl p-4 mb-4">
+                    <p class="text-[10px] sm:text-xs font-black text-green-900 uppercase mb-3">💰 Plan Pricing Control</p>
+
+                    <div class="grid grid-cols-2 gap-3 mb-3">
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">Single Class Regular Rate (₹)</label>
+                            <input type="number" id="cfgSingleRegular" value="500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">Special Rate per Class (₹)</label>
+                            <input type="number" id="cfgSingleSpecial" value="250" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                    </div>
+
+                    <p class="text-[10px] font-black text-green-900 uppercase mt-4 mb-2">📘 1-on-1 Plans</p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">8 Days (₹)</label>
+                            <input type="number" id="cfgPrice8" value="2000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">16 Days (₹)</label>
+                            <input type="number" id="cfgPrice16" value="4000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">24 Days (₹)</label>
+                            <input type="number" id="cfgPrice24" value="6000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">32 Days (₹)</label>
+                            <input type="number" id="cfgPrice32" value="8000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                    </div>
+
+                    <p class="text-[10px] font-black text-green-900 uppercase mt-3 mb-2">👥 Group Plans (Monthly Fee Only)</p>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">2 Days/Mo (₹)</label>
+                            <input type="number" id="cfgGroup2d" value="1500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">3 Days/Mo (₹)</label>
+                            <input type="number" id="cfgGroup3d" value="1900" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                    </div>
+
+                    <div class="mt-4 bg-blue-100 border-2 border-blue-300 rounded-lg p-3">
+                        <p class="text-[10px] font-black text-blue-900 uppercase mb-2">🎓 Admission Fee (For New Group Students Only)</p>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">Admission Fee (₹)</label>
+                            <input type="number" id="cfgGroupAdmission" value="2500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <p class="text-[10px] text-blue-800 mt-1.5 font-semibold">ℹ️ Only applied to <strong>New Students</strong>. Existing students pay monthly fee only.</p>
+                    </div>
+                </div>
 
                 <button onclick="saveOffer()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold p-3.5 rounded-xl transition shadow-md text-sm">
-                    💾 Save Offer Settings
+                    💾 Save All Settings
                 </button>
-                <p id="offerSaveMsg" class="text-green-700 text-sm text-center mt-3 hidden font-bold p-2 bg-green-50 rounded-lg">✅ Saved!</p>
+                <p id="offerSaveMsg" class="text-green-700 text-sm text-center mt-3 hidden font-bold p-2 bg-green-50 rounded-lg">✅ Saved! Student portal এ instantly update হবে</p>
             </div>
         </div>
 
@@ -167,8 +389,8 @@
                 <h2 class="text-base sm:text-lg font-black text-amber-900 mb-4">🎟️ Coupon Management</h2>
 
                 <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-4">
-                    <p class="text-[11px] font-bold text-blue-900">ℹ️ Note: Coupons only work for students with coupon access</p>
-                    <p class="text-[10px] text-slate-600 mt-0.5">Students tab থেকে নির্দিষ্ট student কে coupon access দিন।</p>
+                    <p class="text-[11px] font-bold text-blue-900">ℹ️ Validity Optional</p>
+                    <p class="text-[10px] text-slate-600 mt-0.5">Validity date না দিলে coupon সব সময় কাজ করবে।</p>
                 </div>
 
                 <div class="bg-white border-2 border-slate-200 rounded-xl p-4 mb-4">
@@ -187,26 +409,31 @@
                         <input type="number" id="newCouponValue" placeholder="Value" class="border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm">
                     </div>
 
-                    <!-- ✅ NEW: Coupon Validity -->
                     <div class="bg-amber-50 border-2 border-amber-300 rounded-lg p-3 mb-3">
-                        <p class="text-[10px] sm:text-xs font-black text-amber-900 uppercase mb-2">⏰ Coupon Validity <span class="text-red-500">*</span></p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            <div>
-                                <label class="text-[10px] font-bold text-slate-600 uppercase">Valid From</label>
-                                <input type="datetime-local" id="newCouponValidFrom" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        <label class="flex items-center gap-2 mb-2 cursor-pointer">
+                            <input type="checkbox" id="enableCouponValidity" onchange="toggleCouponValidity()" class="w-4 h-4 accent-amber-600">
+                            <span class="text-[11px] font-black text-amber-900 uppercase">⏰ Set Validity (Optional)</span>
+                        </label>
+                        <p class="text-[10px] text-slate-600 mb-2">Unchecked = Coupon সব সময় valid থাকবে</p>
+                        
+                        <div id="couponValidityInputs" class="hidden">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-600 uppercase">Valid From</label>
+                                    <input type="datetime-local" id="newCouponValidFrom" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-600 uppercase">Valid Until</label>
+                                    <input type="datetime-local" id="newCouponValidUntil" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                                </div>
                             </div>
-                            <div>
-                                <label class="text-[10px] font-bold text-slate-600 uppercase">Valid Until</label>
-                                <input type="datetime-local" id="newCouponValidUntil" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                            <div class="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+                                <button type="button" onclick="setCouponValidity(1)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 1 Day</button>
+                                <button type="button" onclick="setCouponValidity(7)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 7 Days</button>
+                                <button type="button" onclick="setCouponValidity(30)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 30 Days</button>
+                                <button type="button" onclick="setCouponValidity(90)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 90 Days</button>
                             </div>
                         </div>
-                        <div class="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-1.5">
-                            <button type="button" onclick="setCouponValidity(1)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 1 Day</button>
-                            <button type="button" onclick="setCouponValidity(7)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 7 Days</button>
-                            <button type="button" onclick="setCouponValidity(30)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 30 Days</button>
-                            <button type="button" onclick="setCouponValidity(90)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 90 Days</button>
-                        </div>
-                        <p class="text-[10px] text-amber-800 font-semibold mt-2">⚠️ এই সময়ের বাইরে coupon কাজ করবে না</p>
                     </div>
 
                     <div id="allowedPlansRow" class="bg-blue-50 rounded-lg p-3 mb-3">
@@ -243,7 +470,7 @@
             <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                 <h2 class="text-base sm:text-lg font-black text-blue-900">👥 Students — Full Control</h2>
                 <div class="flex gap-2 items-center flex-wrap">
-                    <input type="text" id="studentSearch" oninput="filterStudents()" placeholder="🔍 Search name/email/mobile" class="border-2 border-slate-200 rounded-lg p-2 text-xs w-48">
+                    <input type="text" id="studentSearch" oninput="filterStudents()" placeholder="🔍 Search name/mobile/unique ID" class="border-2 border-slate-200 rounded-lg p-2 text-xs w-48">
                     <span id="studentsCount" class="text-xs font-bold bg-blue-100 text-blue-800 px-3 py-1 rounded-full whitespace-nowrap"></span>
                 </div>
             </div>
@@ -295,7 +522,39 @@
     </div>
 </div>
 
+<!-- ============================================
+     LIVE PREVIEW PANEL
+     ============================================ -->
+<button id="previewToggleBtn" onclick="togglePreview()" title="Show Student Portal Preview">
+    👁️
+</button>
+
+<div id="previewPanel">
+    <div class="preview-header" onclick="togglePreview()">
+        <span class="preview-title">👁️ Live Student Preview</span>
+        <button class="preview-toggle" onclick="event.stopPropagation(); closePreview();">✕</button>
+    </div>
+    <div class="preview-body" id="previewBody">
+        <div class="preview-banner">
+            <div class="pb-title">⏰ Limited Time Special Rate</div>
+            <div class="pb-rate">
+                Regular <span style="text-decoration: line-through; opacity: 0.75;">₹<span id="pvReg">500</span></span>/class → NOW
+                <span style="color: #fef08a;">₹<span id="pvSpec">250</span></span>/class
+            </div>
+            <div class="pb-timer" id="pvTimer">--:--</div>
+        </div>
+
+        <div id="previewContent"></div>
+
+        <div class="preview-actions">
+            <button class="preview-refresh-btn" onclick="refreshPreview()">🔄 Refresh</button>
+            <button class="preview-close-btn" onclick="closePreview()">Close</button>
+        </div>
+    </div>
+</div>
+
 <script>
+/* ============ FIREBASE CONFIG ============ */
 const firebaseConfig = {
   apiKey: "AIzaSyBAmO9v4NOOSSuM59yXY8JppFJzrZUGADM",
   authDomain: "es-tariff.firebaseapp.com",
@@ -309,7 +568,10 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 
 const ADMIN_EMAIL = 'englishspur2020@gmail.com';
-const money = n => '₹' + Number(n).toLocaleString('en-IN');
+
+function money(n) {
+    return '₹' + Number(n).toLocaleString('en-IN');
+}
 
 function formatDT(ts) {
     if (!ts) return '—';
@@ -343,6 +605,15 @@ function togglePassword() {
     const icon = document.getElementById('eyeIcon');
     if (inp.type === 'password') { inp.type = 'text'; icon.textContent = '🙈'; }
     else { inp.type = 'password'; icon.textContent = '👁️'; }
+}
+
+function toggleCouponValidity() {
+    const chk = document.getElementById('enableCouponValidity').checked;
+    document.getElementById('couponValidityInputs').classList.toggle('hidden', !chk);
+    if (!chk) {
+        document.getElementById('newCouponValidFrom').value = '';
+        document.getElementById('newCouponValidUntil').value = '';
+    }
 }
 
 /* ============ AUTH ============ */
@@ -409,11 +680,24 @@ function loadOffer() {
         if (doc.exists) {
             const d = doc.data();
             currentOffer = d;
+            
             document.getElementById('offerActive').checked = d.active !== false;
-            document.getElementById('regularRate').value = d.regularRate || 500;
-            document.getElementById('offerRate').value = d.offerRate || 300;
             document.getElementById('offerTitle').value = d.title || '';
             document.getElementById('offerDescription').value = d.description || '';
+            
+            if (d.planPricing) {
+                const pp = d.planPricing;
+                document.getElementById('cfgSingleRegular').value = pp.singleRegular || 500;
+                document.getElementById('cfgSingleSpecial').value = pp.singleSpecial || 250;
+                document.getElementById('cfgPrice8').value = pp.price8 || 2000;
+                document.getElementById('cfgPrice16').value = pp.price16 || 4000;
+                document.getElementById('cfgPrice24').value = pp.price24 || 6000;
+                document.getElementById('cfgPrice32').value = pp.price32 || 8000;
+                document.getElementById('cfgGroup2d').value = pp.group2d || 1500;
+                document.getElementById('cfgGroup3d').value = pp.group3d || 1900;
+                document.getElementById('cfgGroupAdmission').value = pp.groupAdmission || 2500;
+            }
+            
             if (d.endDateTime) {
                 document.getElementById('offerEndDateTime').value = d.endDateTime;
             } else {
@@ -421,6 +705,10 @@ function loadOffer() {
                 document.getElementById('offerEndDateTime').value = formatDateTimeLocal(def);
             }
             updateStatusBadge(d);
+            attachPreviewListeners();
+            if (document.getElementById('previewPanel').classList.contains('show')) {
+                refreshPreview();
+            }
         }
     });
 }
@@ -436,6 +724,7 @@ function applyQuickSet() {
         document.getElementById('offerEndDateTime').value = formatDateTimeLocal(target);
     }
     sel.value = '';
+    refreshPreview();
 }
 
 function updateStatusBadge(d) {
@@ -459,26 +748,41 @@ function saveOffer() {
     const endDate = new Date(endDT);
     if (isNaN(endDate.getTime())) { alert('⚠️ Invalid date/time.'); return; }
 
+    const planPricing = {
+        singleRegular: Number(document.getElementById('cfgSingleRegular').value) || 500,
+        singleSpecial: Number(document.getElementById('cfgSingleSpecial').value) || 250,
+        price8: Number(document.getElementById('cfgPrice8').value) || 2000,
+        price16: Number(document.getElementById('cfgPrice16').value) || 4000,
+        price24: Number(document.getElementById('cfgPrice24').value) || 6000,
+        price32: Number(document.getElementById('cfgPrice32').value) || 8000,
+        group2d: Number(document.getElementById('cfgGroup2d').value) || 1500,
+        group3d: Number(document.getElementById('cfgGroup3d').value) || 1900,
+        groupAdmission: Number(document.getElementById('cfgGroupAdmission').value) || 2500
+    };
+
     const data = {
         active: document.getElementById('offerActive').checked,
-        regularRate: Number(document.getElementById('regularRate').value),
-        offerRate: Number(document.getElementById('offerRate').value),
         endDateTime: endDT,
         title: document.getElementById('offerTitle').value,
         description: document.getElementById('offerDescription').value,
+        planPricing: planPricing,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     };
 
     db.collection('config').doc('offer').set(data, { merge: true }).then(() => {
         const msg = document.getElementById('offerSaveMsg');
-        msg.textContent = '✅ Saved! All students will see this.';
+        msg.textContent = '✅ Saved! Student portal এ instantly update হবে';
         msg.classList.remove('hidden');
         setTimeout(() => msg.classList.add('hidden'), 2500);
+        
+        if (document.getElementById('previewPanel').classList.contains('show')) {
+            refreshPreview();
+        }
     }).catch(err => alert('Error: ' + err.message));
 }
 setInterval(() => { if (currentOffer) updateStatusBadge(currentOffer); }, 30000);
 
-/* ============ COUPONS with VALIDITY ============ */
+/* ============ COUPONS ============ */
 document.getElementById('newCouponAppliesTo').addEventListener('change', function() {
     document.getElementById('allowedPlansRow').style.display = (this.value === '1on1') ? 'block' : 'none';
 });
@@ -503,29 +807,37 @@ function loadCoupons() {
         snap.forEach(doc => {
             const c = doc.data();
             const planLabel = c.allowedPlans ? ` (${c.allowedPlans.join('/')})` : '';
-            const expired = isCouponExpired(c);
-            const notStarted = isCouponNotStarted(c);
+            const hasValidity = !!(c.validFrom && c.validUntil);
+            const expired = hasValidity && isCouponExpired(c);
+            const notStarted = hasValidity && isCouponNotStarted(c);
+            const isActive = c.active !== false;
             
             let statusBadge = '';
-            if (expired) statusBadge = '<span class="bg-red-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">⛔ EXPIRED</span>';
-            else if (notStarted) statusBadge = '<span class="bg-yellow-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">⏳ NOT STARTED</span>';
-            else statusBadge = '<span class="bg-green-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">🟢 ACTIVE</span>';
+            if (!isActive) {
+                statusBadge = '<span class="bg-slate-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">⚪ INACTIVE</span>';
+            } else if (hasValidity) {
+                if (expired) statusBadge = '<span class="bg-red-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">⛔ EXPIRED</span>';
+                else if (notStarted) statusBadge = '<span class="bg-yellow-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">⏳ NOT STARTED</span>';
+                else statusBadge = '<span class="bg-green-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">🟢 ACTIVE</span>';
+            } else {
+                statusBadge = '<span class="bg-blue-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">♾️ NO EXPIRY</span>';
+            }
             
-            const validityText = c.validUntil 
+            const validityText = hasValidity 
                 ? `📅 ${formatCouponDate(c.validFrom)} → ${formatCouponDate(c.validUntil)}` 
-                : '⚠️ No validity set';
+                : '♾️ No expiry — always valid';
             
             const div = document.createElement('div');
-            div.className = `bg-white border-2 rounded-xl p-3 transition ${expired ? 'border-red-300 bg-red-50' : 'border-slate-200 hover:border-amber-400'}`;
+            div.className = `bg-white border-2 rounded-xl p-3 transition ${expired ? 'border-red-300 bg-red-50' : (!isActive ? 'border-slate-300 bg-slate-50 opacity-75' : 'border-slate-200 hover:border-amber-400')}`;
             div.innerHTML = `
                 <div class="flex justify-between items-start gap-3 flex-wrap">
                     <div class="flex items-start gap-3 min-w-0 flex-1">
-                        <div class="w-10 h-10 ${expired ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700'} rounded-lg flex items-center justify-center font-black text-xs flex-shrink-0">
+                        <div class="w-10 h-10 ${expired ? 'bg-red-100 text-red-700' : (!isActive ? 'bg-slate-200 text-slate-500' : 'bg-amber-100 text-amber-700')} rounded-lg flex items-center justify-center font-black text-xs flex-shrink-0">
                             ${c.type === 'flat' ? '₹' : '%'}
                         </div>
                         <div class="min-w-0">
                             <div class="flex items-center flex-wrap">
-                                <p class="font-black text-amber-700 text-sm">${c.code}</p>
+                                <p class="font-black ${isActive ? 'text-amber-700' : 'text-slate-500'} text-sm">${c.code}</p>
                                 ${statusBadge}
                             </div>
                             <p class="text-[10px] text-slate-500 truncate mt-0.5">
@@ -535,10 +847,12 @@ function loadCoupons() {
                             <p class="text-[10px] ${expired ? 'text-red-700 font-bold' : 'text-slate-600'} mt-1">
                                 ${validityText}
                             </p>
-                            ${expired ? '<p class="text-[10px] text-red-600 font-bold mt-0.5">⛔ This coupon has expired</p>' : ''}
                         </div>
                     </div>
-                    <button onclick="deleteCoupon('${doc.id}')" class="text-red-600 hover:text-red-800 font-bold text-[10px] sm:text-xs px-2.5 py-1.5 rounded-lg hover:bg-red-50 transition flex-shrink-0">🗑️</button>
+                    <div class="flex items-center gap-1 flex-shrink-0">
+                        <button onclick="editCoupon('${doc.id}')" class="text-blue-600 hover:text-blue-800 font-bold text-[10px] sm:text-xs px-2.5 py-1.5 rounded-lg hover:bg-blue-50 transition" title="Edit">✏️</button>
+                        <button onclick="deleteCoupon('${doc.id}')" class="text-red-600 hover:text-red-800 font-bold text-[10px] sm:text-xs px-2.5 py-1.5 rounded-lg hover:bg-red-50 transition" title="Delete">🗑️</button>
+                    </div>
                 </div>
             `;
             list.appendChild(div);
@@ -551,25 +865,33 @@ function addCoupon() {
     const appliesTo = document.getElementById('newCouponAppliesTo').value;
     const type = document.getElementById('newCouponType').value;
     const value = Number(document.getElementById('newCouponValue').value);
+    const validityEnabled = document.getElementById('enableCouponValidity').checked;
     const validFrom = document.getElementById('newCouponValidFrom').value;
     const validUntil = document.getElementById('newCouponValidUntil').value;
 
     if (!code || !value) { alert('⚠️ Please fill code and value.'); return; }
     if (value <= 0) { alert('⚠️ Value must be > 0.'); return; }
-    if (!validFrom || !validUntil) { 
-        alert('⚠️ Please set both Valid From and Valid Until dates.\n\nTip: Click "+ 7 Days" for quick setup.'); 
-        return; 
-    }
-    if (new Date(validUntil) <= new Date(validFrom)) {
-        alert('⚠️ Valid Until must be AFTER Valid From.');
-        return;
+    
+    if (validityEnabled) {
+        if (!validFrom || !validUntil) {
+            alert('⚠️ Please set both Valid From and Valid Until dates.');
+            return;
+        }
+        if (new Date(validUntil) <= new Date(validFrom)) {
+            alert('⚠️ Valid Until must be AFTER Valid From.');
+            return;
+        }
     }
 
     const data = {
         code, appliesTo, type, value, active: true,
-        validFrom, validUntil,
         createdAt: new Date().toISOString()
     };
+    
+    if (validityEnabled) {
+        data.validFrom = validFrom;
+        data.validUntil = validUntil;
+    }
 
     if (appliesTo === '1on1') {
         const plans = Array.from(document.querySelectorAll('.plan-check:checked')).map(c => c.value);
@@ -581,13 +903,225 @@ function addCoupon() {
         document.getElementById('newCouponValue').value = '';
         document.getElementById('newCouponValidFrom').value = '';
         document.getElementById('newCouponValidUntil').value = '';
+        document.getElementById('enableCouponValidity').checked = false;
+        document.getElementById('couponValidityInputs').classList.add('hidden');
         document.querySelectorAll('.plan-check').forEach(c => c.checked = false);
-        alert('✅ Coupon added!\n\n📅 Valid until: ' + formatCouponDate(validUntil) + '\n\nNote: Students need coupon access to use this.');
+        
+        const validityMsg = validityEnabled 
+            ? '📅 Valid until: ' + formatCouponDate(validUntil)
+            : '♾️ No expiry — always valid';
+        
+        alert('✅ Coupon added!\n\n' + validityMsg + '\n\nNote: Students need coupon access to use this.');
     }).catch(err => alert('Error: ' + err.message));
 }
 
 function deleteCoupon(id) {
     if (confirm('Delete this coupon?')) db.collection('coupons').doc(id).delete();
+}
+
+/* ============ EDIT COUPON ============ */
+let editingCouponId = null;
+
+async function editCoupon(id) {
+    // Remove any existing modal
+    closeEditCouponModal();
+    
+    try {
+        const doc = await db.collection('coupons').doc(id).get();
+        if (!doc.exists) { alert('⚠️ Coupon not found.'); return; }
+        const c = doc.data();
+        editingCouponId = id;
+        
+        // Format datetime-local values
+        const toLocalInput = (isoStr) => {
+            if (!isoStr) return '';
+            try {
+                const d = new Date(isoStr);
+                const pad = n => String(n).padStart(2, '0');
+                return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+            } catch (e) { return ''; }
+        };
+        
+        const vFrom = toLocalInput(c.validFrom);
+        const vUntil = toLocalInput(c.validUntil);
+        const hasValidity = !!(c.validFrom && c.validUntil);
+        
+        const planChecks = ['s8', 's16', 's24', 's32'].map(p => {
+            const checked = (c.allowedPlans && c.allowedPlans.includes(p)) ? 'checked' : '';
+            const label = p.replace('s', '') + ' Days';
+            return `<label class="text-[11px] font-bold flex items-center gap-1"><input type="checkbox" class="edit-plan-check" value="${p}" ${checked}> ${label}</label>`;
+        }).join('');
+        
+        const modal = document.createElement('div');
+        modal.id = 'editCouponModal';
+        modal.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:flex-start;justify-content:center;padding:16px;overflow-y:auto;';
+        modal.innerHTML = `
+            <div style="background:white;border-radius:14px;padding:20px;max-width:520px;width:100%;margin:auto;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid #f1f5f9;">
+                    <div>
+                        <h3 style="font-size:18px;font-weight:900;color:#92400e;margin:0;">✏️ Edit Coupon</h3>
+                        <p style="font-size:11px;color:#64748b;margin:4px 0 0;">Code: <strong style="color:#b45309;">${c.code}</strong></p>
+                    </div>
+                    <button onclick="closeEditCouponModal()" style="background:none;border:none;font-size:22px;color:#94a3b8;cursor:pointer;font-weight:bold;line-height:1;">&times;</button>
+                </div>
+                
+                <div style="margin-bottom:14px;">
+                    <label style="font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;display:block;margin-bottom:5px;">Coupon Code</label>
+                    <input type="text" id="editCouponCode" value="${c.code || ''}" maxlength="20" 
+                        style="width:100%;border:2px solid #e2e8f0;border-radius:8px;padding:10px;background:#f8fafc;font-weight:700;font-size:14px;text-transform:uppercase;box-sizing:border-box;"
+                        oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')">
+                </div>
+                
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">
+                    <div>
+                        <label style="font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;display:block;margin-bottom:5px;">Applies To</label>
+                        <select id="editCouponAppliesTo" style="width:100%;border:2px solid #e2e8f0;border-radius:8px;padding:10px;background:#f8fafc;font-weight:700;font-size:13px;box-sizing:border-box;">
+                            <option value="1on1" ${c.appliesTo === '1on1' ? 'selected' : ''}>1-on-1</option>
+                            <option value="group" ${c.appliesTo === 'group' ? 'selected' : ''}>Group</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;display:block;margin-bottom:5px;">Type</label>
+                        <select id="editCouponType" style="width:100%;border:2px solid #e2e8f0;border-radius:8px;padding:10px;background:#f8fafc;font-weight:700;font-size:13px;box-sizing:border-box;">
+                            <option value="flat" ${c.type === 'flat' ? 'selected' : ''}>Flat ₹</option>
+                            <option value="percent" ${c.type === 'percent' ? 'selected' : ''}>Percent %</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="font-size:11px;font-weight:700;color:#475569;text-transform:uppercase;display:block;margin-bottom:5px;">Value</label>
+                        <input type="number" id="editCouponValue" value="${c.value || 0}" min="1"
+                            style="width:100%;border:2px solid #e2e8f0;border-radius:8px;padding:10px;background:#f8fafc;font-weight:700;font-size:14px;box-sizing:border-box;">
+                    </div>
+                </div>
+                
+                <div style="background:#fef3c7;border:2px solid #fbbf24;border-radius:8px;padding:10px;margin-bottom:14px;">
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:8px;">
+                        <input type="checkbox" id="editEnableValidity" ${hasValidity ? 'checked' : ''} 
+                            onchange="document.getElementById('editValidityInputs').style.display = this.checked ? 'block' : 'none';"
+                            style="width:16px;height:16px;accent-color:#d97706;">
+                        <span style="font-size:11px;font-weight:900;color:#92400e;text-transform:uppercase;">⏰ Set Validity (Optional)</span>
+                    </label>
+                    <div id="editValidityInputs" style="${hasValidity ? 'display:block;' : 'display:none;'}">
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                            <div>
+                                <label style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;display:block;margin-bottom:4px;">Valid From</label>
+                                <input type="datetime-local" id="editValidFrom" value="${vFrom}"
+                                    style="width:100%;border:2px solid #e2e8f0;border-radius:8px;padding:8px;background:white;font-weight:700;font-size:12px;box-sizing:border-box;">
+                            </div>
+                            <div>
+                                <label style="font-size:10px;font-weight:700;color:#475569;text-transform:uppercase;display:block;margin-bottom:4px;">Valid Until</label>
+                                <input type="datetime-local" id="editValidUntil" value="${vUntil}"
+                                    style="width:100%;border:2px solid #e2e8f0;border-radius:8px;padding:8px;background:white;font-weight:700;font-size:12px;box-sizing:border-box;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="editAllowedPlansRow" style="background:#eff6ff;border-radius:8px;padding:10px;margin-bottom:14px;${c.appliesTo === '1on1' ? '' : 'display:none;'}">
+                    <p style="font-size:10px;font-weight:700;color:#1e40af;margin:0 0 6px;">Allowed Plans (only for 1-on-1):</p>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                        ${planChecks}
+                    </div>
+                </div>
+                
+                <div style="background:#d1fae5;border:2px solid #10b981;border-radius:8px;padding:10px;margin-bottom:14px;">
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                        <input type="checkbox" id="editCouponActive" ${c.active !== false ? 'checked' : ''} 
+                            style="width:16px;height:16px;accent-color:#059669;">
+                        <span style="font-size:11px;font-weight:900;color:#065f46;text-transform:uppercase;">✅ Active (available for students)</span>
+                    </label>
+                </div>
+                
+                <div style="display:flex;gap:8px;">
+                    <button onclick="closeEditCouponModal()" 
+                        style="flex:1;padding:12px;background:#e2e8f0;color:#334155;font-weight:700;border:none;border-radius:8px;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button onclick="saveEditedCoupon()" 
+                        style="flex:1;padding:12px;background:#d97706;color:white;font-weight:900;border:none;border-radius:8px;cursor:pointer;font-size:13px;text-transform:uppercase;">💾 Save Changes</button>
+                </div>
+            </div>
+        `;
+        
+        // Toggle allowed plans row when appliesTo changes
+        setTimeout(() => {
+            const sel = document.getElementById('editCouponAppliesTo');
+            if (sel) {
+                sel.addEventListener('change', function() {
+                    document.getElementById('editAllowedPlansRow').style.display = (this.value === '1on1') ? 'block' : 'none';
+                });
+            }
+        }, 0);
+        
+        // Click outside to close
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeEditCouponModal();
+        });
+        
+        document.body.appendChild(modal);
+    } catch (err) { alert('Error: ' + err.message); }
+}
+
+function closeEditCouponModal() {
+    const modal = document.getElementById('editCouponModal');
+    if (modal) modal.remove();
+    editingCouponId = null;
+}
+
+async function saveEditedCoupon() {
+    if (!editingCouponId) return;
+    
+    const code = document.getElementById('editCouponCode').value.trim().toUpperCase();
+    const appliesTo = document.getElementById('editCouponAppliesTo').value;
+    const type = document.getElementById('editCouponType').value;
+    const value = Number(document.getElementById('editCouponValue').value);
+    const validityEnabled = document.getElementById('editEnableValidity').checked;
+    const validFrom = document.getElementById('editValidFrom').value;
+    const validUntil = document.getElementById('editValidUntil').value;
+    const active = document.getElementById('editCouponActive').checked;
+    
+    if (!code || code.length < 2) { alert('⚠️ Please enter a valid coupon code.'); return; }
+    if (!value || value <= 0) { alert('⚠️ Value must be greater than 0.'); return; }
+    
+    if (validityEnabled) {
+        if (!validFrom || !validUntil) {
+            alert('⚠️ Please set both Valid From and Valid Until dates.');
+            return;
+        }
+        if (new Date(validUntil) <= new Date(validFrom)) {
+            alert('⚠️ Valid Until must be AFTER Valid From.');
+            return;
+        }
+    }
+    
+    const updateData = {
+        code, appliesTo, type, value, active,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    
+    if (validityEnabled) {
+        updateData.validFrom = validFrom;
+        updateData.validUntil = validUntil;
+    } else {
+        // Remove validity
+        updateData.validFrom = firebase.firestore.FieldValue.delete();
+        updateData.validUntil = firebase.firestore.FieldValue.delete();
+    }
+    
+    if (appliesTo === '1on1') {
+        const plans = Array.from(document.querySelectorAll('.edit-plan-check:checked')).map(c => c.value);
+        if (plans.length > 0) {
+            updateData.allowedPlans = plans;
+        } else {
+            updateData.allowedPlans = firebase.firestore.FieldValue.delete();
+        }
+    } else {
+        updateData.allowedPlans = firebase.firestore.FieldValue.delete();
+    }
+    
+    try {
+        await db.collection('coupons').doc(editingCouponId).update(updateData);
+        closeEditCouponModal();
+        alert('✅ Coupon updated successfully!');
+    } catch (err) { alert('Error: ' + err.message); }
 }
 
 /* ============ PENDING ============ */
@@ -612,13 +1146,15 @@ function loadPending() {
                     <div class="min-w-0">
                         <p class="font-black text-base text-blue-900 truncate">${p.studentName}</p>
                         <p class="text-[11px] text-slate-600 truncate">📱 ${p.studentMobile}</p>
-                        <p class="text-[11px] text-slate-600 truncate">✉️ ${p.studentEmail}</p>
+                        ${p.uniqueId ? `<p class="text-[11px] text-slate-600 truncate">🆔 ${p.uniqueId}</p>` : ''}
                     </div>
                     <span class="bg-yellow-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap">⏳ PENDING</span>
                 </div>
                 <div class="bg-white rounded-lg p-3 mb-3">
                     <p class="text-sm font-bold text-slate-800 leading-snug">📘 ${p.planName}</p>
                     <p class="text-[11px] text-slate-500 mt-1">Amount: <strong class="text-orange-600">${money(p.finalAmount)}</strong>${p.couponCode ? ` · Coupon: <strong>${p.couponCode}</strong>` : ''}</p>
+                    ${p.paymentMethod ? `<p class="text-[11px] text-slate-500 mt-0.5">💳 ${p.paymentMethod}</p>` : ''}
+                    ${p.txnId ? `<p class="text-[11px] text-slate-500 mt-0.5">🔢 Txn: ${p.txnId}</p>` : ''}
                 </div>
                 ${p.screenshot ? `<div class="mb-3"><p class="text-[10px] text-slate-600 font-bold uppercase mb-1.5">Payment Screenshot:</p><img src="${p.screenshot}" class="screenshot-img mx-auto" onclick="window.open(this.src)"></div>` : ''}
                 <div class="flex gap-2">
@@ -668,18 +1204,29 @@ function loadAllPurchases() {
                         <p class="font-bold text-slate-800 text-xs sm:text-sm truncate">${p.studentName}</p>
                         <p class="text-[10px] text-slate-600 mt-0.5 truncate">${p.planName}</p>
                         <p class="text-[10px] text-slate-600 mt-0.5">${money(p.finalAmount)}${p.couponCode ? ' · ' + p.couponCode : ''}</p>
+                        ${p.paymentMethod ? `<p class="text-[10px] text-slate-500 mt-0.5">💳 ${p.paymentMethod}</p>` : ''}
                         <p class="text-[10px] text-slate-400 mt-0.5">📅 ${formatDT(p.createdAt)}</p>
                         ${p.receiptNo ? `<p class="text-[10px] text-slate-500 mt-0.5">🧾 ${p.receiptNo}</p>` : ''}
                     </div>
                     <div class="flex items-center gap-2 flex-shrink-0">
                         <span class="text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">${icons[p.status]} ${p.status.toUpperCase()}</span>
                         ${p.status === 'approved' ? `<button onclick="viewReceipt('${doc.id}')" class="text-blue-700 font-bold text-[10px] underline">View</button>` : ''}
+                        <button onclick="deletePurchase('${doc.id}')" class="text-red-600 hover:text-red-800 font-bold text-[10px] px-1.5 py-0.5 rounded hover:bg-red-50 transition" title="Delete">🗑️</button>
                     </div>
                 </div>
             `;
             list.appendChild(div);
         });
     });
+}
+
+async function deletePurchase(id) {
+    if (!confirm('⚠️ Delete this purchase record?\n\nThis action CANNOT be undone!')) return;
+    if (!confirm('⚠️ FINAL CONFIRMATION\n\nAre you absolutely sure you want to delete this purchase?')) return;
+    try {
+        await db.collection('purchases').doc(id).delete();
+        alert('🗑️ Purchase deleted.');
+    } catch (err) { alert('Error: ' + err.message); }
 }
 
 function viewReceipt(id) {
@@ -695,6 +1242,14 @@ function closeReceiptModal() {
 
 function buildReceiptHTML(p) {
     const date = p.verifiedAt ? new Date(p.verifiedAt.toDate()).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' }) : '—';
+    const couponsHtml = (p.appliedCoupons && p.appliedCoupons.length > 0)
+        ? `<div style="margin-top: 8px; font-size: 11px; color: #166534;">
+            <strong>Coupons applied (${p.appliedCoupons.length}):</strong><br>
+            ${p.appliedCoupons.map(c => `• ${c.code} (${c.type === 'flat' ? '₹' + c.value : c.value + '%'}) → −${money(c.discount)}`).join('<br>')}
+            ${p.appliedCoupons.length > 1 ? `<br><strong>Total Discount: −${money(p.totalDiscount)}</strong>` : ''}
+        </div>`
+        : (p.couponCode ? `<div style="margin-top: 6px; font-size: 10px; color: #64748b;"><strong>Coupon:</strong> ${p.couponCode}</div>` : '');
+    
     return `
         <div style="border: 2px solid #16a34a; border-radius: 12px; padding: 18px; font-family: 'Segoe UI', sans-serif;">
             <div style="text-align: center; padding-bottom: 12px; border-bottom: 2px dashed #94a3b8;">
@@ -715,11 +1270,14 @@ function buildReceiptHTML(p) {
                 <div style="font-size: 11px; font-weight: 900; color: #1d4ed8; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 6px;">STUDENT DETAILS</div>
                 <div style="display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; gap: 8px;"><span>Name</span><strong>${p.studentName}</strong></div>
                 <div style="display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; gap: 8px;"><span>Mobile</span><strong>${p.studentMobile}</strong></div>
-                <div style="display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; gap: 8px; word-break: break-all;"><span>Email</span><strong>${p.studentEmail}</strong></div>
+                ${p.uniqueId ? `<div style="display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; gap: 8px;"><span>Unique ID</span><strong>${p.uniqueId}</strong></div>` : ''}
             </div>
             <div style="margin-bottom: 12px;">
                 <div style="font-size: 11px; font-weight: 900; color: #1d4ed8; border-bottom: 1px solid #cbd5e1; padding-bottom: 3px; margin-bottom: 6px;">PLAN ENROLLED</div>
                 <div style="font-size: 13px; font-weight: 800; color: #1e3a8a; line-height: 1.4;">${p.planName}</div>
+                ${p.admissionFee > 0 ? `<div style="margin-top:6px; font-size:11px; color:#1e3a8a;"><strong>Admission Fee:</strong> ₹${p.admissionFee}</div>` : ''}
+                ${p.monthlyFee > 0 ? `<div style="margin-top:4px; font-size:11px; color:#1e3a8a;"><strong>Monthly Fee:</strong> ₹${p.monthlyFee}</div>` : ''}
+                ${couponsHtml}
             </div>
             <div style="background: linear-gradient(135deg, #1d4ed8, #1e40af); color: white; border-radius: 8px; padding: 12px; display: flex; justify-content: space-between; align-items: center; margin: 12px 0;">
                 <span style="font-size: 11px; font-weight: 700;">AMOUNT PAID</span>
@@ -727,7 +1285,7 @@ function buildReceiptHTML(p) {
             </div>
             <div style="text-align: center; margin-top: 12px; padding-top: 10px; border-top: 2px dashed #94a3b8;">
                 <p style="font-size: 11px; color: #475569; margin: 3px 0;">Thank you for choosing English Spur!</p>
-                <p style="font-size: 11px; font-weight: 800; color: #1d4ed8; margin: 3px 0;">— Sovan Kapri, Founder & Lead Trainer</p>
+                <p style="font-size: 11px; font-weight: 800; color: #1d4ed8; margin: 3px 0;">— Sovan Kapri, Founder &amp; Lead Trainer</p>
             </div>
         </div>
     `;
@@ -764,6 +1322,8 @@ function renderStudents(students) {
         const lastLogin = formatDT(s.lastLoginAt);
         const lastLogout = formatDT(s.lastLogoutAt);
         const createdDate = formatDT(s.createdAt);
+        const uniqueId = s.uniqueId || s.id || '—';
+        const grantedCoupons = s.grantedCoupons || [];
 
         const div = document.createElement('div');
         div.className = 'student-card ' + (isBlocked ? 'blocked' : '');
@@ -776,17 +1336,29 @@ function renderStudents(students) {
                     <div class="flex items-center gap-2 flex-wrap">
                         <p class="font-black text-slate-800 text-sm truncate uppercase">${s.name || '—'}</p>
                         ${isBlocked ? '<span class="badge-red text-[9px] font-bold px-2 py-0.5 rounded-full">BLOCKED</span>' : '<span class="badge-green text-[9px] font-bold px-2 py-0.5 rounded-full">ACTIVE</span>'}
-                        ${hasCoupon ? '<span class="badge-purple text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ COUPON</span>' : ''}
+                        ${hasCoupon ? '<span class="badge-purple text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ COUPON ACCESS</span>' : ''}
                     </div>
                     <div class="mt-1.5 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-0.5">
+                        <p class="text-[11px] text-slate-600 truncate">🆔 ${uniqueId}</p>
                         <p class="text-[11px] text-slate-600 truncate">📱 ${s.mobile || '—'}</p>
-                        <p class="text-[11px] text-slate-600 truncate">✉️ ${s.email || '—'}</p>
                         <p class="text-[10px] text-slate-500">🔐 Logins: <strong class="text-green-700">${loginCount}</strong></p>
                         <p class="text-[10px] text-slate-500">🚪 Logouts: <strong class="text-red-700">${logoutCount}</strong></p>
                         <p class="text-[10px] text-slate-500">📅 Joined: ${createdDate}</p>
                         <p class="text-[10px] text-slate-500">⏰ Last login: ${lastLogin}</p>
                         ${s.lastLogoutAt ? `<p class="text-[10px] text-slate-500 sm:col-span-2">🚪 Last logout: ${lastLogout}</p>` : ''}
                     </div>
+                    ${grantedCoupons.length > 0 ? `
+                    <div class="mt-2 pt-2 border-t border-slate-200">
+                        <p class="text-[10px] font-bold text-purple-700 mb-1">🎟️ Granted Coupons (${grantedCoupons.length}):</p>
+                        <div class="flex flex-wrap gap-1">
+                            ${grantedCoupons.map(c => `
+                                <span class="bg-purple-100 text-purple-800 text-[9px] font-bold px-2 py-0.5 rounded-full border border-purple-300">
+                                    ${c.code} (${c.type === 'flat' ? '₹' + c.value : c.value + '%'})
+                                    ${c.expiresAt ? ' · ⏰ ' + new Date(c.expiresAt).toLocaleDateString('en-IN') : ' · ♾️'}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>` : ''}
                 </div>
             </div>
             <div class="mt-3 pt-3 border-t border-slate-200 flex flex-wrap gap-2">
@@ -794,9 +1366,7 @@ function renderStudents(students) {
                 <button onclick="toggleBlock('${s.id}', ${isBlocked})" class="flex-1 min-w-[100px] ${isBlocked ? 'bg-green-600 hover:bg-green-700' : 'bg-orange-600 hover:bg-orange-700'} text-white font-bold py-2 rounded-lg text-[11px] transition">
                     ${isBlocked ? '✅ Unblock' : '🚫 Block'}
                 </button>
-                <button onclick="toggleCouponAccess('${s.id}', ${hasCoupon})" class="flex-1 min-w-[140px] ${hasCoupon ? 'bg-red-600 hover:bg-red-700' : 'bg-purple-600 hover:bg-purple-700'} text-white font-bold py-2 rounded-lg text-[11px] transition">
-                    ${hasCoupon ? '🚫 Revoke Coupon' : '🎟️ Grant Coupon Access'}
-                </button>
+                <button onclick="manageGrantedCoupons('${s.id}', '${(s.name || '').replace(/'/g, "\\'")}')" class="flex-1 min-w-[120px] bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 rounded-lg text-[11px] transition">🎫 Manage Coupons</button>
                 <button onclick="deleteStudent('${s.id}', '${(s.name || '').replace(/'/g, "\\'")}')" class="flex-1 min-w-[100px] bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg text-[11px] transition">🗑️ Delete</button>
             </div>
         `;
@@ -809,8 +1379,9 @@ function filterStudents() {
     if (!q) { renderStudents(allStudents); return; }
     const filtered = allStudents.filter(s =>
         (s.name || '').toLowerCase().includes(q) ||
-        (s.email || '').toLowerCase().includes(q) ||
-        (s.mobile || '').toLowerCase().includes(q)
+        (s.mobile || '').toLowerCase().includes(q) ||
+        (s.uniqueId || '').toLowerCase().includes(q) ||
+        (s.id || '').toLowerCase().includes(q)
     );
     renderStudents(filtered);
 }
@@ -828,29 +1399,149 @@ async function toggleBlock(id, currentlyBlocked) {
     } catch (err) { alert('Error: ' + err.message); }
 }
 
-async function toggleCouponAccess(id, currentlyHasAccess) {
-    const action = currentlyHasAccess ? 'REVOKE' : 'GRANT';
-    if (!confirm(`${action} coupon access for this student?\n\n${currentlyHasAccess ? 'Student will NOT be able to use any coupon.' : 'Student will be able to use coupon codes.'}`)) return;
+/* ============ MANAGE GRANTED COUPONS ============ */
+async function manageGrantedCoupons(studentId, studentName) {
+    // Remove any existing modal first
+    closeCouponModal();
+    
+    const student = allStudents.find(s => s.id === studentId);
+    if (!student) { alert('Student not found.'); return; }
+    
+    const granted = student.grantedCoupons || [];
+    
+    // Fetch all coupons
+    const allCouponsSnap = await db.collection('coupons').get();
+    const allCoupons = [];
+    allCouponsSnap.forEach(doc => allCoupons.push({ id: doc.id, ...doc.data() }));
+    
+    if (allCoupons.length === 0) {
+        alert('⚠️ No coupons exist yet. Create some coupons first.');
+        return;
+    }
+    
+    let innerHtml = `<div style="font-family: 'Segoe UI', sans-serif;">
+        <h3 style="font-size: 16px; font-weight: 900; margin-bottom: 12px; color: #1e3a8a;">🎫 Manage Granted Coupons</h3>
+        <p style="font-size: 12px; color: #64748b; margin-bottom: 8px;">Student: <strong>${studentName}</strong></p>
+        <div style="background: #eff6ff; border-left: 3px solid #1d4ed8; padding: 8px 10px; border-radius: 6px; margin-bottom: 12px;">
+            <p style="font-size: 10px; color: #1e3a8a; font-weight: 700; margin: 0;">ℹ️ Student can ONLY apply coupons granted here.</p>
+        </div>
+        <div style="max-height: 400px; overflow-y: auto;">`;
+    
+    allCoupons.forEach(c => {
+        const isGranted = granted.some(g => g.id === c.id);
+        const isExpired = c.validUntil && new Date(c.validUntil).getTime() < Date.now();
+        innerHtml += `
+            <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border: 2px solid ${isGranted ? '#9333ea' : '#e2e8f0'}; border-radius: 8px; margin-bottom: 6px; ${isGranted ? 'background: #faf5ff;' : ''} ${isExpired ? 'opacity: 0.5;' : ''}">
+                <div>
+                    <strong style="color: #1e293b; font-size: 13px;">${c.code}</strong>
+                    <span style="font-size: 10px; color: #64748b; display: block;">
+                        ${c.appliesTo === '1on1' ? '👑 1-on-1' : '👥 Group'} · 
+                        ${c.type === 'flat' ? '₹' + c.value + ' off' : c.value + '% off'}
+                        ${c.validUntil ? ' · Expires: ' + new Date(c.validUntil).toLocaleDateString('en-IN') : ' · ♾️'}
+                    </span>
+                </div>
+                <button onclick="toggleGrantedCoupon('${studentId}', '${c.id}', ${isGranted})" 
+                    style="padding: 4px 12px; font-size: 11px; font-weight: 700; border-radius: 6px; border: none; cursor: pointer; 
+                    ${isGranted ? 'background: #ef4444; color: white;' : 'background: #9333ea; color: white;'}">
+                    ${isGranted ? '❌ Revoke' : '✅ Grant'}
+                </button>
+            </div>
+        `;
+    });
+    
+    innerHtml += `</div></div>`;
+    
+    // Create modal with proper ID and close handling
+    const modal = document.createElement('div');
+    modal.id = 'couponManageModal';
+    modal.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;';
+    modal.innerHTML = `<div style="background:white;border-radius:14px;padding:20px;max-width:480px;width:100%;max-height:90vh;overflow:hidden;">
+        ${innerHtml}
+        <button onclick="closeCouponModal()" style="width:100%;margin-top:12px;padding:10px;background:#e2e8f0;color:#334155;font-weight:700;border:none;border-radius:8px;cursor:pointer;">Close</button>
+    </div>`;
+    
+    // Click outside to close
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) closeCouponModal();
+    });
+    
+    document.body.appendChild(modal);
+}
+
+/* ✅ Proper close function */
+function closeCouponModal() {
+    const modal = document.getElementById('couponManageModal');
+    if (modal) modal.remove();
+    // Cleanup any lingering dark overlays
+    document.querySelectorAll('div[style*="rgba(0,0,0,0.7)"]').forEach(el => {
+        if (!el.id || el.id === 'couponManageModal') el.remove();
+    });
+}
+
+/* ✅ toggleGrantedCoupon — auto sets couponAccess based on granted count */
+async function toggleGrantedCoupon(studentId, couponId, currentlyGranted) {
+    // Close old modal
+    closeCouponModal();
+    
     try {
-        await db.collection('students').doc(id).update({
-            couponAccess: !currentlyHasAccess,
+        const studentRef = db.collection('students').doc(studentId);
+        const studentDoc = await studentRef.get();
+        const student = studentDoc.data();
+        let granted = student.grantedCoupons || [];
+        
+        if (currentlyGranted) {
+            granted = granted.filter(g => g.id !== couponId);
+        } else {
+            const couponDoc = await db.collection('coupons').doc(couponId).get();
+            if (couponDoc.exists) {
+                const c = couponDoc.data();
+                granted.push({
+                    id: couponId,
+                    code: c.code,
+                    type: c.type,
+                    value: c.value,
+                    appliesTo: c.appliesTo,
+                    expiresAt: c.validUntil || null,
+                    grantedAt: new Date().toISOString()
+                });
+            }
+        }
+        
+        // ✅ AUTO: couponAccess = true if student has >= 1 granted coupon, else false
+        await studentRef.update({ 
+            grantedCoupons: granted,
+            couponAccess: granted.length > 0,
             couponAccessUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             couponAccessUpdatedBy: ADMIN_EMAIL
         });
-        alert(`✅ Coupon access ${currentlyHasAccess ? 'revoked' : 'granted'}!`);
+        
+        alert(currentlyGranted ? '✅ Coupon revoked!' : '✅ Coupon granted!');
+        
+        // Refresh student list
+        loadStudents();
     } catch (err) { alert('Error: ' + err.message); }
 }
 
 async function deleteStudent(id, name) {
-    if (!confirm(`⚠️ DELETE ${name}?\n\nThis will permanently delete:\n• Student record\n• All activity logs\n• (Purchases will remain)`)) return;
+    if (!confirm(`⚠️ DELETE ${name}?\n\nThis will permanently delete:\n• Student record\n• All activity logs\n• All purchase history\n• All granted coupons`)) return;
     if (!confirm(`⚠️ FINAL CONFIRMATION\n\nAre you sure? This CANNOT be undone!`)) return;
     try {
+        // Delete student record
         await db.collection('students').doc(id).delete();
+        
+        // Delete all activity logs
         const logsSnap = await db.collection('logs').where('studentId', '==', id).get();
-        const batch = db.batch();
-        logsSnap.forEach(doc => batch.delete(doc.ref));
-        await batch.commit();
-        alert('🗑️ Student and all logs deleted.');
+        const batch1 = db.batch();
+        logsSnap.forEach(doc => batch1.delete(doc.ref));
+        await batch1.commit();
+        
+        // Delete all purchase history
+        const purchasesSnap = await db.collection('purchases').where('studentId', '==', id).get();
+        const batch2 = db.batch();
+        purchasesSnap.forEach(doc => batch2.delete(doc.ref));
+        await batch2.commit();
+        
+        alert('🗑️ Student, logs, and all purchase history deleted permanently.');
     } catch (err) { alert('Error: ' + err.message); }
 }
 
@@ -940,7 +1631,7 @@ function loadLogs() {
                             ${typeIcons[log.type] || '•'} ${log.studentName || 'Unknown'}
                             <span class="text-[10px] font-normal text-slate-500 ml-2">${(log.type || '').toUpperCase()}</span>
                         </p>
-                        <p class="text-[10px] text-slate-500 mt-0.5 truncate">📱 ${log.studentMobile || '—'} · ✉️ ${log.studentEmail || '—'}</p>
+                        <p class="text-[10px] text-slate-500 mt-0.5 truncate">📱 ${log.studentMobile || '—'}</p>
                         <p class="text-[10px] text-slate-400 mt-0.5">📅 ${formatDT(log.timestamp)}</p>
                     </div>
                     <button onclick="deleteLogFromList('${doc.id}')" class="text-red-600 hover:text-red-800 text-[10px] font-bold underline flex-shrink-0">Delete</button>
@@ -955,6 +1646,171 @@ async function deleteLogFromList(id) {
     if (!confirm('Delete this log entry?')) return;
     try { await db.collection('logs').doc(id).delete(); } catch (err) { alert('Error: ' + err.message); }
 }
+
+/* ============================================================
+   LIVE PREVIEW PANEL
+   ============================================================ */
+let previewInterval = null;
+
+function togglePreview() {
+    const panel = document.getElementById('previewPanel');
+    const toggleBtn = document.getElementById('previewToggleBtn');
+    
+    if (panel.classList.contains('show')) {
+        closePreview();
+    } else {
+        panel.classList.add('show');
+        toggleBtn.classList.add('hidden');
+        refreshPreview();
+        if (previewInterval) clearInterval(previewInterval);
+        previewInterval = setInterval(refreshPreview, 1000);
+    }
+}
+
+function closePreview() {
+    const panel = document.getElementById('previewPanel');
+    const toggleBtn = document.getElementById('previewToggleBtn');
+    panel.classList.remove('show');
+    toggleBtn.classList.remove('hidden');
+    if (previewInterval) { clearInterval(previewInterval); previewInterval = null; }
+}
+
+function getCurrentFormValues() {
+    return {
+        singleRegular: Number(document.getElementById('cfgSingleRegular').value) || 500,
+        singleSpecial: Number(document.getElementById('cfgSingleSpecial').value) || 250,
+        price8: Number(document.getElementById('cfgPrice8').value) || 2000,
+        price16: Number(document.getElementById('cfgPrice16').value) || 4000,
+        price24: Number(document.getElementById('cfgPrice24').value) || 6000,
+        price32: Number(document.getElementById('cfgPrice32').value) || 8000,
+        group2d: Number(document.getElementById('cfgGroup2d').value) || 1500,
+        group3d: Number(document.getElementById('cfgGroup3d').value) || 1900,
+        groupAdmission: Number(document.getElementById('cfgGroupAdmission').value) || 2500,
+        offerActive: document.getElementById('offerActive').checked,
+        offerEndDateTime: document.getElementById('offerEndDateTime').value,
+        offerTitle: document.getElementById('offerTitle').value,
+        offerDescription: document.getElementById('offerDescription').value
+    };
+}
+
+function formatPreviewDuration(ms) {
+    if (ms <= 0) return '⛔ EXPIRED';
+    const s = Math.floor(ms / 1000);
+    const d = Math.floor(s / 86400);
+    const h = Math.floor((s % 86400) / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const sc = s % 60;
+    if (d > 0) return `${d}d ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+    if (h > 0) return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+    return `${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+}
+
+function refreshPreview() {
+    const v = getCurrentFormValues();
+    
+    document.getElementById('pvReg').textContent = v.singleRegular.toLocaleString('en-IN');
+    document.getElementById('pvSpec').textContent = v.singleSpecial.toLocaleString('en-IN');
+
+    const timerEl = document.getElementById('pvTimer');
+    if (!v.offerActive) {
+        timerEl.textContent = '⛔ OFFER OFF';
+        timerEl.style.color = '#fecaca';
+    } else if (v.offerEndDateTime) {
+        const remaining = new Date(v.offerEndDateTime).getTime() - Date.now();
+        timerEl.textContent = formatPreviewDuration(remaining);
+        timerEl.style.color = remaining > 0 ? '#fef08a' : '#fecaca';
+    } else {
+        timerEl.textContent = '⏸️ No end time';
+        timerEl.style.color = '#fecaca';
+    }
+
+    const contentEl = document.getElementById('previewContent');
+    
+    const plan8Regular = v.singleRegular * 8;
+    const plan16Regular = v.singleRegular * 16;
+    const plan24Regular = v.singleRegular * 24;
+    const plan32Regular = v.singleRegular * 32;
+
+    const group2NewTotal = v.groupAdmission + v.group2d;
+    const group3NewTotal = v.groupAdmission + v.group3d;
+
+    contentEl.innerHTML = `
+        <div class="preview-plan-table">
+            <div class="preview-plan-header">👑 1-on-1 Adults</div>
+            <div class="preview-row">
+                <span class="pr-name">Single Class</span>
+                <span class="pr-price">${money(v.singleSpecial)}<span class="pr-old">${money(v.singleRegular)}</span></span>
+            </div>
+            <div class="preview-row">
+                <span class="pr-name">8 Days</span>
+                <span class="pr-price">${money(v.price8)}<span class="pr-old">${money(plan8Regular)}</span></span>
+            </div>
+            <div class="preview-row">
+                <span class="pr-name">16 Days</span>
+                <span class="pr-price">${money(v.price16)}<span class="pr-old">${money(plan16Regular)}</span></span>
+            </div>
+            <div class="preview-row">
+                <span class="pr-name">24 Days</span>
+                <span class="pr-price">${money(v.price24)}<span class="pr-old">${money(plan24Regular)}</span></span>
+            </div>
+            <div class="preview-row">
+                <span class="pr-name">32 Days</span>
+                <span class="pr-price">${money(v.price32)}<span class="pr-old">${money(plan32Regular)}</span></span>
+            </div>
+        </div>
+
+        <div class="preview-plan-table">
+            <div class="preview-plan-header orange">👥 Group — 🆕 New Students</div>
+            <div class="preview-row">
+                <span class="pr-name">2 Days/Week</span>
+                <span class="pr-price">${money(group2NewTotal)}<span class="pr-old">Adm ${money(v.groupAdmission)} + ${money(v.group2d)}</span></span>
+            </div>
+            <div class="preview-row">
+                <span class="pr-name">3 Days/Week</span>
+                <span class="pr-price">${money(group3NewTotal)}<span class="pr-old">Adm ${money(v.groupAdmission)} + ${money(v.group3d)}</span></span>
+            </div>
+        </div>
+
+        <div class="preview-plan-table">
+            <div class="preview-plan-header green">♻️ Group — Existing Students</div>
+            <div class="preview-row">
+                <span class="pr-name">2 Days/Week</span>
+                <span class="pr-price">${money(v.group2d)}<span class="pr-old">Monthly Fee</span></span>
+            </div>
+            <div class="preview-row">
+                <span class="pr-name">3 Days/Week</span>
+                <span class="pr-price">${money(v.group3d)}<span class="pr-old">Monthly Fee</span></span>
+            </div>
+        </div>
+
+        <div style="text-align: center; font-size: 9px; color: #94a3b8; margin-top: 8px; font-weight: 600;">
+            ⚡ Live preview — form values (before save)
+        </div>
+    `;
+}
+
+function attachPreviewListeners() {
+    const inputIds = [
+        'cfgSingleRegular', 'cfgSingleSpecial',
+        'cfgPrice8', 'cfgPrice16', 'cfgPrice24', 'cfgPrice32',
+        'cfgGroup2d', 'cfgGroup3d', 'cfgGroupAdmission',
+        'offerActive', 'offerEndDateTime', 'offerTitle', 'offerDescription'
+    ];
+    
+    inputIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && !el.dataset.previewBound) {
+            el.dataset.previewBound = '1';
+            el.addEventListener('input', refreshPreview);
+            el.addEventListener('change', refreshPreview);
+        }
+    });
+}
+
+// Auto-attach listeners once panel loads
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(attachPreviewListeners, 1000);
+});
 </script>
 </body>
 </html>

@@ -31,9 +31,9 @@
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md border-t-8 border-red-600 text-center p-6">
         <div class="text-5xl mb-3">🚫</div>
         <h1 class="text-2xl font-black text-red-600 mb-2">Access Blocked</h1>
-        <p class="text-sm text-slate-600 mb-4">Your access has been blocked by admin.</p>
-        <p class="text-[11px] text-slate-500 mb-2">আপনার access বন্ধ করা হয়েছে।</p>
-        <a href="https://wa.me/919875340842?text=My%20access%20is%20blocked" target="_blank" class="inline-flex items-center gap-2 bg-[#25D366] text-white font-bold px-5 py-2.5 rounded-full mt-3 text-sm">💬 Contact Admin</a>
+        <p class="text-sm text-slate-600 mb-1">Your access has been blocked by admin.</p>
+        <p class="text-[12px] text-slate-500 mb-4">আপনার অ্যাক্সেস বন্ধ করা হয়েছে।</p>
+        <a href="https://wa.me/919875340842?text=My%20access%20is%20blocked" target="_blank" class="inline-flex items-center gap-2 bg-[#25D366] text-white font-bold px-5 py-2.5 rounded-full mt-3 text-sm">💬 Contact Admin / অ্যাডমিনকে জানান</a>
     </div>
 </div>
 
@@ -47,7 +47,7 @@
         </div>
         <div class="bg-blue-50 border-l-4 border-blue-600 p-3 mx-4 mt-4 rounded-r-lg">
             <p class="text-[11px] font-bold text-blue-900">👋 Welcome! Please fill your details</p>
-            <p class="text-[10px] text-slate-600 mt-1">আপনার তথ্য দিন — এরপর plans দেখতে ও কিনতে পারবেন।</p>
+            <p class="text-[10px] text-slate-600 mt-1">স্বাগতম! আপনার তথ্য দিন — এরপর plans দেখতে ও কিনতে পারবেন।</p>
         </div>
         <form id="infoForm" onsubmit="handleInfoSubmit(event)" class="p-5 space-y-4">
             <div>
@@ -55,7 +55,7 @@
                 <input type="text" id="studentName" required placeholder="e.g. RAHUL SHARMA" maxlength="50"
                        class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm uppercase" 
                        oninput="this.value = this.value.toUpperCase()">
-                <p class="text-[10px] text-slate-500 mt-1 pl-1">📝 Name will be in CAPITAL LETTERS</p>
+                <p class="text-[10px] text-slate-500 mt-1 pl-1">📝 Name will be in CAPITAL LETTERS / নাম বড় অক্ষরে হবে</p>
             </div>
             <div>
                 <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">WhatsApp <span class="text-red-500">*</span></label>
@@ -79,18 +79,12 @@
                            oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10); updateMobileCounter();">
                 </div>
                 <div class="flex justify-between items-center mt-1 pl-1">
-                    <p id="mobileError" class="text-red-600 text-[10px] hidden font-bold">⚠️ Exactly 10 digits required</p>
+                    <p id="mobileError" class="text-red-600 text-[10px] hidden font-bold">⚠️ Exactly 10 digits required / ঠিক ১০ ডিজিট দিতে হবে</p>
                     <span id="mobileCounter" class="text-[9px] text-slate-400 font-bold ml-auto">0/10</span>
                 </div>
             </div>
-            <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Email <span class="text-red-500">*</span></label>
-                <input type="email" id="studentEmail" required placeholder="student@gmail.com" 
-                       class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm" 
-                       oninput="this.value = this.value.toLowerCase()">
-            </div>
             <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black p-3.5 rounded-xl text-xs uppercase tracking-wider shadow-md">
-                🚀 Continue
+                🚀 Continue / চালিয়ে যান
             </button>
         </form>
     </div>
@@ -124,7 +118,7 @@
                 <div class="text-[10px] font-extrabold uppercase tracking-widest opacity-95">⏰ Limited Time Special Rate</div>
                 <div class="text-2xl sm:text-3xl font-black mt-1.5 leading-tight">
                     Regular <span class="line-through opacity-75" id="bannerRegular">₹500</span>/class → NOW
-                    <span class="text-yellow-300" id="bannerOffer">₹300</span>/class
+                    <span class="text-yellow-300" id="bannerOffer">₹250</span>/class
                 </div>
                 <div class="mt-3 text-[10px] font-bold uppercase tracking-wider opacity-95">⚡ Offer expires in</div>
                 <div id="countdown" class="font-mono text-3xl sm:text-4xl font-black text-yellow-200 leading-tight">--:--</div>
@@ -163,71 +157,320 @@
                     <span class="font-black text-blue-900 text-sm">Total Payable:</span>
                     <span id="coTotal" class="text-lg font-black text-blue-900">₹0</span>
                 </div>
+                <div id="coSavingsHighlight" class="mt-3 hidden"></div>
             </div>
             <div id="couponSection" class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-3 hidden">
-                <p class="text-[10px] font-black text-amber-900 uppercase mb-2">🎟️ Apply Coupon</p>
+                <p class="text-[10px] font-black text-amber-900 uppercase mb-2">🎟️ Apply Coupon <span class="text-slate-500 font-semibold normal-case">(Max 3)</span></p>
                 <div id="couponBox"></div>
+                <div id="appliedCouponsList" class="mt-2 space-y-1.5"></div>
                 <button onclick="requestCouponViaWhatsApp()" class="w-full mt-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-black text-[11px] px-4 py-2.5 rounded-xl shadow flex items-center justify-center gap-2 uppercase">
                     💬 Request Coupon Code
                 </button>
             </div>
             <button onclick="proceedToPayment()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black p-3.5 rounded-xl text-xs sm:text-sm uppercase mb-2">
-                💳 Proceed to Payment
+                💳 Proceed to Payment / পেমেন্টে এগিয়ে যান
             </button>
         </div>
     </div>
 
-    <!-- VIEW: PAYMENT -->
+    <!-- VIEW: PAYMENT (6-STEP WIZARD) -->
     <div id="view-payment" class="hidden">
         <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-5">
-            <h2 class="text-base sm:text-lg font-black text-blue-900 mb-3 text-center">💳 Payment</h2>
-            <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-3">
-                <p id="payPlanName" class="text-xs font-bold text-blue-900 mb-1 leading-snug"></p>
-                <p id="payLines" class="text-[11px] text-slate-700 leading-snug"></p>
-            </div>
-            <div class="bg-gradient-to-r from-blue-700 to-blue-900 text-white rounded-xl p-4 text-center mb-3">
-                <div class="text-[10px] font-bold uppercase tracking-widest opacity-90">Amount to Pay</div>
-                <div id="payAmount" class="text-3xl font-black mt-1">₹0</div>
-            </div>
-            <div class="bg-green-50 border border-green-200 rounded-lg p-3 text-xs text-green-900 mb-3">
-                <p class="font-bold mb-1 text-[11px]">📌 How to pay:</p>
-                <ol class="list-decimal list-inside space-y-0.5 text-[10.5px]">
-                    <li>Scan QR code below OR copy UPI ID</li>
-                    <li>Pay exactly <strong id="payAmountInline">₹0</strong></li>
-                    <li>Take screenshot</li>
-                    <li>Upload below</li>
-                </ol>
-            </div>
-            <div class="bg-white border-2 border-dashed border-slate-300 rounded-2xl p-4 sm:p-5 text-center mb-3">
-                <p class="text-[11px] font-bold text-slate-600 uppercase mb-3">📱 Scan QR Code to Pay</p>
-                <img src="SOVAN KAPRI GOOGLE PAY.jpg" alt="QR Code" class="mx-auto w-full max-w-[320px] sm:max-w-[420px] rounded-xl shadow-md cursor-pointer active:scale-95" onclick="window.open(this.src, '_blank')" onerror="this.style.display='none'">
-                <p class="text-[10px] text-slate-500 mt-3">👆 Tap the QR to zoom</p>
-            </div>
-            <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-3">
-                <p class="text-[11px] font-bold text-amber-900 mb-1">UPI ID:</p>
-                <div class="flex items-center gap-2">
-                    <span class="flex-1 bg-white rounded px-2 py-1.5 text-[11px] font-bold text-amber-900 break-all" id="upiIdText">sovankapri-1@okhdfcbank</span>
-                    <button onclick="copyUpi()" class="bg-amber-600 text-white text-[10px] font-bold px-3 py-1.5 rounded">Copy</button>
+
+            <!-- ============ STEP INDICATOR (6 dots) ============ -->
+            <div class="flex items-center justify-center gap-0.5 sm:gap-1 mb-5 overflow-x-auto pb-2">
+                <div class="flex items-center gap-1 flex-shrink-0">
+                    <div id="stepDot1Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-700 text-white flex items-center justify-center font-black text-[10px] sm:text-xs shadow">1</div>
+                    <span class="text-[9px] sm:text-[10px] font-bold text-blue-700 hidden sm:inline">প্রস্তুতি</span>
+                </div>
+                <div id="stepLine1" class="w-3 sm:w-6 h-1 bg-slate-200 rounded"></div>
+                <div class="flex items-center gap-1 flex-shrink-0">
+                    <div id="stepDot2Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs">2</div>
+                    <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline">পেমেন্ট?</span>
+                </div>
+                <div id="stepLine2" class="w-3 sm:w-6 h-1 bg-slate-200 rounded"></div>
+                <div class="flex items-center gap-1 flex-shrink-0">
+                    <div id="stepDot3Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs">3</div>
+                    <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline">পদ্ধতি</span>
+                </div>
+                <div id="stepLine3" class="w-3 sm:w-6 h-1 bg-slate-200 rounded"></div>
+                <div class="flex items-center gap-1 flex-shrink-0">
+                    <div id="stepDot4Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs">4</div>
+                    <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline">ট্রানজেকশন</span>
+                </div>
+                <div id="stepLine4" class="w-3 sm:w-6 h-1 bg-slate-200 rounded"></div>
+                <div class="flex items-center gap-1 flex-shrink-0">
+                    <div id="stepDot5Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs">5</div>
+                    <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline">স্ক্রিনশট</span>
+                </div>
+                <div id="stepLine5" class="w-3 sm:w-6 h-1 bg-slate-200 rounded"></div>
+                <div class="flex items-center gap-1 flex-shrink-0">
+                    <div id="stepDot6Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs">6</div>
+                    <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline">জমা</span>
                 </div>
             </div>
-            <div class="bg-green-50 border border-green-200 rounded-xl p-3 mb-3">
-                <p class="text-[11px] font-black text-green-900 uppercase mb-2">📸 Upload Payment Screenshot *</p>
-                <input type="file" id="screenshotInput" accept="image/*" class="w-full text-xs file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-green-600 file:text-white file:font-bold file:text-xs">
-                <div id="previewBox" class="mt-2 hidden">
-                    <img id="previewImg" class="max-w-full max-h-48 rounded-lg border-2 border-green-300 mx-auto">
+
+            <!-- ============ STEP 1: READY TO PAY ============ -->
+            <div id="payStep1">
+                <div class="text-center mb-4">
+                    <div class="text-5xl mb-2">💳</div>
+                    <h3 class="text-xl font-black text-blue-900">পেমেন্ট করতে প্রস্তুত</h3>
+                    <p class="text-sm text-slate-600 mt-2 font-semibold">Ready to Pay</p>
+                    <p class="text-[12px] text-slate-500 mt-1 font-semibold">নিচে amount আর QR/UPI দেখুন</p>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Check the amount and QR/UPI below</p>
+                </div>
+
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-3">
+                    <p id="payPlanName" class="text-xs font-bold text-blue-900 mb-1 leading-snug"></p>
+                    <p id="payLines" class="text-[11px] text-slate-700 leading-snug"></p>
+                </div>
+
+                <div class="bg-gradient-to-r from-blue-700 to-blue-900 text-white rounded-xl p-4 text-center mb-4">
+                    <div class="text-[10px] font-bold uppercase tracking-widest opacity-90">Amount to Pay / পরিশোধযোগ্য টাকা</div>
+                    <div id="payAmount" class="text-3xl font-black mt-1">₹0</div>
+                </div>
+
+                <div class="bg-white border-2 border-dashed border-slate-300 rounded-2xl p-4 sm:p-5 text-center mb-3">
+                    <p class="text-sm font-black text-slate-700 uppercase mb-1">📱 Scan QR to Pay</p>
+                    <p class="text-[11px] text-slate-500 mb-3 font-semibold">পেমেন্ট করার জন্য QR স্ক্যান করুন</p>
+                    <img src="SOVAN KAPRI GOOGLE PAY.jpg" alt="QR Code" class="mx-auto w-full max-w-[300px] sm:max-w-[380px] rounded-xl shadow-md cursor-pointer active:scale-95" onclick="window.open(this.src, '_blank')" onerror="this.style.display='none'">
+                    <p class="text-[11px] text-slate-500 mt-3 font-semibold">👆 Tap the QR to zoom / QR টি জুম করতে ট্যাপ করুন</p>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-5">
+                    <p class="text-sm font-black text-amber-900 mb-1.5">UPI ID / UPI আইডি:</p>
+                    <div class="flex items-center gap-2">
+                        <span class="flex-1 bg-white rounded px-2 py-1.5 text-[12px] font-bold text-amber-900 break-all" id="upiIdText">sovankapri-1@okhdfcbank</span>
+                        <button onclick="copyUpi()" class="bg-amber-600 text-white text-[11px] font-bold px-3 py-1.5 rounded">Copy / কপি</button>
+                    </div>
+                </div>
+
+                <button onclick="payStepGo(2)" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black py-3.5 rounded-xl text-sm sm:text-base shadow-md uppercase mb-2">
+                    📱 (Amount Paid / টাকা পেমেন্ট করা হয়েছে) Next / পরবর্তী ধাপ →
+                </button>
+                <button onclick="showView('checkout')" class="w-full bg-slate-100 text-slate-700 font-bold p-2.5 rounded-xl text-xs hover:bg-slate-200">
+                    ← Back to Review / পর্যালোচনায় ফিরে যান
+                </button>
+            </div>
+
+            <!-- ============ STEP 2: DID YOU PAY? ============ -->
+            <div id="payStep2" class="hidden">
+                <div class="text-center mb-4">
+                    <div class="text-5xl mb-2">❓</div>
+                    <h3 class="text-xl font-black text-blue-900">আপনি কি পেমেন্ট করেছেন?</h3>
+                    <p class="text-sm text-slate-600 mt-2 font-semibold">Did you pay?</p>
+                    <p class="text-[12px] text-slate-500 mt-1 font-semibold">টাকা পাঠানোর পরেই "Yes" চাপুন</p>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Tap "Yes" only after sending the money</p>
+                </div>
+
+                <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-5">
+                    <p class="text-[11px] font-black text-blue-700 uppercase mb-1 text-center">Amount you should have sent / আপনার পাঠানো উচিত ছিল</p>
+                    <p class="text-3xl font-black text-blue-900 text-center" id="payStep2Amount">₹0</p>
+                </div>
+
+                <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl p-4 mb-5 text-center">
+                    <p class="text-sm font-black uppercase tracking-widest">⚠️ Honesty Check / সততার সাথে উত্তর দিন</p>
+                    <p class="text-[12px] mt-1.5 opacity-95 font-semibold">শুধু তখনই "Yes" চাপুন যখন আপনি সত্যিই টাকা পাঠিয়েছেন। মিথ্যা order admin বাতিল করবে।</p>
+                    <p class="text-[11px] mt-1 opacity-90">Tap "Yes" only if you really sent the money. Fake orders will be rejected.</p>
+                </div>
+
+                <div class="space-y-3 mb-4">
+                    <button onclick="payStepGo(3)" class="w-full bg-green-600 hover:bg-green-700 text-white font-black py-3.5 rounded-xl text-sm sm:text-base shadow-md uppercase">
+                        ✅ Yes, I've Paid / হ্যাঁ, আমি দিয়েছি
+                    </button>
+                    <button onclick="payCancel()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 rounded-xl text-sm">
+                        ❌ No / Not Yet / না
+                    </button>
+                </div>
+
+                <button onclick="payStepGo(1)" class="w-full bg-slate-100 text-slate-500 font-bold p-2.5 rounded-xl text-xs hover:bg-slate-200">
+                    ← Back / পিছনে
+                </button>
+            </div>
+
+            <!-- ============ STEP 3: PAYMENT METHOD ============ -->
+            <div id="payStep3" class="hidden">
+                <div class="text-center mb-5">
+                    <div class="text-5xl mb-2">💳</div>
+                    <h3 class="text-xl font-black text-blue-900">পেমেন্ট পদ্ধতি</h3>
+                    <p class="text-sm text-slate-600 mt-2 font-semibold">Payment Method</p>
+                    <p class="text-[12px] text-slate-500 mt-1 font-semibold">আপনি কীভাবে টাকা পাঠিয়েছেন?</p>
+                    <p class="text-[11px] text-slate-400 mt-0.5">How did you send the money?</p>
+                </div>
+
+                <p class="text-sm font-black text-slate-700 uppercase mb-3">👇 Select one option / একটি অপশন বেছে নিন:</p>
+                <div class="space-y-3 mb-6">
+                    <label class="flex items-center gap-3 p-4 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition">
+                        <input type="radio" name="payMethod" value="Google Pay (UPI)" class="w-5 h-5 accent-blue-700 flex-shrink-0" checked>
+                        <div class="flex items-center gap-3 flex-1">
+                            <span class="text-2xl">📱</span>
+                            <span class="font-black text-base sm:text-lg text-slate-800">Google Pay / PhonePe / Paytm</span>
+                        </div>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition">
+                        <input type="radio" name="payMethod" value="Bank Transfer" class="w-5 h-5 accent-blue-700 flex-shrink-0">
+                        <div class="flex items-center gap-3 flex-1">
+                            <span class="text-2xl">🏦</span>
+                            <span class="font-black text-base sm:text-lg text-slate-800">ব্যাংক ট্রান্সফার / NEFT / IMPS</span>
+                        </div>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition">
+                        <input type="radio" name="payMethod" value="Cash" class="w-5 h-5 accent-blue-700 flex-shrink-0">
+                        <div class="flex items-center gap-3 flex-1">
+                            <span class="text-2xl">💵</span>
+                            <span class="font-black text-base sm:text-lg text-slate-800">নগদ টাকা (সরাসরি) / Cash (in person)</span>
+                        </div>
+                    </label>
+                    <label class="flex items-center gap-3 p-4 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition">
+                        <input type="radio" name="payMethod" value="Other" class="w-5 h-5 accent-blue-700 flex-shrink-0">
+                        <div class="flex items-center gap-3 flex-1">
+                            <span class="text-2xl">🔗</span>
+                            <span class="font-black text-base sm:text-lg text-slate-800">অন্য কোনো পদ্ধতি / Other</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="flex gap-2">
+                    <button onclick="payStepGo(2)" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-xl text-sm">← Back / পিছনে</button>
+                    <button onclick="payStepGo(4)" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-black py-3.5 rounded-xl text-base shadow-md uppercase">Next / পরবর্তী →</button>
                 </div>
             </div>
-            <button onclick="submitPurchase()" class="w-full bg-green-600 hover:bg-green-700 text-white font-black p-3.5 rounded-xl text-xs sm:text-sm uppercase mb-2">
-                ✅ Submit Order
-            </button>
-            <button onclick="showView('checkout')" class="w-full bg-slate-200 text-slate-700 font-bold p-3 rounded-xl text-xs sm:text-sm hover:bg-slate-300">
-                ← Back to Review
-            </button>
-            <div id="thankYouBox" class="hidden mt-3 bg-gradient-to-br from-green-100 to-emerald-100 border-2 border-green-500 rounded-xl p-4 text-center">
-                <div class="text-4xl mb-1">🎉</div>
-                <p class="font-black text-green-900 uppercase text-sm">Thank You!</p>
-                <p class="text-[11px] text-green-800 font-semibold mt-2">Order submitted. Our team will verify and send receipt on WhatsApp.</p>
+
+            <!-- ============ STEP 4: TRANSACTION ID ============ -->
+            <div id="payStep4" class="hidden">
+                <div class="text-center mb-5">
+                    <div class="text-5xl mb-2">🔢</div>
+                    <h3 class="text-xl font-black text-blue-900">ট্রানজেকশন আইডি</h3>
+                    <p class="text-sm text-slate-600 mt-2 font-semibold">Transaction ID / Reference</p>
+                    <p class="text-[12px] text-slate-500 mt-1 font-semibold">ঐচ্ছিক — তবে দিলে admin দ্রুত verify করতে পারবে</p>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Optional — helps admin verify faster</p>
+                </div>
+
+                <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-4">
+                    <p class="text-[12px] text-slate-700 font-semibold">💡 Open your UPI app → payment history → copy <strong>UTR / Transaction ID</strong> and paste here. Example: 423456789012</p>
+                    <p class="text-[11px] text-slate-500 font-semibold mt-1">💡 UPI অ্যাপে পেমেন্ট history খুলে <strong>UTR / Transaction ID</strong> কপি করে এখানে পেস্ট করুন।</p>
+                </div>
+
+                <div class="mb-5">
+                    <label class="text-sm font-black text-slate-700 uppercase mb-2 block">Txn / UTR ID (Optional) / ট্রানজেকশন আইডি (ঐচ্ছিক)</label>
+                    <input type="text" id="payTxnInput" placeholder="e.g. 423456789012" maxlength="30"
+                           class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-bold text-base" 
+                           oninput="this.value = this.value.replace(/[^0-9A-Za-z]/g, '').slice(0, 30)">
+                    <p class="text-[11px] text-slate-500 mt-2 font-semibold">🔒 Admin will cross-check your payment with this ID</p>
+                    <p class="text-[10px] text-slate-400 mt-0.5">🔒 এই ID দিয়ে admin আপনার পেমেন্ট যাচাই করবে</p>
+                </div>
+
+                <div class="flex gap-2">
+                    <button onclick="payStepGo(3)" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-xl text-sm">← Back / পিছনে</button>
+                    <button onclick="payStepGo(5)" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-black py-3.5 rounded-xl text-base shadow-md uppercase">Next / পরবর্তী →</button>
+                </div>
             </div>
+
+            <!-- ============ STEP 5: SCREENSHOT UPLOAD ============ -->
+            <div id="payStep5" class="hidden">
+                <div class="text-center mb-5">
+                    <div class="text-5xl mb-2">📸</div>
+                    <h3 class="text-xl font-black text-blue-900">স্ক্রিনশট আপলোড করুন</h3>
+                    <p class="text-sm text-slate-600 mt-2 font-semibold">Upload Screenshot</p>
+                    <p class="text-[12px] text-slate-500 mt-1 font-semibold">পেমেন্ট সফল হওয়ার স্ক্রিনশট আপলোড করুন</p>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Upload the successful payment screenshot</p>
+                </div>
+
+                <div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-4">
+                    <p class="text-sm font-black text-green-900 uppercase mb-1">📸 Select Your Screenshot *</p>
+                    <p class="text-[11px] text-green-800 font-semibold mb-2">আপনার স্ক্রিনশট নির্বাচন করুন *</p>
+                    <input type="file" id="screenshotInput" accept="image/*" class="w-full text-xs file:mr-2 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:bg-green-600 file:text-white file:font-bold file:text-xs file:cursor-pointer">
+                    <div id="previewBox" class="mt-3 hidden">
+                        <p class="text-[11px] text-green-800 font-black mb-2">✅ Screenshot Preview / স্ক্রিনশট প্রিভিউ:</p>
+                        <img id="previewImg" class="max-w-full max-h-64 rounded-lg border-2 border-green-300 mx-auto shadow">
+                        <button onclick="clearScreenshot()" class="mt-2 w-full bg-red-100 hover:bg-red-200 text-red-700 font-bold py-2 rounded-lg text-[11px]">🗑️ Remove & Re-upload / মুছে ফেলুন ও আবার আপলোড করুন</button>
+                    </div>
+                    <p id="screenshotWarning" class="text-[11px] text-red-600 font-bold mt-2 hidden">⚠️ Upload a screenshot before proceeding / এগিয়ে যাওয়ার আগে স্ক্রিনশট আপলোড করুন</p>
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+                    <p class="text-[12px] text-amber-900 font-black">💡 Tips:</p>
+                    <ul class="list-disc list-inside text-[11px] text-amber-800 mt-1.5 space-y-0.5 font-semibold">
+                        <li>Amount, date, and UPI ID must be clear in the screenshot</li>
+                        <li>স্ক্রিনশটে amount, তারিখ, UPI ID স্পষ্ট থাকতে হবে</li>
+                        <li>Take a full-screen screenshot, not a partial one</li>
+                        <li>পুরো স্ক্রিনের স্ক্রিনশট নিন, আংশিক নয়</li>
+                    </ul>
+                </div>
+
+                <div class="flex gap-2">
+                    <button onclick="payStepGo(4)" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-xl text-sm">← Back / পিছনে</button>
+                    <button onclick="payStepGo(6)" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-black py-3.5 rounded-xl text-base shadow-md uppercase">Next / পরবর্তী →</button>
+                </div>
+            </div>
+
+            <!-- ============ STEP 6: FINAL CONFIRM & SUBMIT ============ -->
+            <div id="payStep6" class="hidden">
+                <div class="text-center mb-5">
+                    <div class="text-5xl mb-2">🎯</div>
+                    <h3 class="text-xl font-black text-blue-900">চূড়ান্ত নিশ্চিতকরণ</h3>
+                    <p class="text-sm text-slate-600 mt-2 font-semibold">Final Confirmation</p>
+                    <p class="text-[12px] text-slate-500 mt-1 font-semibold">সব তথ্য দেখে নিন তারপর submit করুন</p>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Review all info and then submit</p>
+                </div>
+
+                <div class="bg-slate-50 border-2 border-slate-200 rounded-xl p-4 mb-4 space-y-2">
+                    <div class="flex justify-between text-xs gap-2">
+                        <span class="text-slate-600 flex-shrink-0 font-semibold">👤 Student / শিক্ষার্থী</span>
+                        <strong class="text-slate-800 text-right" id="payStep6Name">—</strong>
+                    </div>
+                    <div class="flex justify-between text-xs gap-2">
+                        <span class="text-slate-600 flex-shrink-0 font-semibold">🆔 Unique ID / ইউনিক আইডি</span>
+                        <strong class="text-slate-800 text-right break-all" id="payStep6Uid">—</strong>
+                    </div>
+                    <div class="flex justify-between text-xs gap-2">
+                        <span class="text-slate-600 flex-shrink-0 font-semibold">📘 Plan / প্ল্যান</span>
+                        <strong class="text-slate-800 text-right max-w-[60%]" id="payStep6Plan">—</strong>
+                    </div>
+                    <div class="flex justify-between text-xs gap-2">
+                        <span class="text-slate-600 flex-shrink-0 font-semibold">💳 Method / পদ্ধতি</span>
+                        <strong class="text-slate-800 text-right" id="payStep6Method">—</strong>
+                    </div>
+                    <div class="flex justify-between text-xs gap-2">
+                        <span class="text-slate-600 flex-shrink-0 font-semibold">🔢 Txn ID / ট্রানজেকশন</span>
+                        <strong class="text-slate-800 text-right break-all" id="payStep6Txn">—</strong>
+                    </div>
+                    <div class="border-t border-dashed border-slate-300 pt-2 flex justify-between text-sm">
+                        <span class="font-black text-slate-700">Amount Paid / পরিশোধিত</span>
+                        <strong class="text-orange-600 text-base" id="payStep6Amount">₹0</strong>
+                    </div>
+                    <div class="flex justify-between text-xs gap-2">
+                        <span class="text-slate-600 flex-shrink-0 font-semibold">📸 Screenshot / স্ক্রিনশট</span>
+                        <strong class="text-green-700" id="payStep6Screenshot">✅ Uploaded</strong>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-4">
+                    <p class="text-sm font-black text-blue-900">📤 Submit Confirmation / জমা দেওয়ার নিশ্চিতকরণ</p>
+                    <p class="text-[11px] text-slate-600 mt-1 font-semibold">Submit করলে WhatsApp-এ সব details চলে যাবে। Admin verify করে receipt পাঠাবে।</p>
+                    <p class="text-[10px] text-slate-500 mt-0.5">On submit, all details go to WhatsApp. Admin will verify and send receipt.</p>
+                </div>
+
+                <div class="flex gap-2 mb-2">
+                    <button onclick="payStepGo(5)" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-xl text-sm">← Back / পিছনে</button>
+                    <button id="paySubmitBtn" onclick="submitPurchase()" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-black py-3.5 rounded-xl text-base shadow-md uppercase">
+                        ✅ Submit / জমা দিন
+                    </button>
+                </div>
+            </div>
+
+            <!-- ============ SUCCESS ============ -->
+            <div id="thankYouBox" class="hidden mt-4 bg-gradient-to-br from-green-100 to-emerald-100 border-2 border-green-500 rounded-xl p-5 text-center">
+                <div class="text-5xl mb-2">🎉</div>
+                <p class="font-black text-green-900 uppercase text-lg">Order Submitted!</p>
+                <p class="font-black text-green-800 text-base">অর্ডার জমা হয়েছে!</p>
+                <p class="text-[12px] text-green-800 font-semibold mt-2">আপনার অর্ডার admin-এর কাছে চলে গেছে।</p>
+                <p class="text-[11px] text-green-700 font-semibold">Your order has been sent to admin.</p>
+                <p class="text-[12px] text-green-800 font-semibold mt-1">Verify হলে WhatsApp-এ receipt পাবেন।</p>
+                <p class="text-[11px] text-green-700 font-semibold">You'll receive the receipt on WhatsApp after verification.</p>
+                <button onclick="showView('plans')" class="mt-3 bg-blue-700 hover:bg-blue-800 text-white font-bold px-5 py-2.5 rounded-xl text-sm">🏠 Back to Plans / প্ল্যানে ফিরে যান</button>
+            </div>
+
         </div>
     </div>
 
@@ -257,33 +500,42 @@ const db = firebase.firestore();
 
 const PHONE = '919875340842';
 const UPI_ID = 'sovankapri-1@okhdfcbank';
-const ADMISSION_FEE = 2500;
 const STORAGE_KEY = 'englishSpurStudent';
 const PLAN_KEY = 'englishSpurSelectedPlan';
-const COUPON_KEY = 'englishSpurAppliedCoupon';
+const COUPON_KEY = 'englishSpurAppliedCoupons';
 const LOGOUT_FLAG = 'englishSpurLoggedOut';
+const MAX_COUPONS = 3;
+
+/* ============ DYNAMIC STATE ============ */
+let SINGLE_REGULAR = 500;
+let SINGLE_SPECIAL = 250;
+let ADMISSION_FEE = 2500;
+
+let oneOnOnePlans = [
+    { key: 's1',  sessions: 1,  price: 250,  label: 'Single Class (1 Day Routine)' },
+    { key: 's8',  sessions: 8,  price: 2000, label: '8 Days Standard Plan' },
+    { key: 's16', sessions: 16, price: 4000, label: '16 Days Advance Plan' },
+    { key: 's24', sessions: 24, price: 6000, label: '24 Days Executive Plan' },
+    { key: 's32', sessions: 32, price: 8000, label: '32 Days Ultimate Master Plan' }
+];
+
+let groupPrices = { group2d: 1500, group3d: 1900 };
 
 let currentStudent = null;
-let offerConfig = { regularRate: 500, offerRate: 300, active: true, endDateTime: null, title: '', description: '' };
+let offerConfig = { active: true, endDateTime: null, title: '', description: '' };
 let coupons = {};
 let offerDeadline = 0;
 let currentTab = 'all';
 let selectedPlan = null;
-let appliedCoupon = null;
+let appliedCoupons = [];
+let pendingCouponCodes = [];
 let screenshotBase64 = null;
 let timerInterval = null;
 let offerExpiredHandled = false;
 let studentListenerActive = false;
 let isLoggingOut = false;
+let currentPayStep = 1;
 
-const oneOnOnePlans = [
-    { key: 's1',  sessions: 1,  price: 300,  label: 'Single Class (1 Day Routine)' },
-    { key: 's8',  sessions: 8,  price: 2000, label: '8 Days Standard Plan' },
-    { key: 's16', sessions: 16, price: 4000, label: '16 Days Advance Plan' },
-    { key: 's24', sessions: 24, price: 6200, label: '24 Days Executive Plan' },
-    { key: 's32', sessions: 32, price: 7500, label: '32 Days Ultimate Master Plan' }
-];
-const groupPrices = { group2d: 1500, group3d: 1900 };
 const money = n => '₹' + Number(n).toLocaleString('en-IN');
 
 function cleanPlanName(name) {
@@ -292,8 +544,20 @@ function cleanPlanName(name) {
 }
 
 function hasCouponAccess() { return currentStudent && currentStudent.couponAccess === true; }
+function getGrantedCouponIds() {
+    if (!currentStudent || !currentStudent.grantedCoupons) return [];
+    return currentStudent.grantedCoupons.map(g => g.id);
+}
+function getGrantedCouponCodes() {
+    if (!currentStudent || !currentStudent.grantedCoupons) return [];
+    return currentStudent.grantedCoupons.map(g => (g.code || '').toUpperCase());
+}
+function isCouponGrantedToStudent(code) {
+    if (!code) return false;
+    const codes = getGrantedCouponCodes();
+    return codes.includes(code.toUpperCase());
+}
 
-/* ============ MOBILE COUNTER ============ */
 function updateMobileCounter() {
     const input = document.getElementById('studentMobile');
     const counter = document.getElementById('mobileCounter');
@@ -306,7 +570,6 @@ function updateMobileCounter() {
     }
 }
 
-/* ============ TOAST ============ */
 function showToast(message) {
     const existing = document.getElementById('realtimeToast');
     if (existing) existing.remove();
@@ -322,15 +585,14 @@ function showToast(message) {
     }, 2500);
 }
 
-/* ============ SAVE/LOAD PLAN ============ */
 function saveSelectedPlan() {
     if (selectedPlan) {
         try { localStorage.setItem(PLAN_KEY, JSON.stringify(selectedPlan)); } catch (e) {}
     } else {
         try { localStorage.removeItem(PLAN_KEY); } catch (e) {}
     }
-    if (appliedCoupon) {
-        try { localStorage.setItem(COUPON_KEY, appliedCoupon.code); } catch (e) {}
+    if (appliedCoupons.length > 0) {
+        try { localStorage.setItem(COUPON_KEY, JSON.stringify(appliedCoupons.map(c => c.code))); } catch (e) {}
     } else {
         try { localStorage.removeItem(COUPON_KEY); } catch (e) {}
     }
@@ -342,8 +604,12 @@ function loadSelectedPlan() {
         return JSON.parse(data);
     } catch (e) { return null; }
 }
-function loadAppliedCouponCode() {
-    try { return localStorage.getItem(COUPON_KEY); } catch (e) { return null; }
+function loadAppliedCouponCodes() {
+    try {
+        const data = localStorage.getItem(COUPON_KEY);
+        if (!data) return [];
+        return JSON.parse(data);
+    } catch (e) { return []; }
 }
 function clearAllStorage() {
     try {
@@ -353,7 +619,6 @@ function clearAllStorage() {
     } catch (e) {}
 }
 
-/* ============ INIT ============ */
 window.addEventListener('DOMContentLoaded', () => {
     let wasLoggedOut = false;
     try { wasLoggedOut = localStorage.getItem(LOGOUT_FLAG) === '1'; } catch (e) {}
@@ -363,7 +628,7 @@ window.addEventListener('DOMContentLoaded', () => {
         clearAllStorage();
         currentStudent = null;
         selectedPlan = null;
-        appliedCoupon = null;
+        appliedCoupons = [];
         document.getElementById('infoScreen').style.display = 'flex';
         document.getElementById('mainApp').classList.add('hidden');
         document.getElementById('blockedScreen').classList.add('hidden');
@@ -400,6 +665,8 @@ function setupScreenshotUpload() {
                 screenshotBase64 = canvas.toDataURL('image/jpeg', 0.6);
                 document.getElementById('previewImg').src = screenshotBase64;
                 document.getElementById('previewBox').classList.remove('hidden');
+                const warnEl = document.getElementById('screenshotWarning');
+                if (warnEl) warnEl.classList.add('hidden');
             };
             img.src = ev.target.result;
         };
@@ -407,7 +674,6 @@ function setupScreenshotUpload() {
     });
 }
 
-/* ============ CHECK BLOCKED ============ */
 async function checkBlockedAndEnter() {
     if (isLoggingOut) return;
     try {
@@ -427,47 +693,99 @@ async function checkBlockedAndEnter() {
     } catch (err) { console.error(err); enterMainApp(); }
 }
 
-function generateStudentId() { return 'stu_' + Date.now().toString(36) + '_' + Math.random().toString(36).substr(2, 9); }
+function generateStudentIdFromMobile(countryCode, mobileNumber) {
+    const clean = (countryCode + mobileNumber).replace(/\D/g, '');
+    return 'ES_' + clean;
+}
+
 function loadStudentFromStorage() { try { const data = localStorage.getItem(STORAGE_KEY); return data ? JSON.parse(data) : null; } catch (e) { return null; } }
 function saveStudentToStorage(s) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch (e) {} }
 
-/* ============ REGISTER ============ */
 async function handleInfoSubmit(e) {
     e.preventDefault();
     const name = document.getElementById('studentName').value.trim().toUpperCase();
     const countryCode = document.getElementById('countryCode').value;
     const mobileNumber = document.getElementById('studentMobile').value.trim();
-    const email = document.getElementById('studentEmail').value.trim().toLowerCase();
     const mobileError = document.getElementById('mobileError');
 
     mobileError.classList.add('hidden');
 
     if (!name || name.length < 2) {
-        alert('⚠️ Please enter your full name.');
+        alert('⚠️ Please enter your full name.\n\nআপনার পুরো নাম লিখুন।');
         return;
     }
 
     if (mobileNumber.length !== 10) {
         mobileError.classList.remove('hidden');
-        mobileError.textContent = '⚠️ Exactly 10 digits required (' + mobileNumber.length + ' entered)';
-        alert('⚠️ WhatsApp number must be exactly 10 digits.\n\nYou entered ' + mobileNumber.length + ' digit(s).');
+        mobileError.textContent = '⚠️ Exactly 10 digits required / ঠিক ১০ ডিজিট দিতে হবে (' + mobileNumber.length + ')';
+        alert('⚠️ WhatsApp number must be exactly 10 digits.\n\nWhatsApp নম্বর অবশ্যই ঠিক ১০ ডিজিট হতে হবে।\n\nYou entered ' + mobileNumber.length + ' digit(s).');
         return;
     }
 
-    if (!email || !email.includes('@') || !email.includes('.')) {
-        alert('⚠️ Please enter a valid email address.');
+    const uniqueId = generateStudentIdFromMobile(countryCode, mobileNumber);
+    const fullMobile = countryCode + ' ' + mobileNumber;
+
+    let existingStudent = null;
+    try {
+        const snap = await db.collection('students').where('mobile', '==', fullMobile).limit(1).get();
+        if (!snap.empty) {
+            existingStudent = { id: snap.docs[0].id, ...snap.docs[0].data() };
+        }
+    } catch (err) { console.error('Lookup error:', err); }
+
+    if (existingStudent) {
+        if (existingStudent.blocked === true) {
+            document.getElementById('blockedScreen').classList.remove('hidden');
+            document.getElementById('infoScreen').style.display = 'none';
+            document.getElementById('mainApp').classList.add('hidden');
+            saveStudentToStorage(existingStudent);
+            currentStudent = existingStudent;
+            return;
+        }
+
+        if (existingStudent.name !== name) {
+            try {
+                await db.collection('students').doc(existingStudent.id).update({ name: name });
+                existingStudent.name = name;
+            } catch (err) { console.error(err); }
+        }
+
+        try {
+            await db.collection('students').doc(existingStudent.id).update({
+                loginCount: firebase.firestore.FieldValue.increment(1),
+                lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        } catch (err) { console.error(err); }
+
+        try {
+            await db.collection('logs').add({
+                studentId: existingStudent.id,
+                studentName: existingStudent.name,
+                studentMobile: existingStudent.mobile,
+                uniqueId: existingStudent.uniqueId || uniqueId,
+                type: 'login',
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                userAgent: navigator.userAgent.substring(0, 200)
+            });
+        } catch (err) { console.error(err); }
+
+        currentStudent = existingStudent;
+        saveStudentToStorage(currentStudent);
+        showToast('👋 Welcome back! / স্বাগতম!');
+        enterMainApp();
         return;
     }
 
     const student = {
-        id: generateStudentId(),
+        id: uniqueId,
+        uniqueId: uniqueId,
         name: name,
         countryCode: countryCode,
         mobileNumber: mobileNumber,
-        mobile: countryCode + ' ' + mobileNumber,
-        email: email,
+        mobile: fullMobile,
         blocked: false,
         couponAccess: false,
+        grantedCoupons: [],
         loginCount: 1,
         logoutCount: 0,
         createdAt: new Date().toISOString(),
@@ -486,36 +804,37 @@ async function handleInfoSubmit(e) {
 
         await db.collection('logs').add({
             studentId: student.id, studentName: student.name,
-            studentEmail: student.email, studentMobile: student.mobile,
+            studentMobile: student.mobile, uniqueId: student.uniqueId,
             type: 'first_visit', timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             userAgent: navigator.userAgent.substring(0, 200)
         });
 
         await db.collection('logs').add({
             studentId: student.id, studentName: student.name,
-            studentEmail: student.email, studentMobile: student.mobile,
+            studentMobile: student.mobile, uniqueId: student.uniqueId,
             type: 'login', timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             userAgent: navigator.userAgent.substring(0, 200)
         });
     } catch (err) { console.error(err); }
 
+    showToast('🆕 Welcome to English Spur! / স্বাগতম!');
     enterMainApp();
 }
 
-/* ============ LOGOUT ============ */
 function studentLogout() {
-    if (!confirm('Logout?\n\nআপনি কি লগআউট করতে চান?\n(পরেরবার আবার আপনার তথ্য দিতে হবে)')) return;
+    if (!confirm('Logout?\n\nআপনি কি লগআউট করতে চান?\n(Next time you\'ll need to fill your info again / পরেরবার আবার আপনার তথ্য দিতে হবে)')) return;
 
     isLoggingOut = true;
     try { localStorage.setItem(LOGOUT_FLAG, '1'); } catch (e) {}
 
     const studentToLog = currentStudent ? { ...currentStudent } : null;
 
-    showToast('🚪 Logging out...');
+    showToast('🚪 Logging out... / লগআউট হচ্ছে...');
 
     currentStudent = null;
     selectedPlan = null;
-    appliedCoupon = null;
+    appliedCoupons = [];
+    pendingCouponCodes = [];
     studentListenerActive = false;
     offerExpiredHandled = false;
 
@@ -533,8 +852,8 @@ function studentLogout() {
                 await db.collection('logs').add({
                     studentId: studentToLog.id,
                     studentName: studentToLog.name,
-                    studentEmail: studentToLog.email,
                     studentMobile: studentToLog.mobile,
+                    uniqueId: studentToLog.uniqueId || '',
                     type: 'logout',
                     timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     userAgent: navigator.userAgent.substring(0, 200)
@@ -562,7 +881,7 @@ function enterMainApp() {
     document.getElementById('infoScreen').style.display = 'none';
     document.getElementById('mainApp').classList.remove('hidden');
     document.getElementById('welcomeName').textContent = currentStudent.name;
-    document.getElementById('welcomeMeta').textContent = currentStudent.email + ' · ' + currentStudent.mobile;
+    document.getElementById('welcomeMeta').textContent = '🆔 ' + (currentStudent.uniqueId || currentStudent.id) + ' · ' + currentStudent.mobile;
     loadData();
     startStudentListener();
     switchTab('all');
@@ -570,14 +889,19 @@ function enterMainApp() {
     const savedPlan = loadSelectedPlan();
     if (savedPlan && savedPlan.name) {
         selectedPlan = savedPlan;
-        const savedCouponCode = loadAppliedCouponCode();
+        const savedCouponCodes = loadAppliedCouponCodes();
         setTimeout(() => {
-            if (savedCouponCode && coupons[savedCouponCode] && hasCouponAccess()) {
-                appliedCoupon = coupons[savedCouponCode];
+            if (savedCouponCodes.length > 0 && hasCouponAccess()) {
+                appliedCoupons = [];
+                savedCouponCodes.forEach(code => {
+                    if (isCouponGrantedToStudent(code) && coupons[code]) {
+                        appliedCoupons.push(coupons[code]);
+                    }
+                });
             }
             refreshCheckout();
             showView('checkout');
-            showToast('📌 আপনার selected plan এ ফিরে এসেছি');
+            showToast('📌 Back to your selected plan / আপনার selected plan এ ফিরে এসেছি');
         }, 600);
     } else {
         showView('plans');
@@ -587,13 +911,13 @@ function enterMainApp() {
 function changePlan() {
     if (!confirm('Change your plan?\n\nআপনি কি আপনার selected plan পরিবর্তন করতে চান?')) return;
     selectedPlan = null;
-    appliedCoupon = null;
+    appliedCoupons = [];
+    pendingCouponCodes = [];
     saveSelectedPlan();
     showView('plans');
-    showToast('🔄 এখন নতুন plan select করুন');
+    showToast('🔄 Select a new plan / এখন নতুন plan select করুন');
 }
 
-/* ============ REAL-TIME STUDENT LISTENER ============ */
 function startStudentListener() {
     if (studentListenerActive || !currentStudent || isLoggingOut) return;
     studentListenerActive = true;
@@ -605,6 +929,7 @@ function startStudentListener() {
 
         const wasBlocked = currentStudent.blocked === true;
         const hadCouponAccess = currentStudent.couponAccess === true;
+        const oldGrantedIds = getGrantedCouponIds();
 
         currentStudent = { ...currentStudent, ...data };
         saveStudentToStorage(currentStudent);
@@ -625,35 +950,82 @@ function startStudentListener() {
 
         const newCouponAccess = data.couponAccess === true;
         if (newCouponAccess !== hadCouponAccess) {
-            if (!newCouponAccess && appliedCoupon) {
-                appliedCoupon = null;
+            if (!newCouponAccess && appliedCoupons.length > 0) {
+                appliedCoupons = [];
                 saveSelectedPlan();
             }
             const checkoutVisible = !document.getElementById('view-checkout').classList.contains('hidden');
             if (checkoutVisible && selectedPlan) refreshCheckout();
             showToast(newCouponAccess ? '🎟️ Coupon access granted!' : '🚫 Coupon access revoked');
+        } else {
+            const newGrantedIds = getGrantedCouponIds();
+            if (oldGrantedIds.length !== newGrantedIds.length || 
+                oldGrantedIds.some(id => !newGrantedIds.includes(id))) {
+                const before = appliedCoupons.length;
+                appliedCoupons = appliedCoupons.filter(c => {
+                    const cid = c.id || c._id;
+                    return cid && newGrantedIds.includes(cid);
+                });
+                if (appliedCoupons.length !== before) {
+                    saveSelectedPlan();
+                    const checkoutVisible = !document.getElementById('view-checkout').classList.contains('hidden');
+                    if (checkoutVisible && selectedPlan) refreshCheckout();
+                    showToast('🎟️ Coupon access updated');
+                }
+            }
         }
     }, err => console.error('Listener error:', err));
 }
 
-/* ============ LOAD DATA ============ */
 async function loadData() {
     db.collection('coupons').onSnapshot(snap => {
         coupons = {};
-        snap.forEach(d => { const c = d.data(); if (c.active !== false && c.code) coupons[c.code.toUpperCase().trim()] = c; });
+        snap.forEach(d => { 
+            const c = d.data();
+            const cid = d.id;
+            if (c.active !== false && c.code) {
+                coupons[c.code.toUpperCase().trim()] = { ...c, _id: cid };
+            }
+        });
     });
 
     db.collection('config').doc('offer').onSnapshot(offerDoc => {
         if (offerDoc.exists) {
             offerConfig = offerDoc.data();
             updateOfferDeadline();
+
+            if (offerConfig.planPricing) {
+                const pp = offerConfig.planPricing;
+                
+                SINGLE_REGULAR = pp.singleRegular || 500;
+                SINGLE_SPECIAL = pp.singleSpecial || 250;
+                ADMISSION_FEE = pp.groupAdmission || 2500;
+                
+                oneOnOnePlans = [
+                    { key: 's1',  sessions: 1,  price: SINGLE_SPECIAL,  label: 'Single Class (1 Day Routine)' },
+                    { key: 's8',  sessions: 8,  price: pp.price8 || 2000,  label: '8 Days Standard Plan' },
+                    { key: 's16', sessions: 16, price: pp.price16 || 4000, label: '16 Days Advance Plan' },
+                    { key: 's24', sessions: 24, price: pp.price24 || 6000, label: '24 Days Executive Plan' },
+                    { key: 's32', sessions: 32, price: pp.price32 || 8000, label: '32 Days Ultimate Master Plan' }
+                ];
+                
+                groupPrices = {
+                    group2d: pp.group2d || 1500,
+                    group3d: pp.group3d || 1900
+                };
+            }
+
             const bR = document.getElementById('bannerRegular');
             const bO = document.getElementById('bannerOffer');
             const bD = document.getElementById('bannerDesc');
-            if (bR) bR.textContent = money(offerConfig.regularRate || 500);
-            if (bO) bO.textContent = money(offerConfig.offerRate || 300);
+            if (bR) bR.textContent = money(SINGLE_REGULAR);
+            if (bO) bO.textContent = money(SINGLE_SPECIAL);
             if (bD && offerConfig.description) bD.textContent = offerConfig.description;
-            if (offerDeadline > Date.now() && offerExpiredHandled) { offerExpiredHandled = false; renderBannerActive(); }
+
+            if (offerDeadline > Date.now() && offerExpiredHandled) { 
+                offerExpiredHandled = false; 
+                renderBannerActive(); 
+            }
             renderPlans();
             if (selectedPlan) refreshCheckout();
             tickTimer();
@@ -698,7 +1070,7 @@ function handleExpiry() {
         banner.className = 'w-full bg-gradient-to-r from-slate-600 to-slate-700 text-white p-4 rounded-2xl mb-3 text-center shadow-xl';
         banner.innerHTML = `<div class="text-sm font-black uppercase tracking-widest">⛔ Offer Expired</div><div class="text-[12px] mt-1 font-bold">Special rate window has ended.</div><div class="text-[11px] mt-1 opacity-95">📞 Helpline: <strong>9875340842</strong></div>`;
     }
-    appliedCoupon = null;
+    appliedCoupons = [];
     renderPlans();
     if (selectedPlan) refreshCheckout();
 }
@@ -711,8 +1083,8 @@ function renderBannerActive() {
         <div class="text-center">
             <div class="text-[10px] font-extrabold uppercase tracking-widest opacity-95">⏰ Limited Time Special Rate</div>
             <div class="text-2xl sm:text-3xl font-black mt-1.5 leading-tight">
-                Regular <span class="line-through opacity-75" id="bannerRegular">${money(offerConfig.regularRate || 500)}</span>/class → NOW
-                <span class="text-yellow-300" id="bannerOffer">${money(offerConfig.offerRate || 300)}</span>/class
+                Regular <span class="line-through opacity-75" id="bannerRegular">${money(SINGLE_REGULAR)}</span>/class → NOW
+                <span class="text-yellow-300" id="bannerOffer">${money(SINGLE_SPECIAL)}</span>/class
             </div>
             <div class="mt-3 text-[10px] font-bold uppercase tracking-wider opacity-95">⚡ Offer expires in</div>
             <div id="countdown" class="font-mono text-3xl sm:text-4xl font-black text-yellow-200 leading-tight">--:--</div>
@@ -725,33 +1097,88 @@ function renderBannerActive() {
     tickTimer();
 }
 
+/* ============================================================
+   PRICING
+   ============================================================ */
 function getPricing(plan) {
     const active = isOfferActive();
+    
     if (plan.category === '1on1') {
-        const regularTotal = (offerConfig.regularRate || 500) * plan.sessions;
-        const specialTotal = (offerConfig.offerRate || 300) * plan.sessions;
+        const regularTotal = SINGLE_REGULAR * plan.sessions;
+        const specialTotal = SINGLE_SPECIAL * plan.sessions;
         const planPrice = active ? plan.baseValue : regularTotal;
         const builtInSave = active ? Math.max(0, specialTotal - planPrice) : 0;
         const totalSave = active ? Math.max(0, regularTotal - planPrice) : 0;
-        let couponDisc = 0, couponOk = false;
-        if (active && hasCouponAccess() && appliedCoupon && appliedCoupon.appliesTo === '1on1') {
-            if (!appliedCoupon.allowedPlans || !plan.planKey || appliedCoupon.allowedPlans.includes(plan.planKey)) {
-                couponOk = true;
-                couponDisc = appliedCoupon.type === 'percent' ? Math.round(planPrice * appliedCoupon.value / 100) : appliedCoupon.value;
-                couponDisc = Math.min(couponDisc, planPrice);
-            }
+        
+        let totalCouponDisc = 0;
+        const usedCoupons = [];
+        if (active && hasCouponAccess() && appliedCoupons.length > 0) {
+            appliedCoupons.forEach(c => {
+                if (c.appliesTo === '1on1') {
+                    if (!c.allowedPlans || !plan.planKey || c.allowedPlans.includes(plan.planKey)) {
+                        const disc = c.type === 'percent' ? Math.round(planPrice * c.value / 100) : c.value;
+                        totalCouponDisc += disc;
+                        usedCoupons.push({ code: c.code, type: c.type, value: c.value, disc });
+                    }
+                }
+            });
         }
-        return { kind: '1on1', active, sessions: plan.sessions, regularTotal, specialTotal, planPrice, builtInSave, totalSave, couponDisc, couponOk, final: planPrice - couponDisc };
+        totalCouponDisc = Math.min(totalCouponDisc, planPrice);
+        const couponOk = usedCoupons.length > 0;
+        
+        return { 
+            kind: '1on1', active, sessions: plan.sessions, 
+            regularTotal, specialTotal, planPrice, builtInSave, totalSave, 
+            couponDisc: totalCouponDisc, couponOk, usedCoupons,
+            final: planPrice - totalCouponDisc 
+        };
     }
-    const admStd = ADMISSION_FEE;
-    let admDisc = 0, couponOk = false;
-    if (active && hasCouponAccess() && appliedCoupon && appliedCoupon.appliesTo === 'group') {
-        couponOk = true;
-        admDisc = appliedCoupon.type === 'percent' ? Math.round(admStd * appliedCoupon.value / 100) : appliedCoupon.value;
-        admDisc = Math.min(admDisc, admStd);
+    
+    const monthly = plan.baseValue;
+    
+    let admStd = 0;
+    let admDisc = 0;
+    let admFinal = 0;
+    
+    if (plan.isNewStudent) {
+        admStd = ADMISSION_FEE;
+        if (active && hasCouponAccess() && appliedCoupons.length > 0) {
+            let admCouponDisc = 0;
+            appliedCoupons.forEach(c => {
+                if (c.appliesTo === 'group') {
+                    const disc = c.type === 'percent' ? Math.round(admStd * c.value / 100) : c.value;
+                    admCouponDisc += disc;
+                }
+            });
+            admDisc = Math.min(admCouponDisc, admStd);
+            admFinal = admStd - admDisc;
+        } else {
+            admFinal = admStd;
+        }
     }
-    const admFinal = admStd - admDisc;
-    return { kind: 'group', active, admStd, admDisc, admFinal, monthly: plan.baseValue, couponOk, totalSave: admDisc, final: admFinal + plan.baseValue };
+    
+    let monthlyDisc = 0;
+    const usedCoupons = [];
+    if (active && hasCouponAccess() && appliedCoupons.length > 0) {
+        appliedCoupons.forEach(c => {
+            if (c.appliesTo === 'group') {
+                const disc = c.type === 'percent' ? Math.round(monthly * c.value / 100) : c.value;
+                monthlyDisc += disc;
+                usedCoupons.push({ code: c.code, type: c.type, value: c.value, disc });
+            }
+        });
+    }
+    monthlyDisc = Math.min(monthlyDisc, monthly);
+    const couponOk = usedCoupons.length > 0;
+    const monthlyFinal = monthly - monthlyDisc;
+    
+    return { 
+        kind: 'group', active, monthly, monthlyDisc, monthlyFinal,
+        isNewStudent: plan.isNewStudent,
+        admStd, admDisc, admFinal,
+        couponDisc: monthlyDisc, couponOk, usedCoupons,
+        final: monthlyFinal + admFinal
+    };
 }
 
 function renderPlans() {
@@ -780,24 +1207,72 @@ function render1on1Row(title, plan) {
     const active = isOfferActive();
     return `<tr onclick="selectPlan('${fullName}', '1on1', ${plan.price}, '${plan.key}', ${plan.sessions})" class="hover:bg-amber-50 cursor-pointer active:bg-amber-100">
         <td class="p-3"><div class="text-[11px] sm:text-xs font-bold">${plan.label}</div>
-        <div class="text-[9px] mt-0.5">${active ? `<span class="text-slate-400 line-through">₹${offerConfig.regularRate}</span> → <span class="text-green-700 font-bold">₹${offerConfig.offerRate}/class</span> · <span class="text-green-700">Save ${money(p.totalSave)}</span>` : `<span class="text-red-600">⛔ Offer expired</span>`}</div></td>
+        ${active && p.totalSave > 0 ? `<div class="mt-1.5"><span class="inline-block bg-green-600 text-white text-[11px] font-black px-3 py-1 rounded-full shadow-md">🎉 Save ${money(p.totalSave)}</span></div>` : (!active ? `<div class="text-[10px] mt-1 text-red-600 font-bold">⛔ Offer expired</div>` : '')}</td>
         <td class="p-3 text-center"><div class="text-sm font-black text-orange-600">${money(p.final)}</div>${active ? `<div class="text-[9px] text-slate-400 line-through">${money(p.regularTotal)}</div>` : ''}</td>
     </tr>`;
 }
 
 function renderGroupTable(title, headerClass) {
-    const p2 = getPricing({ category: 'group', baseValue: groupPrices.group2d });
-    const p3 = getPricing({ category: 'group', baseValue: groupPrices.group3d });
-    const cell = (p) => `<div class="text-[10px] leading-relaxed">Admission: ${money(p.admFinal)}${p.admDisc > 0 ? ` <span class="line-through text-slate-400">${money(p.admStd)}</span>` : ''}<br>Monthly: ${money(p.monthly)}<br><strong class="text-[11px]">Total: ${money(p.final)}</strong></div>`;
+    const p2New = getPricing({ category: 'group', baseValue: groupPrices.group2d, isNewStudent: true });
+    const p3New = getPricing({ category: 'group', baseValue: groupPrices.group3d, isNewStudent: true });
+    const p2Exist = getPricing({ category: 'group', baseValue: groupPrices.group2d, isNewStudent: false });
+    const p3Exist = getPricing({ category: 'group', baseValue: groupPrices.group3d, isNewStudent: false });
+    
+    const newCell = (p) => {
+        const totalSave = p.admDisc + p.monthlyDisc;
+        return `<div class="text-[10px] leading-relaxed">
+            <div class="text-[11px]">Admission: <strong>${money(p.admFinal)}</strong>${p.admDisc > 0 ? ` <span class="line-through text-slate-400 text-[9px]">${money(p.admStd)}</span>` : ''}</div>
+            <div class="text-[11px]">Monthly: <strong>${money(p.monthlyFinal)}</strong>${p.monthlyDisc > 0 ? ` <span class="line-through text-slate-400 text-[9px]">${money(p.monthly)}</span>` : ''}</div>
+            <div class="border-t border-dashed border-slate-300 mt-1 pt-1">
+                <strong class="text-[13px] text-orange-600">Total: ${money(p.final)}</strong>
+            </div>
+            ${totalSave > 0 ? `<div class="mt-1.5"><span class="inline-block bg-green-600 text-white text-[11px] font-black px-3 py-1 rounded-full shadow-md">🎉 Save ${money(totalSave)}</span></div>` : ''}
+        </div>`;
+    };
+    
+    const existCell = (p) => {
+        return `<div class="text-[10px] leading-relaxed">
+            <strong class="text-[15px] text-orange-600">${money(p.final)}</strong>
+            ${p.monthlyDisc > 0 ? `<div class="text-[9px] text-slate-400 line-through">${money(p.monthly)}</div>` : ''}
+            ${p.monthlyDisc > 0 ? `<div class="mt-1.5"><span class="inline-block bg-green-600 text-white text-[11px] font-black px-3 py-1 rounded-full shadow-md">🎉 Save ${money(p.monthlyDisc)}</span></div>` : ''}
+        </div>`;
+    };
+    
     return `<div class="bg-white rounded-2xl overflow-hidden shadow-lg">
         <div class="${headerClass} text-white font-black text-[11px] sm:text-xs text-center py-2.5 px-3 uppercase">${title}</div>
+        
+        <div class="bg-blue-100 px-3 py-2 border-b border-blue-200">
+            <p class="text-[10px] font-black text-blue-900 uppercase tracking-wider">🆕 New Students — Monthly + Admission Fee</p>
+        </div>
         <table class="w-full text-left">
-            <thead><tr class="bg-slate-100 text-[10px] font-extrabold uppercase border-b"><th class="p-2.5 w-2/5">Batch</th><th class="p-2.5 text-center">Fee Structure</th></tr></thead>
             <tbody class="divide-y divide-slate-100">
-                <tr onclick="selectPlan('${title} - Weekly 2 Days Plan', 'group', ${groupPrices.group2d})" class="hover:bg-amber-50 cursor-pointer active:bg-amber-100"><td class="p-3 text-[11px] font-bold">🗓️ 2 Days/Week</td><td class="p-3 text-center">${cell(p2)}</td></tr>
-                <tr onclick="selectPlan('${title} - Weekly 3 Days Plan', 'group', ${groupPrices.group3d})" class="bg-slate-50/40 hover:bg-amber-50 cursor-pointer active:bg-amber-100"><td class="p-3 text-[11px] font-bold">🗓️ 3 Days/Week</td><td class="p-3 text-center">${cell(p3)}</td></tr>
+                <tr onclick="selectPlan('${title} - Weekly 2 Days Plan (New Student)', 'group', ${groupPrices.group2d}, null, 1, true)" class="hover:bg-amber-50 cursor-pointer active:bg-amber-100">
+                    <td class="p-3 text-[11px] font-bold w-2/5">🗓️ 2 Days/Week</td>
+                    <td class="p-3 text-center">${newCell(p2New)}</td>
+                </tr>
+                <tr onclick="selectPlan('${title} - Weekly 3 Days Plan (New Student)', 'group', ${groupPrices.group3d}, null, 1, true)" class="bg-slate-50/40 hover:bg-amber-50 cursor-pointer active:bg-amber-100">
+                    <td class="p-3 text-[11px] font-bold">🗓️ 3 Days/Week</td>
+                    <td class="p-3 text-center">${newCell(p3New)}</td>
+                </tr>
             </tbody>
-        </table></div>`;
+        </table>
+        
+        <div class="bg-green-100 px-3 py-2 border-y border-green-200">
+            <p class="text-[10px] font-black text-green-900 uppercase tracking-wider">♻️ Existing Students — Monthly Fee Only</p>
+        </div>
+        <table class="w-full text-left">
+            <tbody class="divide-y divide-slate-100">
+                <tr onclick="selectPlan('${title} - Weekly 2 Days Plan (Existing Student)', 'group', ${groupPrices.group2d}, null, 1, false)" class="hover:bg-amber-50 cursor-pointer active:bg-amber-100">
+                    <td class="p-3 text-[11px] font-bold w-2/5">🗓️ 2 Days/Week</td>
+                    <td class="p-3 text-center">${existCell(p2Exist)}</td>
+                </tr>
+                <tr onclick="selectPlan('${title} - Weekly 3 Days Plan (Existing Student)', 'group', ${groupPrices.group3d}, null, 1, false)" class="bg-slate-50/40 hover:bg-amber-50 cursor-pointer active:bg-amber-100">
+                    <td class="p-3 text-[11px] font-bold">🗓️ 3 Days/Week</td>
+                    <td class="p-3 text-center">${existCell(p3Exist)}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>`;
 }
 
 function switchTab(tab) {
@@ -819,9 +1294,10 @@ function showView(v) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function selectPlan(name, category, baseValue, planKey = null, sessions = 1) {
-    selectedPlan = { name, category, baseValue, planKey, sessions };
-    appliedCoupon = null;
+function selectPlan(name, category, baseValue, planKey = null, sessions = 1, isNewStudent = false) {
+    selectedPlan = { name, category, baseValue, planKey, sessions, isNewStudent };
+    appliedCoupons = [];
+    pendingCouponCodes = [];
     saveSelectedPlan();
     refreshCheckout();
     showView('checkout');
@@ -833,198 +1309,512 @@ function refreshCheckout() {
     document.getElementById('coPlanName').textContent = selectedPlan.name;
 
     let rows = '';
+    let totalSave = 0;
+    
     if (p.kind === '1on1') {
         if (p.active) {
-            rows += `<div class="flex justify-between"><span>Regular (₹${offerConfig.regularRate} × ${p.sessions})</span><span class="line-through text-slate-400">${money(p.regularTotal)}</span></div>`;
-            rows += `<div class="flex justify-between"><span>Special (₹${offerConfig.offerRate} × ${p.sessions})</span><span class="text-green-700 font-bold">${money(p.specialTotal)}</span></div>`;
             rows += `<div class="flex justify-between"><span>Package Price</span><span class="font-bold">${money(p.planPrice)}</span></div>`;
+            totalSave = p.totalSave;
         } else {
-            rows += `<div class="flex justify-between"><span>Regular Rate × ${p.sessions}</span><span class="font-bold">${money(p.regularTotal)}</span></div>`;
+            rows += `<div class="flex justify-between"><span>Regular Price</span><span class="font-bold">${money(p.regularTotal)}</span></div>`;
         }
-        if (p.couponDisc > 0) rows += `<div class="flex justify-between text-green-700 font-bold"><span>🎟️ ${appliedCoupon.code}</span><span>− ${money(p.couponDisc)}</span></div>`;
+        p.usedCoupons.forEach(uc => {
+            rows += `<div class="flex justify-between text-green-700 font-bold"><span>🎟️ ${uc.code}</span><span>− ${money(uc.disc)}</span></div>`;
+        });
+        if (p.usedCoupons.length > 0) totalSave += p.couponDisc;
     } else {
-        rows += `<div class="flex justify-between"><span>Admission Fee</span><span>${money(p.admStd)}</span></div>`;
-        if (p.admDisc > 0) rows += `<div class="flex justify-between text-green-700 font-bold"><span>🎟️ ${appliedCoupon.code}</span><span>− ${money(p.admDisc)}</span></div>`;
-        rows += `<div class="flex justify-between"><span>Monthly Tuition</span><span>${money(p.monthly)}</span></div>`;
+        if (p.isNewStudent && p.admStd > 0) {
+            rows += `<div class="flex justify-between"><span>🆕 Admission Fee</span><span class="font-bold">${money(p.admStd)}</span></div>`;
+            if (p.admDisc > 0) {
+                rows += `<div class="flex justify-between text-green-700 font-bold"><span>🎟️ Admission Discount</span><span>− ${money(p.admDisc)}</span></div>`;
+                totalSave += p.admDisc;
+            }
+        }
+        rows += `<div class="flex justify-between"><span>Monthly Tuition Fee</span><span class="font-bold">${money(p.monthly)}</span></div>`;
+        p.usedCoupons.forEach(uc => {
+            rows += `<div class="flex justify-between text-green-700 font-bold"><span>🎟️ ${uc.code}</span><span>− ${money(uc.disc)}</span></div>`;
+        });
+        if (p.usedCoupons.length > 0) totalSave += p.monthlyDisc;
     }
+    
     document.getElementById('coBreakdown').innerHTML = rows;
     document.getElementById('coTotal').textContent = money(p.final);
+    
+    const saveEl = document.getElementById('coSavingsHighlight');
+    if (saveEl) {
+        if (totalSave > 0) {
+            saveEl.classList.remove('hidden');
+            saveEl.innerHTML = `
+                <div class="bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl p-4 text-center shadow-lg">
+                    <div class="text-[11px] font-bold uppercase tracking-widest opacity-90">🎉 You Are Saving / আপনি সাশ্রয় করছেন</div>
+                    <div class="text-3xl sm:text-4xl font-black mt-1">${money(totalSave)}</div>
+                </div>`;
+        } else {
+            saveEl.classList.add('hidden');
+        }
+    }
 
     const couponSection = document.getElementById('couponSection');
-    if (hasCouponAccess()) {
+    const grantedIds = getGrantedCouponIds();
+    const grantedCount = grantedIds.length;
+    const maxAllowed = Math.min(MAX_COUPONS, grantedCount);
+    
+    if (hasCouponAccess() && grantedCount > 0) {
         couponSection.classList.remove('hidden');
         const box = document.getElementById('couponBox');
+        const listEl = document.getElementById('appliedCouponsList');
+        
         if (!isOfferActive()) {
-            box.innerHTML = `<div class="text-[11px] text-red-700 font-bold bg-red-50 border border-red-200 rounded p-2">⛔ Offer expired.</div>`;
-        } else if (appliedCoupon && p.couponOk) {
-            let validityInfo = '';
-            if (appliedCoupon.validUntil) {
-                const untilStr = new Date(appliedCoupon.validUntil).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-                validityInfo = `<div class="text-[9px] text-green-700 mt-1">📅 Valid until: ${untilStr}</div>`;
-            }
-            box.innerHTML = `<div class="bg-green-100 border border-green-300 rounded-lg p-2.5 text-[11px] font-bold text-green-800">
-                <div class="flex justify-between items-center">
-                    <span>✅ ${appliedCoupon.code} Applied</span>
-                    <button onclick="removeCoupon()" class="text-red-600 underline">Remove</button>
-                </div>
-                ${validityInfo}
-            </div>`;
+            box.innerHTML = `<div class="text-[11px] text-red-700 font-bold bg-red-50 border border-red-200 rounded p-2">⛔ Offer expired / অফার শেষ।</div>`;
+            listEl.innerHTML = '';
+        } else if (appliedCoupons.length >= maxAllowed) {
+            box.innerHTML = `<div class="text-[11px] text-amber-800 font-bold bg-amber-100 border border-amber-300 rounded p-2">⚠️ Maximum ${maxAllowed} coupon${maxAllowed > 1 ? 's' : ''} reached / সর্বোচ্চ ${maxAllowed} টি কুপন ব্যবহার হয়েছে।</div>`;
         } else {
-            box.innerHTML = `<div class="flex gap-2"><input type="text" id="couponInput" placeholder="Enter code" class="flex-1 border-2 border-slate-200 rounded-lg p-2.5 text-xs font-bold uppercase"><button onclick="applyCoupon()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[11px] px-4 rounded-lg">Apply</button></div><p class="text-[10px] text-amber-800 font-semibold mt-2">Enter your special code</p>`;
+            box.innerHTML = `
+                <div class="flex gap-2 mb-2">
+                    <input type="text" id="couponInput" placeholder="Enter coupon code / কুপন কোড লিখুন" class="flex-1 border-2 border-slate-200 rounded-lg p-2.5 text-xs font-bold uppercase" onkeydown="if(event.key==='Enter'){event.preventDefault();addCouponToList();}">
+                    <button onclick="addCouponToList()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] px-4 rounded-lg whitespace-nowrap">➕ Add / যোগ করুন</button>
+                </div>
+                <button id="applyCouponBtn" onclick="applyCouponList()" class="w-full bg-green-600 hover:bg-green-700 text-white font-black text-[12px] py-2.5 rounded-lg shadow uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    ✅ Apply Coupon / কুপন প্রয়োগ করুন (${pendingCouponCodes.length})
+                </button>
+                <p class="text-[10px] text-amber-800 font-semibold mt-2">Use up to ${maxAllowed} granted code${maxAllowed > 1 ? 's' : ''} / আপনার জন্য ${maxAllowed} টি কুপন অনুমোদিত (${appliedCoupons.length}/${maxAllowed} applied)</p>
+            `;
+        }
+        
+        if (appliedCoupons.length > 0) {
+            listEl.innerHTML = appliedCoupons.map((c, i) => {
+                let validityInfo = '';
+                if (c.validFrom && c.validUntil) {
+                    const untilStr = new Date(c.validUntil).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                    validityInfo = `<div class="text-[9px] text-green-700 mt-1">📅 Valid until: ${untilStr}</div>`;
+                } else {
+                    validityInfo = `<div class="text-[9px] text-green-700 mt-1">♾️ No expiry — always valid / কোনো মেয়াদ নেই</div>`;
+                }
+                return `<div class="bg-green-100 border border-green-300 rounded-lg p-2.5 text-[11px] font-bold text-green-800">
+                    <div class="flex justify-between items-center">
+                        <span>✅ ${c.code} ${c.type === 'flat' ? '(−₹' + c.value + ')' : '(−' + c.value + '%)'}</span>
+                        <button onclick="removeCouponByIndex(${i})" class="text-red-600 underline">Remove / মুছুন</button>
+                    </div>
+                    ${validityInfo}
+                </div>`;
+            }).join('');
+        } else {
+            listEl.innerHTML = '';
         }
     } else {
         couponSection.classList.add('hidden');
     }
 }
 
-/* ============ APPLY COUPON with Validity Check ============ */
-async function applyCoupon() {
-    if (!hasCouponAccess()) { alert('🚫 Coupon access required. Contact admin.'); return; }
-    if (!isOfferActive()) { alert('⛔ Offer has expired.'); return; }
+/* ============ PENDING COUPON INPUT ============ */
+function addCouponToList() {
+    if (!hasCouponAccess()) { alert('🚫 Coupon access required / কুপন অ্যাক্সেস প্রয়োজন। Contact admin.'); return; }
+    if (!isOfferActive()) { alert('⛔ Offer has expired / অফার শেষ।'); return; }
     
     const input = document.getElementById('couponInput');
     const code = (input ? input.value : '').trim().toUpperCase();
-    if (!code) { alert('Enter a code'); return; }
-
-    let c = coupons[code];
-    if (!c) {
-        try {
-            const snap = await db.collection('coupons').where('code', '==', code).limit(1).get();
-            if (!snap.empty) {
-                const fresh = snap.docs[0].data();
-                if (fresh.active !== false) { c = fresh; coupons[code] = fresh; }
-            }
-        } catch (err) { console.error(err); }
+    if (!code) { alert('⚠️ Enter a coupon code / কুপন কোড লিখুন।'); return; }
+    
+    const grantedIds = getGrantedCouponIds();
+    const maxAllowed = Math.min(MAX_COUPONS, grantedIds.length);
+    const totalCount = appliedCoupons.length + pendingCouponCodes.length;
+    
+    if (totalCount >= maxAllowed) {
+        alert(`⚠️ Maximum ${maxAllowed} coupon${maxAllowed > 1 ? 's' : ''} allowed.\n\nসর্বোচ্চ ${maxAllowed} টি কুপন ব্যবহার করা যাবে।`);
+        return;
     }
-
-    if (!c) { 
-        alert('❌ Invalid coupon code: "' + code + '"'); 
-        return; 
+    
+    if (pendingCouponCodes.includes(code)) {
+        alert('⚠️ This code is already added. / এই কোডটি ইতিমধ্যে যোগ করা হয়েছে।');
+        return;
     }
+    
+    if (appliedCoupons.some(c => c.code === code)) {
+        alert('⚠️ This coupon is already applied. / এই কুপনটি ইতিমধ্যে প্রয়োগ করা হয়েছে।');
+        return;
+    }
+    
+    if (!isCouponGrantedToStudent(code)) {
+        alert('❌ This coupon is not assigned to you.\n\nYou can only use coupons granted to you by admin.\n\nIf you need this coupon, please contact admin.\n\n---\n\nএই কুপনটি আপনার জন্য অনুমোদিত নয়।\n\nশুধুমাত্র অ্যাডমিন আপনার জন্য যেসব কুপন অনুমোদন করেছেন সেগুলোই ব্যবহার করা যাবে।');
+        return;
+    }
+    
+    pendingCouponCodes.push(code);
+    if (input) input.value = '';
+    updateApplyButton();
+    showToast('➕ Added / যোগ হয়েছে: ' + code);
+}
 
-    // ✅ Validity Check — Not Started
-    if (c.validFrom) {
-        const fromTime = new Date(c.validFrom).getTime();
-        if (fromTime > Date.now()) {
-            const fromStr = new Date(c.validFrom).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-            alert('⏳ This coupon is not yet active.\n\nValid from: ' + fromStr);
-            return;
+async function applyCouponList() {
+    if (!hasCouponAccess()) { alert('🚫 Coupon access required.'); return; }
+    if (!isOfferActive()) { alert('⛔ Offer has expired.'); return; }
+    if (pendingCouponCodes.length === 0) { alert('⚠️ No coupon added yet. Click ➕ Add first.\n\nএখনো কোনো কুপন যোগ করা হয়নি। প্রথমে ➕ Add চাপুন।'); return; }
+    
+    const validated = [];
+    const errors = [];
+    
+    for (const code of pendingCouponCodes) {
+        let c = coupons[code];
+        if (!c) {
+            try {
+                const snap = await db.collection('coupons').where('code', '==', code).limit(1).get();
+                if (!snap.empty) {
+                    const fresh = snap.docs[0].data();
+                    if (fresh.active !== false) { c = { ...fresh, _id: snap.docs[0].id }; coupons[code] = c; }
+                }
+            } catch (err) { console.error(err); }
         }
-    }
-
-    // ✅ Validity Check — Expired
-    if (c.validUntil) {
-        const untilTime = new Date(c.validUntil).getTime();
-        if (untilTime < Date.now()) {
-            alert('⛔ This coupon has expired.\n\nExpired on: ' + new Date(c.validUntil).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }));
-            return;
+        
+        if (!c) { errors.push(`${code}: Invalid coupon`); continue; }
+        if (!isCouponGrantedToStudent(code)) { errors.push(`${code}: Not granted to you`); continue; }
+        
+        if (c.validFrom && c.validUntil) {
+            const fromTime = new Date(c.validFrom).getTime();
+            const untilTime = new Date(c.validUntil).getTime();
+            if (fromTime > Date.now()) { errors.push(`${code}: Not yet active`); continue; }
+            if (untilTime < Date.now()) { errors.push(`${code}: Expired`); continue; }
         }
+        
+        if (c.appliesTo !== selectedPlan.category) {
+            errors.push(`${code}: Only for ${c.appliesTo === '1on1' ? '1-on-1' : 'Group'} plans`);
+            continue;
+        }
+        
+        if (c.allowedPlans && selectedPlan.planKey && !c.allowedPlans.includes(selectedPlan.planKey)) {
+            errors.push(`${code}: Not valid for this plan`);
+            continue;
+        }
+        
+        validated.push(c);
     }
-
-    if (c.appliesTo !== selectedPlan.category) { 
-        alert(`❌ This coupon is only for ${c.appliesTo === '1on1' ? '1-on-1' : 'Group'} plans.`); 
-        return; 
+    
+    if (errors.length > 0) {
+        alert('⚠️ Some coupons could not be applied:\n\n' + errors.join('\n') + '\n\nকিছু কুপন প্রয়োগ করা যায়নি।');
+        pendingCouponCodes = pendingCouponCodes.filter(code => validated.some(v => v.code === code));
+        updateApplyButton();
+        if (validated.length === 0) return;
     }
-
-    if (c.allowedPlans && selectedPlan.planKey && !c.allowedPlans.includes(selectedPlan.planKey)) { 
-        alert('❌ Not valid for this specific plan.'); 
-        return; 
-    }
-
-    appliedCoupon = c;
+    
+    validated.forEach(c => {
+        if (!appliedCoupons.some(a => a.code === c.code)) {
+            appliedCoupons.push(c);
+        }
+    });
+    
+    pendingCouponCodes = [];
     saveSelectedPlan();
     refreshCheckout();
-    alert('🎉 Coupon "' + c.code + '" applied!');
+    alert('🎉 Coupon' + (validated.length > 1 ? 's' : '') + ' applied: ' + validated.map(v => v.code).join(', '));
 }
-function removeCoupon() { appliedCoupon = null; saveSelectedPlan(); refreshCheckout(); }
+
+function updateApplyButton() {
+    const btn = document.getElementById('applyCouponBtn');
+    if (!btn) return;
+    if (pendingCouponCodes.length > 0) {
+        btn.disabled = false;
+        btn.textContent = `✅ Apply Coupon / কুপন প্রয়োগ করুন (${pendingCouponCodes.length})`;
+    } else {
+        btn.disabled = true;
+        btn.textContent = '✅ Apply Coupon / কুপন প্রয়োগ করুন';
+    }
+}
+
+function removeCouponByIndex(idx) {
+    appliedCoupons.splice(idx, 1);
+    saveSelectedPlan();
+    refreshCheckout();
+}
 
 function contactViaWhatsApp() {
     const cleanPlan = selectedPlan ? cleanPlanName(selectedPlan.name) : '';
     const planLine = cleanPlan ? `\n*Interested Plan:*\n*${cleanPlan}*\n` : '';
-    const msg = `💬 CONTACT REQUEST - English Spur\n\n*Student Details:*\n• Name: *${currentStudent.name}*\n• WhatsApp: *${currentStudent.mobile}*\n• Email: ${currentStudent.email}\n${planLine}\nPlease help me with the course details.\n\nThank you!`;
+    const msg = `💬 CONTACT REQUEST - English Spur\n\n*Student Details:*\n• Name: *${currentStudent.name}*\n• WhatsApp: *${currentStudent.mobile}*\n• Unique ID: ${currentStudent.uniqueId || currentStudent.id}\n${planLine}\nPlease help me with the course details.\n\nThank you!`;
     window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
 function requestCouponViaWhatsApp() {
-    if (!hasCouponAccess()) { alert('🚫 Coupon access required. Contact admin.'); return; }
-    if (!selectedPlan) { alert('⚠️ Please select a plan first.'); return; }
+    if (!hasCouponAccess()) { alert('🚫 Coupon access required.'); return; }
+    if (!selectedPlan) { alert('⚠️ Please select a plan first. / প্রথমে একটি প্ল্যান নির্বাচন করুন।'); return; }
     if (!isOfferActive()) { alert('⛔ Offer expired.'); return; }
     const p = getPricing(selectedPlan);
     const cleanPlan = cleanPlanName(selectedPlan.name);
     let breakdown = '';
     if (p.kind === '1on1') {
-        breakdown = `• Regular Rate: ₹${offerConfig.regularRate} × ${p.sessions} = ${money(p.regularTotal)}\n• Special Rate: ₹${offerConfig.offerRate} × ${p.sessions} = ${money(p.specialTotal)}\n• Package Price: ${money(p.planPrice)}\n• Final Total Payable: ${money(p.final)}`;
+        breakdown = `• Package Price: ${money(p.planPrice)}\n• Final Total Payable: ${money(p.final)}`;
     } else {
-        breakdown = `• Admission Fee: ${money(p.admStd)}\n• Monthly Tuition Fee: ${money(p.monthly)}\n• Final Total Payable: ${money(p.final)}`;
+        if (p.isNewStudent && p.admStd > 0) {
+            breakdown = `• Admission Fee: ${money(p.admStd)}\n• Monthly Tuition Fee: ${money(p.monthly)}\n• Final Total Payable: ${money(p.final)}`;
+        } else {
+            breakdown = `• Monthly Tuition Fee: ${money(p.monthly)}\n• Final Total Payable: ${money(p.final)}`;
+        }
     }
-    const msg = `🎟️ COUPON REQUEST — English Spur\n\n*Student Details:*\n• Name: *${currentStudent.name}*\n• WhatsApp: *${currentStudent.mobile}*\n• Email: ${currentStudent.email}\n\n*Selected Plan:*\n*${cleanPlan}*\n\n*Current Fee Breakdown:*\n${breakdown}\n-------------------------\n*Current Total Payable: ${money(p.final)}*\n\nPlease review my details and send me a Special Coupon Code.\n\nThank you!`;
+    const msg = `🎟️ COUPON REQUEST — English Spur\n\n*Student Details:*\n• Name: *${currentStudent.name}*\n• WhatsApp: *${currentStudent.mobile}*\n• Unique ID: ${currentStudent.uniqueId || currentStudent.id}\n\n*Selected Plan:*\n*${cleanPlan}*\n\n*Current Fee Breakdown:*\n${breakdown}\n-------------------------\n*Current Total Payable: ${money(p.final)}*\n\nPlease review my details and send me a Special Coupon Code.\n\nThank you!`;
     window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
+/* ============ MULTI-STEP PAYMENT WIZARD (6 STEPS) ============ */
 function proceedToPayment() {
     if (!selectedPlan) { alert('⚠️ Please select a plan.'); return; }
     const p = getPricing(selectedPlan);
+    
     document.getElementById('payPlanName').textContent = '📘 ' + selectedPlan.name;
     let lines = '';
     if (p.kind === '1on1') {
-        lines = `Regular: ${money(p.regularTotal)} | Package: ${money(p.planPrice)}`;
-        if (p.couponDisc > 0) lines += ` | Coupon ${appliedCoupon.code}: − ${money(p.couponDisc)}`;
+        lines = `Package: ${money(p.planPrice)}`;
+        if (p.couponDisc > 0) lines += ` | Coupons (${p.usedCoupons.length}): − ${money(p.couponDisc)}`;
     } else {
-        lines = `Admission: ${money(p.admStd)} | Monthly: ${money(p.monthly)}`;
-        if (p.admDisc > 0) lines += ` | Coupon ${appliedCoupon.code}: − ${money(p.admDisc)}`;
+        if (p.isNewStudent && p.admStd > 0) {
+            lines = `Admission: ${money(p.admFinal)} | Monthly: ${money(p.monthlyFinal)}`;
+            if (p.couponDisc > 0) lines += ` | Coupons (${p.usedCoupons.length}): − ${money(p.couponDisc)}`;
+        } else {
+            lines = `Monthly Fee: ${money(p.monthlyFinal)}`;
+            if (p.couponDisc > 0) lines += ` | Coupons (${p.usedCoupons.length}): − ${money(p.couponDisc)}`;
+        }
     }
     document.getElementById('payLines').textContent = lines;
     document.getElementById('payAmount').textContent = money(p.final);
-    document.getElementById('payAmountInline').textContent = money(p.final);
+    document.getElementById('payStep2Amount').textContent = money(p.final);
+    document.getElementById('payStep6Amount').textContent = money(p.final);
+    
     screenshotBase64 = null;
-    document.getElementById('previewBox').classList.add('hidden');
-    document.getElementById('screenshotInput').value = '';
-    document.getElementById('thankYouBox').classList.add('hidden');
+    const pb = document.getElementById('previewBox');
+    if (pb) pb.classList.add('hidden');
+    const si = document.getElementById('screenshotInput');
+    if (si) si.value = '';
+    const tyb = document.getElementById('thankYouBox');
+    if (tyb) tyb.classList.add('hidden');
+    const warnEl = document.getElementById('screenshotWarning');
+    if (warnEl) warnEl.classList.add('hidden');
+    const txnInput = document.getElementById('payTxnInput');
+    if (txnInput) txnInput.value = '';
+
+    const radios = document.querySelectorAll('input[name="payMethod"]');
+    if (radios.length > 0) radios[0].checked = true;
+
+    document.getElementById('payStep6Name').textContent = currentStudent.name || '—';
+    document.getElementById('payStep6Uid').textContent = currentStudent.uniqueId || currentStudent.id || '—';
+    document.getElementById('payStep6Plan').textContent = selectedPlan.name || '—';
+
+    currentPayStep = 1;
     showView('payment');
+    renderPayStep();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function copyUpi() { navigator.clipboard.writeText(UPI_ID).then(() => alert('✅ UPI ID copied!')); }
+function renderPayStep() {
+    [1, 2, 3, 4, 5, 6].forEach(n => {
+        const el = document.getElementById('payStep' + n);
+        if (el) el.classList.add('hidden');
+    });
+    const current = document.getElementById('payStep' + currentPayStep);
+    if (current) {
+        current.classList.remove('hidden');
+        current.classList.add('fade-in');
+    }
 
+    for (let i = 1; i <= 6; i++) {
+        const c = document.getElementById('stepDot' + i + 'Circle');
+        const label = c && c.nextElementSibling;
+        if (!c) continue;
+        if (i < currentPayStep) {
+            c.className = 'w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-green-600 text-white flex items-center justify-center font-black text-[10px] sm:text-xs shadow';
+            c.textContent = '✓';
+            if (label) label.className = 'text-[9px] sm:text-[10px] font-bold text-green-600 hidden sm:inline';
+        } else if (i === currentPayStep) {
+            c.className = 'w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-700 text-white flex items-center justify-center font-black text-[10px] sm:text-xs shadow ring-4 ring-blue-200';
+            c.textContent = i;
+            if (label) label.className = 'text-[9px] sm:text-[10px] font-bold text-blue-700 hidden sm:inline';
+        } else {
+            c.className = 'w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs';
+            c.textContent = i;
+            if (label) label.className = 'text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline';
+        }
+    }
+    for (let i = 1; i <= 5; i++) {
+        const line = document.getElementById('stepLine' + i);
+        if (!line) continue;
+        if (i < currentPayStep) {
+            line.className = 'w-3 sm:w-6 h-1 bg-green-500 rounded';
+        } else {
+            line.className = 'w-3 sm:w-6 h-1 bg-slate-200 rounded';
+        }
+    }
+
+    if (currentPayStep === 5) {
+        const warnEl = document.getElementById('screenshotWarning');
+        if (warnEl) warnEl.classList.add('hidden');
+        if (screenshotBase64) {
+            document.getElementById('previewImg').src = screenshotBase64;
+            document.getElementById('previewBox').classList.remove('hidden');
+        }
+        setupScreenshotUpload();
+    }
+
+    if (currentPayStep === 6) {
+        document.getElementById('payStep6Method').textContent = getSelectedPayMethod();
+        const txn = (document.getElementById('payTxnInput')?.value || '').trim();
+        document.getElementById('payStep6Txn').textContent = txn || '— (not provided / দেওয়া হয়নি)';
+        const sEl = document.getElementById('payStep6Screenshot');
+        if (screenshotBase64) {
+            sEl.textContent = '✅ Uploaded / আপলোড হয়েছে';
+            sEl.className = 'text-green-700';
+        } else {
+            sEl.textContent = '❌ Missing / অনুপস্থিত';
+            sEl.className = 'text-red-600';
+        }
+    }
+}
+
+function payStepGo(n) {
+    if (currentPayStep === 5 && n === 6) {
+        if (!screenshotBase64) {
+            const warnEl = document.getElementById('screenshotWarning');
+            if (warnEl) warnEl.classList.remove('hidden');
+            alert('⚠️ Please upload your payment screenshot before proceeding.\n\nএগিয়ে যাওয়ার আগে পেমেন্ট স্ক্রিনশট আপলোড করুন।');
+            return;
+        }
+    }
+    currentPayStep = n;
+    renderPayStep();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function getSelectedPayMethod() {
+    const radios = document.querySelectorAll('input[name="payMethod"]');
+    for (const r of radios) {
+        if (r.checked) {
+            const map = {
+                'Google Pay (UPI)': 'Google Pay / PhonePe / Paytm (UPI)',
+                'Bank Transfer': 'ব্যাংক ট্রান্সফার (NEFT / IMPS)',
+                'Cash': 'নগদ টাকা (সরাসরি)',
+                'Other': 'অন্য পদ্ধতি'
+            };
+            return map[r.value] || r.value;
+        }
+    }
+    return 'Google Pay / PhonePe / Paytm (UPI)';
+}
+
+function getTxnId() {
+    return (document.getElementById('payTxnInput')?.value || '').trim();
+}
+
+function clearScreenshot() {
+    screenshotBase64 = null;
+    const si = document.getElementById('screenshotInput');
+    if (si) si.value = '';
+    document.getElementById('previewBox').classList.add('hidden');
+    document.getElementById('previewImg').src = '';
+}
+
+function payCancel() {
+    if (!confirm('Payment not completed yet?\n\nএখনো পেমেন্ট সম্পূর্ণ করেননি?\n\nOrder will not be cancelled — you can try again anytime.\n\nঅর্ডার বাতিল হবে না — চাইলে আবার চেষ্টা করতে পারবেন।')) return;
+    showToast('💡 Ready when you are! / যখন প্রস্তুত হবেন!');
+    currentPayStep = 1;
+    renderPayStep();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function copyUpi() { navigator.clipboard.writeText(UPI_ID).then(() => alert('✅ UPI ID copied! / UPI ID কপি হয়েছে!')); }
+
+/* ============ SUBMIT PURCHASE ============ */
 async function submitPurchase() {
-    if (!screenshotBase64) { alert('⚠️ Please upload payment screenshot!'); return; }
+    if (!screenshotBase64) { alert('⚠️ Please upload payment screenshot! / পেমেন্ট স্ক্রিনশট আপলোড করুন!'); return; }
+    if (!selectedPlan) { alert('⚠️ Plan missing. Please reselect. / প্ল্যান পাওয়া যায়নি। আবার নির্বাচন করুন।'); return; }
+    
     const p = getPricing(selectedPlan);
     const cleanPlan = cleanPlanName(selectedPlan.name);
+    const payMethod = getSelectedPayMethod();
+    const txnId = getTxnId();
+    
+    const appliedCouponData = p.usedCoupons.map(uc => {
+        const orig = appliedCoupons.find(c => c.code === uc.code);
+        return { code: uc.code, type: uc.type, value: uc.value, discount: uc.disc, appliesTo: orig ? orig.appliesTo : null };
+    });
+    
     const order = {
-        studentId: currentStudent.id, studentName: currentStudent.name,
-        studentMobile: currentStudent.mobile, studentEmail: currentStudent.email,
-        planName: selectedPlan.name, planCategory: selectedPlan.category,
-        planKey: selectedPlan.planKey || null, sessions: selectedPlan.sessions || 1,
-        baseAmount: p.kind === '1on1' ? p.planPrice : p.admStd + p.monthly,
-        couponCode: appliedCoupon ? appliedCoupon.code : null,
-        couponDiscount: p.kind === '1on1' ? p.couponDisc : p.admDisc,
-        finalAmount: p.final, screenshot: screenshotBase64, status: 'pending',
+        studentId: currentStudent.id,
+        studentName: currentStudent.name,
+        studentMobile: currentStudent.mobile,
+        uniqueId: currentStudent.uniqueId || currentStudent.id,
+        planName: selectedPlan.name,
+        planCategory: selectedPlan.category,
+        planKey: selectedPlan.planKey || null,
+        sessions: selectedPlan.sessions || 1,
+        isNewStudent: selectedPlan.isNewStudent || false,
+        baseAmount: p.kind === '1on1' ? p.planPrice : (p.isNewStudent ? p.admStd + p.monthly : p.monthly),
+        originalAmount: p.kind === '1on1' ? p.regularTotal : (p.isNewStudent ? p.admStd + p.monthly : p.monthly),
+        admissionFee: p.kind === 'group' && p.isNewStudent ? p.admFinal : 0,
+        monthlyFee: p.kind === 'group' ? p.monthlyFinal : 0,
+        couponCode: appliedCoupons.length > 0 ? appliedCoupons.map(c => c.code).join(',') : null,
+        appliedCoupons: appliedCouponData,
+        totalDiscount: p.couponDisc + (p.kind === 'group' && p.isNewStudent ? p.admDisc : 0),
+        finalAmount: p.final,
+        paymentMethod: payMethod,
+        txnId: txnId || null,
+        screenshot: screenshotBase64,
+        status: 'pending',
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
+    
+    const submitBtn = document.getElementById('paySubmitBtn');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '⏳ Submitting... / জমা হচ্ছে...'; }
+    
     try {
         await db.collection('purchases').add(order);
+        
+        try {
+            const link = document.createElement('a');
+            link.href = screenshotBase64;
+            link.download = `Payment_${currentStudent.uniqueId || currentStudent.id}_${Date.now()}.jpg`;
+            link.click();
+        } catch (e) { console.error('Screenshot download failed:', e); }
+        
         let breakdown = '';
         if (p.kind === '1on1') {
-            breakdown = `• Regular Rate: ₹${offerConfig.regularRate} × ${p.sessions} = ${money(p.regularTotal)}\n• Special Rate: ₹${offerConfig.offerRate} × ${p.sessions} = ${money(p.specialTotal)}\n• Package Price: ${money(p.planPrice)}\n`;
-            if (p.couponDisc > 0) breakdown += `• Coupon ${appliedCoupon.code}: -${money(p.couponDisc)}\n`;
+            breakdown = `• Package Price: ${money(p.planPrice)}\n`;
+            p.usedCoupons.forEach(uc => { breakdown += `• Coupon ${uc.code}: -${money(uc.disc)}\n`; });
             breakdown += `• Final Total Payable: ${money(p.final)}`;
         } else {
-            breakdown = `• Admission Fee: ${money(p.admStd)}\n`;
-            if (p.admDisc > 0) breakdown += `• Coupon ${appliedCoupon.code}: -${money(p.admDisc)}  →  Effective Admission: ${money(p.admFinal)}\n`;
-            breakdown += `• Monthly Tuition Fee: ${money(p.monthly)}\n• Final Total Payable: ${money(p.final)}`;
+            if (p.isNewStudent && p.admStd > 0) {
+                breakdown = `• Admission Fee: ${money(p.admStd)}\n`;
+                if (p.admDisc > 0) breakdown += `• Admission Discount: -${money(p.admDisc)}\n`;
+                breakdown += `• Monthly Tuition Fee: ${money(p.monthly)}\n`;
+            } else {
+                breakdown = `• Monthly Tuition Fee: ${money(p.monthly)}\n`;
+            }
+            p.usedCoupons.forEach(uc => { breakdown += `• Coupon ${uc.code}: -${money(uc.disc)}\n`; });
+            breakdown += `• Final Total Payable: ${money(p.final)}`;
         }
-        const statusText = appliedCoupon ? `Coupon Applied (${appliedCoupon.code})` : 'Standard Package Price';
-        const msg = `Hello,\nEnglish Spur English Training Academy / Sovan Kapri Sir,\n\nMy name is *${currentStudent.name}*.\nMobile: *${currentStudent.mobile}*\nEmail: ${currentStudent.email}\n\nI have reviewed the plan and want to enroll:\n*${cleanPlan}*\nStatus: ${statusText}\n\n--- FEE BREAKDOWN ---\n${breakdown}\n-------------------------\n*Final Total Payable Amount: ${money(p.final)}*\n\n*I will submit the required Documents for Admission:* Passport Size Photograph & Standard Address Proof (Aadhar/Voter/School ID).\n\nPlease confirm and I will complete the payment now.`;
+        
+        const couponText = appliedCoupons.length > 0 
+            ? `Coupons Applied (${appliedCoupons.map(c => c.code).join(', ')})` 
+            : 'Standard Package Price';
+        
+        const txnLine = txnId ? `\n• Txn ID: ${txnId}` : '';
+        
+        const msg = `✅ *PAYMENT COMPLETED — English Spur*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order. Please find the details below:\n\n--- STUDENT DETAILS ---\n• Name: *${currentStudent.name}*\n• Mobile: *${currentStudent.mobile}*\n• Unique ID: ${currentStudent.uniqueId || currentStudent.id}\n\n--- PLAN ENROLLED ---\n*${cleanPlan}*\nStatus: ${couponText}\n\n--- FEE BREAKDOWN ---\n${breakdown}\n-------------------------\n*💵 Amount Paid: ${money(p.final)}*\n\n--- PAYMENT INFO ---\n• Method: ${payMethod}${txnLine}\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\n--- DOCUMENTS ---\nI will submit the required admission documents shortly:\n• Passport Size Photograph\n• Address Proof (Aadhar / Voter ID / School ID)\n\nKindly verify my payment and send me the confirmation receipt.\n\nThank you 🙏`;
         window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 
         selectedPlan = null;
-        appliedCoupon = null;
+        appliedCoupons = [];
+        pendingCouponCodes = [];
         saveSelectedPlan();
 
+        [1, 2, 3, 4, 5, 6].forEach(n => {
+            const el = document.getElementById('payStep' + n);
+            if (el) el.classList.add('hidden');
+        });
         setTimeout(() => {
-            document.getElementById('thankYouBox').classList.remove('hidden');
-            document.getElementById('thankYouBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const tyb = document.getElementById('thankYouBox');
+            tyb.classList.remove('hidden');
+            tyb.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 350);
-    } catch (err) { alert('❌ Error: ' + err.message); }
+    } catch (err) { 
+        alert('❌ Error: ' + err.message); 
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = '✅ Submit / জমা দিন'; }
+    }
 }
 
 async function loadHistory() {
@@ -1033,7 +1823,7 @@ async function loadHistory() {
         const snap = await db.collection('purchases').where('studentId', '==', currentStudent.id).get();
         const list = document.getElementById('historyList');
         list.innerHTML = '';
-        if (snap.empty) { list.innerHTML = '<p class="text-center text-slate-500 py-6 text-sm">No orders yet.</p>'; return; }
+        if (snap.empty) { list.innerHTML = '<p class="text-center text-slate-500 py-6 text-sm">No orders yet. / এখনো কোনো অর্ডার নেই।</p>'; return; }
         const items = [];
         snap.forEach(d => items.push({ id: d.id, ...d.data() }));
         items.sort((a, b) => { const ta = a.createdAt ? a.createdAt.toDate().getTime() : 0; const tb = b.createdAt ? b.createdAt.toDate().getTime() : 0; return tb - ta; });
@@ -1042,7 +1832,7 @@ async function loadHistory() {
             const icons = { pending: '⏳', approved: '✅', rejected: '❌' };
             const div = document.createElement('div');
             div.className = `border-2 rounded-xl p-3.5 ${colors[p.status] || 'bg-slate-50'}`;
-            div.innerHTML = `<div class="flex justify-between items-start gap-2 flex-wrap"><div class="flex-1 min-w-0"><p class="font-bold text-xs">${p.planName}</p><p class="text-[10px] text-slate-600 mt-0.5">Amount: <strong>${money(p.finalAmount)}</strong>${p.couponCode ? ` · ${p.couponCode}` : ''}</p>${p.receiptNo ? `<p class="text-[10px] text-green-700 font-bold mt-0.5">🧾 ${p.receiptNo}</p>` : ''}${p.rejectionReason ? `<p class="text-[10px] text-red-700 mt-0.5">Reason: ${p.rejectionReason}</p>` : ''}</div><span class="text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap">${icons[p.status]} ${p.status.toUpperCase()}</span></div>${p.status === 'approved' ? `<button onclick="viewReceipt('${p.id}')" class="mt-3 w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2.5 rounded-lg text-[11px]">📄 View Receipt</button>` : ''}`;
+            div.innerHTML = `<div class="flex justify-between items-start gap-2 flex-wrap"><div class="flex-1 min-w-0"><p class="font-bold text-xs">${p.planName}</p><p class="text-[10px] text-slate-600 mt-0.5">Amount: <strong>${money(p.finalAmount)}</strong>${p.couponCode ? ` · ${p.couponCode}` : ''}</p>${p.paymentMethod ? `<p class="text-[10px] text-slate-500 mt-0.5">💳 ${p.paymentMethod}</p>` : ''}${p.receiptNo ? `<p class="text-[10px] text-green-700 font-bold mt-0.5">🧾 ${p.receiptNo}</p>` : ''}${p.rejectionReason ? `<p class="text-[10px] text-red-700 mt-0.5">Reason: ${p.rejectionReason}</p>` : ''}</div><span class="text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap">${icons[p.status]} ${p.status.toUpperCase()}</span></div>${p.status === 'approved' ? `<button onclick="viewReceipt('${p.id}')" class="mt-3 w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2.5 rounded-lg text-[11px]">📄 View Receipt / রসিদ দেখুন</button>` : ''}`;
             list.appendChild(div);
         });
     } catch (e) { console.error(e); }
@@ -1081,11 +1871,20 @@ function buildReceipt(p) {
         <div class="header"><div class="brand">ENGLISH <span>SPUR</span></div><div class="org">English Spur English Training Academy</div><div class="addr">Kanaipur, Bantul, Bagnan, Howrah - 711312</div><div class="addr">📞 +91 9875340842 · ✉️ englishspur2020@gmail.com</div></div>
         <div class="title"><h2>PAYMENT RECEIPT</h2><p>পেমেন্ট রসিদ</p></div>
         <div class="meta"><div><strong>Receipt:</strong> ${p.receiptNo}</div><div><strong>Date:</strong> ${date}</div></div>
-        <div class="section"><h3>Student Details</h3><div class="row"><span>Name</span><strong>${p.studentName}</strong></div><div class="row"><span>Mobile</span><strong>${p.studentMobile}</strong></div><div class="row"><span>Email</span><strong>${p.studentEmail}</strong></div></div>
-        <div class="section"><h3>Plan Enrolled</h3><div style="font-size:13px; font-weight:800; color:#1e3a8a;">${p.planName}</div></div>
+        <div class="section"><h3>Student Details</h3><div class="row"><span>Name</span><strong>${p.studentName}</strong></div><div class="row"><span>Mobile</span><strong>${p.studentMobile}</strong></div>${p.uniqueId ? `<div class="row"><span>Unique ID</span><strong>${p.uniqueId}</strong></div>` : ''}</div>
+        <div class="section"><h3>Plan Enrolled</h3><div style="font-size:13px; font-weight:800; color:#1e3a8a;">${p.planName}</div>
+        ${p.admissionFee > 0 ? `<div style="margin-top:6px; font-size:11px; color:#1e3a8a;"><strong>Admission Fee:</strong> ₹${p.admissionFee}</div>` : ''}
+        ${p.monthlyFee > 0 ? `<div style="margin-top:4px; font-size:11px; color:#1e3a8a;"><strong>Monthly Fee:</strong> ₹${p.monthlyFee}</div>` : ''}
+        ${p.appliedCoupons && p.appliedCoupons.length > 0 ? `
+        <div style="margin-top:6px; font-size:11px; color:#166534;">
+            <strong>Coupons applied (${p.appliedCoupons.length}):</strong><br>
+            ${p.appliedCoupons.map(c => `• ${c.code} (${c.type === 'flat' ? '₹' + c.value : c.value + '%'}) → −₹${c.discount}`).join('<br>')}
+            ${p.appliedCoupons.length > 1 ? `<br><strong>Total Discount: −₹${p.totalDiscount}</strong>` : ''}
+        </div>` : ''}
+        </div>
         <div class="total"><span class="lbl">AMOUNT PAID</span><span class="amt">${money(p.finalAmount)}</span></div>
-        <div class="section"><h3>Payment Info</h3><div class="row"><span>Method</span><strong>UPI</strong></div><div class="row"><span>Status</span><strong style="color:#16a34a;">✅ Verified</strong></div></div>
-        <div class="footer"><p>Thank you for choosing English Spur!</p><p style="font-weight:800; color:#1d4ed8;">— Sovan Kapri, Founder & Lead Trainer</p></div>
+        <div class="section"><h3>Payment Info</h3><div class="row"><span>Method</span><strong>${p.paymentMethod || 'UPI'}</strong></div>${p.txnId ? `<div class="row"><span>Txn ID</span><strong>${p.txnId}</strong></div>` : ''}<div class="row"><span>Status</span><strong style="color:#16a34a;">✅ Verified</strong></div></div>
+        <div class="footer"><p>Thank you for choosing English Spur!</p><p style="font-weight:800; color:#1d4ed8;">— Sovan Kapri, Founder &amp; Lead Trainer</p></div>
     </div>
     <div class="noprint"><button onclick="window.print()">🖨️ Print / Save as PDF</button></div>
     </body></html>`;
