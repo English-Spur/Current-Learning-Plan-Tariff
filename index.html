@@ -22,6 +22,18 @@
     .tab-inactive { background-color: #e2e8f0; color: #334155; }
     .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 200; background: #0f172a; color: #fff; padding: 12px 22px; border-radius: 999px; font-size: 13px; font-weight: 700; box-shadow: 0 10px 30px rgba(0,0,0,0.4); animation: slideDown 0.3s ease; max-width: 90%; text-align: center; }
     @keyframes slideDown { from { opacity: 0; transform: translate(-50%, -20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+    .checklist-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all 0.2s; }
+    .checklist-item:hover { border-color: #1d4ed8; background: #eff6ff; }
+    .checklist-item.checked { border-color: #16a34a; background: #f0fdf4; }
+    .checklist-item input[type="radio"] { margin-top: 2px; width: 20px; height: 20px; accent-color: #1d4ed8; flex-shrink: 0; }
+    .checklist-item.checked input[type="radio"] { accent-color: #16a34a; }
+    .checklist-content { flex: 1; }
+    .step-dot-complete { width: 2rem !important; height: 2rem !important; background: #15803d !important; box-shadow: 0 0 0 4px rgba(21,128,61,0.25), 0 4px 8px rgba(21,128,61,0.4) !important; font-size: 1rem !important; }
+    @media (min-width: 640px) {
+        .step-dot-complete { width: 2.25rem !important; height: 2.25rem !important; font-size: 1.1rem !important; }
+    }
+    #reuploadModal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.75); z-index: 9999; display: none; align-items: flex-start; justify-content: center; padding: 16px; overflow-y: auto; }
+    #reuploadModal.show { display: flex; }
 </style>
 </head>
 <body>
@@ -101,7 +113,9 @@
             </div>
         </div>
         <div class="flex items-center gap-1.5 flex-shrink-0">
-            <button onclick="showView('history')" class="bg-blue-50 text-blue-700 font-bold text-[10px] sm:text-xs px-2.5 py-2 rounded-lg">📋 Orders</button>
+            <button onclick="showView('history')" class="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-[10px] sm:text-xs px-2.5 py-2 rounded-lg text-left leading-tight">
+                📋 Order / Payment<br><span class="text-[9px]">History / ইতিহাস</span>
+            </button>
             <button onclick="studentLogout()" class="bg-red-500 hover:bg-red-600 text-white font-bold text-[10px] sm:text-xs px-2.5 py-2 rounded-lg">🚪 Logout</button>
         </div>
     </div>
@@ -173,49 +187,44 @@
         </div>
     </div>
 
-    <!-- VIEW: PAYMENT (6-STEP WIZARD) -->
+    <!-- VIEW: PAYMENT -->
     <div id="view-payment" class="hidden">
         <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-5">
 
-            <!-- ============ STEP INDICATOR (6 dots) ============ -->
+            <!-- STEP INDICATOR -->
             <div class="flex items-center justify-center gap-0.5 sm:gap-1 mb-5 overflow-x-auto pb-2">
                 <div class="flex items-center gap-1 flex-shrink-0">
-                    <div id="stepDot1Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-700 text-white flex items-center justify-center font-black text-[10px] sm:text-xs shadow">1</div>
-                    <span class="text-[9px] sm:text-[10px] font-bold text-blue-700 hidden sm:inline">প্রস্তুতি</span>
+                    <div id="stepDot1Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-700 text-white flex items-center justify-center font-black text-[10px] sm:text-xs shadow transition-all">1</div>
+                    <span class="text-[9px] sm:text-[10px] font-bold text-blue-700 hidden sm:inline" id="stepLabel1">Pay</span>
                 </div>
                 <div id="stepLine1" class="w-3 sm:w-6 h-1 bg-slate-200 rounded"></div>
                 <div class="flex items-center gap-1 flex-shrink-0">
-                    <div id="stepDot2Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs">2</div>
-                    <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline">পেমেন্ট?</span>
+                    <div id="stepDot2Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs transition-all">2</div>
+                    <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline" id="stepLabel2">Method</span>
                 </div>
                 <div id="stepLine2" class="w-3 sm:w-6 h-1 bg-slate-200 rounded"></div>
                 <div class="flex items-center gap-1 flex-shrink-0">
-                    <div id="stepDot3Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs">3</div>
-                    <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline">পদ্ধতি</span>
+                    <div id="stepDot3Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs transition-all">3</div>
+                    <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline" id="stepLabel3">Proof</span>
                 </div>
                 <div id="stepLine3" class="w-3 sm:w-6 h-1 bg-slate-200 rounded"></div>
                 <div class="flex items-center gap-1 flex-shrink-0">
-                    <div id="stepDot4Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs">4</div>
-                    <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline">ট্রানজেকশন</span>
+                    <div id="stepDot4Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs transition-all">4</div>
+                    <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline" id="stepLabel4">Confirm</span>
                 </div>
                 <div id="stepLine4" class="w-3 sm:w-6 h-1 bg-slate-200 rounded"></div>
                 <div class="flex items-center gap-1 flex-shrink-0">
-                    <div id="stepDot5Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs">5</div>
-                    <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline">স্ক্রিনশট</span>
-                </div>
-                <div id="stepLine5" class="w-3 sm:w-6 h-1 bg-slate-200 rounded"></div>
-                <div class="flex items-center gap-1 flex-shrink-0">
-                    <div id="stepDot6Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs">6</div>
-                    <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline">জমা</span>
+                    <div id="stepDot5Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs transition-all">5</div>
+                    <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline" id="stepLabel5">Done</span>
                 </div>
             </div>
 
-            <!-- ============ STEP 1: READY TO PAY ============ -->
+            <!-- STAGE 1 -->
             <div id="payStep1">
                 <div class="text-center mb-4">
                     <div class="text-5xl mb-2">💳</div>
-                    <h3 class="text-xl font-black text-blue-900">পেমেন্ট করতে প্রস্তুত</h3>
-                    <p class="text-sm text-slate-600 mt-2 font-semibold">Ready to Pay</p>
+                    <h3 class="text-xl font-black text-blue-900">Step 1: Payment</h3>
+                    <p class="text-sm text-slate-600 mt-2 font-semibold">ধাপ ১: পেমেন্ট</p>
                     <p class="text-[12px] text-slate-500 mt-1 font-semibold">নিচে amount আর QR/UPI দেখুন</p>
                     <p class="text-[11px] text-slate-400 mt-0.5">Check the amount and QR/UPI below</p>
                 </div>
@@ -237,7 +246,7 @@
                     <p class="text-[11px] text-slate-500 mt-3 font-semibold">👆 Tap the QR to zoom / QR টি জুম করতে ট্যাপ করুন</p>
                 </div>
 
-                <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-5">
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
                     <p class="text-sm font-black text-amber-900 mb-1.5">UPI ID / UPI আইডি:</p>
                     <div class="flex items-center gap-2">
                         <span class="flex-1 bg-white rounded px-2 py-1.5 text-[12px] font-bold text-amber-900 break-all" id="upiIdText">sovankapri-1@okhdfcbank</span>
@@ -245,135 +254,103 @@
                     </div>
                 </div>
 
-                <button onclick="payStepGo(2)" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black py-3.5 rounded-xl text-sm sm:text-base shadow-md uppercase mb-2">
-                    📱 (Amount Paid / টাকা পেমেন্ট করা হয়েছে) Next / পরবর্তী ধাপ →
+                <div class="bg-green-50 border-2 border-green-300 rounded-xl p-4 mb-4">
+                    <label class="checklist-item" id="payDoneChecklist" onclick="togglePayDone()" style="background: white;">
+                        <input type="radio" name="payDoneCheck" id="payDoneRadio" onclick="event.stopPropagation(); togglePayDone();">
+                        <div class="checklist-content">
+                            <p class="text-sm font-black text-green-900">✅ I have completed the payment</p>
+                            <p class="text-[12px] text-green-800 font-semibold mt-0.5">আমি পেমেন্ট সম্পন্ন করেছি</p>
+                            <p class="text-[10px] text-slate-500 mt-1">Tick this option and click Next to continue.</p>
+                            <p class="text-[10px] text-slate-500">এই অপশন টিক করে Next চাপুন।</p>
+                        </div>
+                    </label>
+                </div>
+
+                <button id="stage1NextBtn" onclick="payStageGo(2)" disabled class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black py-3.5 rounded-xl text-sm sm:text-base shadow-md uppercase mb-2 disabled:opacity-40 disabled:cursor-not-allowed transition">
+                    Next / পরবর্তী →
                 </button>
                 <button onclick="showView('checkout')" class="w-full bg-slate-100 text-slate-700 font-bold p-2.5 rounded-xl text-xs hover:bg-slate-200">
                     ← Back to Review / পর্যালোচনায় ফিরে যান
                 </button>
             </div>
 
-            <!-- ============ STEP 2: DID YOU PAY? ============ -->
+            <!-- STAGE 2 -->
             <div id="payStep2" class="hidden">
-                <div class="text-center mb-4">
-                    <div class="text-5xl mb-2">❓</div>
-                    <h3 class="text-xl font-black text-blue-900">আপনি কি পেমেন্ট করেছেন?</h3>
-                    <p class="text-sm text-slate-600 mt-2 font-semibold">Did you pay?</p>
-                    <p class="text-[12px] text-slate-500 mt-1 font-semibold">টাকা পাঠানোর পরেই "Yes" চাপুন</p>
-                    <p class="text-[11px] text-slate-400 mt-0.5">Tap "Yes" only after sending the money</p>
+                <div class="text-center mb-5">
+                    <div class="text-5xl mb-2">📱</div>
+                    <h3 class="text-xl font-black text-blue-900">Step 2: Payment Method</h3>
+                    <p class="text-sm text-slate-600 mt-2 font-semibold">ধাপ ২: পেমেন্ট পদ্ধতি</p>
+                    <p class="text-[12px] text-slate-500 mt-1 font-semibold">আপনি কোন UPI অ্যাপ দিয়ে পেমেন্ট করেছেন?</p>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Which UPI app did you use to pay?</p>
                 </div>
 
-                <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-5">
-                    <p class="text-[11px] font-black text-blue-700 uppercase mb-1 text-center">Amount you should have sent / আপনার পাঠানো উচিত ছিল</p>
-                    <p class="text-3xl font-black text-blue-900 text-center" id="payStep2Amount">₹0</p>
+                <p class="text-sm font-black text-slate-700 uppercase mb-3">👇 Select your UPI app / আপনার UPI অ্যাপ নির্বাচন করুন:</p>
+                <div class="space-y-3 mb-6">
+                    <label class="checklist-item" id="methodItem1" onclick="selectPayMethod('Google Pay', 1)">
+                        <input type="radio" name="payMethod" value="Google Pay" class="pay-method-radio">
+                        <div class="checklist-content">
+                            <p class="font-black text-base text-slate-800">💠 Google Pay</p>
+                            <p class="text-[11px] text-slate-500 font-semibold mt-0.5">GPay</p>
+                        </div>
+                    </label>
+                    <label class="checklist-item" id="methodItem2" onclick="selectPayMethod('PhonePe', 2)">
+                        <input type="radio" name="payMethod" value="PhonePe" class="pay-method-radio">
+                        <div class="checklist-content">
+                            <p class="font-black text-base text-slate-800">💜 PhonePe</p>
+                            <p class="text-[11px] text-slate-500 font-semibold mt-0.5">PhonePe UPI</p>
+                        </div>
+                    </label>
+                    <label class="checklist-item" id="methodItem3" onclick="selectPayMethod('Paytm', 3)">
+                        <input type="radio" name="payMethod" value="Paytm" class="pay-method-radio">
+                        <div class="checklist-content">
+                            <p class="font-black text-base text-slate-800">💙 Paytm</p>
+                            <p class="text-[11px] text-slate-500 font-semibold mt-0.5">Paytm UPI</p>
+                        </div>
+                    </label>
+                    <label class="checklist-item" id="methodItem4" onclick="selectPayMethod('BHIM UPI', 4)">
+                        <input type="radio" name="payMethod" value="BHIM UPI" class="pay-method-radio">
+                        <div class="checklist-content">
+                            <p class="font-black text-base text-slate-800">🇮🇳 BHIM UPI</p>
+                            <p class="text-[11px] text-slate-500 font-semibold mt-0.5">BHIM App</p>
+                        </div>
+                    </label>
+                    <label class="checklist-item" id="methodItem5" onclick="selectPayMethod('Amazon Pay', 5)">
+                        <input type="radio" name="payMethod" value="Amazon Pay" class="pay-method-radio">
+                        <div class="checklist-content">
+                            <p class="font-black text-base text-slate-800">🅰️ Amazon Pay</p>
+                            <p class="text-[11px] text-slate-500 font-semibold mt-0.5">Amazon UPI</p>
+                        </div>
+                    </label>
+                    <label class="checklist-item" id="methodItem6" onclick="selectPayMethod('WhatsApp Pay', 6)">
+                        <input type="radio" name="payMethod" value="WhatsApp Pay" class="pay-method-radio">
+                        <div class="checklist-content">
+                            <p class="font-black text-base text-slate-800">💬 WhatsApp Pay</p>
+                            <p class="text-[11px] text-slate-500 font-semibold mt-0.5">WhatsApp UPI</p>
+                        </div>
+                    </label>
+                    <label class="checklist-item" id="methodItem7" onclick="selectPayMethod('Other UPI App', 7)">
+                        <input type="radio" name="payMethod" value="Other UPI App" class="pay-method-radio">
+                        <div class="checklist-content">
+                            <p class="font-black text-base text-slate-800">🔗 Other UPI App</p>
+                            <p class="text-[11px] text-slate-500 font-semibold mt-0.5">অন্য UPI অ্যাপ</p>
+                        </div>
+                    </label>
                 </div>
 
-                <div class="bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-xl p-4 mb-5 text-center">
-                    <p class="text-sm font-black uppercase tracking-widest">⚠️ Honesty Check / সততার সাথে উত্তর দিন</p>
-                    <p class="text-[12px] mt-1.5 opacity-95 font-semibold">শুধু তখনই "Yes" চাপুন যখন আপনি সত্যিই টাকা পাঠিয়েছেন। মিথ্যা order admin বাতিল করবে।</p>
-                    <p class="text-[11px] mt-1 opacity-90">Tap "Yes" only if you really sent the money. Fake orders will be rejected.</p>
+                <div class="flex gap-2">
+                    <button onclick="payStageGo(1)" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-xl text-sm">← Back / পিছনে</button>
+                    <button id="stage2NextBtn" onclick="payStageGo(3)" disabled class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-black py-3.5 rounded-xl text-base shadow-md uppercase disabled:opacity-40 disabled:cursor-not-allowed transition">Next / পরবর্তী →</button>
                 </div>
-
-                <div class="space-y-3 mb-4">
-                    <button onclick="payStepGo(3)" class="w-full bg-green-600 hover:bg-green-700 text-white font-black py-3.5 rounded-xl text-sm sm:text-base shadow-md uppercase">
-                        ✅ Yes, I've Paid / হ্যাঁ, আমি দিয়েছি
-                    </button>
-                    <button onclick="payCancel()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold py-3 rounded-xl text-sm">
-                        ❌ No / Not Yet / না
-                    </button>
-                </div>
-
-                <button onclick="payStepGo(1)" class="w-full bg-slate-100 text-slate-500 font-bold p-2.5 rounded-xl text-xs hover:bg-slate-200">
-                    ← Back / পিছনে
-                </button>
             </div>
 
-            <!-- ============ STEP 3: PAYMENT METHOD ============ -->
+            <!-- STAGE 3 -->
             <div id="payStep3" class="hidden">
                 <div class="text-center mb-5">
-                    <div class="text-5xl mb-2">💳</div>
-                    <h3 class="text-xl font-black text-blue-900">পেমেন্ট পদ্ধতি</h3>
-                    <p class="text-sm text-slate-600 mt-2 font-semibold">Payment Method</p>
-                    <p class="text-[12px] text-slate-500 mt-1 font-semibold">আপনি কীভাবে টাকা পাঠিয়েছেন?</p>
-                    <p class="text-[11px] text-slate-400 mt-0.5">How did you send the money?</p>
-                </div>
-
-                <p class="text-sm font-black text-slate-700 uppercase mb-3">👇 Select one option / একটি অপশন বেছে নিন:</p>
-                <div class="space-y-3 mb-6">
-                    <label class="flex items-center gap-3 p-4 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition">
-                        <input type="radio" name="payMethod" value="Google Pay (UPI)" class="w-5 h-5 accent-blue-700 flex-shrink-0" checked>
-                        <div class="flex items-center gap-3 flex-1">
-                            <span class="text-2xl">📱</span>
-                            <span class="font-black text-base sm:text-lg text-slate-800">Google Pay / PhonePe / Paytm</span>
-                        </div>
-                    </label>
-                    <label class="flex items-center gap-3 p-4 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition">
-                        <input type="radio" name="payMethod" value="Bank Transfer" class="w-5 h-5 accent-blue-700 flex-shrink-0">
-                        <div class="flex items-center gap-3 flex-1">
-                            <span class="text-2xl">🏦</span>
-                            <span class="font-black text-base sm:text-lg text-slate-800">ব্যাংক ট্রান্সফার / NEFT / IMPS</span>
-                        </div>
-                    </label>
-                    <label class="flex items-center gap-3 p-4 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition">
-                        <input type="radio" name="payMethod" value="Cash" class="w-5 h-5 accent-blue-700 flex-shrink-0">
-                        <div class="flex items-center gap-3 flex-1">
-                            <span class="text-2xl">💵</span>
-                            <span class="font-black text-base sm:text-lg text-slate-800">নগদ টাকা (সরাসরি) / Cash (in person)</span>
-                        </div>
-                    </label>
-                    <label class="flex items-center gap-3 p-4 bg-white border-2 border-slate-200 rounded-xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition">
-                        <input type="radio" name="payMethod" value="Other" class="w-5 h-5 accent-blue-700 flex-shrink-0">
-                        <div class="flex items-center gap-3 flex-1">
-                            <span class="text-2xl">🔗</span>
-                            <span class="font-black text-base sm:text-lg text-slate-800">অন্য কোনো পদ্ধতি / Other</span>
-                        </div>
-                    </label>
-                </div>
-
-                <div class="flex gap-2">
-                    <button onclick="payStepGo(2)" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-xl text-sm">← Back / পিছনে</button>
-                    <button onclick="payStepGo(4)" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-black py-3.5 rounded-xl text-base shadow-md uppercase">Next / পরবর্তী →</button>
-                </div>
-            </div>
-
-            <!-- ============ STEP 4: TRANSACTION ID ============ -->
-            <div id="payStep4" class="hidden">
-                <div class="text-center mb-5">
-                    <div class="text-5xl mb-2">🔢</div>
-                    <h3 class="text-xl font-black text-blue-900">ট্রানজেকশন আইডি</h3>
-                    <p class="text-sm text-slate-600 mt-2 font-semibold">Transaction ID / Reference</p>
-                    <p class="text-[12px] text-slate-500 mt-1 font-semibold">ঐচ্ছিক — তবে দিলে admin দ্রুত verify করতে পারবে</p>
-                    <p class="text-[11px] text-slate-400 mt-0.5">Optional — helps admin verify faster</p>
-                </div>
-
-                <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-4">
-                    <p class="text-[12px] text-slate-700 font-semibold">💡 Open your UPI app → payment history → copy <strong>UTR / Transaction ID</strong> and paste here. Example: 423456789012</p>
-                    <p class="text-[11px] text-slate-500 font-semibold mt-1">💡 UPI অ্যাপে পেমেন্ট history খুলে <strong>UTR / Transaction ID</strong> কপি করে এখানে পেস্ট করুন।</p>
-                </div>
-
-                <div class="mb-5">
-                    <label class="text-sm font-black text-slate-700 uppercase mb-2 block">Txn / UTR ID (Optional) / ট্রানজেকশন আইডি (ঐচ্ছিক)</label>
-                    <input type="text" id="payTxnInput" placeholder="e.g. 423456789012" maxlength="30"
-                           class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-bold text-base" 
-                           oninput="this.value = this.value.replace(/[^0-9A-Za-z]/g, '').slice(0, 30)">
-                    <p class="text-[11px] text-slate-500 mt-2 font-semibold">🔒 Admin will cross-check your payment with this ID</p>
-                    <p class="text-[10px] text-slate-400 mt-0.5">🔒 এই ID দিয়ে admin আপনার পেমেন্ট যাচাই করবে</p>
-                </div>
-
-                <div class="flex gap-2">
-                    <button onclick="payStepGo(3)" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-xl text-sm">← Back / পিছনে</button>
-                    <button onclick="payStepGo(5)" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-black py-3.5 rounded-xl text-base shadow-md uppercase">Next / পরবর্তী →</button>
-                </div>
-            </div>
-
-            <!-- ============ STEP 5: SCREENSHOT UPLOAD ============ -->
-            <div id="payStep5" class="hidden">
-                <div class="text-center mb-5">
                     <div class="text-5xl mb-2">📸</div>
-                    <h3 class="text-xl font-black text-blue-900">স্ক্রিনশট আপলোড করুন</h3>
-                    <p class="text-sm text-slate-600 mt-2 font-semibold">Upload Screenshot</p>
-                    <p class="text-[12px] text-slate-500 mt-1 font-semibold">পেমেন্ট সফল হওয়ার স্ক্রিনশট আপলোড করুন</p>
-                    <p class="text-[11px] text-slate-400 mt-0.5">Upload the successful payment screenshot</p>
+                    <h3 class="text-xl font-black text-blue-900">Step 3: Upload Screenshot</h3>
+                    <p class="text-sm text-slate-600 mt-2 font-semibold">ধাপ ৩: স্ক্রিনশট আপলোড</p>
+                    <p class="text-[12px] text-slate-500 mt-1 font-semibold">পেমেন্ট করার পর স্ক্রিনশট আপলোড করুন (বাধ্যতামূলক)</p>
+                    <p class="text-[11px] text-slate-400 mt-0.5">Upload payment screenshot — this is mandatory</p>
                 </div>
 
                 <div class="bg-green-50 border border-green-200 rounded-xl p-4 mb-4">
@@ -398,18 +375,30 @@
                     </ul>
                 </div>
 
+                <div class="bg-blue-50 border-2 border-blue-300 rounded-xl p-4 mb-4">
+                    <label class="checklist-item" id="screenshotAttachChecklist" onclick="toggleScreenshotCheck()" style="background: white;">
+                        <input type="radio" name="screenshotAttachCheck" id="screenshotAttachRadio" onclick="event.stopPropagation(); toggleScreenshotCheck();">
+                        <div class="checklist-content">
+                            <p class="text-sm font-black text-blue-900">✅ Screenshot has been attached</p>
+                            <p class="text-[12px] text-blue-800 font-semibold mt-0.5">স্ক্রিনশট সংযুক্ত করা হয়েছে</p>
+                            <p class="text-[10px] text-slate-500 mt-1">Tick this option and click Next.</p>
+                            <p class="text-[10px] text-slate-500">এই অপশন টিক করে Next চাপুন।</p>
+                        </div>
+                    </label>
+                </div>
+
                 <div class="flex gap-2">
-                    <button onclick="payStepGo(4)" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-xl text-sm">← Back / পিছনে</button>
-                    <button onclick="payStepGo(6)" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-black py-3.5 rounded-xl text-base shadow-md uppercase">Next / পরবর্তী →</button>
+                    <button onclick="payStageGo(2)" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-xl text-sm">← Back / পিছনে</button>
+                    <button id="stage3NextBtn" onclick="payStageGo(4)" disabled class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-black py-3.5 rounded-xl text-base shadow-md uppercase disabled:opacity-40 disabled:cursor-not-allowed transition">Next / পরবর্তী →</button>
                 </div>
             </div>
 
-            <!-- ============ STEP 6: FINAL CONFIRM & SUBMIT ============ -->
-            <div id="payStep6" class="hidden">
+            <!-- STAGE 4 -->
+            <div id="payStep4" class="hidden">
                 <div class="text-center mb-5">
                     <div class="text-5xl mb-2">🎯</div>
-                    <h3 class="text-xl font-black text-blue-900">চূড়ান্ত নিশ্চিতকরণ</h3>
-                    <p class="text-sm text-slate-600 mt-2 font-semibold">Final Confirmation</p>
+                    <h3 class="text-xl font-black text-blue-900">Step 4: Final Confirmation</h3>
+                    <p class="text-sm text-slate-600 mt-2 font-semibold">ধাপ ৪: চূড়ান্ত নিশ্চিতকরণ</p>
                     <p class="text-[12px] text-slate-500 mt-1 font-semibold">সব তথ্য দেখে নিন তারপর submit করুন</p>
                     <p class="text-[11px] text-slate-400 mt-0.5">Review all info and then submit</p>
                 </div>
@@ -417,71 +406,199 @@
                 <div class="bg-slate-50 border-2 border-slate-200 rounded-xl p-4 mb-4 space-y-2">
                     <div class="flex justify-between text-xs gap-2">
                         <span class="text-slate-600 flex-shrink-0 font-semibold">👤 Student / শিক্ষার্থী</span>
-                        <strong class="text-slate-800 text-right" id="payStep6Name">—</strong>
+                        <strong class="text-slate-800 text-right" id="payStep4Name">—</strong>
                     </div>
                     <div class="flex justify-between text-xs gap-2">
                         <span class="text-slate-600 flex-shrink-0 font-semibold">🆔 Unique ID / ইউনিক আইডি</span>
-                        <strong class="text-slate-800 text-right break-all" id="payStep6Uid">—</strong>
+                        <strong class="text-slate-800 text-right break-all" id="payStep4Uid">—</strong>
                     </div>
                     <div class="flex justify-between text-xs gap-2">
                         <span class="text-slate-600 flex-shrink-0 font-semibold">📘 Plan / প্ল্যান</span>
-                        <strong class="text-slate-800 text-right max-w-[60%]" id="payStep6Plan">—</strong>
+                        <strong class="text-slate-800 text-right max-w-[60%]" id="payStep4Plan">—</strong>
                     </div>
                     <div class="flex justify-between text-xs gap-2">
-                        <span class="text-slate-600 flex-shrink-0 font-semibold">💳 Method / পদ্ধতি</span>
-                        <strong class="text-slate-800 text-right" id="payStep6Method">—</strong>
-                    </div>
-                    <div class="flex justify-between text-xs gap-2">
-                        <span class="text-slate-600 flex-shrink-0 font-semibold">🔢 Txn ID / ট্রানজেকশন</span>
-                        <strong class="text-slate-800 text-right break-all" id="payStep6Txn">—</strong>
+                        <span class="text-slate-600 flex-shrink-0 font-semibold">📱 UPI App / UPI অ্যাপ</span>
+                        <strong class="text-slate-800 text-right" id="payStep4Method">—</strong>
                     </div>
                     <div class="border-t border-dashed border-slate-300 pt-2 flex justify-between text-sm">
                         <span class="font-black text-slate-700">Amount Paid / পরিশোধিত</span>
-                        <strong class="text-orange-600 text-base" id="payStep6Amount">₹0</strong>
+                        <strong class="text-orange-600 text-base" id="payStep4Amount">₹0</strong>
                     </div>
                     <div class="flex justify-between text-xs gap-2">
                         <span class="text-slate-600 flex-shrink-0 font-semibold">📸 Screenshot / স্ক্রিনশট</span>
-                        <strong class="text-green-700" id="payStep6Screenshot">✅ Uploaded</strong>
+                        <strong class="text-green-700" id="payStep4Screenshot">✅ Uploaded</strong>
                     </div>
                 </div>
 
                 <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-4">
-                    <p class="text-sm font-black text-blue-900">📤 Submit Confirmation / জমা দেওয়ার নিশ্চিতকরণ</p>
+                    <p class="text-sm font-black text-blue-900">📤 Ready to submit?</p>
                     <p class="text-[11px] text-slate-600 mt-1 font-semibold">Submit করলে WhatsApp-এ সব details চলে যাবে। Admin verify করে receipt পাঠাবে।</p>
                     <p class="text-[10px] text-slate-500 mt-0.5">On submit, all details go to WhatsApp. Admin will verify and send receipt.</p>
                 </div>
 
                 <div class="flex gap-2 mb-2">
-                    <button onclick="payStepGo(5)" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-xl text-sm">← Back / পিছনে</button>
+                    <button onclick="payStageGo(3)" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-xl text-sm">← Back / পিছনে</button>
                     <button id="paySubmitBtn" onclick="submitPurchase()" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-black py-3.5 rounded-xl text-base shadow-md uppercase">
                         ✅ Submit / জমা দিন
                     </button>
                 </div>
             </div>
 
-            <!-- ============ SUCCESS ============ -->
-            <div id="thankYouBox" class="hidden mt-4 bg-gradient-to-br from-green-100 to-emerald-100 border-2 border-green-500 rounded-xl p-5 text-center">
-                <div class="text-5xl mb-2">🎉</div>
-                <p class="font-black text-green-900 uppercase text-lg">Order Submitted!</p>
-                <p class="font-black text-green-800 text-base">অর্ডার জমা হয়েছে!</p>
-                <p class="text-[12px] text-green-800 font-semibold mt-2">আপনার অর্ডার admin-এর কাছে চলে গেছে।</p>
-                <p class="text-[11px] text-green-700 font-semibold">Your order has been sent to admin.</p>
-                <p class="text-[12px] text-green-800 font-semibold mt-1">Verify হলে WhatsApp-এ receipt পাবেন।</p>
-                <p class="text-[11px] text-green-700 font-semibold">You'll receive the receipt on WhatsApp after verification.</p>
-                <button onclick="showView('plans')" class="mt-3 bg-blue-700 hover:bg-blue-800 text-white font-bold px-5 py-2.5 rounded-xl text-sm">🏠 Back to Plans / প্ল্যানে ফিরে যান</button>
+            <!-- STAGE 5 -->
+            <div id="thankYouBox" class="hidden mt-4">
+                <div class="text-center mb-5">
+                    <div class="mx-auto w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center shadow-2xl" style="background: #15803d; box-shadow: 0 0 0 8px rgba(21,128,61,0.2), 0 10px 30px rgba(21,128,61,0.5);">
+                        <span class="text-white font-black text-4xl sm:text-5xl">✓</span>
+                    </div>
+                    <p class="mt-3 text-lg font-black text-green-800">Completed</p>
+                    <p class="text-base font-black text-green-700">সম্পন্ন হয়েছে</p>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-100 to-emerald-100 border-2 border-green-500 rounded-xl p-5 text-center mb-4">
+                    <div class="text-5xl mb-2">🎉</div>
+                    <p class="font-black text-green-900 uppercase text-lg">Order Submitted!</p>
+                    <p class="font-black text-green-800 text-base">অর্ডার জমা হয়েছে!</p>
+                </div>
+                
+                <div class="bg-blue-50 border-2 border-blue-300 rounded-xl p-5 mb-4">
+                    <div class="text-center mb-3">
+                        <div class="text-4xl mb-2">🔍</div>
+                        <p class="font-black text-blue-900 text-base">Verification in Progress</p>
+                        <p class="font-black text-blue-800 text-sm">যাচাইকরণ চলছে</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 border border-blue-200">
+                        <p class="text-[13px] text-slate-700 font-semibold leading-relaxed">We will verify your uploaded payment screenshot and send you a digital receipt at the earliest.</p>
+                        <p class="text-[12px] text-slate-600 font-semibold mt-2 leading-relaxed">আপনার আপলোড করা পেমেন্ট স্ক্রিনশট যাচাই করে যত দ্রুত সম্ভব আপনাকে ডিজিটাল রসিদ পাঠানো হবে।</p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-400 rounded-xl p-5 mb-4">
+                    <div class="flex items-start gap-3 mb-3">
+                        <div class="text-3xl flex-shrink-0">⚠️</div>
+                        <div>
+                            <p class="font-black text-amber-900 text-base leading-snug">Important Notice</p>
+                            <p class="font-black text-amber-800 text-sm leading-snug">গুরুত্বপূর্ণ নোটিশ</p>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 border border-amber-300">
+                        <p class="text-[13px] text-slate-700 font-semibold leading-relaxed">
+                            Please check your <strong class="text-amber-700">📋 Order / Payment History</strong> section regularly to confirm whether your payment has been <strong class="text-green-700">Approved</strong> by the admin.
+                        </p>
+                        <p class="text-[12px] text-slate-600 font-semibold mt-2 leading-relaxed">
+                            আপনার পেমেন্ট admin approve করেছেন কিনা তা নিশ্চিত করতে অনুগ্রহ করে নিয়মিত <strong class="text-amber-700">📋 Order / Payment History</strong> সেকশনটি দেখুন।
+                        </p>
+                        <button onclick="showView('history')" class="mt-3 w-full bg-amber-600 hover:bg-amber-700 text-white font-black text-[12px] py-2.5 rounded-lg shadow uppercase tracking-wide">
+                            📋 Go to Order / Payment History
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-orange-300 rounded-xl p-5 text-center mb-4">
+                    <div class="text-4xl mb-2">🙏</div>
+                    <p class="font-black text-orange-900 text-lg">Thank You!</p>
+                    <p class="font-black text-orange-800 text-base">ধন্যবাদ!</p>
+                    <p class="text-[12px] text-orange-900 font-semibold mt-2 leading-relaxed">Thank you for choosing English Spur. We're honored to be part of your learning journey.</p>
+                    <p class="text-[11px] text-orange-800 font-semibold mt-1.5 leading-relaxed">English Spur পরিবার থেকে আপনাকে অসংখ্য ধন্যবাদ। আপনার শিক্ষার যাত্রায় পাশে থাকতে পেরে আমরা গর্বিত।</p>
+                    <p class="text-[11px] text-orange-900 font-black mt-3">— Team English Spur</p>
+                </div>
+
+                <button onclick="showView('plans')" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold px-5 py-3 rounded-xl text-sm">🏠 Back to Plans / প্ল্যানে ফিরে যান</button>
             </div>
 
         </div>
     </div>
 
-    <!-- VIEW: HISTORY -->
+    <!-- VIEW: ORDER & PAYMENT HISTORY -->
     <div id="view-history" class="hidden">
         <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-5">
-            <h2 class="text-base sm:text-lg font-black text-blue-900 mb-3">📋 My Orders</h2>
+            <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                <div>
+                    <h2 class="text-base sm:text-lg font-black text-blue-900">📋 Order & Payment History</h2>
+                    <p class="text-[11px] text-slate-500 font-semibold">অর্ডার ও পেমেন্ট ইতিহাস</p>
+                </div>
+                <button onclick="loadHistory()" class="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-[11px] px-3 py-1.5 rounded-lg">🔄 Refresh / রিফ্রেশ</button>
+            </div>
             <div id="historyList" class="space-y-3"></div>
             <button onclick="showView('plans')" class="w-full bg-slate-200 text-slate-700 font-bold p-3 rounded-xl text-xs sm:text-sm mt-3 hover:bg-slate-300">
-                ← Back to Plans
+                ← Back to Plans / প্ল্যানে ফিরে যান
             </button>
+        </div>
+    </div>
+</div>
+
+<!-- RE-UPLOAD MODAL -->
+<div id="reuploadModal">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full my-auto p-5" style="max-width: 560px;">
+        <div class="flex justify-between items-center mb-4 pb-3 border-b-2 border-slate-100">
+            <div>
+                <h3 class="text-lg font-black text-red-700">🔄 Re-upload Screenshot</h3>
+                <p class="text-[11px] text-slate-500 font-semibold">পুনরায় স্ক্রিনশট আপলোড করুন</p>
+            </div>
+            <button onclick="closeReuploadModal()" class="text-slate-400 hover:text-red-600 text-2xl font-bold leading-none">&times;</button>
+        </div>
+
+        <div id="reuploadBody">
+            <div class="bg-red-50 border-l-4 border-red-600 p-3 rounded-r-lg mb-4">
+                <p class="text-[11px] font-black text-red-900 uppercase">⚠️ Rejection Reason / প্রত্যাখ্যানের কারণ</p>
+                <p id="reuploadReason" class="text-[12px] text-red-800 font-semibold mt-1">—</p>
+            </div>
+
+            <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-4">
+                <p class="text-[10px] font-bold text-blue-700 uppercase mb-1">Plan / প্ল্যান</p>
+                <p id="reuploadPlanName" class="text-sm font-black text-blue-900 leading-snug">—</p>
+                <p class="text-[11px] text-slate-600 mt-1 font-semibold">Amount / পরিমাণ: <strong id="reuploadAmount" class="text-orange-600">₹0</strong></p>
+            </div>
+
+            <p class="text-sm font-black text-slate-700 mb-2">1️⃣ Select UPI App / আপনার UPI অ্যাপ নির্বাচন করুন:</p>
+            <div class="space-y-2 mb-4" id="reuploadMethodList">
+                <label class="flex items-center gap-3 p-3 bg-white border-2 border-slate-200 rounded-lg cursor-pointer hover:border-blue-500 transition reupload-method-item">
+                    <input type="radio" name="reuploadMethod" value="Google Pay" class="w-4 h-4 accent-blue-700">
+                    <span class="font-bold text-sm text-slate-800">💠 Google Pay</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 bg-white border-2 border-slate-200 rounded-lg cursor-pointer hover:border-blue-500 transition reupload-method-item">
+                    <input type="radio" name="reuploadMethod" value="PhonePe" class="w-4 h-4 accent-blue-700">
+                    <span class="font-bold text-sm text-slate-800">💜 PhonePe</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 bg-white border-2 border-slate-200 rounded-lg cursor-pointer hover:border-blue-500 transition reupload-method-item">
+                    <input type="radio" name="reuploadMethod" value="Paytm" class="w-4 h-4 accent-blue-700">
+                    <span class="font-bold text-sm text-slate-800">💙 Paytm</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 bg-white border-2 border-slate-200 rounded-lg cursor-pointer hover:border-blue-500 transition reupload-method-item">
+                    <input type="radio" name="reuploadMethod" value="BHIM UPI" class="w-4 h-4 accent-blue-700">
+                    <span class="font-bold text-sm text-slate-800">🇮🇳 BHIM UPI</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 bg-white border-2 border-slate-200 rounded-lg cursor-pointer hover:border-blue-500 transition reupload-method-item">
+                    <input type="radio" name="reuploadMethod" value="Amazon Pay" class="w-4 h-4 accent-blue-700">
+                    <span class="font-bold text-sm text-slate-800">🅰️ Amazon Pay</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 bg-white border-2 border-slate-200 rounded-lg cursor-pointer hover:border-blue-500 transition reupload-method-item">
+                    <input type="radio" name="reuploadMethod" value="WhatsApp Pay" class="w-4 h-4 accent-blue-700">
+                    <span class="font-bold text-sm text-slate-800">💬 WhatsApp Pay</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 bg-white border-2 border-slate-200 rounded-lg cursor-pointer hover:border-blue-500 transition reupload-method-item">
+                    <input type="radio" name="reuploadMethod" value="Other UPI App" class="w-4 h-4 accent-blue-700">
+                    <span class="font-bold text-sm text-slate-800">🔗 Other UPI App</span>
+                </label>
+            </div>
+
+            <p class="text-sm font-black text-slate-700 mb-2">2️⃣ Upload New Screenshot * / নতুন স্ক্রিনশট আপলোড করুন:</p>
+            <div class="bg-green-50 border-2 border-green-200 rounded-lg p-3 mb-4">
+                <input type="file" id="reuploadScreenshotInput" accept="image/*" class="w-full text-xs file:mr-2 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-green-600 file:text-white file:font-bold file:text-xs file:cursor-pointer">
+                <div id="reuploadPreviewBox" class="mt-2 hidden">
+                    <p class="text-[10px] text-green-800 font-black mb-1">✅ New Screenshot Preview / নতুন স্ক্রিনশট প্রিভিউ:</p>
+                    <img id="reuploadPreviewImg" class="max-w-full max-h-48 rounded-lg border-2 border-green-300 mx-auto shadow">
+                </div>
+            </div>
+
+            <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-4">
+                <p class="text-[11px] text-slate-700 font-semibold">📌 After submitting, please attach the auto-downloaded screenshot in WhatsApp and send it to admin.</p>
+                <p class="text-[10px] text-slate-500 font-semibold mt-1">সাবমিট করার পর auto-downloaded স্ক্রিনশটটি WhatsApp-এ attach করে admin কে পাঠান।</p>
+            </div>
+
+            <div class="flex gap-2">
+                <button onclick="closeReuploadModal()" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3 rounded-xl text-sm">Cancel / বাতিল</button>
+                <button id="reuploadSubmitBtn" onclick="submitReupload()" class="flex-1 bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-xl text-sm shadow-md uppercase">🔄 Send to Admin via WhatsApp</button>
+            </div>
         </div>
     </div>
 </div>
@@ -506,7 +623,6 @@ const COUPON_KEY = 'englishSpurAppliedCoupons';
 const LOGOUT_FLAG = 'englishSpurLoggedOut';
 const MAX_COUPONS = 3;
 
-/* ============ DYNAMIC STATE ============ */
 let SINGLE_REGULAR = 500;
 let SINGLE_SPECIAL = 250;
 let ADMISSION_FEE = 2500;
@@ -535,12 +651,29 @@ let offerExpiredHandled = false;
 let studentListenerActive = false;
 let isLoggingOut = false;
 let currentPayStep = 1;
+let payDoneChecked = false;
+let payMethodSelected = '';
+let screenshotCheckChecked = false;
+
+let reuploadOrderId = null;
+let reuploadScreenshotBase64 = null;
+let reuploadMethodSelected = '';
 
 const money = n => '₹' + Number(n).toLocaleString('en-IN');
 
 function cleanPlanName(name) {
     if (!name) return '';
-    return name.replace(/[\u{1F000}-\u{1FFFF}]/gu, '').replace(/[\u{2600}-\u{27BF}]/gu, '').replace(/[\u{2190}-\u{21FF}]/gu, '').replace(/[\u{FE00}-\u{FE0F}]/gu, '').replace(/[👑👶👥🧸📘🎟️⏰⚡🎉💬📞📸🚀✅❌⚠️🔒🔄]/g, '').replace(/\s+/g, ' ').trim();
+    return name.replace(/[\u{1F000}-\u{1FFFF}]/gu, '').replace(/[\u{2600}-\u{27BF}]/gu, '').replace(/[\u{2190}-\u{21FF}]/gu, '').replace(/[\u{FE00}-\u{FE0F}]/gu, '').replace(/[👑👶👥🧸📘🎟️⏰⚡🎉💬📞📸🚀✅❌⚠️🔒🔄🙏🔍🏦💳🎯💠💜💙🇮🇳🅰️]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+function formatFullTimestamp(ts) {
+    if (!ts) return '—';
+    try {
+        const d = ts.toDate ? ts.toDate() : new Date(ts);
+        if (isNaN(d.getTime())) return '—';
+        const options = { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        return d.toLocaleString('en-IN', options);
+    } catch (e) { return '—'; }
 }
 
 function hasCouponAccess() { return currentStudent && currentStudent.couponAccess === true; }
@@ -633,6 +766,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('mainApp').classList.add('hidden');
         document.getElementById('blockedScreen').classList.add('hidden');
         setupScreenshotUpload();
+        setupReuploadScreenshotUpload();
         return;
     }
 
@@ -645,6 +779,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     setupScreenshotUpload();
+    setupReuploadScreenshotUpload();
 });
 
 function setupScreenshotUpload() {
@@ -667,6 +802,31 @@ function setupScreenshotUpload() {
                 document.getElementById('previewBox').classList.remove('hidden');
                 const warnEl = document.getElementById('screenshotWarning');
                 if (warnEl) warnEl.classList.add('hidden');
+            };
+            img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+    });
+}
+
+function setupReuploadScreenshotUpload() {
+    const si = document.getElementById('reuploadScreenshotInput');
+    if (!si || si.dataset.bound === '1') return;
+    si.dataset.bound = '1';
+    si.addEventListener('change', function(e) {
+        const file = e.target.files[0]; if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                let w = img.width, h = img.height; const max = 800;
+                if (w > h && w > max) { h = h * max / w; w = max; } else if (h > max) { w = w * max / h; h = max; }
+                canvas.width = w; canvas.height = h;
+                canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                reuploadScreenshotBase64 = canvas.toDataURL('image/jpeg', 0.6);
+                document.getElementById('reuploadPreviewImg').src = reuploadScreenshotBase64;
+                document.getElementById('reuploadPreviewBox').classList.remove('hidden');
             };
             img.src = ev.target.result;
         };
@@ -1097,9 +1257,6 @@ function renderBannerActive() {
     tickTimer();
 }
 
-/* ============================================================
-   PRICING
-   ============================================================ */
 function getPricing(plan) {
     const active = isOfferActive();
     
@@ -1407,7 +1564,6 @@ function refreshCheckout() {
     }
 }
 
-/* ============ PENDING COUPON INPUT ============ */
 function addCouponToList() {
     if (!hasCouponAccess()) { alert('🚫 Coupon access required / কুপন অ্যাক্সেস প্রয়োজন। Contact admin.'); return; }
     if (!isOfferActive()) { alert('⛔ Offer has expired / অফার শেষ।'); return; }
@@ -1553,7 +1709,7 @@ function requestCouponViaWhatsApp() {
     window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
-/* ============ MULTI-STEP PAYMENT WIZARD (6 STEPS) ============ */
+/* ============ PAYMENT FLOW (5 STAGES) ============ */
 function proceedToPayment() {
     if (!selectedPlan) { alert('⚠️ Please select a plan.'); return; }
     const p = getPricing(selectedPlan);
@@ -1574,10 +1730,13 @@ function proceedToPayment() {
     }
     document.getElementById('payLines').textContent = lines;
     document.getElementById('payAmount').textContent = money(p.final);
-    document.getElementById('payStep2Amount').textContent = money(p.final);
-    document.getElementById('payStep6Amount').textContent = money(p.final);
+    document.getElementById('payStep4Amount').textContent = money(p.final);
     
     screenshotBase64 = null;
+    payDoneChecked = false;
+    payMethodSelected = '';
+    screenshotCheckChecked = false;
+    
     const pb = document.getElementById('previewBox');
     if (pb) pb.classList.add('hidden');
     const si = document.getElementById('screenshotInput');
@@ -1586,24 +1745,35 @@ function proceedToPayment() {
     if (tyb) tyb.classList.add('hidden');
     const warnEl = document.getElementById('screenshotWarning');
     if (warnEl) warnEl.classList.add('hidden');
-    const txnInput = document.getElementById('payTxnInput');
-    if (txnInput) txnInput.value = '';
-
-    const radios = document.querySelectorAll('input[name="payMethod"]');
-    if (radios.length > 0) radios[0].checked = true;
-
-    document.getElementById('payStep6Name').textContent = currentStudent.name || '—';
-    document.getElementById('payStep6Uid').textContent = currentStudent.uniqueId || currentStudent.id || '—';
-    document.getElementById('payStep6Plan').textContent = selectedPlan.name || '—';
+    
+    document.querySelectorAll('.pay-method-radio').forEach(r => r.checked = false);
+    document.querySelectorAll('.checklist-item').forEach(el => el.classList.remove('checked'));
+    const payDoneRadio = document.getElementById('payDoneRadio');
+    if (payDoneRadio) payDoneRadio.checked = false;
+    const screenshotAttachRadio = document.getElementById('screenshotAttachRadio');
+    if (screenshotAttachRadio) screenshotAttachRadio.checked = false;
+    
+    const b1 = document.getElementById('stage1NextBtn');
+    const b2 = document.getElementById('stage2NextBtn');
+    const b3 = document.getElementById('stage3NextBtn');
+    if (b1) b1.disabled = true;
+    if (b2) b2.disabled = true;
+    if (b3) b3.disabled = true;
+    
+    document.getElementById('payStep4Name').textContent = currentStudent.name || '—';
+    document.getElementById('payStep4Uid').textContent = currentStudent.uniqueId || currentStudent.id || '—';
+    document.getElementById('payStep4Plan').textContent = selectedPlan.name || '—';
+    document.getElementById('payStep4Method').textContent = '—';
+    document.getElementById('payStep4Screenshot').textContent = '—';
 
     currentPayStep = 1;
     showView('payment');
-    renderPayStep();
+    renderPayStage();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function renderPayStep() {
-    [1, 2, 3, 4, 5, 6].forEach(n => {
+function renderPayStage() {
+    [1, 2, 3, 4, 5].forEach(n => {
         const el = document.getElementById('payStep' + n);
         if (el) el.classList.add('hidden');
     });
@@ -1613,35 +1783,36 @@ function renderPayStep() {
         current.classList.add('fade-in');
     }
 
-    for (let i = 1; i <= 6; i++) {
+    for (let i = 1; i <= 5; i++) {
         const c = document.getElementById('stepDot' + i + 'Circle');
-        const label = c && c.nextElementSibling;
+        const label = document.getElementById('stepLabel' + i);
         if (!c) continue;
+        c.classList.remove('step-dot-complete');
         if (i < currentPayStep) {
-            c.className = 'w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-green-600 text-white flex items-center justify-center font-black text-[10px] sm:text-xs shadow';
+            c.className = 'step-dot-complete rounded-full text-white flex items-center justify-center font-black shadow transition-all';
             c.textContent = '✓';
-            if (label) label.className = 'text-[9px] sm:text-[10px] font-bold text-green-600 hidden sm:inline';
+            if (label) label.className = 'text-[9px] sm:text-[10px] font-bold text-green-700 hidden sm:inline';
         } else if (i === currentPayStep) {
-            c.className = 'w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-700 text-white flex items-center justify-center font-black text-[10px] sm:text-xs shadow ring-4 ring-blue-200';
+            c.className = 'w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-700 text-white flex items-center justify-center font-black text-[10px] sm:text-xs shadow ring-4 ring-blue-200 transition-all';
             c.textContent = i;
             if (label) label.className = 'text-[9px] sm:text-[10px] font-bold text-blue-700 hidden sm:inline';
         } else {
-            c.className = 'w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs';
+            c.className = 'w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center font-black text-[10px] sm:text-xs transition-all';
             c.textContent = i;
             if (label) label.className = 'text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline';
         }
     }
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 4; i++) {
         const line = document.getElementById('stepLine' + i);
         if (!line) continue;
         if (i < currentPayStep) {
-            line.className = 'w-3 sm:w-6 h-1 bg-green-500 rounded';
+            line.className = 'w-3 sm:w-6 h-1 bg-green-600 rounded';
         } else {
             line.className = 'w-3 sm:w-6 h-1 bg-slate-200 rounded';
         }
     }
 
-    if (currentPayStep === 5) {
+    if (currentPayStep === 3) {
         const warnEl = document.getElementById('screenshotWarning');
         if (warnEl) warnEl.classList.add('hidden');
         if (screenshotBase64) {
@@ -1651,11 +1822,9 @@ function renderPayStep() {
         setupScreenshotUpload();
     }
 
-    if (currentPayStep === 6) {
-        document.getElementById('payStep6Method').textContent = getSelectedPayMethod();
-        const txn = (document.getElementById('payTxnInput')?.value || '').trim();
-        document.getElementById('payStep6Txn').textContent = txn || '— (not provided / দেওয়া হয়নি)';
-        const sEl = document.getElementById('payStep6Screenshot');
+    if (currentPayStep === 4) {
+        document.getElementById('payStep4Method').textContent = payMethodSelected || '—';
+        const sEl = document.getElementById('payStep4Screenshot');
         if (screenshotBase64) {
             sEl.textContent = '✅ Uploaded / আপলোড হয়েছে';
             sEl.className = 'text-green-700';
@@ -1666,38 +1835,65 @@ function renderPayStep() {
     }
 }
 
-function payStepGo(n) {
-    if (currentPayStep === 5 && n === 6) {
-        if (!screenshotBase64) {
-            const warnEl = document.getElementById('screenshotWarning');
-            if (warnEl) warnEl.classList.remove('hidden');
-            alert('⚠️ Please upload your payment screenshot before proceeding.\n\nএগিয়ে যাওয়ার আগে পেমেন্ট স্ক্রিনশট আপলোড করুন।');
-            return;
-        }
-    }
+function payStageGo(n) {
     currentPayStep = n;
-    renderPayStep();
+    renderPayStage();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function getSelectedPayMethod() {
-    const radios = document.querySelectorAll('input[name="payMethod"]');
-    for (const r of radios) {
-        if (r.checked) {
-            const map = {
-                'Google Pay (UPI)': 'Google Pay / PhonePe / Paytm (UPI)',
-                'Bank Transfer': 'ব্যাংক ট্রান্সফার (NEFT / IMPS)',
-                'Cash': 'নগদ টাকা (সরাসরি)',
-                'Other': 'অন্য পদ্ধতি'
-            };
-            return map[r.value] || r.value;
-        }
+function togglePayDone() {
+    payDoneChecked = !payDoneChecked;
+    const item = document.getElementById('payDoneChecklist');
+    const radio = document.getElementById('payDoneRadio');
+    if (payDoneChecked) {
+        item.classList.add('checked');
+        radio.checked = true;
+    } else {
+        item.classList.remove('checked');
+        radio.checked = false;
     }
-    return 'Google Pay / PhonePe / Paytm (UPI)';
+    const btn = document.getElementById('stage1NextBtn');
+    if (btn) btn.disabled = !payDoneChecked;
 }
 
-function getTxnId() {
-    return (document.getElementById('payTxnInput')?.value || '').trim();
+function selectPayMethod(method, idx) {
+    payMethodSelected = method;
+    document.querySelectorAll('.pay-method-radio').forEach(r => r.checked = false);
+    for (let i = 1; i <= 7; i++) {
+        const el = document.getElementById('methodItem' + i);
+        if (el) el.classList.remove('checked');
+    }
+    const item = document.getElementById('methodItem' + idx);
+    const radio = item ? item.querySelector('.pay-method-radio') : null;
+    if (item) item.classList.add('checked');
+    if (radio) radio.checked = true;
+    const btn = document.getElementById('stage2NextBtn');
+    if (btn) btn.disabled = false;
+}
+
+function toggleScreenshotCheck() {
+    if (!screenshotBase64) {
+        alert('⚠️ Please upload your payment screenshot first.\n\nপ্রথমে আপনার পেমেন্ট স্ক্রিনশট আপলোড করুন।');
+        const radio = document.getElementById('screenshotAttachRadio');
+        if (radio) radio.checked = false;
+        return;
+    }
+    screenshotCheckChecked = !screenshotCheckChecked;
+    const item = document.getElementById('screenshotAttachChecklist');
+    const radio = document.getElementById('screenshotAttachRadio');
+    if (screenshotCheckChecked) {
+        item.classList.add('checked');
+        radio.checked = true;
+    } else {
+        item.classList.remove('checked');
+        radio.checked = false;
+    }
+    const btn = document.getElementById('stage3NextBtn');
+    if (btn) btn.disabled = !(screenshotCheckChecked && screenshotBase64);
+}
+
+function getSelectedPayMethod() {
+    return payMethodSelected || 'Google Pay';
 }
 
 function clearScreenshot() {
@@ -1706,19 +1902,19 @@ function clearScreenshot() {
     if (si) si.value = '';
     document.getElementById('previewBox').classList.add('hidden');
     document.getElementById('previewImg').src = '';
-}
-
-function payCancel() {
-    if (!confirm('Payment not completed yet?\n\nএখনো পেমেন্ট সম্পূর্ণ করেননি?\n\nOrder will not be cancelled — you can try again anytime.\n\nঅর্ডার বাতিল হবে না — চাইলে আবার চেষ্টা করতে পারবেন।')) return;
-    showToast('💡 Ready when you are! / যখন প্রস্তুত হবেন!');
-    currentPayStep = 1;
-    renderPayStep();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (screenshotCheckChecked) {
+        screenshotCheckChecked = false;
+        const item = document.getElementById('screenshotAttachChecklist');
+        const radio = document.getElementById('screenshotAttachRadio');
+        if (item) item.classList.remove('checked');
+        if (radio) radio.checked = false;
+        const btn = document.getElementById('stage3NextBtn');
+        if (btn) btn.disabled = true;
+    }
 }
 
 function copyUpi() { navigator.clipboard.writeText(UPI_ID).then(() => alert('✅ UPI ID copied! / UPI ID কপি হয়েছে!')); }
 
-/* ============ SUBMIT PURCHASE ============ */
 async function submitPurchase() {
     if (!screenshotBase64) { alert('⚠️ Please upload payment screenshot! / পেমেন্ট স্ক্রিনশট আপলোড করুন!'); return; }
     if (!selectedPlan) { alert('⚠️ Plan missing. Please reselect. / প্ল্যান পাওয়া যায়নি। আবার নির্বাচন করুন।'); return; }
@@ -1726,7 +1922,6 @@ async function submitPurchase() {
     const p = getPricing(selectedPlan);
     const cleanPlan = cleanPlanName(selectedPlan.name);
     const payMethod = getSelectedPayMethod();
-    const txnId = getTxnId();
     
     const appliedCouponData = p.usedCoupons.map(uc => {
         const orig = appliedCoupons.find(c => c.code === uc.code);
@@ -1752,7 +1947,6 @@ async function submitPurchase() {
         totalDiscount: p.couponDisc + (p.kind === 'group' && p.isNewStudent ? p.admDisc : 0),
         finalAmount: p.final,
         paymentMethod: payMethod,
-        txnId: txnId || null,
         screenshot: screenshotBase64,
         status: 'pending',
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -1792,9 +1986,7 @@ async function submitPurchase() {
             ? `Coupons Applied (${appliedCoupons.map(c => c.code).join(', ')})` 
             : 'Standard Package Price';
         
-        const txnLine = txnId ? `\n• Txn ID: ${txnId}` : '';
-        
-        const msg = `✅ *PAYMENT COMPLETED — English Spur*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order. Please find the details below:\n\n--- STUDENT DETAILS ---\n• Name: *${currentStudent.name}*\n• Mobile: *${currentStudent.mobile}*\n• Unique ID: ${currentStudent.uniqueId || currentStudent.id}\n\n--- PLAN ENROLLED ---\n*${cleanPlan}*\nStatus: ${couponText}\n\n--- FEE BREAKDOWN ---\n${breakdown}\n-------------------------\n*💵 Amount Paid: ${money(p.final)}*\n\n--- PAYMENT INFO ---\n• Method: ${payMethod}${txnLine}\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\n--- DOCUMENTS ---\nI will submit the required admission documents shortly:\n• Passport Size Photograph\n• Address Proof (Aadhar / Voter ID / School ID)\n\nKindly verify my payment and send me the confirmation receipt.\n\nThank you 🙏`;
+        const msg = `✅ *PAYMENT COMPLETED — English Spur*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order. Please find the details below:\n\n--- STUDENT DETAILS ---\n• Name: *${currentStudent.name}*\n• Mobile: *${currentStudent.mobile}*\n• Unique ID: ${currentStudent.uniqueId || currentStudent.id}\n\n--- PLAN ENROLLED ---\n*${cleanPlan}*\nStatus: ${couponText}\n\n--- FEE BREAKDOWN ---\n${breakdown}\n-------------------------\n*💵 Amount Paid: ${money(p.final)}*\n\n--- PAYMENT INFO ---\n• Method: ${payMethod}\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\n--- DOCUMENTS ---\nI will submit the required admission documents shortly:\n• Passport Size Photograph\n• Address Proof (Aadhar / Voter ID / School ID)\n\nKindly verify my payment and send me the confirmation receipt.\n\nThank you 🙏`;
         window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 
         selectedPlan = null;
@@ -1802,10 +1994,13 @@ async function submitPurchase() {
         pendingCouponCodes = [];
         saveSelectedPlan();
 
-        [1, 2, 3, 4, 5, 6].forEach(n => {
+        [1, 2, 3, 4, 5].forEach(n => {
             const el = document.getElementById('payStep' + n);
             if (el) el.classList.add('hidden');
         });
+        
+        currentPayStep = 5;
+        renderPayStage();
         setTimeout(() => {
             const tyb = document.getElementById('thankYouBox');
             tyb.classList.remove('hidden');
@@ -1817,25 +2012,269 @@ async function submitPurchase() {
     }
 }
 
-async function loadHistory() {
+function loadHistory() {
     if (!currentStudent) return;
-    try {
-        const snap = await db.collection('purchases').where('studentId', '==', currentStudent.id).get();
-        const list = document.getElementById('historyList');
+    const list = document.getElementById('historyList');
+    list.innerHTML = '<p class="text-center text-slate-500 py-6 text-sm">🔄 Loading... / লোড হচ্ছে...</p>';
+    
+    db.collection('purchases')
+      .where('studentId', '==', currentStudent.id)
+      .onSnapshot(snap => {
         list.innerHTML = '';
-        if (snap.empty) { list.innerHTML = '<p class="text-center text-slate-500 py-6 text-sm">No orders yet. / এখনো কোনো অর্ডার নেই।</p>'; return; }
+        if (snap.empty) { 
+            list.innerHTML = '<div class="text-center py-10 bg-slate-50 rounded-xl"><p class="text-3xl mb-2">📭</p><p class="text-slate-600 font-bold text-sm">No orders yet.</p><p class="text-slate-500 text-xs mt-1">এখনো কোনো অর্ডার নেই।</p></div>'; 
+            return; 
+        }
         const items = [];
         snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-        items.sort((a, b) => { const ta = a.createdAt ? a.createdAt.toDate().getTime() : 0; const tb = b.createdAt ? b.createdAt.toDate().getTime() : 0; return tb - ta; });
+        items.sort((a, b) => { 
+            const ta = a.createdAt ? a.createdAt.toDate().getTime() : 0; 
+            const tb = b.createdAt ? b.createdAt.toDate().getTime() : 0; 
+            return tb - ta; 
+        });
+        
         items.forEach(p => {
-            const colors = { pending: 'bg-yellow-100 text-yellow-800 border-yellow-300', approved: 'bg-green-100 text-green-800 border-green-300', rejected: 'bg-red-100 text-red-800 border-red-300' };
+            const colors = { pending: 'bg-yellow-50 text-yellow-800 border-yellow-300', approved: 'bg-green-50 text-green-800 border-green-300', rejected: 'bg-red-50 text-red-800 border-red-300' };
+            const badges = { pending: 'bg-yellow-500', approved: 'bg-green-600', rejected: 'bg-red-600' };
             const icons = { pending: '⏳', approved: '✅', rejected: '❌' };
+            const statusText = { pending: 'PENDING / অপেক্ষমাণ', approved: 'APPROVED / অনুমোদিত', rejected: 'REJECTED / প্রত্যাখ্যাত' };
+            
             const div = document.createElement('div');
-            div.className = `border-2 rounded-xl p-3.5 ${colors[p.status] || 'bg-slate-50'}`;
-            div.innerHTML = `<div class="flex justify-between items-start gap-2 flex-wrap"><div class="flex-1 min-w-0"><p class="font-bold text-xs">${p.planName}</p><p class="text-[10px] text-slate-600 mt-0.5">Amount: <strong>${money(p.finalAmount)}</strong>${p.couponCode ? ` · ${p.couponCode}` : ''}</p>${p.paymentMethod ? `<p class="text-[10px] text-slate-500 mt-0.5">💳 ${p.paymentMethod}</p>` : ''}${p.receiptNo ? `<p class="text-[10px] text-green-700 font-bold mt-0.5">🧾 ${p.receiptNo}</p>` : ''}${p.rejectionReason ? `<p class="text-[10px] text-red-700 mt-0.5">Reason: ${p.rejectionReason}</p>` : ''}</div><span class="text-[10px] font-bold px-2 py-1 rounded-full whitespace-nowrap">${icons[p.status]} ${p.status.toUpperCase()}</span></div>${p.status === 'approved' ? `<button onclick="viewReceipt('${p.id}')" class="mt-3 w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2.5 rounded-lg text-[11px]">📄 View Receipt / রসিদ দেখুন</button>` : ''}`;
+            div.className = `border-2 rounded-xl p-3.5 ${colors[p.status] || 'bg-slate-50 border-slate-200'}`;
+            div.innerHTML = `
+                <div class="flex justify-between items-start gap-2 flex-wrap mb-2">
+                    <div class="flex-1 min-w-0">
+                        <p class="font-black text-xs sm:text-sm text-slate-800 truncate">${p.planName}</p>
+                    </div>
+                    <span class="text-white text-[10px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap ${badges[p.status]}">
+                        ${icons[p.status]} ${statusText[p.status]}
+                    </span>
+                </div>
+                
+                <div class="bg-white rounded-lg p-3 mb-2 space-y-1.5">
+                    <div class="flex justify-between text-[11px] gap-2">
+                        <span class="text-slate-500 font-semibold">🆔 Order ID:</span>
+                        <strong class="text-slate-700 text-right break-all">${p.id}</strong>
+                    </div>
+                    <div class="flex justify-between text-[11px] gap-2">
+                        <span class="text-slate-500 font-semibold">📅 Date & Time:</span>
+                        <strong class="text-slate-700 text-right">${formatFullTimestamp(p.createdAt)}</strong>
+                    </div>
+                    <div class="flex justify-between text-[11px] gap-2">
+                        <span class="text-slate-500 font-semibold">💰 Amount Paid:</span>
+                        <strong class="text-orange-600 text-sm">${money(p.finalAmount)}</strong>
+                    </div>
+                    ${p.couponCode ? `<div class="flex justify-between text-[11px] gap-2">
+                        <span class="text-slate-500 font-semibold">🎟️ Coupon:</span>
+                        <strong class="text-slate-700 text-right">${p.couponCode}</strong>
+                    </div>` : ''}
+                    ${p.paymentMethod ? `<div class="flex justify-between text-[11px] gap-2">
+                        <span class="text-slate-500 font-semibold">📱 UPI App:</span>
+                        <strong class="text-slate-700 text-right">${p.paymentMethod}</strong>
+                    </div>` : ''}
+                    ${p.receiptNo ? `<div class="flex justify-between text-[11px] gap-2">
+                        <span class="text-slate-500 font-semibold">🧾 Receipt No:</span>
+                        <strong class="text-green-700 text-right">${p.receiptNo}</strong>
+                    </div>` : ''}
+                    ${p.verifiedAt ? `<div class="flex justify-between text-[11px] gap-2">
+                        <span class="text-slate-500 font-semibold">✅ Verified At:</span>
+                        <strong class="text-slate-700 text-right">${formatFullTimestamp(p.verifiedAt)}</strong>
+                    </div>` : ''}
+                    ${p.rejectionReason ? `<div class="flex justify-between text-[11px] gap-2">
+                        <span class="text-slate-500 font-semibold">⚠️ Reason:</span>
+                        <strong class="text-red-700 text-right">${p.rejectionReason}</strong>
+                    </div>` : ''}
+                </div>
+                
+                ${p.status === 'approved' ? `<button onclick="viewReceipt('${p.id}')" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2.5 rounded-lg text-[11px] mb-2">📄 View Receipt / রসিদ দেখুন</button>` : ''}
+                
+                ${p.status === 'rejected' ? `
+                    <div class="bg-red-100 border border-red-300 rounded-lg p-2.5 mb-2">
+                        <p class="text-[10px] text-red-800 font-semibold">💡 Your payment was rejected. You can re-upload a correct screenshot and send it to admin via WhatsApp.</p>
+                        <p class="text-[10px] text-red-700 font-semibold mt-1">আপনার পেমেন্ট প্রত্যাখ্যাত হয়েছে। সঠিক স্ক্রিনশট পুনরায় আপলোড করে WhatsApp-এ admin কে পাঠাতে পারেন।</p>
+                    </div>
+                    <button onclick="openReuploadModal('${p.id}')" class="w-full bg-red-600 hover:bg-red-700 text-white font-black py-2.5 rounded-lg text-[12px] mb-2 shadow-md">
+                        🔄 Re-upload Screenshot / পুনরায় আপলোড করুন
+                    </button>
+                ` : ''}
+            `;
             list.appendChild(div);
         });
-    } catch (e) { console.error(e); }
+      }, err => {
+        console.error(err);
+        list.innerHTML = '<p class="text-center text-red-500 py-6 text-sm">Error: ' + err.message + '</p>';
+      });
+}
+
+async function openReuploadModal(orderId) {
+    try {
+        const doc = await db.collection('purchases').doc(orderId).get();
+        if (!doc.exists) { alert('⚠️ Order not found.'); return; }
+        const p = doc.data();
+        
+        reuploadOrderId = orderId;
+        reuploadScreenshotBase64 = null;
+        reuploadMethodSelected = '';
+        
+        document.getElementById('reuploadReason').textContent = p.rejectionReason || 'Not specified / উল্লেখ নেই';
+        document.getElementById('reuploadPlanName').textContent = p.planName || '—';
+        document.getElementById('reuploadAmount').textContent = money(p.finalAmount || 0);
+        document.getElementById('reuploadScreenshotInput').value = '';
+        document.getElementById('reuploadPreviewBox').classList.add('hidden');
+        document.getElementById('reuploadPreviewImg').src = '';
+        document.querySelectorAll('input[name="reuploadMethod"]').forEach(r => r.checked = false);
+        document.querySelectorAll('.reupload-method-item').forEach(el => {
+            el.classList.remove('checked');
+            el.style.borderColor = '';
+            el.style.background = '';
+        });
+        
+        if (p.paymentMethod) {
+            const radios = document.querySelectorAll('input[name="reuploadMethod"]');
+            radios.forEach(r => {
+                if (r.value === p.paymentMethod) {
+                    r.checked = true;
+                    const parent = r.closest('.reupload-method-item');
+                    if (parent) {
+                        parent.classList.add('checked');
+                        parent.style.borderColor = '#16a34a';
+                        parent.style.background = '#f0fdf4';
+                    }
+                    reuploadMethodSelected = p.paymentMethod;
+                }
+            });
+        }
+        
+        document.getElementById('reuploadModal').classList.add('show');
+        document.body.style.overflow = 'hidden';
+    } catch (err) {
+        alert('Error: ' + err.message);
+    }
+}
+
+function closeReuploadModal() {
+    document.getElementById('reuploadModal').classList.remove('show');
+    document.body.style.overflow = '';
+    reuploadOrderId = null;
+    reuploadScreenshotBase64 = null;
+    reuploadMethodSelected = '';
+    const btn = document.getElementById('reuploadSubmitBtn');
+    if (btn) { btn.disabled = false; btn.textContent = '🔄 Send to Admin via WhatsApp'; }
+}
+
+document.addEventListener('change', function(e) {
+    if (e.target && e.target.name === 'reuploadMethod') {
+        reuploadMethodSelected = e.target.value;
+        document.querySelectorAll('.reupload-method-item').forEach(el => {
+            el.classList.remove('checked');
+            el.style.borderColor = '';
+            el.style.background = '';
+        });
+        const parent = e.target.closest('.reupload-method-item');
+        if (parent) {
+            parent.classList.add('checked');
+            parent.style.borderColor = '#16a34a';
+            parent.style.background = '#f0fdf4';
+        }
+    }
+});
+
+/* ✅ UPDATED: Re-upload SUBMITS via WhatsApp only — NO Firestore update */
+async function submitReupload() {
+    if (!reuploadOrderId) { alert('⚠️ Order ID missing.'); return; }
+    if (!reuploadScreenshotBase64) { alert('⚠️ Please upload the new screenshot.\n\nনতুন স্ক্রিনশট আপলোড করুন।'); return; }
+    if (!reuploadMethodSelected) { alert('⚠️ Please select your UPI app.\n\nআপনার UPI অ্যাপ নির্বাচন করুন।'); return; }
+    
+    const btn = document.getElementById('reuploadSubmitBtn');
+    if (btn) { btn.disabled = true; btn.textContent = '⏳ Preparing... / প্রস্তুত হচ্ছে...'; }
+    
+    try {
+        // Read-only fetch of order info
+        const docSnap = await db.collection('purchases').doc(reuploadOrderId).get();
+        if (!docSnap.exists) { 
+            alert('⚠️ Order not found. / অর্ডার পাওয়া যায়নি।'); 
+            if (btn) { btn.disabled = false; btn.textContent = '🔄 Send to Admin via WhatsApp'; }
+            return; 
+        }
+        const p = docSnap.data();
+        
+        // ✅ Auto-download screenshot
+        try {
+            const link = document.createElement('a');
+            link.href = reuploadScreenshotBase64;
+            link.download = `Payment_Reupload_${currentStudent.uniqueId || currentStudent.id}_${Date.now()}.jpg`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (e) { console.error('Screenshot download failed:', e); }
+        
+        // ✅ Build WhatsApp message
+        const cleanPlan = cleanPlanName(p.planName);
+        const msg = 
+`🔄 *PAYMENT SCREENSHOT RE-SUBMISSION — English Spur*
+
+Respected Sovan Kapri Sir,
+
+My previous payment screenshot was rejected. I have re-uploaded a new, correct screenshot. Kindly re-verify and update my order status.
+
+--- STUDENT DETAILS ---
+• Name: *${p.studentName}*
+• Mobile: *${p.studentMobile}*
+• Unique ID: ${p.uniqueId || ''}
+
+--- ORDER DETAILS ---
+• Order ID: ${reuploadOrderId}
+• Plan: *${cleanPlan}*
+• Amount: *${money(p.finalAmount)}*
+• UPI App: ${reuploadMethodSelected}
+
+--- PREVIOUS REJECTION REASON ---
+${p.rejectionReason ? p.rejectionReason : '(not specified)'}
+
+📸 *New Screenshot:* Auto-downloaded — I am attaching it with this message.
+
+Kindly re-verify and send me the digital receipt at the earliest.
+
+Thank you 🙏`;
+        window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+        
+        closeReuploadModal();
+        showToast('✅ Screenshot ready! / স্ক্রিনশট প্রস্তুত!');
+        
+        setTimeout(() => {
+            alert(
+`✅ Your new screenshot has been downloaded to your device.
+
+📌 NEXT STEPS:
+1️⃣ WhatsApp is now open with your re-submission message
+2️⃣ Please TAP the attachment (📎) icon in WhatsApp
+3️⃣ Select the auto-downloaded screenshot from your Gallery / Downloads
+4️⃣ SEND the message to admin
+
+⚠️ Without attaching the screenshot, admin cannot re-verify your payment.
+
+Admin will update your order status in the Admin Panel. You can check back in Order / Payment History.
+
+---
+✅ আপনার নতুন স্ক্রিনশট ডিভাইসে ডাউনলোড হয়েছে।
+
+📌 পরবর্তী ধাপ:
+1️⃣ WhatsApp এখন আপনার re-submission message নিয়ে খোলা হয়েছে
+2️⃣ অনুগ্রহ করে WhatsApp-এ 📎 attachment আইকনে ট্যাপ করুন
+3️⃣ Gallery / Downloads থেকে auto-downloaded স্ক্রিনশটটি সিলেক্ট করুন
+4️⃣ Message টি admin কে SEND করুন
+
+⚠️ স্ক্রিনশট attach না করলে admin আপনার পেমেন্ট পুনরায় verify করতে পারবে না।
+
+অ্যাডমিন Admin Panel থেকে আপনার order status আপডেট করবেন। Order / Payment History-তে দেখে নিতে পারবেন।`
+            );
+        }, 400);
+        
+    } catch (err) {
+        console.error(err);
+        alert('❌ Error: ' + err.message);
+        if (btn) { btn.disabled = false; btn.textContent = '🔄 Send to Admin via WhatsApp'; }
+    }
 }
 
 async function viewReceipt(id) {
@@ -1883,7 +2322,7 @@ function buildReceipt(p) {
         </div>` : ''}
         </div>
         <div class="total"><span class="lbl">AMOUNT PAID</span><span class="amt">${money(p.finalAmount)}</span></div>
-        <div class="section"><h3>Payment Info</h3><div class="row"><span>Method</span><strong>${p.paymentMethod || 'UPI'}</strong></div>${p.txnId ? `<div class="row"><span>Txn ID</span><strong>${p.txnId}</strong></div>` : ''}<div class="row"><span>Status</span><strong style="color:#16a34a;">✅ Verified</strong></div></div>
+        <div class="section"><h3>Payment Info</h3><div class="row"><span>Method</span><strong>${p.paymentMethod || 'UPI'}</strong></div><div class="row"><span>Status</span><strong style="color:#16a34a;">✅ Verified</strong></div></div>
         <div class="footer"><p>Thank you for choosing English Spur!</p><p style="font-weight:800; color:#1d4ed8;">— Sovan Kapri, Founder &amp; Lead Trainer</p></div>
     </div>
     <div class="noprint"><button onclick="window.print()">🖨️ Print / Save as PDF</button></div>
