@@ -191,7 +191,6 @@
     <div id="view-payment" class="hidden">
         <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-5">
 
-            <!-- STEP INDICATOR -->
             <div class="flex items-center justify-center gap-0.5 sm:gap-1 mb-5 overflow-x-auto pb-2">
                 <div class="flex items-center gap-1 flex-shrink-0">
                     <div id="stepDot1Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-700 text-white flex items-center justify-center font-black text-[10px] sm:text-xs shadow transition-all">1</div>
@@ -454,6 +453,14 @@
                     <p class="text-base font-black text-green-700">সম্পন্ন হয়েছে</p>
                 </div>
 
+                <!-- ✅ ORDER ID PROMINENT DISPLAY -->
+                <div id="stage5OrderIdBox" class="bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-xl p-5 mb-4 text-center shadow-lg">
+                    <div class="text-[11px] font-bold uppercase tracking-widest opacity-90">🆔 Your Order ID</div>
+                    <div id="stage5OrderId" class="text-3xl sm:text-4xl font-black mt-2 font-mono tracking-wider" style="letter-spacing: 3px;">ES-0000000</div>
+                    <p class="text-[11px] mt-2 opacity-95">📌 Save this ID — use it for all future references</p>
+                    <p class="text-[11px] opacity-95">এই ID টি সংরক্ষণ করুন — ভবিষ্যতে সব কাজে লাগবে</p>
+                </div>
+
                 <div class="bg-gradient-to-br from-green-100 to-emerald-100 border-2 border-green-500 rounded-xl p-5 text-center mb-4">
                     <div class="text-5xl mb-2">🎉</div>
                     <p class="font-black text-green-900 uppercase text-lg">Order Submitted!</p>
@@ -538,6 +545,12 @@
         </div>
 
         <div id="reuploadBody">
+            <!-- Order ID Display -->
+            <div class="bg-blue-50 border-2 border-blue-300 rounded-xl p-3 mb-4 text-center">
+                <p class="text-[10px] font-black text-blue-700 uppercase tracking-wider">🆔 Order ID</p>
+                <p id="reuploadOrderIdDisplay" class="font-mono font-black text-blue-800 text-lg mt-1 tracking-wider">ES-0000000</p>
+            </div>
+
             <div class="bg-red-50 border-l-4 border-red-600 p-3 rounded-r-lg mb-4">
                 <p class="text-[11px] font-black text-red-900 uppercase">⚠️ Rejection Reason / প্রত্যাখ্যানের কারণ</p>
                 <p id="reuploadReason" class="text-[12px] text-red-800 font-semibold mt-1">—</p>
@@ -656,10 +669,36 @@ let payMethodSelected = '';
 let screenshotCheckChecked = false;
 
 let reuploadOrderId = null;
+let reuploadOrderRef = null;
 let reuploadScreenshotBase64 = null;
 let reuploadMethodSelected = '';
 
 const money = n => '₹' + Number(n).toLocaleString('en-IN');
+
+/* ✅ Generate 7-digit unique Order ID with Firestore check */
+async function generateUniqueOrderId() {
+    let attempts = 0;
+    while (attempts < 10) {
+        const num = Math.floor(1000000 + Math.random() * 9000000); // 1,000,000 - 9,999,999
+        const candidate = 'ES-' + num;
+        
+        try {
+            const snap = await db.collection('purchases')
+                .where('orderId', '==', candidate)
+                .limit(1)
+                .get();
+            
+            if (snap.empty) {
+                return candidate; // ✅ Unique
+            }
+        } catch (err) {
+            console.error('Order ID check error:', err);
+            return candidate;
+        }
+        attempts++;
+    }
+    return 'ES-' + ((Date.now() % 9000000) + 1000000);
+}
 
 function cleanPlanName(name) {
     if (!name) return '';
@@ -1923,12 +1962,19 @@ async function submitPurchase() {
     const cleanPlan = cleanPlanName(selectedPlan.name);
     const payMethod = getSelectedPayMethod();
     
+    const submitBtn = document.getElementById('paySubmitBtn');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '⏳ Submitting... / জমা হচ্ছে...'; }
+    
+    // ✅ Generate UNIQUE 7-digit Order ID
+    const orderId = await generateUniqueOrderId();
+    
     const appliedCouponData = p.usedCoupons.map(uc => {
         const orig = appliedCoupons.find(c => c.code === uc.code);
         return { code: uc.code, type: uc.type, value: uc.value, discount: uc.disc, appliesTo: orig ? orig.appliesTo : null };
     });
     
     const order = {
+        orderId: orderId,
         studentId: currentStudent.id,
         studentName: currentStudent.name,
         studentMobile: currentStudent.mobile,
@@ -1952,16 +1998,13 @@ async function submitPurchase() {
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
     };
     
-    const submitBtn = document.getElementById('paySubmitBtn');
-    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '⏳ Submitting... / জমা হচ্ছে...'; }
-    
     try {
         await db.collection('purchases').add(order);
         
         try {
             const link = document.createElement('a');
             link.href = screenshotBase64;
-            link.download = `Payment_${currentStudent.uniqueId || currentStudent.id}_${Date.now()}.jpg`;
+            link.download = `${orderId}_${currentStudent.uniqueId || currentStudent.id}.jpg`;
             link.click();
         } catch (e) { console.error('Screenshot download failed:', e); }
         
@@ -1986,8 +2029,12 @@ async function submitPurchase() {
             ? `Coupons Applied (${appliedCoupons.map(c => c.code).join(', ')})` 
             : 'Standard Package Price';
         
-        const msg = `✅ *PAYMENT COMPLETED — English Spur*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order. Please find the details below:\n\n--- STUDENT DETAILS ---\n• Name: *${currentStudent.name}*\n• Mobile: *${currentStudent.mobile}*\n• Unique ID: ${currentStudent.uniqueId || currentStudent.id}\n\n--- PLAN ENROLLED ---\n*${cleanPlan}*\nStatus: ${couponText}\n\n--- FEE BREAKDOWN ---\n${breakdown}\n-------------------------\n*💵 Amount Paid: ${money(p.final)}*\n\n--- PAYMENT INFO ---\n• Method: ${payMethod}\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\n--- DOCUMENTS ---\nI will submit the required admission documents shortly:\n• Passport Size Photograph\n• Address Proof (Aadhar / Voter ID / School ID)\n\nKindly verify my payment and send me the confirmation receipt.\n\nThank you 🙏`;
+        const msg = `✅ *PAYMENT COMPLETED — English Spur*\n\n*🆔 ORDER ID: ${orderId}*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order. Please find the details below:\n\n--- STUDENT DETAILS ---\n• Name: *${currentStudent.name}*\n• Mobile: *${currentStudent.mobile}*\n• Unique ID: ${currentStudent.uniqueId || currentStudent.id}\n\n--- PLAN ENROLLED ---\n*${cleanPlan}*\nStatus: ${couponText}\n\n--- FEE BREAKDOWN ---\n${breakdown}\n-------------------------\n*💵 Amount Paid: ${money(p.final)}*\n\n--- PAYMENT INFO ---\n• Method: ${payMethod}\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\n--- DOCUMENTS ---\nI will submit the required admission documents shortly:\n• Passport Size Photograph\n• Address Proof (Aadhar / Voter ID / School ID)\n\nKindly verify my payment and send me the confirmation receipt.\n\nThank you 🙏`;
         window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+
+        // ✅ Display Order ID in Stage 5
+        const stage5OrderIdEl = document.getElementById('stage5OrderId');
+        if (stage5OrderIdEl) stage5OrderIdEl.textContent = orderId;
 
         selectedPlan = null;
         appliedCoupons = [];
@@ -2052,10 +2099,12 @@ function loadHistory() {
                 </div>
                 
                 <div class="bg-white rounded-lg p-3 mb-2 space-y-1.5">
-                    <div class="flex justify-between text-[11px] gap-2">
-                        <span class="text-slate-500 font-semibold">🆔 Order ID:</span>
-                        <strong class="text-slate-700 text-right break-all">${p.id}</strong>
+                    <!-- ✅ Order ID prominent -->
+                    <div class="flex justify-between items-center text-[11px] gap-2 bg-blue-50 border-2 border-blue-300 rounded-lg px-3 py-2 mb-1">
+                        <span class="text-blue-700 font-black text-[10px] uppercase tracking-wider">🆔 Order ID</span>
+                        <strong class="text-blue-800 text-right font-mono font-black text-[15px] tracking-widest">${p.orderId || '—'}</strong>
                     </div>
+                    
                     <div class="flex justify-between text-[11px] gap-2">
                         <span class="text-slate-500 font-semibold">📅 Date & Time:</span>
                         <strong class="text-slate-700 text-right">${formatFullTimestamp(p.createdAt)}</strong>
@@ -2113,9 +2162,11 @@ async function openReuploadModal(orderId) {
         const p = doc.data();
         
         reuploadOrderId = orderId;
+        reuploadOrderRef = p.orderId || '—';
         reuploadScreenshotBase64 = null;
         reuploadMethodSelected = '';
         
+        document.getElementById('reuploadOrderIdDisplay').textContent = reuploadOrderRef;
         document.getElementById('reuploadReason').textContent = p.rejectionReason || 'Not specified / উল্লেখ নেই';
         document.getElementById('reuploadPlanName').textContent = p.planName || '—';
         document.getElementById('reuploadAmount').textContent = money(p.finalAmount || 0);
@@ -2156,6 +2207,7 @@ function closeReuploadModal() {
     document.getElementById('reuploadModal').classList.remove('show');
     document.body.style.overflow = '';
     reuploadOrderId = null;
+    reuploadOrderRef = null;
     reuploadScreenshotBase64 = null;
     reuploadMethodSelected = '';
     const btn = document.getElementById('reuploadSubmitBtn');
@@ -2179,7 +2231,6 @@ document.addEventListener('change', function(e) {
     }
 });
 
-/* ✅ UPDATED: Re-upload SUBMITS via WhatsApp only — NO Firestore update */
 async function submitReupload() {
     if (!reuploadOrderId) { alert('⚠️ Order ID missing.'); return; }
     if (!reuploadScreenshotBase64) { alert('⚠️ Please upload the new screenshot.\n\nনতুন স্ক্রিনশট আপলোড করুন।'); return; }
@@ -2189,7 +2240,6 @@ async function submitReupload() {
     if (btn) { btn.disabled = true; btn.textContent = '⏳ Preparing... / প্রস্তুত হচ্ছে...'; }
     
     try {
-        // Read-only fetch of order info
         const docSnap = await db.collection('purchases').doc(reuploadOrderId).get();
         if (!docSnap.exists) { 
             alert('⚠️ Order not found. / অর্ডার পাওয়া যায়নি।'); 
@@ -2197,21 +2247,22 @@ async function submitReupload() {
             return; 
         }
         const p = docSnap.data();
+        const orderId = p.orderId || reuploadOrderId;
         
-        // ✅ Auto-download screenshot
         try {
             const link = document.createElement('a');
             link.href = reuploadScreenshotBase64;
-            link.download = `Payment_Reupload_${currentStudent.uniqueId || currentStudent.id}_${Date.now()}.jpg`;
+            link.download = `Reupload_${orderId}_${currentStudent.uniqueId || currentStudent.id}_${Date.now()}.jpg`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         } catch (e) { console.error('Screenshot download failed:', e); }
         
-        // ✅ Build WhatsApp message
         const cleanPlan = cleanPlanName(p.planName);
         const msg = 
 `🔄 *PAYMENT SCREENSHOT RE-SUBMISSION — English Spur*
+
+*🆔 ORDER ID: ${orderId}*
 
 Respected Sovan Kapri Sir,
 
@@ -2223,7 +2274,7 @@ My previous payment screenshot was rejected. I have re-uploaded a new, correct s
 • Unique ID: ${p.uniqueId || ''}
 
 --- ORDER DETAILS ---
-• Order ID: ${reuploadOrderId}
+• Order ID: *${orderId}*
 • Plan: *${cleanPlan}*
 • Amount: *${money(p.finalAmount)}*
 • UPI App: ${reuploadMethodSelected}
@@ -2245,6 +2296,8 @@ Thank you 🙏`;
             alert(
 `✅ Your new screenshot has been downloaded to your device.
 
+🆔 ORDER ID: ${orderId}
+
 📌 NEXT STEPS:
 1️⃣ WhatsApp is now open with your re-submission message
 2️⃣ Please TAP the attachment (📎) icon in WhatsApp
@@ -2257,6 +2310,8 @@ Admin will update your order status in the Admin Panel. You can check back in Or
 
 ---
 ✅ আপনার নতুন স্ক্রিনশট ডিভাইসে ডাউনলোড হয়েছে।
+
+🆔 অর্ডার আইডি: ${orderId}
 
 📌 পরবর্তী ধাপ:
 1️⃣ WhatsApp এখন আপনার re-submission message নিয়ে খোলা হয়েছে
@@ -2297,6 +2352,9 @@ function buildReceipt(p) {
     .org { font-size: 12px; font-weight: 800; color: #334155; margin-top: 3px; }
     .addr { font-size: 10px; color: #64748b; margin-top: 2px; }
     .title { text-align: center; margin: 16px 0; } .title h2 { font-size: 17px; font-weight: 900; letter-spacing: 2px; margin: 0; } .title p { font-size: 11px; color: #64748b; margin: 2px 0; }
+    .orderid-box { background: #eff6ff; border: 2px solid #bfdbfe; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; text-align: center; }
+    .orderid-label { font-size: 10px; font-weight: 800; color: #1d4ed8; text-transform: uppercase; letter-spacing: 1px; }
+    .orderid-value { font-family: monospace; font-size: 22px; font-weight: 900; color: #1e40af; letter-spacing: 2px; margin-top: 3px; }
     .meta { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 14px; flex-wrap: wrap; gap: 6px; }
     .section { margin-bottom: 14px; } .section h3 { font-size: 11px; font-weight: 900; color: #1d4ed8; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin-bottom: 6px; text-transform: uppercase; }
     .row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; gap: 8px; } .row span:last-child { text-align: right; word-break: break-word; }
@@ -2309,6 +2367,13 @@ function buildReceipt(p) {
     <div class="paper">
         <div class="header"><div class="brand">ENGLISH <span>SPUR</span></div><div class="org">English Spur English Training Academy</div><div class="addr">Kanaipur, Bantul, Bagnan, Howrah - 711312</div><div class="addr">📞 +91 9875340842 · ✉️ englishspur2020@gmail.com</div></div>
         <div class="title"><h2>PAYMENT RECEIPT</h2><p>পেমেন্ট রসিদ</p></div>
+        
+        <!-- ORDER ID BOX -->
+        <div class="orderid-box">
+            <div class="orderid-label">🆔 Order ID</div>
+            <div class="orderid-value">${p.orderId || '—'}</div>
+        </div>
+        
         <div class="meta"><div><strong>Receipt:</strong> ${p.receiptNo}</div><div><strong>Date:</strong> ${date}</div></div>
         <div class="section"><h3>Student Details</h3><div class="row"><span>Name</span><strong>${p.studentName}</strong></div><div class="row"><span>Mobile</span><strong>${p.studentMobile}</strong></div>${p.uniqueId ? `<div class="row"><span>Unique ID</span><strong>${p.uniqueId}</strong></div>` : ''}</div>
         <div class="section"><h3>Plan Enrolled</h3><div style="font-size:13px; font-weight:800; color:#1e3a8a;">${p.planName}</div>

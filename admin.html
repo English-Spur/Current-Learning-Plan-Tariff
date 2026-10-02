@@ -29,183 +29,40 @@
     .badge-green { background: #16a34a; color: #fff; }
     .badge-yellow { background: #eab308; color: #fff; }
     .badge-purple { background: #9333ea; color: #fff; }
+    .order-id-badge { font-family: 'Courier New', monospace; letter-spacing: 1px; background: #dbeafe; color: #1e40af; border: 2px solid #93c5fd; padding: 3px 10px; border-radius: 8px; font-weight: 900; display: inline-block; font-size: 12px; }
+    .order-id-badge-lg { font-family: 'Courier New', monospace; letter-spacing: 2px; background: #dbeafe; color: #1e40af; border: 2px solid #3b82f6; padding: 5px 14px; border-radius: 10px; font-weight: 900; display: inline-block; font-size: 15px; }
     @media print { .noprint { display: none !important; } }
-
-    /* ============ LIVE PREVIEW PANEL ============ */
-    #previewPanel {
-        position: fixed;
-        top: 10px;
-        right: 10px;
-        width: 380px;
-        max-height: 95vh;
-        background: #ffffff;
-        border: 3px solid #1d4ed8;
-        border-radius: 14px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-        z-index: 1000;
-        display: none;
-        overflow: hidden;
-    }
+    #previewPanel { position: fixed; top: 10px; right: 10px; width: 380px; max-height: 95vh; background: #ffffff; border: 3px solid #1d4ed8; border-radius: 14px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); z-index: 1000; display: none; overflow: hidden; }
     #previewPanel.show { display: block; }
-
-    .preview-header {
-        background: linear-gradient(135deg, #1d4ed8, #1e40af);
-        color: #fff;
-        padding: 12px 16px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-    }
-    .preview-header .preview-title {
-        font-size: 13px;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-    .preview-header .preview-toggle {
-        background: rgba(255,255,255,0.2);
-        border: none;
-        color: #fff;
-        font-size: 16px;
-        cursor: pointer;
-        padding: 4px 10px;
-        border-radius: 6px;
-        font-weight: 700;
-    }
-    .preview-body {
-        padding: 12px;
-        overflow-y: auto;
-        max-height: calc(95vh - 55px);
-        background: #f8fafc;
-    }
-
-    .preview-banner {
-        background: linear-gradient(135deg, #f97316, #dc2626);
-        color: #fff;
-        padding: 12px;
-        border-radius: 10px;
-        text-align: center;
-        margin-bottom: 10px;
-    }
-    .preview-banner .pb-title {
-        font-size: 9px;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        opacity: 0.95;
-    }
-    .preview-banner .pb-rate {
-        font-size: 16px;
-        font-weight: 900;
-        margin-top: 4px;
-        line-height: 1.2;
-    }
-    .preview-banner .pb-timer {
-        font-family: 'Courier New', monospace;
-        font-size: 20px;
-        font-weight: 900;
-        color: #fef08a;
-        margin-top: 6px;
-    }
-
-    .preview-plan-table {
-        background: #fff;
-        border-radius: 10px;
-        overflow: hidden;
-        margin-bottom: 10px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    }
-    .preview-plan-header {
-        background: #1e40af;
-        color: #fff;
-        font-size: 10px;
-        font-weight: 800;
-        text-transform: uppercase;
-        padding: 8px;
-        text-align: center;
-        letter-spacing: 0.05em;
-    }
+    .preview-header { background: linear-gradient(135deg, #1d4ed8, #1e40af); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .preview-header .preview-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+    .preview-header .preview-toggle { background: rgba(255,255,255,0.2); border: none; color: #fff; font-size: 16px; cursor: pointer; padding: 4px 10px; border-radius: 6px; font-weight: 700; }
+    .preview-body { padding: 12px; overflow-y: auto; max-height: calc(95vh - 55px); background: #f8fafc; }
+    .preview-banner { background: linear-gradient(135deg, #f97316, #dc2626); color: #fff; padding: 12px; border-radius: 10px; text-align: center; margin-bottom: 10px; }
+    .preview-banner .pb-title { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.95; }
+    .preview-banner .pb-rate { font-size: 16px; font-weight: 900; margin-top: 4px; line-height: 1.2; }
+    .preview-banner .pb-timer { font-family: 'Courier New', monospace; font-size: 20px; font-weight: 900; color: #fef08a; margin-top: 6px; }
+    .preview-plan-table { background: #fff; border-radius: 10px; overflow: hidden; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .preview-plan-header { background: #1e40af; color: #fff; font-size: 10px; font-weight: 800; text-transform: uppercase; padding: 8px; text-align: center; letter-spacing: 0.05em; }
     .preview-plan-header.orange { background: #ea580c; }
     .preview-plan-header.green { background: #047857; }
-
-    .preview-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 8px 10px;
-        border-bottom: 1px solid #f1f5f9;
-        font-size: 11px;
-    }
+    .preview-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-bottom: 1px solid #f1f5f9; font-size: 11px; }
     .preview-row:last-child { border-bottom: none; }
-    .preview-row .pr-name {
-        font-weight: 700;
-        color: #1e293b;
-        flex: 1;
-    }
-    .preview-row .pr-price {
-        font-weight: 900;
-        color: #ea580c;
-        font-size: 12px;
-        text-align: right;
-    }
-    .preview-row .pr-old {
-        font-size: 9px;
-        color: #94a3b8;
-        text-decoration: line-through;
-        display: block;
-    }
-
-    .preview-actions {
-        display: flex;
-        gap: 6px;
-        margin-top: 10px;
-    }
-    .preview-actions button {
-        flex: 1;
-        padding: 8px;
-        font-size: 11px;
-        font-weight: 700;
-        border-radius: 8px;
-        border: none;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
+    .preview-row .pr-name { font-weight: 700; color: #1e293b; flex: 1; }
+    .preview-row .pr-price { font-weight: 900; color: #ea580c; font-size: 12px; text-align: right; }
+    .preview-row .pr-old { font-size: 9px; color: #94a3b8; text-decoration: line-through; display: block; }
+    .preview-actions { display: flex; gap: 6px; margin-top: 10px; }
+    .preview-actions button { flex: 1; padding: 8px; font-size: 11px; font-weight: 700; border-radius: 8px; border: none; cursor: pointer; transition: all 0.2s; }
     .preview-refresh-btn { background: #1d4ed8; color: #fff; }
     .preview-refresh-btn:hover { background: #1e40af; }
     .preview-close-btn { background: #e2e8f0; color: #334155; }
     .preview-close-btn:hover { background: #cbd5e1; }
-
-    #previewToggleBtn {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, #1d4ed8, #1e40af);
-        color: #fff;
-        border: none;
-        cursor: pointer;
-        box-shadow: 0 8px 20px rgba(29,78,216,0.4);
-        font-size: 24px;
-        z-index: 999;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.2s;
-    }
+    #previewToggleBtn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #1d4ed8, #1e40af); color: #fff; border: none; cursor: pointer; box-shadow: 0 8px 20px rgba(29,78,216,0.4); font-size: 24px; z-index: 999; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
     #previewToggleBtn:hover { transform: scale(1.08); }
     #previewToggleBtn.hidden { display: none; }
-
-    @media (max-width: 768px) {
-        #previewPanel {
-            width: calc(100vw - 20px);
-            right: 10px;
-            left: 10px;
-            max-height: 90vh;
-        }
-    }
+    @media (max-width: 768px) { #previewPanel { width: calc(100vw - 20px); right: 10px; left: 10px; max-height: 90vh; } }
+    #couponManageModal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: none; align-items: flex-start; justify-content: center; padding: 16px; overflow-y: auto; }
+    #couponManageModal.show { display: flex; }
 </style>
 </head>
 <body>
@@ -273,7 +130,7 @@
             <button onclick="switchTab('logs')" id="tab-logs" class="tab-btn inactive">📊 Activity Logs</button>
         </div>
 
-        <!-- TAB: OFFER & PRICING -->
+        <!-- OFFER TAB -->
         <div id="content-offer" class="tab-content fade-in">
             <div class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 rounded-xl p-4 sm:p-5">
                 <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
@@ -319,7 +176,6 @@
                     </div>
                 </div>
 
-                <!-- DYNAMIC PLAN PRICING -->
                 <div class="bg-green-50 border-2 border-green-300 rounded-xl p-4 mb-4">
                     <p class="text-[10px] sm:text-xs font-black text-green-900 uppercase mb-3">💰 Plan Pricing Control</p>
 
@@ -383,7 +239,7 @@
             </div>
         </div>
 
-        <!-- TAB: COUPONS -->
+        <!-- COUPONS TAB -->
         <div id="content-coupons" class="tab-content hidden fade-in">
             <div class="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-200 rounded-xl p-4 sm:p-5">
                 <h2 class="text-base sm:text-lg font-black text-amber-900 mb-4">🎟️ Coupon Management</h2>
@@ -453,19 +309,19 @@
             </div>
         </div>
 
-        <!-- TAB: PENDING -->
+        <!-- PENDING TAB -->
         <div id="content-pending" class="tab-content hidden fade-in">
             <h2 class="text-base sm:text-lg font-black text-blue-900 mb-4">⏳ Pending Payments</h2>
             <div id="pendingList" class="space-y-3"></div>
         </div>
 
-        <!-- TAB: ALL PURCHASES -->
+        <!-- ALL PURCHASES TAB -->
         <div id="content-all" class="tab-content hidden fade-in">
             <h2 class="text-base sm:text-lg font-black text-blue-900 mb-4">📋 All Purchases</h2>
             <div id="allPurchasesList" class="space-y-3"></div>
         </div>
 
-        <!-- TAB: STUDENTS -->
+        <!-- STUDENTS TAB -->
         <div id="content-students" class="tab-content hidden fade-in">
             <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                 <h2 class="text-base sm:text-lg font-black text-blue-900">👥 Students — Full Control</h2>
@@ -477,7 +333,7 @@
             <div id="studentsList" class="space-y-2"></div>
         </div>
 
-        <!-- TAB: LOGS -->
+        <!-- LOGS TAB -->
         <div id="content-logs" class="tab-content hidden fade-in">
             <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                 <h2 class="text-base sm:text-lg font-black text-blue-900">📊 Activity Logs</h2>
@@ -522,9 +378,53 @@
     </div>
 </div>
 
-<!-- ============================================
-     LIVE PREVIEW PANEL
-     ============================================ -->
+<!-- MANAGE COUPONS MODAL -->
+<div id="couponManageModal">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full my-auto p-5" style="max-width: 640px;">
+        <div class="flex justify-between items-center mb-4 pb-3 border-b-2 border-slate-100">
+            <div>
+                <h3 class="text-lg font-black text-blue-900">🎫 Manage Granted Coupons</h3>
+                <p id="manageStudentName" class="text-xs text-slate-500 font-semibold"></p>
+            </div>
+            <button onclick="closeCouponModal()" class="text-slate-400 hover:text-red-600 text-2xl font-bold leading-none">&times;</button>
+        </div>
+        <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-4">
+            <p class="text-[11px] font-bold text-blue-900">ℹ️ Student can ONLY apply coupons granted here.</p>
+        </div>
+        <div class="bg-amber-50 border-2 border-amber-200 rounded-xl p-3 mb-4">
+            <p class="text-[11px] font-black text-amber-900 uppercase mb-2">🔍 Filter Coupons</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-2">
+                <input type="text" id="manageCouponSearch" oninput="renderManageCoupons()" placeholder="🔍 Search code..." class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white">
+                <select id="manageCouponTypeFilter" onchange="renderManageCoupons()" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white">
+                    <option value="">All Types</option>
+                    <option value="flat">Flat ₹</option>
+                    <option value="percent">Percent %</option>
+                </select>
+                <select id="manageCouponAppliesFilter" onchange="renderManageCoupons()" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white">
+                    <option value="">All Plans</option>
+                    <option value="1on1">1-on-1</option>
+                    <option value="group">Group</option>
+                </select>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+                <label class="flex items-center gap-1.5 text-[11px] font-bold text-slate-700 cursor-pointer bg-white px-2.5 py-1.5 rounded-lg border-2 border-slate-200">
+                    <input type="checkbox" id="manageCouponShowGrantedOnly" onchange="renderManageCoupons()" class="w-3.5 h-3.5 accent-purple-600">
+                    ✅ Granted Only
+                </label>
+                <label class="flex items-center gap-1.5 text-[11px] font-bold text-slate-700 cursor-pointer bg-white px-2.5 py-1.5 rounded-lg border-2 border-slate-200">
+                    <input type="checkbox" id="manageCouponHideExpired" onchange="renderManageCoupons()" class="w-3.5 h-3.5 accent-red-600">
+                    ⛔ Hide Expired
+                </label>
+                <button onclick="resetManageFilters()" class="ml-auto text-[11px] font-bold text-blue-600 hover:text-blue-800 underline">↺ Reset</button>
+            </div>
+            <p id="manageCouponCount" class="text-[10px] text-slate-500 font-semibold mt-2"></p>
+        </div>
+        <div id="manageCouponList" class="space-y-2 max-h-[50vh] overflow-y-auto"></div>
+        <button onclick="closeCouponModal()" class="w-full mt-4 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3 rounded-xl text-sm">Close</button>
+    </div>
+</div>
+
+<!-- PREVIEW PANEL -->
 <button id="previewToggleBtn" onclick="togglePreview()" title="Show Student Portal Preview">
     👁️
 </button>
@@ -836,8 +736,9 @@ function loadCoupons() {
                             ${c.type === 'flat' ? '₹' : '%'}
                         </div>
                         <div class="min-w-0">
-                            <div class="flex items-center flex-wrap">
+                            <div class="flex items-center flex-wrap gap-1">
                                 <p class="font-black ${isActive ? 'text-amber-700' : 'text-slate-500'} text-sm">${c.code}</p>
+                                <button onclick="copyCouponCode('${c.code}')" class="text-blue-600 hover:text-blue-800 text-[11px] px-1.5 py-0.5 rounded hover:bg-blue-50 transition font-bold" title="Copy Code">📋</button>
                                 ${statusBadge}
                             </div>
                             <p class="text-[10px] text-slate-500 truncate mt-0.5">
@@ -919,11 +820,43 @@ function deleteCoupon(id) {
     if (confirm('Delete this coupon?')) db.collection('coupons').doc(id).delete();
 }
 
+function copyCouponCode(code) {
+    if (!code) return;
+    navigator.clipboard.writeText(code).then(() => {
+        showCopiedToast('Copied: ' + code);
+    }).catch(() => {
+        try {
+            const ta = document.createElement('textarea');
+            ta.value = code;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            showCopiedToast('Copied: ' + code);
+        } catch (e) {
+            alert('❌ Copy failed. Code: ' + code);
+        }
+    });
+}
+
+function showCopiedToast(msg) {
+    const toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#16a34a;color:#fff;padding:12px 22px;border-radius:999px;font-size:13px;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,0.3);z-index:99999;font-family:Segoe UI,sans-serif;';
+    toast.textContent = '📋 ' + msg;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+        toast.style.transition = 'opacity 0.3s';
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+    }, 1800);
+}
+
 /* ============ EDIT COUPON ============ */
 let editingCouponId = null;
 
 async function editCoupon(id) {
-    // Remove any existing modal
     closeEditCouponModal();
     
     try {
@@ -932,7 +865,6 @@ async function editCoupon(id) {
         const c = doc.data();
         editingCouponId = id;
         
-        // Format datetime-local values
         const toLocalInput = (isoStr) => {
             if (!isoStr) return '';
             try {
@@ -1041,7 +973,6 @@ async function editCoupon(id) {
             </div>
         `;
         
-        // Toggle allowed plans row when appliesTo changes
         setTimeout(() => {
             const sel = document.getElementById('editCouponAppliesTo');
             if (sel) {
@@ -1051,7 +982,6 @@ async function editCoupon(id) {
             }
         }, 0);
         
-        // Click outside to close
         modal.addEventListener('click', function(e) {
             if (e.target === modal) closeEditCouponModal();
         });
@@ -1101,7 +1031,6 @@ async function saveEditedCoupon() {
         updateData.validFrom = validFrom;
         updateData.validUntil = validUntil;
     } else {
-        // Remove validity
         updateData.validFrom = firebase.firestore.FieldValue.delete();
         updateData.validUntil = firebase.firestore.FieldValue.delete();
     }
@@ -1124,7 +1053,7 @@ async function saveEditedCoupon() {
     } catch (err) { alert('Error: ' + err.message); }
 }
 
-/* ============ PENDING ============ */
+/* ============ PENDING (with Order ID highlight) ============ */
 function loadPending() {
     db.collection('purchases').where('status', '==', 'pending').onSnapshot(snap => {
         const list = document.getElementById('pendingList');
@@ -1145,8 +1074,9 @@ function loadPending() {
                 <div class="flex justify-between items-start flex-wrap gap-2 mb-3">
                     <div class="min-w-0">
                         <p class="font-black text-base text-blue-900 truncate">${p.studentName}</p>
-                        <p class="text-[11px] text-slate-600 truncate">📱 ${p.studentMobile}</p>
-                        ${p.uniqueId ? `<p class="text-[11px] text-slate-600 truncate">🆔 ${p.uniqueId}</p>` : ''}
+                        ${p.orderId ? `<p class="mt-1.5"><span class="order-id-badge-lg">🆔 ${p.orderId}</span></p>` : ''}
+                        <p class="text-[11px] text-slate-600 truncate mt-1.5">📱 ${p.studentMobile}</p>
+                        ${p.uniqueId ? `<p class="text-[11px] text-slate-600 truncate">🔖 ${p.uniqueId}</p>` : ''}
                     </div>
                     <span class="bg-yellow-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap">⏳ PENDING</span>
                 </div>
@@ -1154,7 +1084,6 @@ function loadPending() {
                     <p class="text-sm font-bold text-slate-800 leading-snug">📘 ${p.planName}</p>
                     <p class="text-[11px] text-slate-500 mt-1">Amount: <strong class="text-orange-600">${money(p.finalAmount)}</strong>${p.couponCode ? ` · Coupon: <strong>${p.couponCode}</strong>` : ''}</p>
                     ${p.paymentMethod ? `<p class="text-[11px] text-slate-500 mt-0.5">💳 ${p.paymentMethod}</p>` : ''}
-                    ${p.txnId ? `<p class="text-[11px] text-slate-500 mt-0.5">🔢 Txn: ${p.txnId}</p>` : ''}
                 </div>
                 ${p.screenshot ? `<div class="mb-3"><p class="text-[10px] text-slate-600 font-bold uppercase mb-1.5">Payment Screenshot:</p><img src="${p.screenshot}" class="screenshot-img mx-auto" onclick="window.open(this.src)"></div>` : ''}
                 <div class="flex gap-2">
@@ -1186,7 +1115,7 @@ function rejectPurchase(id) {
     }).then(() => alert('❌ Rejected.'));
 }
 
-/* ============ ALL PURCHASES ============ */
+/* ============ ALL PURCHASES (with Order ID highlight) ============ */
 function loadAllPurchases() {
     db.collection('purchases').orderBy('createdAt', 'desc').limit(100).onSnapshot(snap => {
         const list = document.getElementById('allPurchasesList');
@@ -1201,7 +1130,10 @@ function loadAllPurchases() {
             div.innerHTML = `
                 <div class="flex justify-between items-center flex-wrap gap-2">
                     <div class="min-w-0 flex-1">
-                        <p class="font-bold text-slate-800 text-xs sm:text-sm truncate">${p.studentName}</p>
+                        <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+                            <p class="font-bold text-slate-800 text-xs sm:text-sm truncate">${p.studentName}</p>
+                            ${p.orderId ? `<span class="order-id-badge">🆔 ${p.orderId}</span>` : ''}
+                        </div>
                         <p class="text-[10px] text-slate-600 mt-0.5 truncate">${p.planName}</p>
                         <p class="text-[10px] text-slate-600 mt-0.5">${money(p.finalAmount)}${p.couponCode ? ' · ' + p.couponCode : ''}</p>
                         ${p.paymentMethod ? `<p class="text-[10px] text-slate-500 mt-0.5">💳 ${p.paymentMethod}</p>` : ''}
@@ -1262,6 +1194,13 @@ function buildReceiptHTML(p) {
                 <div style="font-size: 17px; font-weight: 900; letter-spacing: 2px;">PAYMENT RECEIPT</div>
                 <div style="font-size: 11px; color: #64748b;">পেমেন্ট রসিদ</div>
             </div>
+            
+            ${p.orderId ? `
+            <div style="background:#eff6ff;border:2px solid #bfdbfe;border-radius:8px;padding:10px 14px;margin-bottom:14px;text-align:center;">
+                <div style="font-size:10px;font-weight:800;color:#1d4ed8;text-transform:uppercase;letter-spacing:1px;">🆔 Order ID</div>
+                <div style="font-family:'Courier New',monospace;font-size:22px;font-weight:900;color:#1e40af;letter-spacing:2px;margin-top:3px;">${p.orderId}</div>
+            </div>` : ''}
+            
             <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 12px; flex-wrap: wrap; gap: 6px;">
                 <div><strong>Receipt:</strong> ${p.receiptNo || '—'}</div>
                 <div><strong>Date:</strong> ${date}</div>
@@ -1339,7 +1278,7 @@ function renderStudents(students) {
                         ${hasCoupon ? '<span class="badge-purple text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ COUPON ACCESS</span>' : ''}
                     </div>
                     <div class="mt-1.5 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-0.5">
-                        <p class="text-[11px] text-slate-600 truncate">🆔 ${uniqueId}</p>
+                        <p class="text-[11px] text-slate-600 truncate">🔖 ${uniqueId}</p>
                         <p class="text-[11px] text-slate-600 truncate">📱 ${s.mobile || '—'}</p>
                         <p class="text-[10px] text-slate-500">🔐 Logins: <strong class="text-green-700">${loginCount}</strong></p>
                         <p class="text-[10px] text-slate-500">🚪 Logouts: <strong class="text-red-700">${logoutCount}</strong></p>
@@ -1399,90 +1338,140 @@ async function toggleBlock(id, currentlyBlocked) {
     } catch (err) { alert('Error: ' + err.message); }
 }
 
-/* ============ MANAGE GRANTED COUPONS ============ */
+let currentManageStudentId = null;
+let currentManageStudentName = '';
+let currentManageGranted = [];
+let currentManageAllCoupons = [];
+
 async function manageGrantedCoupons(studentId, studentName) {
-    // Remove any existing modal first
     closeCouponModal();
     
     const student = allStudents.find(s => s.id === studentId);
     if (!student) { alert('Student not found.'); return; }
     
-    const granted = student.grantedCoupons || [];
+    currentManageStudentId = studentId;
+    currentManageStudentName = studentName;
+    currentManageGranted = student.grantedCoupons || [];
     
-    // Fetch all coupons
     const allCouponsSnap = await db.collection('coupons').get();
-    const allCoupons = [];
-    allCouponsSnap.forEach(doc => allCoupons.push({ id: doc.id, ...doc.data() }));
+    currentManageAllCoupons = [];
+    allCouponsSnap.forEach(doc => currentManageAllCoupons.push({ id: doc.id, ...doc.data() }));
     
-    if (allCoupons.length === 0) {
+    if (currentManageAllCoupons.length === 0) {
         alert('⚠️ No coupons exist yet. Create some coupons first.');
         return;
     }
     
-    let innerHtml = `<div style="font-family: 'Segoe UI', sans-serif;">
-        <h3 style="font-size: 16px; font-weight: 900; margin-bottom: 12px; color: #1e3a8a;">🎫 Manage Granted Coupons</h3>
-        <p style="font-size: 12px; color: #64748b; margin-bottom: 8px;">Student: <strong>${studentName}</strong></p>
-        <div style="background: #eff6ff; border-left: 3px solid #1d4ed8; padding: 8px 10px; border-radius: 6px; margin-bottom: 12px;">
-            <p style="font-size: 10px; color: #1e3a8a; font-weight: 700; margin: 0;">ℹ️ Student can ONLY apply coupons granted here.</p>
-        </div>
-        <div style="max-height: 400px; overflow-y: auto;">`;
+    document.getElementById('manageStudentName').textContent = 'Student: ' + studentName;
     
-    allCoupons.forEach(c => {
-        const isGranted = granted.some(g => g.id === c.id);
+    document.getElementById('manageCouponSearch').value = '';
+    document.getElementById('manageCouponTypeFilter').value = '';
+    document.getElementById('manageCouponAppliesFilter').value = '';
+    document.getElementById('manageCouponShowGrantedOnly').checked = false;
+    document.getElementById('manageCouponHideExpired').checked = false;
+    
+    renderManageCoupons();
+    
+    document.getElementById('couponManageModal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function resetManageFilters() {
+    document.getElementById('manageCouponSearch').value = '';
+    document.getElementById('manageCouponTypeFilter').value = '';
+    document.getElementById('manageCouponAppliesFilter').value = '';
+    document.getElementById('manageCouponShowGrantedOnly').checked = false;
+    document.getElementById('manageCouponHideExpired').checked = false;
+    renderManageCoupons();
+}
+
+function renderManageCoupons() {
+    const listEl = document.getElementById('manageCouponList');
+    const countEl = document.getElementById('manageCouponCount');
+    if (!listEl) return;
+    
+    const searchQuery = (document.getElementById('manageCouponSearch')?.value || '').toLowerCase().trim();
+    const typeFilter = document.getElementById('manageCouponTypeFilter')?.value || '';
+    const appliesFilter = document.getElementById('manageCouponAppliesFilter')?.value || '';
+    const showGrantedOnly = document.getElementById('manageCouponShowGrantedOnly')?.checked || false;
+    const hideExpired = document.getElementById('manageCouponHideExpired')?.checked || false;
+    
+    let filtered = currentManageAllCoupons.filter(c => {
+        if (searchQuery && !(c.code || '').toLowerCase().includes(searchQuery)) return false;
+        if (typeFilter && c.type !== typeFilter) return false;
+        if (appliesFilter && c.appliesTo !== appliesFilter) return false;
+        if (showGrantedOnly && !currentManageGranted.some(g => g.id === c.id)) return false;
+        if (hideExpired && c.validUntil && new Date(c.validUntil).getTime() < Date.now()) return false;
+        return true;
+    });
+    
+    filtered.sort((a, b) => {
+        const aGranted = currentManageGranted.some(g => g.id === a.id);
+        const bGranted = currentManageGranted.some(g => g.id === b.id);
+        if (aGranted && !bGranted) return -1;
+        if (!aGranted && bGranted) return 1;
+        return (a.code || '').localeCompare(b.code || '');
+    });
+    
+    if (countEl) {
+        countEl.textContent = `Showing ${filtered.length} of ${currentManageAllCoupons.length} coupons · ${currentManageGranted.length} granted`;
+    }
+    
+    if (filtered.length === 0) {
+        listEl.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No coupons match your filter.</p>';
+        return;
+    }
+    
+    listEl.innerHTML = '';
+    filtered.forEach(c => {
+        const isGranted = currentManageGranted.some(g => g.id === c.id);
         const isExpired = c.validUntil && new Date(c.validUntil).getTime() < Date.now();
-        innerHtml += `
-            <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border: 2px solid ${isGranted ? '#9333ea' : '#e2e8f0'}; border-radius: 8px; margin-bottom: 6px; ${isGranted ? 'background: #faf5ff;' : ''} ${isExpired ? 'opacity: 0.5;' : ''}">
-                <div>
-                    <strong style="color: #1e293b; font-size: 13px;">${c.code}</strong>
-                    <span style="font-size: 10px; color: #64748b; display: block;">
-                        ${c.appliesTo === '1on1' ? '👑 1-on-1' : '👥 Group'} · 
-                        ${c.type === 'flat' ? '₹' + c.value + ' off' : c.value + '% off'}
-                        ${c.validUntil ? ' · Expires: ' + new Date(c.validUntil).toLocaleDateString('en-IN') : ' · ♾️'}
-                    </span>
+        const isInactive = c.active === false;
+        
+        let borderColor = '#e2e8f0';
+        let bgColor = '#ffffff';
+        if (isGranted) { borderColor = '#9333ea'; bgColor = '#faf5ff'; }
+        if (isExpired || isInactive) { bgColor = '#f8fafc'; }
+        
+        const div = document.createElement('div');
+        div.style.cssText = `display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:2px solid ${borderColor};border-radius:10px;background:${bgColor};${isExpired || isInactive ? 'opacity:0.65;' : ''}`;
+        div.innerHTML = `
+            <div style="min-width:0;flex:1;">
+                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                    <strong style="color:#1e293b;font-size:13px;font-family:'Courier New',monospace;">${c.code}</strong>
+                    <button onclick="copyCouponCode('${c.code}')" 
+                        style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;padding:2px 8px;border-radius:6px;font-size:10px;font-weight:800;cursor:pointer;font-family:inherit;"
+                        title="Copy code">📋 Copy</button>
+                    ${isGranted ? '<span style="background:#9333ea;color:white;font-size:9px;font-weight:800;padding:2px 6px;border-radius:99px;">✅ GRANTED</span>' : ''}
+                    ${isExpired ? '<span style="background:#dc2626;color:white;font-size:9px;font-weight:800;padding:2px 6px;border-radius:99px;">⛔ EXPIRED</span>' : ''}
+                    ${isInactive ? '<span style="background:#64748b;color:white;font-size:9px;font-weight:800;padding:2px 6px;border-radius:99px;">⚪ INACTIVE</span>' : ''}
                 </div>
-                <button onclick="toggleGrantedCoupon('${studentId}', '${c.id}', ${isGranted})" 
-                    style="padding: 4px 12px; font-size: 11px; font-weight: 700; border-radius: 6px; border: none; cursor: pointer; 
-                    ${isGranted ? 'background: #ef4444; color: white;' : 'background: #9333ea; color: white;'}">
-                    ${isGranted ? '❌ Revoke' : '✅ Grant'}
-                </button>
+                <span style="font-size:10px;color:#64748b;display:block;margin-top:3px;">
+                    ${c.appliesTo === '1on1' ? '👑 1-on-1' : '👥 Group'} · 
+                    ${c.type === 'flat' ? '₹' + c.value + ' off' : c.value + '% off'}
+                    ${c.validUntil ? ' · Expires: ' + new Date(c.validUntil).toLocaleDateString('en-IN') : ' · ♾️'}
+                </span>
             </div>
+            <button onclick="toggleGrantedCoupon('${currentManageStudentId}', '${c.id}', ${isGranted})" 
+                style="padding:6px 14px;font-size:11px;font-weight:800;border-radius:8px;border:none;cursor:pointer;font-family:inherit;flex-shrink:0;margin-left:8px;
+                ${isGranted ? 'background:#ef4444;color:white;' : 'background:#9333ea;color:white;'}">
+                ${isGranted ? '❌ Revoke' : '✅ Grant'}
+            </button>
         `;
+        listEl.appendChild(div);
     });
-    
-    innerHtml += `</div></div>`;
-    
-    // Create modal with proper ID and close handling
-    const modal = document.createElement('div');
-    modal.id = 'couponManageModal';
-    modal.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;';
-    modal.innerHTML = `<div style="background:white;border-radius:14px;padding:20px;max-width:480px;width:100%;max-height:90vh;overflow:hidden;">
-        ${innerHtml}
-        <button onclick="closeCouponModal()" style="width:100%;margin-top:12px;padding:10px;background:#e2e8f0;color:#334155;font-weight:700;border:none;border-radius:8px;cursor:pointer;">Close</button>
-    </div>`;
-    
-    // Click outside to close
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) closeCouponModal();
-    });
-    
-    document.body.appendChild(modal);
 }
 
-/* ✅ Proper close function */
 function closeCouponModal() {
-    const modal = document.getElementById('couponManageModal');
-    if (modal) modal.remove();
-    // Cleanup any lingering dark overlays
-    document.querySelectorAll('div[style*="rgba(0,0,0,0.7)"]').forEach(el => {
-        if (!el.id || el.id === 'couponManageModal') el.remove();
-    });
+    document.getElementById('couponManageModal').classList.remove('show');
+    document.body.style.overflow = '';
+    currentManageStudentId = null;
+    currentManageStudentName = '';
+    currentManageGranted = [];
+    currentManageAllCoupons = [];
 }
 
-/* ✅ toggleGrantedCoupon — auto sets couponAccess based on granted count */
 async function toggleGrantedCoupon(studentId, couponId, currentlyGranted) {
-    // Close old modal
-    closeCouponModal();
-    
     try {
         const studentRef = db.collection('students').doc(studentId);
         const studentDoc = await studentRef.get();
@@ -1507,7 +1496,6 @@ async function toggleGrantedCoupon(studentId, couponId, currentlyGranted) {
             }
         }
         
-        // ✅ AUTO: couponAccess = true if student has >= 1 granted coupon, else false
         await studentRef.update({ 
             grantedCoupons: granted,
             couponAccess: granted.length > 0,
@@ -1515,10 +1503,10 @@ async function toggleGrantedCoupon(studentId, couponId, currentlyGranted) {
             couponAccessUpdatedBy: ADMIN_EMAIL
         });
         
-        alert(currentlyGranted ? '✅ Coupon revoked!' : '✅ Coupon granted!');
-        
-        // Refresh student list
+        currentManageGranted = granted;
         loadStudents();
+        renderManageCoupons();
+        showCopiedToast(currentlyGranted ? '❌ Revoked' : '✅ Granted');
     } catch (err) { alert('Error: ' + err.message); }
 }
 
@@ -1526,26 +1514,20 @@ async function deleteStudent(id, name) {
     if (!confirm(`⚠️ DELETE ${name}?\n\nThis will permanently delete:\n• Student record\n• All activity logs\n• All purchase history\n• All granted coupons`)) return;
     if (!confirm(`⚠️ FINAL CONFIRMATION\n\nAre you sure? This CANNOT be undone!`)) return;
     try {
-        // Delete student record
         await db.collection('students').doc(id).delete();
-        
-        // Delete all activity logs
         const logsSnap = await db.collection('logs').where('studentId', '==', id).get();
         const batch1 = db.batch();
         logsSnap.forEach(doc => batch1.delete(doc.ref));
         await batch1.commit();
-        
-        // Delete all purchase history
         const purchasesSnap = await db.collection('purchases').where('studentId', '==', id).get();
         const batch2 = db.batch();
         purchasesSnap.forEach(doc => batch2.delete(doc.ref));
         await batch2.commit();
-        
         alert('🗑️ Student, logs, and all purchase history deleted permanently.');
     } catch (err) { alert('Error: ' + err.message); }
 }
 
-/* ============ ACTIVITY LOG MODAL ============ */
+/* ============ ACTIVITY LOGS ============ */
 async function viewActivity(studentId, studentName) {
     document.getElementById('activityStudentName').textContent = studentName;
     document.getElementById('activityContent').innerHTML = '<p class="text-center text-slate-500 py-4">Loading...</p>';
@@ -1609,7 +1591,6 @@ async function deleteLog(id) {
     } catch (err) { alert('Error: ' + err.message); }
 }
 
-/* ============ ALL LOGS ============ */
 function loadLogs() {
     const limit = Number(document.getElementById('logFilter').value) || 100;
     db.collection('logs').orderBy('timestamp', 'desc').limit(limit).onSnapshot(snap => {
@@ -1655,10 +1636,8 @@ let previewInterval = null;
 function togglePreview() {
     const panel = document.getElementById('previewPanel');
     const toggleBtn = document.getElementById('previewToggleBtn');
-    
-    if (panel.classList.contains('show')) {
-        closePreview();
-    } else {
+    if (panel.classList.contains('show')) { closePreview(); }
+    else {
         panel.classList.add('show');
         toggleBtn.classList.add('hidden');
         refreshPreview();
@@ -1707,7 +1686,6 @@ function formatPreviewDuration(ms) {
 
 function refreshPreview() {
     const v = getCurrentFormValues();
-    
     document.getElementById('pvReg').textContent = v.singleRegular.toLocaleString('en-IN');
     document.getElementById('pvSpec').textContent = v.singleSpecial.toLocaleString('en-IN');
 
@@ -1725,78 +1703,38 @@ function refreshPreview() {
     }
 
     const contentEl = document.getElementById('previewContent');
-    
     const plan8Regular = v.singleRegular * 8;
     const plan16Regular = v.singleRegular * 16;
     const plan24Regular = v.singleRegular * 24;
     const plan32Regular = v.singleRegular * 32;
-
     const group2NewTotal = v.groupAdmission + v.group2d;
     const group3NewTotal = v.groupAdmission + v.group3d;
 
     contentEl.innerHTML = `
         <div class="preview-plan-table">
             <div class="preview-plan-header">👑 1-on-1 Adults</div>
-            <div class="preview-row">
-                <span class="pr-name">Single Class</span>
-                <span class="pr-price">${money(v.singleSpecial)}<span class="pr-old">${money(v.singleRegular)}</span></span>
-            </div>
-            <div class="preview-row">
-                <span class="pr-name">8 Days</span>
-                <span class="pr-price">${money(v.price8)}<span class="pr-old">${money(plan8Regular)}</span></span>
-            </div>
-            <div class="preview-row">
-                <span class="pr-name">16 Days</span>
-                <span class="pr-price">${money(v.price16)}<span class="pr-old">${money(plan16Regular)}</span></span>
-            </div>
-            <div class="preview-row">
-                <span class="pr-name">24 Days</span>
-                <span class="pr-price">${money(v.price24)}<span class="pr-old">${money(plan24Regular)}</span></span>
-            </div>
-            <div class="preview-row">
-                <span class="pr-name">32 Days</span>
-                <span class="pr-price">${money(v.price32)}<span class="pr-old">${money(plan32Regular)}</span></span>
-            </div>
+            <div class="preview-row"><span class="pr-name">Single Class</span><span class="pr-price">${money(v.singleSpecial)}<span class="pr-old">${money(v.singleRegular)}</span></span></div>
+            <div class="preview-row"><span class="pr-name">8 Days</span><span class="pr-price">${money(v.price8)}<span class="pr-old">${money(plan8Regular)}</span></span></div>
+            <div class="preview-row"><span class="pr-name">16 Days</span><span class="pr-price">${money(v.price16)}<span class="pr-old">${money(plan16Regular)}</span></span></div>
+            <div class="preview-row"><span class="pr-name">24 Days</span><span class="pr-price">${money(v.price24)}<span class="pr-old">${money(plan24Regular)}</span></span></div>
+            <div class="preview-row"><span class="pr-name">32 Days</span><span class="pr-price">${money(v.price32)}<span class="pr-old">${money(plan32Regular)}</span></span></div>
         </div>
-
         <div class="preview-plan-table">
             <div class="preview-plan-header orange">👥 Group — 🆕 New Students</div>
-            <div class="preview-row">
-                <span class="pr-name">2 Days/Week</span>
-                <span class="pr-price">${money(group2NewTotal)}<span class="pr-old">Adm ${money(v.groupAdmission)} + ${money(v.group2d)}</span></span>
-            </div>
-            <div class="preview-row">
-                <span class="pr-name">3 Days/Week</span>
-                <span class="pr-price">${money(group3NewTotal)}<span class="pr-old">Adm ${money(v.groupAdmission)} + ${money(v.group3d)}</span></span>
-            </div>
+            <div class="preview-row"><span class="pr-name">2 Days/Week</span><span class="pr-price">${money(group2NewTotal)}<span class="pr-old">Adm ${money(v.groupAdmission)} + ${money(v.group2d)}</span></span></div>
+            <div class="preview-row"><span class="pr-name">3 Days/Week</span><span class="pr-price">${money(group3NewTotal)}<span class="pr-old">Adm ${money(v.groupAdmission)} + ${money(v.group3d)}</span></span></div>
         </div>
-
         <div class="preview-plan-table">
             <div class="preview-plan-header green">♻️ Group — Existing Students</div>
-            <div class="preview-row">
-                <span class="pr-name">2 Days/Week</span>
-                <span class="pr-price">${money(v.group2d)}<span class="pr-old">Monthly Fee</span></span>
-            </div>
-            <div class="preview-row">
-                <span class="pr-name">3 Days/Week</span>
-                <span class="pr-price">${money(v.group3d)}<span class="pr-old">Monthly Fee</span></span>
-            </div>
+            <div class="preview-row"><span class="pr-name">2 Days/Week</span><span class="pr-price">${money(v.group2d)}<span class="pr-old">Monthly Fee</span></span></div>
+            <div class="preview-row"><span class="pr-name">3 Days/Week</span><span class="pr-price">${money(v.group3d)}<span class="pr-old">Monthly Fee</span></span></div>
         </div>
-
-        <div style="text-align: center; font-size: 9px; color: #94a3b8; margin-top: 8px; font-weight: 600;">
-            ⚡ Live preview — form values (before save)
-        </div>
+        <div style="text-align: center; font-size: 9px; color: #94a3b8; margin-top: 8px; font-weight: 600;">⚡ Live preview — form values (before save)</div>
     `;
 }
 
 function attachPreviewListeners() {
-    const inputIds = [
-        'cfgSingleRegular', 'cfgSingleSpecial',
-        'cfgPrice8', 'cfgPrice16', 'cfgPrice24', 'cfgPrice32',
-        'cfgGroup2d', 'cfgGroup3d', 'cfgGroupAdmission',
-        'offerActive', 'offerEndDateTime', 'offerTitle', 'offerDescription'
-    ];
-    
+    const inputIds = ['cfgSingleRegular', 'cfgSingleSpecial', 'cfgPrice8', 'cfgPrice16', 'cfgPrice24', 'cfgPrice32', 'cfgGroup2d', 'cfgGroup3d', 'cfgGroupAdmission', 'offerActive', 'offerEndDateTime', 'offerTitle', 'offerDescription'];
     inputIds.forEach(id => {
         const el = document.getElementById(id);
         if (el && !el.dataset.previewBound) {
@@ -1807,7 +1745,6 @@ function attachPreviewListeners() {
     });
 }
 
-// Auto-attach listeners once panel loads
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(attachPreviewListeners, 1000);
 });
