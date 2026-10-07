@@ -20,7 +20,6 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     .fade-in { animation: fadeIn 0.3s ease-in; }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    @keyframes pulseGlow { 0%,100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.5); } 50% { box-shadow: 0 0 0 8px rgba(245,158,11,0); } }
     @keyframes modalPop { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
     .modal-pop { animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
     @keyframes badgePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
@@ -83,7 +82,6 @@
         box-shadow: 0 8px 20px rgba(245,158,11,0.4);
     }
 
-    /* ═══════════════ PLAN COLOUR THEMES ═══════════════ */
     .plan-row {
         background: #fff;
         border: 2px solid #e2e8f0;
@@ -107,41 +105,35 @@
         box-shadow: 0 3px 10px rgba(0,0,0,0.15);
     }
 
-    /* 👑 1-on-1 ADULT — ROYAL BLUE */
     .theme-adult-1on1 { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #3b82f6 !important; }
     .theme-adult-1on1:hover { border-color: #1d4ed8 !important; background: linear-gradient(135deg, #dbeafe, #bfdbfe); box-shadow: 0 6px 20px rgba(29, 78, 216, 0.25) !important; }
     .theme-adult-1on1 .plan-days-text { color: #1e40af; }
     .theme-adult-1on1 .plan-price-main { color: #1d4ed8; }
     .theme-adult-1on1 .plan-icon-badge { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
 
-    /* 👶 1-on-1 KIDS — PINK/ROSE */
     .theme-kids-1on1 { background: linear-gradient(135deg, #fdf2f8, #fce7f3); border-color: #ec4899 !important; }
     .theme-kids-1on1:hover { border-color: #db2777 !important; background: linear-gradient(135deg, #fce7f3, #fbcfe8); box-shadow: 0 6px 20px rgba(219, 39, 119, 0.25) !important; }
     .theme-kids-1on1 .plan-days-text { color: #be185d; }
     .theme-kids-1on1 .plan-price-main { color: #db2777; }
     .theme-kids-1on1 .plan-icon-badge { background: linear-gradient(135deg, #ec4899, #db2777); }
 
-    /* 👥 GROUP ADULT — EMERALD GREEN */
     .theme-adult-group { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-color: #10b981 !important; }
     .theme-adult-group:hover { border-color: #059669 !important; background: linear-gradient(135deg, #dcfce7, #bbf7d0); box-shadow: 0 6px 20px rgba(5, 150, 105, 0.25) !important; }
     .theme-adult-group .plan-days-text { color: #047857; }
     .theme-adult-group .plan-price-main { color: #059669; }
     .theme-adult-group .plan-icon-badge { background: linear-gradient(135deg, #10b981, #059669); }
 
-    /* 🧸 GROUP KIDS — PURPLE/VIOLET */
     .theme-kids-group { background: linear-gradient(135deg, #faf5ff, #f3e8ff); border-color: #a855f7 !important; }
     .theme-kids-group:hover { border-color: #9333ea !important; background: linear-gradient(135deg, #f3e8ff, #e9d5ff); box-shadow: 0 6px 20px rgba(147, 51, 234, 0.25) !important; }
     .theme-kids-group .plan-days-text { color: #7e22ce; }
     .theme-kids-group .plan-price-main { color: #9333ea; }
     .theme-kids-group .plan-icon-badge { background: linear-gradient(135deg, #a855f7, #9333ea); }
 
-    /* Section headers */
     .section-header-adult-1on1 { background: linear-gradient(90deg, #1d4ed8, #1e40af); }
     .section-header-kids-1on1 { background: linear-gradient(90deg, #db2777, #be185d); }
     .section-header-adult-group { background: linear-gradient(90deg, #059669, #047857); }
     .section-header-kids-group { background: linear-gradient(90deg, #9333ea, #7e22ce); }
 
-    /* ═══════════════ TELECOM-STYLE VALUE BADGES ═══════════════ */
     .value-badge {
         display: inline-flex;
         align-items: center;
@@ -155,8 +147,6 @@
         box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         white-space: nowrap;
     }
-
-    .badge-best-value { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; animation: badgePulse 1.8s ease-in-out infinite; }
     .badge-most-popular { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; }
     .badge-longest { background: linear-gradient(135deg, #ec4899, #db2777); color: #fff; }
 
@@ -168,22 +158,8 @@
         margin-top: 8px;
         text-align: center;
     }
-
-    .savings-meter .sm-pct {
-        font-size: 20px;
-        font-weight: 900;
-        color: #ea580c;
-        line-height: 1;
-    }
-
-    .savings-meter .sm-label {
-        font-size: 10px;
-        font-weight: 800;
-        color: #92400e;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-top: 2px;
-    }
+    .savings-meter .sm-pct { font-size: 20px; font-weight: 900; color: #ea580c; line-height: 1; }
+    .savings-meter .sm-label { font-size: 10px; font-weight: 800; color: #92400e; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
 
     .length-tip {
         background: linear-gradient(135deg, #ecfdf5, #d1fae5);
@@ -223,7 +199,7 @@
         <div class="bg-gradient-to-r from-blue-700 to-blue-900 p-6 text-center">
             <img src="logo.png" alt="English Spur" class="brand-logo mx-auto mb-2 bg-white rounded-full p-1.5" onerror="this.style.display='none'">
             <h2 class="text-xl font-black text-white">Welcome to English Spur!</h2>
-            <p class="text-blue-100 text-xs mt-1">Learn English. Speak Confidently.</p>
+            <p class="text-blue-100 text-xs mt-1">Learn English. Speak Confident.</p>
         </div>
         <div class="p-5 space-y-3">
             <button onclick="showScreen('newStudent')" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black p-4 rounded-xl transition shadow-md text-sm flex items-center justify-between">
@@ -349,9 +325,7 @@
         </div>
     </div>
 
-    <!-- VIEW: CURRENT PLAN (DASHBOARD HOME) — LEARNING FOCUSED -->
     <div id="viewCurrentPlan">
-        <!-- Big Explore CTA -->
         <div class="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-2xl shadow-xl p-6 mb-4 text-white relative overflow-hidden">
             <div class="absolute top-0 right-0 w-40 h-40 rounded-full bg-white/10 -mr-12 -mt-12"></div>
             <div class="absolute bottom-0 left-0 w-28 h-28 rounded-full bg-white/5 -ml-10 -mb-10"></div>
@@ -374,7 +348,6 @@
             </div>
         </div>
 
-        <!-- Telecom-style Value Section -->
         <div class="bg-white rounded-2xl shadow-xl p-5 mb-4 border-2 border-amber-200">
             <div class="flex items-center gap-2 mb-3">
                 <span class="text-2xl">💎</span>
@@ -426,7 +399,6 @@
             </button>
         </div>
 
-        <!-- Help Card -->
         <div class="bg-white rounded-2xl shadow-lg p-5 text-center border border-slate-100">
             <p class="text-3xl mb-2">💬</p>
             <p class="text-sm text-slate-700 font-bold mb-1">Have a question about plans?</p>
@@ -437,7 +409,6 @@
         </div>
     </div>
 
-    <!-- VIEW: EXPLORE PLANS -->
     <div id="viewExplorePlans" class="hidden">
         <div class="bg-white rounded-2xl shadow-xl p-3 mb-3 flex items-center gap-2">
             <button onclick="showCurrentPlanView()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-3 py-2 rounded-lg text-xs">← Back</button>
@@ -491,10 +462,8 @@
         </div>
     </div>
 
-    <!-- VIEW: PAYMENT -->
     <div id="view-payment" class="hidden">
         <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-5">
-
             <div class="flex items-center justify-center gap-0.5 sm:gap-1 mb-5 overflow-x-auto pb-2">
                 <div class="flex items-center gap-1 flex-shrink-0">
                     <div id="stepDot1Circle" class="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-blue-700 text-white flex items-center justify-center font-black text-[10px] sm:text-xs shadow transition-all">1</div>
@@ -522,7 +491,6 @@
                 </div>
             </div>
 
-            <!-- STAGE 1 -->
             <div id="payStep1">
                 <div class="text-center mb-4">
                     <div class="text-5xl mb-2">💳</div>
@@ -572,7 +540,6 @@
                 </button>
             </div>
 
-            <!-- STAGE 2 -->
             <div id="payStep2" class="hidden">
                 <div class="text-center mb-5">
                     <div class="text-5xl mb-2">📱</div>
@@ -618,7 +585,6 @@
                 </div>
             </div>
 
-            <!-- STAGE 3 -->
             <div id="payStep3" class="hidden">
                 <div class="text-center mb-5">
                     <div class="text-5xl mb-2">📸</div>
@@ -653,7 +619,6 @@
                 </div>
             </div>
 
-            <!-- STAGE 4 -->
             <div id="payStep4" class="hidden">
                 <div class="text-center mb-5">
                     <div class="text-5xl mb-2">🎯</div>
@@ -701,7 +666,6 @@
                 </div>
             </div>
 
-            <!-- STAGE 5 -->
             <div id="thankYouBox" class="hidden mt-4">
                 <div class="text-center mb-5">
                     <div class="mx-auto w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center shadow-2xl" style="background: #15803d; box-shadow: 0 0 0 8px rgba(21,128,61,0.2), 0 10px 30px rgba(21,128,61,0.5);">
@@ -749,7 +713,6 @@
         </div>
     </div>
 
-    <!-- VIEW: HISTORY -->
     <div id="view-history" class="hidden">
         <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-5">
             <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
@@ -779,16 +742,13 @@
 
 </div>
 
-<!-- ═══════════════ PLAN CHECKOUT MODAL ═══════════════ -->
+<!-- PLAN CHECKOUT MODAL -->
 <div id="planCheckoutModal" class="fixed inset-0 z-[9999] hidden overflow-y-auto" style="background: rgba(15,23,42,0.85); backdrop-filter: blur(6px);">
     <div class="min-h-screen flex items-start sm:items-center justify-center p-3 sm:p-5">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg my-auto overflow-hidden modal-pop">
-
             <div id="checkoutModalHeader" class="bg-gradient-to-r from-blue-700 to-blue-900 p-4 flex justify-between items-center">
                 <div class="flex items-center gap-3 min-w-0">
-                    <div id="checkoutModalIcon" class="w-11 h-11 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center text-2xl flex-shrink-0">
-                        👑
-                    </div>
+                    <div id="checkoutModalIcon" class="w-11 h-11 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center text-2xl flex-shrink-0">👑</div>
                     <div class="min-w-0">
                         <p class="text-white font-black text-sm sm:text-base uppercase tracking-wide">Confirm Your Plan</p>
                         <p id="checkoutModalSubtitle" class="text-blue-100 text-[10px] sm:text-xs font-semibold truncate">Please review before payment</p>
@@ -798,16 +758,13 @@
             </div>
 
             <div class="p-4 sm:p-5 max-h-[70vh] overflow-y-auto">
-
                 <div id="checkoutPlanCard" class="rounded-2xl border-2 p-4 mb-4"></div>
 
                 <div id="checkoutCouponSection" class="mb-4 hidden">
                     <div class="flex items-center justify-between mb-2">
                         <p class="text-[11px] font-black text-purple-800 uppercase tracking-wider">🎟️ Apply Coupon <span id="checkoutCouponLimit" class="text-slate-500 font-semibold normal-case"></span></p>
                     </div>
-
                     <div id="checkoutAvailableCoupons" class="space-y-2 mb-3"></div>
-
                     <details class="bg-amber-50 border border-amber-200 rounded-lg">
                         <summary class="text-[10px] font-bold text-amber-900 cursor-pointer select-none p-2.5">✏️ Have a coupon code? Enter manually</summary>
                         <div class="p-2.5 pt-0">
@@ -817,12 +774,10 @@
                             </div>
                         </div>
                     </details>
-
                     <div id="checkoutAppliedCoupons" class="space-y-1.5 mt-2"></div>
                 </div>
 
                 <div id="checkoutSavingsBox" class="hidden mb-4"></div>
-
                 <div id="checkoutOfferForYou" class="hidden mb-4"></div>
 
                 <div class="bg-slate-50 rounded-2xl border-2 border-slate-200 p-4 mb-4">
@@ -838,7 +793,6 @@
                         <li>Submit to admin for approval</li>
                     </ul>
                 </div>
-
             </div>
 
             <div class="p-4 border-t-2 border-slate-100 bg-slate-50 flex flex-col sm:flex-row gap-2">
@@ -849,7 +803,6 @@
                     💳 Proceed to Payment →
                 </button>
             </div>
-
         </div>
     </div>
 </div>
@@ -929,7 +882,7 @@
 
 <script>
 /* ============ FIREBASE ============ */
-const firebaseConfig = {
+var firebaseConfig = {
   apiKey: "AIzaSyBAmO9v4NOOSSuM59yXY8JppFJzrZUGADM",
   authDomain: "es-tariff.firebaseapp.com",
   projectId: "es-tariff",
@@ -938,68 +891,67 @@ const firebaseConfig = {
   appId: "1:113483091618:web:1bb7cfb608ba85382011fb"
 };
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+var db = firebase.firestore();
 
 /* ============ CONSTANTS ============ */
-const PHONE = '919875340842';
-const UPI_ID = 'sovankapri-1@okhdfcbank';
-const STORAGE_KEY = 'englishSpurStudent';
-const PLAN_KEY = 'englishSpurSelectedPlan';
-const COUPON_KEY = 'englishSpurAppliedCoupons';
-const LOGOUT_FLAG = 'englishSpurLoggedOut';
-const MAX_COUPONS = 3;
+var PHONE = '919875340842';
+var UPI_ID = 'sovankapri-1@okhdfcbank';
+var STORAGE_KEY = 'englishSpurStudent';
+var PLAN_KEY = 'englishSpurSelectedPlan';
+var COUPON_KEY = 'englishSpurAppliedCoupons';
+var LOGOUT_FLAG = 'englishSpurLoggedOut';
+var MAX_COUPONS = 3;
 
 /* ============ STATE ============ */
-let offerConfig = null;
-let pricing = {
+var offerConfig = null;
+var pricing = {
     oneOnOneRegular: 500, oneOnOneDiscounted: 350, oneOnOneSpecial: 250,
     groupAdmissionRegular: 2500, groupAdmissionDiscounted: 2000, groupAdmissionSpecial: 1500,
-    groupRateRegular: 200, groupRateDiscounted: 180, groupRateSpecial: 170,
-    singleRegular: 500, singleSpecial: 250, groupAdmission: 2500
+    groupRateRegular: 200, groupRateDiscounted: 180, groupRateSpecial: 170
 };
-let dynamicCategories = { oneOnOne: {}, group: {} };
-let currentTab = 'all';
-let coupons = {};
-let offerDeadline = 0;
-let timerInterval = null;
-let offerExpiredHandled = false;
-let showAllCourses = false;
+var dynamicCategories = { oneOnOne: {}, group: {} };
+var currentTab = 'all';
+var coupons = {};
+var offerDeadline = 0;
+var timerInterval = null;
+var offerExpiredHandled = false;
+var showAllCourses = false;
 
-let currentStudent = null;
-let isExistingStudent = false;
-let selectedPlan = null;
-let appliedCoupons = [];
-let pendingCouponCodes = [];
-let screenshotBase64 = null;
-let currentPayStep = 1;
-let payDoneChecked = false;
-let payMethodSelected = '';
-let screenshotCheckChecked = false;
-let seenOrderIds = new Set();
-let currentPlanData = null;
-let ordersUnsubscribe = null;
-let studentUnsubscribe = null;
-let isLoggingOut = false;
-let studentListenerActive = false;
-let purchasedPlansCount = 0;
+var currentStudent = null;
+var isExistingStudent = false;
+var selectedPlan = null;
+var appliedCoupons = [];
+var screenshotBase64 = null;
+var currentPayStep = 1;
+var payDoneChecked = false;
+var payMethodSelected = '';
+var screenshotCheckChecked = false;
+var seenOrderIds = {};
+var currentPlanData = null;
+var ordersUnsubscribe = null;
+var studentUnsubscribe = null;
+var isLoggingOut = false;
+var studentListenerActive = false;
+var purchasedPlansCount = 0;
 
-let reuploadOrderId = null;
-let reuploadOrderRef = null;
-let reuploadScreenshotBase64 = null;
-let reuploadMethodSelected = '';
+var reuploadOrderId = null;
+var reuploadOrderRef = null;
+var reuploadScreenshotBase64 = null;
+var reuploadMethodSelected = '';
 
 /* ============ HELPERS ============ */
-const money = n => '₹' + Number(n).toLocaleString('en-IN');
+function money(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
+function pad2(n) { return String(n).padStart(2, '0'); }
 
 function cleanPlanName(name) {
     if (!name) return '';
-    return String(name).replace(/[\u{1F000}-\u{1FFFF}]/gu, '').replace(/[\u{2600}-\u{27BF}]/gu, '').replace(/[\u{2190}-\u{21FF}]/gu, '').replace(/[\u{FE00}-\u{FE0F}]/gu, '').replace(/[👑👶👥🧸📘🎟️⏰⚡🎉💬📞📸🚀✅❌⚠️🔒🔄🙏🔍🏦💳🎯💠💜💙🇮🇳🅰️🌟💎🔥]/g, '').replace(/\s+/g, ' ').trim();
+    return String(name).replace(/\s+/g, ' ').trim();
 }
 
 function formatFullTimestamp(ts) {
     if (!ts) return '—';
     try {
-        const d = ts.toDate ? ts.toDate() : new Date(ts);
+        var d = ts.toDate ? ts.toDate() : new Date(ts);
         if (isNaN(d.getTime())) return '—';
         return d.toLocaleString('en-IN', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
     } catch (e) { return '—'; }
@@ -1008,7 +960,7 @@ function formatFullTimestamp(ts) {
 function formatDateOnly(ts) {
     if (!ts) return '—';
     try {
-        const d = ts.toDate ? ts.toDate() : new Date(ts);
+        var d = ts.toDate ? ts.toDate() : new Date(ts);
         if (isNaN(d.getTime())) return '—';
         return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' });
     } catch (e) { return '—'; }
@@ -1017,39 +969,39 @@ function formatDateOnly(ts) {
 function hasCouponAccess() { return currentStudent && currentStudent.couponAccess === true; }
 function getGrantedCouponIds() {
     if (!currentStudent || !currentStudent.grantedCoupons) return [];
-    return currentStudent.grantedCoupons.map(g => g.id);
+    return currentStudent.grantedCoupons.map(function(g) { return g.id; });
 }
 function getGrantedCouponCodes() {
     if (!currentStudent || !currentStudent.grantedCoupons) return [];
-    return currentStudent.grantedCoupons.map(g => (g.code || '').toUpperCase());
+    return currentStudent.grantedCoupons.map(function(g) { return (g.code || '').toUpperCase(); });
 }
 function isCouponGrantedToStudent(code) {
     if (!code) return false;
-    return getGrantedCouponCodes().includes(code.toUpperCase());
+    return getGrantedCouponCodes().indexOf(code.toUpperCase()) !== -1;
 }
 function allowMultipleCoupons() { return currentStudent && currentStudent.allowMultipleCoupons === true; }
 
 function updateRegMobileCounter() {
-    const input = document.getElementById('regMobile');
-    const counter = document.getElementById('regMobileCounter');
+    var input = document.getElementById('regMobile');
+    var counter = document.getElementById('regMobileCounter');
     if (counter && input) {
-        const len = input.value.length;
+        var len = input.value.length;
         counter.textContent = len + '/10';
         counter.className = len === 10 ? 'text-[9px] text-green-600 font-bold' : 'text-[9px] text-slate-400 font-bold';
     }
 }
 
 function showToast(message, type) {
-    const existing = document.querySelector('.toast');
+    var existing = document.querySelector('.toast');
     if (existing) existing.remove();
-    const toast = document.createElement('div');
+    var toast = document.createElement('div');
     toast.className = 'toast ' + (type || 'success');
     toast.textContent = message;
     document.body.appendChild(toast);
-    setTimeout(() => {
+    setTimeout(function() {
         toast.style.transition = 'opacity 0.3s';
         toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 300);
+        setTimeout(function() { toast.remove(); }, 300);
     }, 2500);
 }
 
@@ -1057,11 +1009,11 @@ function saveSelectedPlan() {
     try {
         if (selectedPlan) localStorage.setItem(PLAN_KEY, JSON.stringify(selectedPlan));
         else localStorage.removeItem(PLAN_KEY);
-        if (appliedCoupons.length > 0) localStorage.setItem(COUPON_KEY, JSON.stringify(appliedCoupons.map(c => c.code)));
+        if (appliedCoupons.length > 0) localStorage.setItem(COUPON_KEY, JSON.stringify(appliedCoupons.map(function(c) { return c.code; })));
         else localStorage.removeItem(COUPON_KEY);
     } catch (e) {}
 }
-function loadStudentFromStorage() { try { const d = localStorage.getItem(STORAGE_KEY); return d ? JSON.parse(d) : null; } catch (e) { return null; } }
+function loadStudentFromStorage() { try { var d = localStorage.getItem(STORAGE_KEY); return d ? JSON.parse(d) : null; } catch (e) { return null; } }
 function saveStudentToStorage(s) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch (e) {} }
 
 function generateStudentIdFromMobile(countryCode, mobileNumber) {
@@ -1070,11 +1022,11 @@ function generateStudentIdFromMobile(countryCode, mobileNumber) {
 
 /* ============ SCREEN NAVIGATION ============ */
 function showScreen(name) {
-    ['Welcome', 'NewStudent', 'OldStudent', 'Dashboard'].forEach(s => {
-        const el = document.getElementById('screen' + s);
+    ['Welcome', 'NewStudent', 'OldStudent', 'Dashboard'].forEach(function(s) {
+        var el = document.getElementById('screen' + s);
         if (el) el.classList.add('hidden');
     });
-    const target = document.getElementById('screen' + name.charAt(0).toUpperCase() + name.slice(1));
+    var target = document.getElementById('screen' + name.charAt(0).toUpperCase() + name.slice(1));
     if (target) {
         target.classList.remove('hidden');
         target.classList.add('fade-in');
@@ -1083,12 +1035,12 @@ function showScreen(name) {
 }
 
 function showView(v) {
-    ['viewCurrentPlan', 'viewExplorePlans', 'view-checkout', 'view-payment', 'view-history'].forEach(id => {
-        const el = document.getElementById(id);
+    ['viewCurrentPlan', 'viewExplorePlans', 'view-checkout', 'view-payment', 'view-history'].forEach(function(id) {
+        var el = document.getElementById(id);
         if (el) el.classList.add('hidden');
     });
 
-    let target = null;
+    var target = null;
     if (v === 'currentPlan') target = document.getElementById('viewCurrentPlan');
     else if (v === 'explorePlans') target = document.getElementById('viewExplorePlans');
     else target = document.getElementById('view-' + v);
@@ -1104,9 +1056,9 @@ function showView(v) {
         updateCourseFilterBanner();
     }
     if (v === 'currentPlan') {
-        const hBadge = document.getElementById('historyBadge');
+        var hBadge = document.getElementById('historyBadge');
         if (hBadge) hBadge.classList.add('hidden');
-        const aBadge = document.getElementById('actionBadge');
+        var aBadge = document.getElementById('actionBadge');
         if (aBadge) aBadge.classList.add('hidden');
     }
 
@@ -1115,15 +1067,31 @@ function showView(v) {
 
 function showCurrentPlanView() { showView('currentPlan'); }
 function showExplorePlans() {
-    const modal = document.getElementById('planCheckoutModal');
+    var modal = document.getElementById('planCheckoutModal');
     if (modal) modal.classList.add('hidden');
     document.body.style.overflow = '';
     showView('explorePlans');
 }
 
+/* ============ TAB SWITCHER — MUST BE DEFINED BEFORE USE ============ */
+function switchTab(tab) {
+    currentTab = tab;
+    var tabs = ['all', '1on1-adult', '1on1-kids', 'group'];
+    tabs.forEach(function(t) {
+        var btn = document.getElementById('tab-' + t);
+        if (!btn) return;
+        if (t === tab) {
+            btn.className = 'text-[10px] sm:text-[11px] font-bold py-2.5 px-1.5 rounded-lg tab-active';
+        } else {
+            btn.className = 'text-[10px] sm:text-[11px] font-bold py-2.5 px-1.5 rounded-lg tab-inactive hover:bg-slate-300';
+        }
+    });
+    renderDynamicPlans();
+}
+
 /* ============ INIT ============ */
-window.addEventListener('DOMContentLoaded', () => {
-    let wasLoggedOut = false;
+window.addEventListener('DOMContentLoaded', function() {
+    var wasLoggedOut = false;
     try { wasLoggedOut = localStorage.getItem(LOGOUT_FLAG) === '1'; } catch (e) {}
 
     if (wasLoggedOut) {
@@ -1156,15 +1124,15 @@ window.addEventListener('DOMContentLoaded', () => {
 async function checkBlockedAndEnter() {
     if (isLoggingOut) return;
     try {
-        const doc = await db.collection('students').doc(currentStudent.id).get();
+        var doc = await db.collection('students').doc(currentStudent.id).get();
         if (doc.exists) {
-            const data = doc.data();
+            var data = doc.data();
             if (data.blocked === true) {
                 document.getElementById('blockedScreen').classList.remove('hidden');
                 showScreen('welcome');
                 return;
             }
-            currentStudent = { ...currentStudent, ...data };
+            currentStudent = Object.assign({}, currentStudent, data);
             saveStudentToStorage(currentStudent);
         }
         enterDashboard();
@@ -1193,24 +1161,24 @@ function updateStudentInfo() {
 }
 
 function updateStudentBadges() {
-    const badges = document.getElementById('studentBadges');
+    var badges = document.getElementById('studentBadges');
     if (!badges) return;
     badges.innerHTML = '';
-    const code = currentStudent.studentCode || currentStudent.studentId;
-    if (code) badges.innerHTML += `<span class="bg-indigo-100 text-indigo-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🏷️ ${code}</span>`;
-    if (currentStudent.courseEnrolled) badges.innerHTML += `<span class="bg-blue-100 text-blue-800 text-[9px] font-bold px-2 py-0.5 rounded-full">📚 ${currentStudent.courseEnrolled}</span>`;
-    if (currentStudent.couponAccess) badges.innerHTML += `<span class="bg-purple-100 text-purple-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ Coupon</span>`;
-    if (currentStudent.allowMultipleCoupons) badges.innerHTML += `<span class="bg-fuchsia-100 text-fuchsia-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ Multi</span>`;
-    badges.innerHTML += `<span class="bg-green-100 text-green-800 text-[9px] font-bold px-2 py-0.5 rounded-full">✅ Active</span>`;
+    var code = currentStudent.studentCode || currentStudent.studentId;
+    if (code) badges.innerHTML += '<span class="bg-indigo-100 text-indigo-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🏷️ ' + code + '</span>';
+    if (currentStudent.courseEnrolled) badges.innerHTML += '<span class="bg-blue-100 text-blue-800 text-[9px] font-bold px-2 py-0.5 rounded-full">📚 ' + currentStudent.courseEnrolled + '</span>';
+    if (currentStudent.couponAccess) badges.innerHTML += '<span class="bg-purple-100 text-purple-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ Coupon</span>';
+    if (currentStudent.allowMultipleCoupons) badges.innerHTML += '<span class="bg-fuchsia-100 text-fuchsia-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ Multi</span>';
+    badges.innerHTML += '<span class="bg-green-100 text-green-800 text-[9px] font-bold px-2 py-0.5 rounded-full">✅ Active</span>';
 }
 
 /* ============ REGISTER ============ */
 async function registerNewStudent() {
-    const name = document.getElementById('regName').value.trim().toUpperCase();
-    const countryCode = document.getElementById('regCountryCode').value;
-    const mobileNumber = document.getElementById('regMobile').value.trim();
-    const errEl = document.getElementById('regError');
-    const mobileErrEl = document.getElementById('regMobileError');
+    var name = document.getElementById('regName').value.trim().toUpperCase();
+    var countryCode = document.getElementById('regCountryCode').value;
+    var mobileNumber = document.getElementById('regMobile').value.trim();
+    var errEl = document.getElementById('regError');
+    var mobileErrEl = document.getElementById('regMobileError');
     errEl.classList.add('hidden');
     mobileErrEl.classList.add('hidden');
 
@@ -1223,19 +1191,19 @@ async function registerNewStudent() {
         return;
     }
 
-    const fullMobile = countryCode + ' ' + mobileNumber;
-    const uniqueId = generateStudentIdFromMobile(countryCode, mobileNumber);
+    var fullMobile = countryCode + ' ' + mobileNumber;
+    var uniqueId = generateStudentIdFromMobile(countryCode, mobileNumber);
 
     try {
-        const dup = await db.collection('students').where('mobile', '==', fullMobile).get();
+        var dup = await db.collection('students').where('mobile', '==', fullMobile).get();
         if (!dup.empty) {
             errEl.innerHTML = '❌ This number is already registered. <a href="#" onclick="showScreen(\'oldStudent\'); return false;" class="underline font-bold">Login instead</a>';
             errEl.classList.remove('hidden');
             return;
         }
 
-        const student = {
-            name, countryCode, mobileNumber, mobile: fullMobile, uniqueId,
+        var student = {
+            name: name, countryCode: countryCode, mobileNumber: mobileNumber, mobile: fullMobile, uniqueId: uniqueId,
             studentId: '', studentCode: '', trackId: 'TRK-' + mobileNumber,
             courseEnrolled: '', batchName: '',
             blocked: false, couponAccess: false, allowMultipleCoupons: false, grantedCoupons: [],
@@ -1244,8 +1212,8 @@ async function registerNewStudent() {
             lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
         };
 
-        const docRef = await db.collection('students').add(student);
-        currentStudent = { id: docRef.id, ...student };
+        var docRef = await db.collection('students').add(student);
+        currentStudent = Object.assign({ id: docRef.id }, student);
         isExistingStudent = false;
         saveStudentToStorage(currentStudent);
         logActivity('first_visit');
@@ -1259,13 +1227,13 @@ async function registerNewStudent() {
 
 /* ============ EXISTING LOGIN ============ */
 async function existingStudentLogin() {
-    const code = document.getElementById('loginCode').value.trim().toUpperCase();
-    const errEl = document.getElementById('loginError');
+    var code = document.getElementById('loginCode').value.trim().toUpperCase();
+    var errEl = document.getElementById('loginError');
     errEl.classList.add('hidden');
     if (!code) { errEl.textContent = '❌ Please enter your Student Code.'; errEl.classList.remove('hidden'); return; }
 
     try {
-        let snap = await db.collection('students').where('studentCode', '==', code).limit(1).get();
+        var snap = await db.collection('students').where('studentCode', '==', code).limit(1).get();
         if (snap.empty) snap = await db.collection('students').where('studentId', '==', code).limit(1).get();
         if (snap.empty) snap = await db.collection('students').where('uniqueId', '==', code).limit(1).get();
 
@@ -1274,14 +1242,14 @@ async function existingStudentLogin() {
             errEl.classList.remove('hidden');
             return;
         }
-        const doc = snap.docs[0];
-        const s = doc.data();
+        var doc = snap.docs[0];
+        var s = doc.data();
         if (s.blocked === true) {
             errEl.textContent = '🚫 Your account is blocked. Please contact the office.';
             errEl.classList.remove('hidden');
             return;
         }
-        currentStudent = { id: doc.id, ...s };
+        currentStudent = Object.assign({ id: doc.id }, s);
         isExistingStudent = true;
         await db.collection('students').doc(doc.id).update({
             loginCount: (s.loginCount || 0) + 1,
@@ -1302,13 +1270,13 @@ async function studentLogout() {
     if (!confirm('Logout?\n\nআপনি কি লগআউট করতে চান?')) return;
     isLoggingOut = true;
     try { localStorage.setItem(LOGOUT_FLAG, '1'); } catch (e) {}
-    const studentToLog = currentStudent ? { ...currentStudent } : null;
+    var studentToLog = currentStudent ? Object.assign({}, currentStudent) : null;
     showToast('🚪 Logging out...', 'info');
 
     currentStudent = null; isExistingStudent = false; selectedPlan = null;
-    appliedCoupons = []; pendingCouponCodes = [];
+    appliedCoupons = [];
     studentListenerActive = false; offerExpiredHandled = false;
-    seenOrderIds = new Set(); currentPlanData = null;
+    seenOrderIds = {}; currentPlanData = null;
 
     if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
     if (ordersUnsubscribe) { ordersUnsubscribe(); ordersUnsubscribe = null; }
@@ -1321,7 +1289,7 @@ async function studentLogout() {
     } catch (e) {}
 
     if (studentToLog) {
-        (async () => {
+        (async function() {
             try {
                 await db.collection('logs').add({
                     studentId: studentToLog.id, studentName: studentToLog.name,
@@ -1346,11 +1314,11 @@ function startStudentListener() {
     if (studentListenerActive || !currentStudent || isLoggingOut) return;
     studentListenerActive = true;
 
-    studentUnsubscribe = db.collection('students').doc(currentStudent.id).onSnapshot(doc => {
+    studentUnsubscribe = db.collection('students').doc(currentStudent.id).onSnapshot(function(doc) {
         if (isLoggingOut || !doc.exists) return;
-        const data = doc.data();
-        const wasBlocked = currentStudent.blocked === true;
-        currentStudent = { ...currentStudent, ...data };
+        var data = doc.data();
+        var wasBlocked = currentStudent.blocked === true;
+        currentStudent = Object.assign({}, currentStudent, data);
         saveStudentToStorage(currentStudent);
 
         if (data.blocked === true && !wasBlocked) {
@@ -1366,7 +1334,7 @@ function startStudentListener() {
         updateStudentBadges();
         updateCourseFilterBanner();
         renderDynamicPlans();
-    }, err => console.error('Listener error:', err));
+    }, function(err) { console.error('Listener error:', err); });
 }
 
 /* ============ ORDERS LISTENER ============ */
@@ -1376,29 +1344,28 @@ function startOrdersListener() {
 
     ordersUnsubscribe = db.collection('purchases')
         .where('studentId', '==', currentStudent.id)
-        .onSnapshot(snap => {
-            const orders = [];
-            snap.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
-            orders.sort((a, b) => {
-                const ta = a.createdAt ? a.createdAt.toDate().getTime() : 0;
-                const tb = b.createdAt ? b.createdAt.toDate().getTime() : 0;
+        .onSnapshot(function(snap) {
+            var orders = [];
+            snap.forEach(function(doc) { orders.push(Object.assign({ id: doc.id }, doc.data())); });
+            orders.sort(function(a, b) {
+                var ta = a.createdAt ? a.createdAt.toDate().getTime() : 0;
+                var tb = b.createdAt ? b.createdAt.toDate().getTime() : 0;
                 return tb - ta;
             });
             renderOrders(orders);
-            orders.forEach(o => {
-                if (o.status === 'approved' && !seenOrderIds.has(o.id)) {
-                    seenOrderIds.add(o.id);
+            orders.forEach(function(o) {
+                if (o.status === 'approved' && !seenOrderIds[o.id]) {
+                    seenOrderIds[o.id] = true;
                     showToast('🎉 Payment approved!', 'success');
                     loadCurrentPlan();
                 }
             });
-        }, err => console.warn('Orders listener failed:', err.message));
+        }, function(err) { console.warn('Orders listener failed:', err.message); });
 }
 
-/* ============ RENDER ORDERS (only for badges + history banner) ============ */
 function renderOrders(orders) {
-    const historyBanner = document.getElementById('historyPendingBanner');
-    const historyBannerMsg = document.getElementById('historyPendingMsg');
+    var historyBanner = document.getElementById('historyPendingBanner');
+    var historyBannerMsg = document.getElementById('historyPendingMsg');
 
     if (!orders || orders.length === 0) {
         if (historyBanner) historyBanner.classList.add('hidden');
@@ -1406,29 +1373,29 @@ function renderOrders(orders) {
         return;
     }
 
-    const pending = orders.filter(o => o.status === 'pending');
+    var pending = orders.filter(function(o) { return o.status === 'pending'; });
     if (pending.length > 0 && historyBanner) {
         historyBanner.classList.remove('hidden');
         historyBannerMsg.innerHTML = pending.length === 1
-            ? `Order <strong>${pending[0].orderId || '—'}</strong> is being verified by admin.`
-            : `You have <strong>${pending.length} pending orders</strong> being verified.`;
+            ? 'Order <strong>' + (pending[0].orderId || '—') + '</strong> is being verified by admin.'
+            : 'You have <strong>' + pending.length + ' pending orders</strong> being verified.';
     } else if (historyBanner) {
         historyBanner.classList.add('hidden');
     }
 
-    const actionCount = orders.filter(o => o.status === 'pending' || o.status === 'rejected').length;
+    var actionCount = orders.filter(function(o) { return o.status === 'pending' || o.status === 'rejected'; }).length;
     updateActionBadge(actionCount);
 }
 
 function updateActionBadge(count) {
-    const badge = document.getElementById('actionBadge');
+    var badge = document.getElementById('actionBadge');
     if (!badge) return;
     if (count > 0) badge.classList.remove('hidden');
     else badge.classList.add('hidden');
 }
 
 function updateHistoryBadge(count) {
-    const badge = document.getElementById('historyBadge');
+    var badge = document.getElementById('historyBadge');
     if (!badge) return;
     if (count > 0) {
         badge.textContent = count > 9 ? '9+' : count;
@@ -1442,7 +1409,7 @@ function updateHistoryBadge(count) {
 async function loadCurrentPlan() {
     if (!currentStudent || !currentStudent.id) return;
     try {
-        const snap = await db.collection('purchases')
+        var snap = await db.collection('purchases')
             .where('studentId', '==', currentStudent.id)
             .limit(50)
             .get();
@@ -1455,20 +1422,20 @@ async function loadCurrentPlan() {
             return;
         }
 
-        const allOrders = [];
-        snap.forEach(d => allOrders.push({ id: d.id, ...d.data() }));
+        var allOrders = [];
+        snap.forEach(function(d) { allOrders.push(Object.assign({ id: d.id }, d.data())); });
 
-        const approved = allOrders.filter(o => o.status === 'approved');
-        const actionable = allOrders.filter(o => o.status === 'pending' || o.status === 'rejected');
+        var approved = allOrders.filter(function(o) { return o.status === 'approved'; });
+        var actionable = allOrders.filter(function(o) { return o.status === 'pending' || o.status === 'rejected'; });
 
         purchasedPlansCount = approved.length;
         updateHistoryBadge(purchasedPlansCount);
         updateActionBadge(actionable.length);
 
         if (approved.length > 0) {
-            approved.sort((a, b) => {
-                const ta = a.verifiedAt ? a.verifiedAt.toDate().getTime() : 0;
-                const tb = b.verifiedAt ? b.verifiedAt.toDate().getTime() : 0;
+            approved.sort(function(a, b) {
+                var ta = a.verifiedAt ? a.verifiedAt.toDate().getTime() : 0;
+                var tb = b.verifiedAt ? b.verifiedAt.toDate().getTime() : 0;
                 return tb - ta;
             });
             currentPlanData = approved[0];
@@ -1486,30 +1453,30 @@ async function loadCurrentPlan() {
 
 /* ============ LOAD OFFER CONFIG ============ */
 function loadOfferConfig() {
-    db.collection('coupons').onSnapshot(snap => {
+    db.collection('coupons').onSnapshot(function(snap) {
         coupons = {};
-        snap.forEach(d => {
-            const c = d.data();
+        snap.forEach(function(d) {
+            var c = d.data();
             if (c.active !== false && c.code) {
-                coupons[c.code.toUpperCase().trim()] = { ...c, _id: d.id };
+                coupons[c.code.toUpperCase().trim()] = Object.assign({}, c, { _id: d.id });
             }
         });
     });
 
-    db.collection('config').doc('offer').onSnapshot(offerDoc => {
+    db.collection('config').doc('offer').onSnapshot(function(offerDoc) {
         if (!offerDoc.exists) {
             offerConfig = null;
             renderDynamicPlans();
             return;
         }
 
-        const data = offerDoc.data() || {};
+        var data = offerDoc.data() || {};
         offerConfig = data;
         window.currentOffer = data;
 
-        const oop = data.oneOnOnePricing || {};
-        const gp = data.groupPricing || {};
-        const pp = data.planPricing || {};
+        var oop = data.oneOnOnePricing || {};
+        var gp = data.groupPricing || {};
+        var pp = data.planPricing || {};
 
         pricing = {
             oneOnOneRegular: Number(oop.regularPrice) || Number(pp.singleRegular) || 500,
@@ -1520,10 +1487,7 @@ function loadOfferConfig() {
             groupAdmissionSpecial: Number(gp.specialAdmission) || 1500,
             groupRateRegular: Number(gp.regularPerClass) || 200,
             groupRateDiscounted: Number(gp.discountedPerClass) || 180,
-            groupRateSpecial: Number(gp.specialPerClass) || 170,
-            singleRegular: Number(oop.regularPrice) || Number(pp.singleRegular) || 500,
-            singleSpecial: Number(oop.specialOfferPrice) || Number(pp.singleSpecial) || 250,
-            groupAdmission: Number(gp.specialAdmission) || Number(pp.groupAdmission) || 2500
+            groupRateSpecial: Number(gp.specialPerClass) || 170
         };
 
         dynamicCategories = {
@@ -1538,23 +1502,23 @@ function loadOfferConfig() {
             renderBannerActive();
         }
 
-        const bR = document.getElementById('bannerReg');
-        const bO = document.getElementById('bannerSpec');
-        const bT = document.getElementById('bannerTitle');
+        var bR = document.getElementById('bannerReg');
+        var bO = document.getElementById('bannerSpec');
+        var bT = document.getElementById('bannerTitle');
         if (bR) bR.textContent = money(pricing.oneOnOneRegular);
         if (bO) bO.textContent = money(pricing.oneOnOneSpecial);
         if (bT) bT.textContent = data.title || '';
 
-        const banner = document.getElementById('offerBanner');
+        var banner = document.getElementById('offerBanner');
         if (banner) {
-            const isActive = data.active !== false && offerDeadline > Date.now();
+            var isActive = data.active !== false && offerDeadline > Date.now();
             if (isActive) banner.classList.remove('hidden');
             else banner.classList.add('hidden');
         }
 
         renderDynamicPlans();
         tickTimer();
-    }, err => console.error('❌ Offer listener error:', err));
+    }, function(err) { console.error('Offer listener error:', err); });
 
     startTimer();
 }
@@ -1562,31 +1526,31 @@ function loadOfferConfig() {
 function updateOfferDeadline() {
     if (!offerConfig || offerConfig.active === false) { offerDeadline = Date.now() - 1; return; }
     if (!offerConfig.endDateTime || typeof offerConfig.endDateTime !== 'string') { offerDeadline = Date.now() - 1; return; }
-    let endDate;
+    var endDate;
     try { endDate = new Date(offerConfig.endDateTime); } catch (e) { offerDeadline = Date.now() - 1; return; }
     if (isNaN(endDate.getTime())) { offerDeadline = Date.now() - 1; return; }
     offerDeadline = endDate.getTime();
 }
 
 function renderBannerActive() {
-    const banner = document.getElementById('offerBanner');
+    var banner = document.getElementById('offerBanner');
     if (!banner) return;
     banner.className = 'bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 text-white p-4 rounded-2xl mb-3 shadow-xl flash-offer';
-    banner.innerHTML = `
-        <div class="text-center">
-            <div class="text-[10px] font-extrabold uppercase tracking-widest opacity-95">⏰ Limited Time Special Rate</div>
-            <div class="text-xl sm:text-2xl font-black mt-1.5 leading-tight">
-                Regular <span class="line-through opacity-75" id="bannerReg">${money(pricing.oneOnOneRegular)}</span>/class → NOW
-                <span class="text-yellow-300" id="bannerSpec">${money(pricing.oneOnOneSpecial)}</span>/class
-            </div>
-            <div class="mt-3 text-[10px] font-bold uppercase tracking-wider opacity-95">⚡ Offer expires in</div>
-            <div id="countdown" class="font-mono text-2xl sm:text-3xl font-black text-yellow-200 leading-tight">--:--</div>
-            <div class="text-[10px] mt-1.5 font-semibold opacity-95 max-w-md mx-auto" id="bannerTitle">${offerConfig?.title || ''}</div>
-            <div class="mt-3 flex flex-wrap justify-center gap-2">
-                <button onclick="contactViaWhatsApp()" class="bg-[#25D366] hover:bg-[#1ebe5d] text-white text-[10px] sm:text-[11px] font-black px-3.5 py-2 rounded-full shadow-lg flex items-center gap-1.5 uppercase">💬 WhatsApp Us</button>
-                <a href="tel:+919875340842" class="bg-black/30 hover:bg-black/50 text-white text-[10px] sm:text-[11px] font-bold px-3.5 py-2 rounded-full flex items-center gap-1.5">📞 Call</a>
-            </div>
-        </div>`;
+    banner.innerHTML =
+        '<div class="text-center">' +
+            '<div class="text-[10px] font-extrabold uppercase tracking-widest opacity-95">⏰ Limited Time Special Rate</div>' +
+            '<div class="text-xl sm:text-2xl font-black mt-1.5 leading-tight">' +
+                'Regular <span class="line-through opacity-75" id="bannerReg">' + money(pricing.oneOnOneRegular) + '</span>/class → NOW ' +
+                '<span class="text-yellow-300" id="bannerSpec">' + money(pricing.oneOnOneSpecial) + '</span>/class' +
+            '</div>' +
+            '<div class="mt-3 text-[10px] font-bold uppercase tracking-wider opacity-95">⚡ Offer expires in</div>' +
+            '<div id="countdown" class="font-mono text-2xl sm:text-3xl font-black text-yellow-200 leading-tight">--:--</div>' +
+            '<div class="text-[10px] mt-1.5 font-semibold opacity-95 max-w-md mx-auto" id="bannerTitle">' + (offerConfig && offerConfig.title ? offerConfig.title : '') + '</div>' +
+            '<div class="mt-3 flex flex-wrap justify-center gap-2">' +
+                '<button onclick="contactViaWhatsApp()" class="bg-[#25D366] hover:bg-[#1ebe5d] text-white text-[10px] sm:text-[11px] font-black px-3.5 py-2 rounded-full shadow-lg flex items-center gap-1.5 uppercase">💬 WhatsApp Us</button>' +
+                '<a href="tel:+919875340842" class="bg-black/30 hover:bg-black/50 text-white text-[10px] sm:text-[11px] font-bold px-3.5 py-2 rounded-full flex items-center gap-1.5">📞 Call</a>' +
+            '</div>' +
+        '</div>';
     tickTimer();
 }
 
@@ -1596,8 +1560,8 @@ function startTimer() {
     timerInterval = setInterval(tickTimer, 1000);
 }
 function tickTimer() {
-    const diff = Math.max(0, offerDeadline - Date.now());
-    const el = document.getElementById('countdown');
+    var diff = Math.max(0, offerDeadline - Date.now());
+    var el = document.getElementById('countdown');
     if (el) {
         el.textContent = formatDuration(diff);
         if (diff <= 5 * 60 * 1000 && diff > 0) el.classList.add('timer-low');
@@ -1607,42 +1571,43 @@ function tickTimer() {
 }
 function formatDuration(ms) {
     if (ms <= 0) return '00:00';
-    const s = Math.floor(ms / 1000); const d = Math.floor(s / 86400); const h = Math.floor((s % 86400) / 3600);
-    const m = Math.floor((s % 3600) / 60); const sc = s % 60;
-    if (d > 0) return `${d}d ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
-    if (h > 0) return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
-    return `${String(m).padStart(2,'0')}:${String(sc).padStart(2,'0')}`;
+    var s = Math.floor(ms / 1000); var d = Math.floor(s / 86400); var h = Math.floor((s % 86400) / 3600);
+    var m = Math.floor((s % 3600) / 60); var sc = s % 60;
+    if (d > 0) return d + 'd ' + pad2(h) + ':' + pad2(m) + ':' + pad2(sc);
+    if (h > 0) return pad2(h) + ':' + pad2(m) + ':' + pad2(sc);
+    return pad2(m) + ':' + pad2(sc);
 }
+
 function isOfferActive() { return offerDeadline > Date.now() && offerConfig && offerConfig.active !== false; }
 
 function handleExpiry() {
-    const banner = document.getElementById('offerBanner');
+    var banner = document.getElementById('offerBanner');
     if (banner) {
         banner.className = 'w-full bg-gradient-to-r from-slate-600 to-slate-700 text-white p-4 rounded-2xl mb-3 text-center shadow-xl';
-        banner.innerHTML = `<div class="text-sm font-black uppercase tracking-widest">⛔ Offer Expired</div><div class="text-[12px] mt-1 font-bold">Special rate window has ended.</div><div class="text-[11px] mt-1 opacity-95">📞 Helpline: <strong>9875340842</strong></div>`;
+        banner.innerHTML = '<div class="text-sm font-black uppercase tracking-widest">⛔ Offer Expired</div><div class="text-[12px] mt-1 font-bold">Special rate window has ended.</div><div class="text-[11px] mt-1 opacity-95">📞 Helpline: <strong>9875340842</strong></div>';
     }
     appliedCoupons = [];
     renderDynamicPlans();
 }
 
 /* ============ COURSE FILTER ============ */
-function getStudentCourse() { return (currentStudent?.courseEnrolled || '').trim(); }
+function getStudentCourse() { return (currentStudent && currentStudent.courseEnrolled ? currentStudent.courseEnrolled : '').trim(); }
 
 function toggleShowAllCourses() {
     showAllCourses = !showAllCourses;
     updateCourseFilterBanner();
     renderDynamicPlans();
-    const el = document.getElementById('plansContainer');
+    var el = document.getElementById('plansContainer');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function updateCourseFilterBanner() {
-    const banner = document.getElementById('courseFilterBanner');
-    const nameEl = document.getElementById('courseFilterName');
-    const btn = document.getElementById('toggleAllCoursesBtn');
+    var banner = document.getElementById('courseFilterBanner');
+    var nameEl = document.getElementById('courseFilterName');
+    var btn = document.getElementById('toggleAllCoursesBtn');
     if (!banner || !nameEl || !btn) return;
 
-    const course = getStudentCourse();
+    var course = getStudentCourse();
     if (!course || showAllCourses) {
         banner.classList.add('hidden');
         btn.textContent = '🌟 Show All Courses';
@@ -1654,159 +1619,132 @@ function updateCourseFilterBanner() {
 }
 
 function filterPlansByCourse(cat, subKey, subData) {
-    const course = getStudentCourse();
+    var course = getStudentCourse();
     if (!course) return true;
     if (showAllCourses) return true;
 
-    const courseLower = course.toLowerCase();
-    const keyLower = subKey.toLowerCase();
-    const displayLower = (subData.displayName || '').toLowerCase();
+    var courseLower = course.toLowerCase();
+    var keyLower = subKey.toLowerCase();
+    var displayLower = (subData.displayName || '').toLowerCase();
 
-    if (courseLower.includes('kid')) return keyLower.includes('kid') || displayLower.includes('kid');
-    if (courseLower.includes('adult') || courseLower.includes('power speak')) {
-        return keyLower.includes('adult') || keyLower.includes('power') || displayLower.includes('adult') || displayLower.includes('power');
+    if (courseLower.indexOf('kid') !== -1) return keyLower.indexOf('kid') !== -1 || displayLower.indexOf('kid') !== -1;
+    if (courseLower.indexOf('adult') !== -1 || courseLower.indexOf('power speak') !== -1) {
+        return keyLower.indexOf('adult') !== -1 || keyLower.indexOf('power') !== -1 || displayLower.indexOf('adult') !== -1 || displayLower.indexOf('power') !== -1;
     }
     return true;
 }
 
 /* ============ DYNAMIC PLANS RENDERING ============ */
 function renderDynamicPlans() {
-    const container = document.getElementById('plansContainer');
+    var container = document.getElementById('plansContainer');
     if (!container) return;
 
     updateCourseFilterBanner();
 
-    const hasOneOnOne = dynamicCategories.oneOnOne && Object.keys(dynamicCategories.oneOnOne).length > 0;
-    const hasGroup = dynamicCategories.group && Object.keys(dynamicCategories.group).length > 0;
+    var hasOneOnOne = dynamicCategories.oneOnOne && Object.keys(dynamicCategories.oneOnOne).length > 0;
+    var hasGroup = dynamicCategories.group && Object.keys(dynamicCategories.group).length > 0;
 
     if (!hasOneOnOne && !hasGroup) {
-        container.innerHTML = `
-            <div class="bg-white rounded-2xl shadow-lg p-6 text-center border-2 border-slate-200">
-                <p class="text-3xl mb-2">⏳</p>
-                <p class="text-slate-600 font-bold text-sm">Plans are being updated.</p>
-                <button onclick="contactViaWhatsApp()" class="mt-4 bg-[#25D366] text-white font-black text-xs px-5 py-2.5 rounded-full shadow">💬 Contact Admin</button>
-            </div>`;
+        container.innerHTML =
+            '<div class="bg-white rounded-2xl shadow-lg p-6 text-center border-2 border-slate-200">' +
+                '<p class="text-3xl mb-2">⏳</p>' +
+                '<p class="text-slate-600 font-bold text-sm">Plans are being updated.</p>' +
+                '<button onclick="contactViaWhatsApp()" class="mt-4 bg-[#25D366] text-white font-black text-xs px-5 py-2.5 rounded-full shadow">💬 Contact Admin</button>' +
+            '</div>';
         return;
     }
 
-    let html = '';
-    const showOneOnOne = (currentTab === 'all' || currentTab === '1on1-adult' || currentTab === '1on1-kids');
-    const showGroup = (currentTab === 'all' || currentTab === 'group');
+    var html = '';
+    var showOneOnOne = (currentTab === 'all' || currentTab === '1on1-adult' || currentTab === '1on1-kids');
+    var showGroup = (currentTab === 'all' || currentTab === 'group');
 
     if (showOneOnOne && hasOneOnOne) {
-        Object.keys(dynamicCategories.oneOnOne).forEach(key => {
-            const sub = dynamicCategories.oneOnOne[key];
-            if (currentTab === '1on1-adult' && !key.toLowerCase().includes('adult')) return;
-            if (currentTab === '1on1-kids' && !key.toLowerCase().includes('kid')) return;
+        Object.keys(dynamicCategories.oneOnOne).forEach(function(key) {
+            var sub = dynamicCategories.oneOnOne[key];
+            if (currentTab === '1on1-adult' && key.toLowerCase().indexOf('adult') === -1) return;
+            if (currentTab === '1on1-kids' && key.toLowerCase().indexOf('kid') === -1) return;
             if (!filterPlansByCourse('oneOnOne', key, sub)) return;
             html += renderSubCategoryBlock('oneOnOne', key, sub);
         });
     }
 
     if (showGroup && hasGroup) {
-        Object.keys(dynamicCategories.group).forEach(key => {
-            const sub = dynamicCategories.group[key];
+        Object.keys(dynamicCategories.group).forEach(function(key) {
+            var sub = dynamicCategories.group[key];
             if (currentTab === '1on1-adult' || currentTab === '1on1-kids') return;
             if (!filterPlansByCourse('group', key, sub)) return;
             html += renderSubCategoryBlock('group', key, sub);
         });
     }
 
-    container.innerHTML = html || `
-        <div class="bg-white rounded-2xl shadow-lg p-6 text-center">
-            <p class="text-3xl mb-2">📭</p>
-            <p class="text-slate-600 font-bold text-sm">No plans in this category.</p>
-            ${getStudentCourse() && !showAllCourses ? `
-                <button onclick="toggleShowAllCourses()" class="mt-3 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs px-5 py-2.5 rounded-full shadow">
-                    🌟 Show All Courses
-                </button>
-            ` : ''}
-        </div>`;
+    container.innerHTML = html || (
+        '<div class="bg-white rounded-2xl shadow-lg p-6 text-center">' +
+            '<p class="text-3xl mb-2">📭</p>' +
+            '<p class="text-slate-600 font-bold text-sm">No plans in this category.</p>' +
+            (getStudentCourse() && !showAllCourses ? '<button onclick="toggleShowAllCourses()" class="mt-3 bg-indigo-600 hover:bg-indigo-700 text-white font-black text-xs px-5 py-2.5 rounded-full shadow">🌟 Show All Courses</button>' : '') +
+        '</div>');
 }
 
 function renderSubCategoryBlock(cat, subKey, subData) {
-    const plans = subData.plans || [];
+    var plans = subData.plans || [];
+    var keyLower = (subKey || '').toLowerCase();
+    var isKids = keyLower.indexOf('kid') !== -1;
+    var headerClass, icon, subTitle;
 
-    const keyLower = (subKey || '').toLowerCase();
-    const isKids = keyLower.includes('kid');
-    let themeClass, headerClass, icon, subTitle;
-
-    if (cat === 'oneOnOne' && !isKids) {
-        themeClass = 'theme-adult-1on1';
-        headerClass = 'section-header-adult-1on1';
-        icon = '👑';
-        subTitle = 'Personal Coaching for Adults';
-    } else if (cat === 'oneOnOne' && isKids) {
-        themeClass = 'theme-kids-1on1';
-        headerClass = 'section-header-kids-1on1';
-        icon = '👶';
-        subTitle = 'Personal Coaching for Kids';
-    } else if (cat === 'group' && !isKids) {
-        themeClass = 'theme-adult-group';
-        headerClass = 'section-header-adult-group';
-        icon = '👥';
-        subTitle = 'Group Class for Adults';
-    } else {
-        themeClass = 'theme-kids-group';
-        headerClass = 'section-header-kids-group';
-        icon = '🧸';
-        subTitle = 'Group Class for Kids';
-    }
+    if (cat === 'oneOnOne' && !isKids) { headerClass = 'section-header-adult-1on1'; icon = '👑'; subTitle = 'Personal Coaching for Adults'; }
+    else if (cat === 'oneOnOne' && isKids) { headerClass = 'section-header-kids-1on1'; icon = '👶'; subTitle = 'Personal Coaching for Kids'; }
+    else if (cat === 'group' && !isKids) { headerClass = 'section-header-adult-group'; icon = '👥'; subTitle = 'Group Class for Adults'; }
+    else { headerClass = 'section-header-kids-group'; icon = '🧸'; subTitle = 'Group Class for Kids'; }
 
     if (plans.length === 0) {
-        return `
-            <div class="rounded-2xl overflow-hidden shadow-lg mb-3 border-2 border-slate-200">
-                <div class="${headerClass} text-white py-3 px-4">
-                    <div class="flex items-center justify-center gap-2">
-                        <span class="text-2xl">${icon}</span>
-                        <div class="text-center">
-                            <p class="font-black text-[12px] sm:text-sm uppercase tracking-wider leading-tight">${subData.displayName || subKey}</p>
-                            <p class="text-[9px] opacity-90 font-semibold">${subTitle}</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-4 text-center text-slate-500 text-xs bg-white">No plans available.</div>
-            </div>`;
+        return '<div class="rounded-2xl overflow-hidden shadow-lg mb-3 border-2 border-slate-200">' +
+            '<div class="' + headerClass + ' text-white py-3 px-4"><div class="flex items-center justify-center gap-2">' +
+                '<span class="text-2xl">' + icon + '</span>' +
+                '<div class="text-center"><p class="font-black text-[12px] sm:text-sm uppercase tracking-wider leading-tight">' + (subData.displayName || subKey) + '</p>' +
+                '<p class="text-[9px] opacity-90 font-semibold">' + subTitle + '</p></div>' +
+            '</div></div>' +
+            '<div class="p-4 text-center text-slate-500 text-xs bg-white">No plans available.</div>' +
+        '</div>';
     }
 
-    return `
-        <div class="rounded-2xl overflow-hidden shadow-lg mb-3 border-2 border-slate-200">
-            <div class="${headerClass} text-white py-3 px-4">
-                <div class="flex items-center justify-center gap-2">
-                    <span class="text-2xl">${icon}</span>
-                    <div class="text-center">
-                        <p class="font-black text-[12px] sm:text-sm uppercase tracking-wider leading-tight">${subData.displayName || subKey}</p>
-                        <p class="text-[9px] opacity-90 font-semibold">${subTitle}</p>
-                    </div>
-                </div>
-            </div>
+    var html = '<div class="rounded-2xl overflow-hidden shadow-lg mb-3 border-2 border-slate-200">';
+    html += '<div class="' + headerClass + ' text-white py-3 px-4"><div class="flex items-center justify-center gap-2">';
+    html += '<span class="text-2xl">' + icon + '</span>';
+    html += '<div class="text-center"><p class="font-black text-[12px] sm:text-sm uppercase tracking-wider leading-tight">' + (subData.displayName || subKey) + '</p>';
+    html += '<p class="text-[9px] opacity-90 font-semibold">' + subTitle + '</p></div></div></div>';
 
-            ${cat === 'group' && !isExistingStudent ? `
-                <div class="bg-blue-100 px-3 py-2 border-b border-blue-200">
-                    <p class="text-[10px] font-black text-blue-900 uppercase tracking-wider">🆕 New Students — Monthly + Admission Fee</p>
-                </div>` : ''}
-            ${cat === 'group' && isExistingStudent ? `
-                <div class="bg-green-100 px-3 py-2 border-b border-green-200">
-                    <p class="text-[10px] font-black text-green-900 uppercase tracking-wider">♻️ Renewal — No Admission Fee</p>
-                </div>` : ''}
+    if (cat === 'group' && !isExistingStudent) {
+        html += '<div class="bg-blue-100 px-3 py-2 border-b border-blue-200"><p class="text-[10px] font-black text-blue-900 uppercase tracking-wider">🆕 New Students — Monthly + Admission Fee</p></div>';
+    }
+    if (cat === 'group' && isExistingStudent) {
+        html += '<div class="bg-green-100 px-3 py-2 border-b border-green-200"><p class="text-[10px] font-black text-green-900 uppercase tracking-wider">♻️ Renewal — No Admission Fee</p></div>';
+    }
 
-            <div class="p-3 space-y-3 bg-white">
-                ${plans.map((p, idx) => renderPlanRow(cat, subKey, subData, p, idx, themeClass, icon)).join('')}
-            </div>
-        </div>
-    `;
+    html += '<div class="p-3 space-y-3 bg-white">';
+    plans.forEach(function(p, idx) {
+        html += renderPlanRow(cat, subKey, subData, p, idx);
+    });
+    html += '</div></div>';
+
+    return html;
 }
 
-/* ============ RENDER PLAN ROW (TELECOM-STYLE) ============ */
-function renderPlanRow(cat, subKey, subData, plan, idx, themeClass, icon) {
-    const planId = `${cat}_${subData.subCategoryId || subKey}_${idx}`;
+function renderPlanRow(cat, subKey, subData, plan, idx) {
+    var days = Number(plan.days) || 0;
+    var active = isOfferActive();
+    var keyLower = (subKey || '').toLowerCase();
+    var isKids = keyLower.indexOf('kid') !== -1;
 
-    const days = Number(plan.days) || 0;
-    const active = isOfferActive();
+    var themeClass = '';
+    var icon = '';
+    if (cat === 'oneOnOne' && !isKids) { themeClass = 'theme-adult-1on1'; icon = '👑'; }
+    else if (cat === 'oneOnOne' && isKids) { themeClass = 'theme-kids-1on1'; icon = '👶'; }
+    else if (cat === 'group' && !isKids) { themeClass = 'theme-adult-group'; icon = '👥'; }
+    else { themeClass = 'theme-kids-group'; icon = '🧸'; }
 
-    let regularRate = Number(plan.regularRate) || Number(plan.perClassRate) || 0;
-    let discountedRate = Number(plan.discountedRate) || regularRate;
-    let specialRate = Number(plan.specialRate) || (Number(plan.offerPrice) / days) || discountedRate;
+    var regularRate = Number(plan.regularRate) || Number(plan.perClassRate) || 0;
+    var discountedRate = Number(plan.discountedRate) || regularRate;
+    var specialRate = Number(plan.specialRate) || (Number(plan.offerPrice) / days) || discountedRate;
 
     if (!regularRate && cat === 'oneOnOne') {
         regularRate = pricing.oneOnOneRegular;
@@ -1819,171 +1757,120 @@ function renderPlanRow(cat, subKey, subData, plan, idx, themeClass, icon) {
         specialRate = pricing.groupRateSpecial;
     }
 
-    const regularTotal = days * regularRate;
-    const discountedTotal = days * discountedRate;
-    const specialTotal = days * specialRate;
+    var regularTotal = days * regularRate;
+    var discountedTotal = days * discountedRate;
+    var specialTotal = days * specialRate;
 
-    let finalPrice, currentRate, priceLabel;
-    if (active) {
-        finalPrice = specialTotal;
-        currentRate = specialRate;
-        priceLabel = '🌟 SPECIAL';
-    } else {
-        finalPrice = discountedTotal;
-        currentRate = discountedRate;
-        priceLabel = '💰 DISCOUNTED';
-    }
+    var finalPrice, currentRate, priceLabel;
+    if (active) { finalPrice = specialTotal; currentRate = specialRate; priceLabel = '🌟 SPECIAL'; }
+    else { finalPrice = discountedTotal; currentRate = discountedRate; priceLabel = '💰 DISCOUNTED'; }
 
-    const totalSave = regularTotal - finalPrice;
-    const totalSavePercent = regularTotal > 0 ? Math.round((totalSave / regularTotal) * 100) : 0;
-    const specialBonusDiscount = active ? (discountedTotal - specialTotal) : 0;
+    var totalSave = regularTotal - finalPrice;
+    var totalSavePercent = regularTotal > 0 ? Math.round((totalSave / regularTotal) * 100) : 0;
 
-    // Telecom badges
-    const allPlans = subData.plans || [];
-    const maxDays = Math.max(...allPlans.map(p => Number(p.days) || 0));
-    const planDaysList = allPlans.map(p => Number(p.days) || 0).sort((a,b) => a-b);
-    const middleIdx = Math.floor(planDaysList.length / 2);
-    const mostPopularDays = planDaysList[middleIdx] || 16;
+    var allPlans = subData.plans || [];
+    var maxDays = 0;
+    allPlans.forEach(function(p) { var d = Number(p.days) || 0; if (d > maxDays) maxDays = d; });
+    var planDaysList = allPlans.map(function(p) { return Number(p.days) || 0; }).sort(function(a, b) { return a - b; });
+    var middleIdx = Math.floor(planDaysList.length / 2);
+    var mostPopularDays = planDaysList[middleIdx] || 16;
 
-    let planBadges = '';
+    var planBadges = '';
     if (days === maxDays && days >= 16 && planDaysList.length > 2) {
-        planBadges += `<span class="value-badge badge-longest">💎 Longest</span>`;
+        planBadges += '<span class="value-badge badge-longest">💎 Longest</span>';
     }
     if (days === mostPopularDays && planDaysList.length > 2 && days !== maxDays) {
-        planBadges += `<span class="value-badge badge-most-popular">🔥 Popular</span>`;
+        planBadges += '<span class="value-badge badge-most-popular">🔥 Popular</span>';
     }
 
-    const savingsMeter = totalSave > 0 ? `
-        <div class="savings-meter">
-            <div class="sm-pct">${totalSavePercent}% OFF</div>
-            <div class="sm-label">🎉 Save ${money(totalSave)}</div>
-        </div>
-    ` : '';
+    var savingsMeter = totalSave > 0 ? (
+        '<div class="savings-meter">' +
+            '<div class="sm-pct">' + totalSavePercent + '% OFF</div>' +
+            '<div class="sm-label">🎉 Save ' + money(totalSave) + '</div>' +
+        '</div>'
+    ) : '';
 
-    let lengthTip = '';
-    if (days <= 8) {
-        lengthTip = `<div class="length-tip">💡 Larger plans = Bigger discounts!</div>`;
-    } else if (days >= 16 && days < maxDays) {
-        lengthTip = `<div class="length-tip">✨ Going longer saves even more →</div>`;
-    } else if (days === maxDays && maxDays >= 24) {
-        lengthTip = `<div class="length-tip">🏆 Best value — Maximum savings!</div>`;
+    var lengthTip = '';
+    if (days <= 8) lengthTip = '<div class="length-tip">💡 Larger plans = Bigger discounts!</div>';
+    else if (days >= 16 && days < maxDays) lengthTip = '<div class="length-tip">✨ Going longer saves even more →</div>';
+    else if (days === maxDays && maxDays >= 24) lengthTip = '<div class="length-tip">🏆 Best value — Maximum savings!</div>';
+
+    var priceHTML = '<div class="text-right">';
+    priceHTML += '<div class="text-[10px] text-slate-400 line-through">Regular: ' + money(regularTotal) + '</div>';
+    if (active) priceHTML += '<div class="text-[10px] text-slate-400 line-through">Discounted: ' + money(discountedTotal) + '</div>';
+    else priceHTML += '<div class="text-[10px] text-slate-600 font-bold">Discounted: ' + money(discountedTotal) + '</div>';
+    priceHTML += '<div class="text-lg font-black plan-price-main mt-1">' + money(finalPrice) + '</div>';
+    priceHTML += '</div>';
+
+    var planId = cat + '_' + (subData.subCategoryId || subKey) + '_' + idx;
+    var safeKey = subKey.replace(/'/g, "\\'");
+    var safeDisplay = (subData.displayName || subKey).replace(/'/g, "\\'");
+    var safeSubId = (subData.subCategoryId || '').replace(/'/g, "\\'");
+
+    var html = '<div class="plan-row ' + themeClass + '" data-plan-id="' + planId + '" onclick="selectPlanRow(\'' + cat + '\', \'' + safeKey + '\', \'' + safeSubId + '\', \'' + safeDisplay + '\', ' + idx + ')" style="position: relative;">';
+    if (planBadges) {
+        html += '<div style="position:absolute; top:8px; right:8px; display:flex; flex-direction:column; gap:3px; align-items:flex-end; z-index:2;">' + planBadges + '</div>';
     }
-
-    let admissionFee = 0;
-    let admissionRegularFee = 0;
-    if (cat === 'group' && !isExistingStudent) {
-        admissionRegularFee = pricing.groupAdmissionRegular;
-        admissionFee = active ? pricing.groupAdmissionSpecial : pricing.groupAdmissionDiscounted;
-    }
-
-    let priceHTML = '';
-    if (cat === 'group' && !isExistingStudent && admissionFee > 0) {
-        priceHTML = `
-            <div class="text-right">
-                <div class="text-[9px] font-black text-slate-500 uppercase mb-1">Monthly Fee</div>
-                <div class="text-[10px] text-slate-400 line-through">Regular: ${money(regularTotal)}</div>
-                ${active ? `<div class="text-[10px] text-slate-400 line-through">Discounted: ${money(discountedTotal)}</div>` : `<div class="text-[10px] text-slate-600 font-bold">Discounted: ${money(discountedTotal)}</div>`}
-                ${active ? `<div class="text-base font-black plan-price-main">🌟 ${money(specialTotal)}</div>` : ''}
-                <div class="mt-2 pt-2 border-t border-dashed border-slate-300">
-                    <div class="text-[9px] font-black text-slate-500 uppercase mb-1">Admission Fee</div>
-                    <div class="text-[10px] text-slate-400 line-through">Regular: ${money(admissionRegularFee)}</div>
-                    ${active ? `<div class="text-sm font-black plan-price-main">🌟 ${money(admissionFee)}</div>` : `<div class="text-sm font-black plan-price-main">💰 ${money(admissionFee)}</div>`}
-                </div>
-            </div>
-        `;
-    } else {
-        priceHTML = `
-            <div class="text-right">
-                <div class="text-[10px] text-slate-400 line-through">Regular: ${money(regularTotal)}</div>
-                ${active 
-                    ? `<div class="text-[10px] text-slate-400 line-through">Discounted: ${money(discountedTotal)}</div>`
-                    : `<div class="text-[10px] text-slate-600 font-bold">Discounted: ${money(discountedTotal)}</div>`
-                }
-                <div class="text-lg font-black plan-price-main mt-1">${money(finalPrice)}</div>
-            </div>
-        `;
-    }
-
-    return `
-        <div class="plan-row ${themeClass}"
-             data-plan-id="${planId}"
-             onclick="selectPlanRow('${cat}', '${subKey.replace(/'/g, "\\'")}', '${(subData.subCategoryId || '').replace(/'/g, "\\'")}', '${(subData.displayName || subKey).replace(/'/g, "\\'")}', ${idx})"
-             style="position: relative;">
-            
-            ${planBadges ? `<div style="position:absolute; top:8px; right:8px; display:flex; flex-direction:column; gap:3px; align-items:flex-end; z-index:2;">${planBadges}</div>` : ''}
-
-            <div class="flex items-start gap-3">
-                <div class="plan-icon-badge">${icon}</div>
-                <div class="flex-1 min-w-0 flex justify-between items-start gap-2 flex-wrap">
-                    <div class="min-w-0 flex-1">
-                        <p class="font-black plan-days-text text-sm">${days} Classes</p>
-                        <p class="text-[10px] text-slate-600 font-semibold">${cat === 'oneOnOne' ? '1-on-1' : 'Group'} · ₹${currentRate}/class</p>
-                        ${active ? `<span class="special-badge mt-1 inline-block">${priceLabel}</span>` : ''}
-                        ${active && specialBonusDiscount > 0 ? `<p class="text-[10px] text-emerald-700 font-bold mt-1">✨ Extra: ₹${specialBonusDiscount}</p>` : ''}
-                    </div>
-                    <div class="flex-shrink-0">${priceHTML}</div>
-                </div>
-            </div>
-
-            ${savingsMeter}
-            ${lengthTip}
-        </div>
-    `;
+    html += '<div class="flex items-start gap-3">';
+    html += '<div class="plan-icon-badge">' + icon + '</div>';
+    html += '<div class="flex-1 min-w-0 flex justify-between items-start gap-2 flex-wrap">';
+    html += '<div class="min-w-0 flex-1">';
+    html += '<p class="font-black plan-days-text text-sm">' + days + ' Classes</p>';
+    html += '<p class="text-[10px] text-slate-600 font-semibold">' + (cat === 'oneOnOne' ? '1-on-1' : 'Group') + ' · ₹' + currentRate + '/class</p>';
+    if (active) html += '<span class="special-badge mt-1 inline-block">' + priceLabel + '</span>';
+    html += '</div>';
+    html += '<div class="flex-shrink-0">' + priceHTML + '</div>';
+    html += '</div></div>';
+    html += savingsMeter;
+    html += lengthTip;
+    html += '</div>';
+    return html;
 }
 
-/* ============ SELECT PLAN → CHECKOUT MODAL ============ */
+/* ============ SELECT PLAN ============ */
 function selectPlanRow(cat, subKey, subCategoryId, subCategoryDisplay, planIndex) {
-    const subData = dynamicCategories[cat][subKey];
+    var subData = dynamicCategories[cat][subKey];
     if (!subData) return;
-    const plan = subData.plans[planIndex];
+    var plan = subData.plans[planIndex];
     if (!plan) return;
 
-    const planId = `${cat}_${subCategoryId}_${planIndex}`;
+    var planId = cat + '_' + subCategoryId + '_' + planIndex;
 
     if (selectedPlan && selectedPlan.planId !== planId) {
         appliedCoupons = [];
-        pendingCouponCodes = [];
     }
 
-    const isNewStudent = (cat === 'group') ? !isExistingStudent : false;
+    var isNewStudent = (cat === 'group') ? !isExistingStudent : false;
 
     selectedPlan = {
-        planId, category: cat, subCategoryKey: subKey,
-        subCategoryId, subCategoryDisplay, planIndex,
-        plan: { ...plan }, isNewStudent
+        planId: planId, category: cat, subCategoryKey: subKey,
+        subCategoryId: subCategoryId, subCategoryDisplay: subCategoryDisplay, planIndex: planIndex,
+        plan: Object.assign({}, plan), isNewStudent: isNewStudent
     };
 
     saveSelectedPlan();
 
-    const keyLower = (subKey || '').toLowerCase();
-    const isKids = keyLower.includes('kid');
-    let themeIcon, themeColorFrom, themeColorTo;
-    if (cat === 'oneOnOne' && !isKids) {
-        themeIcon = '👑'; themeColorFrom = '#1d4ed8'; themeColorTo = '#1e40af';
-    } else if (cat === 'oneOnOne' && isKids) {
-        themeIcon = '👶'; themeColorFrom = '#db2777'; themeColorTo = '#be185d';
-    } else if (cat === 'group' && !isKids) {
-        themeIcon = '👥'; themeColorFrom = '#059669'; themeColorTo = '#047857';
-    } else {
-        themeIcon = '🧸'; themeColorFrom = '#9333ea'; themeColorTo = '#7e22ce';
-    }
+    var keyLower = (subKey || '').toLowerCase();
+    var isKids = keyLower.indexOf('kid') !== -1;
+    var themeIcon, themeColorFrom, themeColorTo;
+    if (cat === 'oneOnOne' && !isKids) { themeIcon = '👑'; themeColorFrom = '#1d4ed8'; themeColorTo = '#1e40af'; }
+    else if (cat === 'oneOnOne' && isKids) { themeIcon = '👶'; themeColorFrom = '#db2777'; themeColorTo = '#be185d'; }
+    else if (cat === 'group' && !isKids) { themeIcon = '👥'; themeColorFrom = '#059669'; themeColorTo = '#047857'; }
+    else { themeIcon = '🧸'; themeColorFrom = '#9333ea'; themeColorTo = '#7e22ce'; }
 
     openPlanCheckoutModal(themeIcon, themeColorFrom, themeColorTo);
 }
 
-/* ============ CHECKOUT MODAL ============ */
 function openPlanCheckoutModal(icon, colorFrom, colorTo) {
     if (!selectedPlan) return;
-
-    const modal = document.getElementById('planCheckoutModal');
-    const header = document.getElementById('checkoutModalHeader');
-    const iconEl = document.getElementById('checkoutModalIcon');
+    var modal = document.getElementById('planCheckoutModal');
+    var header = document.getElementById('checkoutModalHeader');
+    var iconEl = document.getElementById('checkoutModalIcon');
 
     iconEl.textContent = icon;
-    header.style.background = `linear-gradient(135deg, ${colorFrom}, ${colorTo})`;
+    header.style.background = 'linear-gradient(135deg, ' + colorFrom + ', ' + colorTo + ')';
 
-    document.getElementById('checkoutModalSubtitle').textContent = 
-        `${selectedPlan.subCategoryDisplay} — ${selectedPlan.plan.days} Classes`;
+    document.getElementById('checkoutModalSubtitle').textContent = selectedPlan.subCategoryDisplay + ' — ' + selectedPlan.plan.days + ' Classes';
 
     renderCheckoutPlanCard(colorFrom, colorTo);
     renderCheckoutCoupons();
@@ -1995,127 +1882,75 @@ function openPlanCheckoutModal(icon, colorFrom, colorTo) {
 }
 
 function closePlanCheckoutModal() {
-    const modal = document.getElementById('planCheckoutModal');
+    var modal = document.getElementById('planCheckoutModal');
     if (modal) modal.classList.add('hidden');
     document.body.style.overflow = '';
 }
 
-/* ============ CHECKOUT PLAN CARD (with tips) ============ */
 function renderCheckoutPlanCard(colorFrom, colorTo) {
     if (!selectedPlan) return;
-    const p = calculateSelectedPlanPricing();
+    var p = calculateSelectedPlanPricing();
     if (!p) return;
 
-    const card = document.getElementById('checkoutPlanCard');
-    const days = selectedPlan.plan.days;
+    var card = document.getElementById('checkoutPlanCard');
+    var days = selectedPlan.plan.days;
 
-    // Compare with other plans in same subcategory
-    const subData = dynamicCategories[selectedPlan.category]?.[selectedPlan.subCategoryKey];
-    const allPlans = subData?.plans || [];
-    const longerPlans = allPlans.filter(pl => Number(pl.days) > days);
-    const shorterPlans = allPlans.filter(pl => Number(pl.days) < days);
-    const maxDays = Math.max(...allPlans.map(pl => Number(pl.days) || 0));
-    
-    let tipMessage = '';
+    var subData = dynamicCategories[selectedPlan.category] && dynamicCategories[selectedPlan.category][selectedPlan.subCategoryKey];
+    var allPlans = (subData && subData.plans) ? subData.plans : [];
+    var longerPlans = allPlans.filter(function(pl) { return Number(pl.days) > days; });
+    var shorterPlans = allPlans.filter(function(pl) { return Number(pl.days) < days; });
+    var maxDays = 0;
+    allPlans.forEach(function(pl) { var d = Number(pl.days) || 0; if (d > maxDays) maxDays = d; });
+
+    var tipMessage = '';
     if (shorterPlans.length === 0 && longerPlans.length > 0) {
-        tipMessage = `💡 This is the shortest plan. Go longer to save more!`;
+        tipMessage = '💡 This is the shortest plan. Go longer to save more!';
     } else if (longerPlans.length === 0 && shorterPlans.length > 0 && maxDays >= 24) {
-        tipMessage = `🏆 Best value plan! Maximum savings of all!`;
+        tipMessage = '🏆 Best value plan! Maximum savings of all!';
     } else if (longerPlans.length > 0) {
-        const nextPlan = longerPlans.sort((a,b) => a.days - b.days)[0];
-        const extraSave = (Number(nextPlan.days) - days) * (p.regularRate - p.currentRate);
-        tipMessage = `✨ ${nextPlan.days} classes কিনলে আরও ${money(extraSave)} বাঁচাতে পারতেন!`;
+        var nextPlan = longerPlans.sort(function(a, b) { return a.days - b.days; })[0];
+        var extraSave = (Number(nextPlan.days) - days) * (p.regularRate - p.currentRate);
+        tipMessage = '✨ ' + nextPlan.days + ' classes কিনলে আরও ' + money(extraSave) + ' বাঁচাতে পারতেন!';
     }
 
-    let html = `
-        <div class="flex items-start justify-between gap-3 mb-3">
-            <div class="min-w-0 flex-1">
-                <p class="text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1">Selected Plan</p>
-                <p class="text-sm font-black text-slate-800 leading-snug">${selectedPlan.subCategoryDisplay}</p>
-                <p class="text-[11px] text-slate-600 font-semibold mt-1">📚 ${days} Classes · ${selectedPlan.category === 'oneOnOne' ? '1-on-1' : 'Group'}</p>
-            </div>
-            <div class="text-right flex-shrink-0">
-                ${p.active ? `<div class="inline-block bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">🌟 Special Offer</div>` 
-                    : `<div class="inline-block bg-sky-500 text-white text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">💰 Discounted</div>`}
-            </div>
-        </div>
-    `;
+    var html = '<div class="flex items-start justify-between gap-3 mb-3">' +
+        '<div class="min-w-0 flex-1">' +
+            '<p class="text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1">Selected Plan</p>' +
+            '<p class="text-sm font-black text-slate-800 leading-snug">' + selectedPlan.subCategoryDisplay + '</p>' +
+            '<p class="text-[11px] text-slate-600 font-semibold mt-1">📚 ' + days + ' Classes · ' + (selectedPlan.category === 'oneOnOne' ? '1-on-1' : 'Group') + '</p>' +
+        '</div>' +
+        '<div class="text-right flex-shrink-0">' +
+            (p.active ? '<div class="inline-block bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">🌟 Special Offer</div>'
+                : '<div class="inline-block bg-sky-500 text-white text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">💰 Discounted</div>') +
+        '</div>' +
+    '</div>';
 
-    html += `<div class="bg-white rounded-xl border-2 border-slate-100 p-3 space-y-2">`;
-
-    html += `
-        <div class="flex justify-between items-center text-xs">
-            <span class="text-slate-500 font-semibold">Regular Price (₹${p.regularRate} × ${days})</span>
-            <span class="text-slate-400 line-through font-bold">${money(p.regularTotal)}</span>
-        </div>
-    `;
+    html += '<div class="bg-white rounded-xl border-2 border-slate-100 p-3 space-y-2">';
+    html += '<div class="flex justify-between items-center text-xs"><span class="text-slate-500 font-semibold">Regular Price (₹' + p.regularRate + ' × ' + days + ')</span><span class="text-slate-400 line-through font-bold">' + money(p.regularTotal) + '</span></div>';
 
     if (p.active) {
-        html += `
-            <div class="flex justify-between items-center text-xs">
-                <span class="text-sky-600 font-semibold">Discounted (₹${p.discountedRate} × ${days})</span>
-                <span class="text-sky-500 line-through font-bold">${money(p.discountedTotal)}</span>
-            </div>
-            <div class="flex justify-between items-center text-xs pt-1.5 border-t border-dashed border-slate-200">
-                <span class="font-black" style="color: ${colorFrom};">🌟 Special Offer Price</span>
-                <span class="font-black text-base" style="color: ${colorFrom};">${money(p.specialTotal)}</span>
-            </div>
-        `;
+        html += '<div class="flex justify-between items-center text-xs"><span class="text-sky-600 font-semibold">Discounted (₹' + p.discountedRate + ' × ' + days + ')</span><span class="text-sky-500 line-through font-bold">' + money(p.discountedTotal) + '</span></div>';
+        html += '<div class="flex justify-between items-center text-xs pt-1.5 border-t border-dashed border-slate-200"><span class="font-black" style="color: ' + colorFrom + ';">🌟 Special Offer Price</span><span class="font-black text-base" style="color: ' + colorFrom + ';">' + money(p.specialTotal) + '</span></div>';
     } else {
-        html += `
-            <div class="flex justify-between items-center text-xs">
-                <span class="text-sky-700 font-bold">💰 Discounted Price</span>
-                <span class="text-sky-700 font-black">${money(p.discountedTotal)}</span>
-            </div>
-        `;
+        html += '<div class="flex justify-between items-center text-xs"><span class="text-sky-700 font-bold">💰 Discounted Price</span><span class="text-sky-700 font-black">' + money(p.discountedTotal) + '</span></div>';
     }
-
-    if (p.admissionFee > 0) {
-        html += `
-            <div class="pt-2 border-t-2 border-slate-200 space-y-1.5">
-                <p class="text-[10px] font-black text-slate-500 uppercase tracking-wider">🎓 Admission Fee (New Student)</p>
-                <div class="flex justify-between items-center text-xs">
-                    <span class="text-slate-500 font-semibold">Regular</span>
-                    <span class="text-slate-400 line-through font-bold">${money(p.admissionRegularFee)}</span>
-                </div>
-                ${p.active ? `
-                <div class="flex justify-between items-center text-xs">
-                    <span class="text-sky-600 font-semibold">Discounted</span>
-                    <span class="text-sky-500 line-through font-bold">${money(p.admissionDiscountedFee)}</span>
-                </div>
-                <div class="flex justify-between items-center text-xs">
-                    <span class="font-black" style="color: ${colorFrom};">🌟 Special Offer</span>
-                    <span class="font-black" style="color: ${colorFrom};">${money(p.admissionFee)}</span>
-                </div>` : `
-                <div class="flex justify-between items-center text-xs">
-                    <span class="text-sky-700 font-bold">💰 Discounted</span>
-                    <span class="text-sky-700 font-black">${money(p.admissionFee)}</span>
-                </div>`}
-            </div>
-        `;
-    }
-
-    html += `</div>`;
+    html += '</div>';
 
     if (tipMessage) {
-        html += `
-            <div class="mt-3 bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-300 rounded-xl p-3">
-                <p class="text-[11px] font-bold text-amber-900 leading-snug">${tipMessage}</p>
-            </div>
-        `;
+        html += '<div class="mt-3 bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-300 rounded-xl p-3"><p class="text-[11px] font-bold text-amber-900 leading-snug">' + tipMessage + '</p></div>';
     }
 
     card.innerHTML = html;
-    card.style.background = `linear-gradient(135deg, ${colorFrom}11, ${colorTo}11)`;
+    card.style.background = 'linear-gradient(135deg, ' + colorFrom + '11, ' + colorTo + '11)';
     card.style.borderColor = colorFrom;
 }
 
 function renderCheckoutCoupons() {
-    const section = document.getElementById('checkoutCouponSection');
+    var section = document.getElementById('checkoutCouponSection');
     if (!section) return;
 
-    const grantedCount = getGrantedCouponIds().length;
-    const maxAllowed = allowMultipleCoupons() ? Math.min(MAX_COUPONS, grantedCount) : 1;
+    var grantedCount = getGrantedCouponIds().length;
+    var maxAllowed = allowMultipleCoupons() ? Math.min(MAX_COUPONS, grantedCount) : 1;
 
     if (!hasCouponAccess() || grantedCount === 0 || !isOfferActive()) {
         section.classList.add('hidden');
@@ -2123,62 +1958,61 @@ function renderCheckoutCoupons() {
     }
 
     section.classList.remove('hidden');
-    const limitEl = document.getElementById('checkoutCouponLimit');
-    if (limitEl) limitEl.textContent = `(Max ${maxAllowed})`;
+    var limitEl = document.getElementById('checkoutCouponLimit');
+    if (limitEl) limitEl.textContent = '(Max ' + maxAllowed + ')';
 
-    const wrap = document.getElementById('checkoutAvailableCoupons');
-    const granted = currentStudent?.grantedCoupons || [];
-    const appliedCodes = appliedCoupons.map(c => c.code);
-    const atLimit = appliedCoupons.length >= maxAllowed;
+    var wrap = document.getElementById('checkoutAvailableCoupons');
+    var granted = (currentStudent && currentStudent.grantedCoupons) ? currentStudent.grantedCoupons : [];
+    var appliedCodes = appliedCoupons.map(function(c) { return c.code; });
+    var atLimit = appliedCoupons.length >= maxAllowed;
 
-    wrap.innerHTML = granted.map(g => {
-        const code = (g.code || '').toUpperCase();
-        const isApplied = appliedCodes.includes(code);
-        const isExpired = g.expiresAt && new Date(g.expiresAt).getTime() < Date.now();
-        const cat = g.category || g.appliesTo || '';
-        const catMatches = !cat || cat === selectedPlan.category;
-        const catLabel = cat === 'oneOnOne' ? '👑 1-on-1' : cat === 'group' ? '👥 Group' : '🌟 All';
-        const discLabel = g.type === 'flat' ? `₹${g.value} OFF` : `${g.value}% OFF`;
+    var html = '';
+    granted.forEach(function(g) {
+        var code = (g.code || '').toUpperCase();
+        var isApplied = appliedCodes.indexOf(code) !== -1;
+        var isExpired = g.expiresAt && new Date(g.expiresAt).getTime() < Date.now();
+        var cat = g.category || g.appliesTo || '';
+        var catMatches = !cat || cat === selectedPlan.category;
+        var catLabel = cat === 'oneOnOne' ? '👑 1-on-1' : cat === 'group' ? '👥 Group' : '🌟 All';
+        var discLabel = g.type === 'flat' ? '₹' + g.value + ' OFF' : g.value + '% OFF';
 
-        let statusText = '';
+        var statusText = '';
         if (isApplied) statusText = '✅ APPLIED';
         else if (isExpired) statusText = '⛔ EXPIRED';
         else if (atLimit) statusText = '⚠️ LIMIT';
         else if (!catMatches) statusText = '❌ WRONG CATEGORY';
         else statusText = '👆 TAP TO APPLY';
 
-        const isDisabled = isApplied || isExpired || atLimit || !catMatches;
-        const cls = isApplied ? 'bg-green-50 border-green-400'
+        var isDisabled = isApplied || isExpired || atLimit || !catMatches;
+        var cls = isApplied ? 'bg-green-50 border-green-400'
             : isExpired ? 'bg-slate-100 border-slate-300 opacity-60'
             : !catMatches ? 'bg-red-50 border-red-200 opacity-70'
             : 'bg-white border-purple-300 hover:border-purple-500 hover:shadow-md cursor-pointer';
 
-        return `
-            <div class="border-2 rounded-xl p-3 transition ${cls}"
-                 ${!isDisabled ? `onclick="applyCheckoutCoupon('${code}')"` : ''}>
-                <div class="flex justify-between items-center gap-2 mb-1 flex-wrap">
-                    <div class="flex items-center gap-2 min-w-0 flex-wrap">
-                        <span class="coupon-badge">🎟️ ${code}</span>
-                        <span class="text-[10px] font-black text-orange-600">${discLabel}</span>
-                    </div>
-                    <span class="text-[9px] font-black whitespace-nowrap ${isApplied ? 'text-green-700' : isExpired ? 'text-red-600' : 'text-purple-700'}">
-                        ${statusText}
-                    </span>
-                </div>
-                <p class="text-[10px] text-slate-600 font-semibold leading-snug">
-                    <strong class="text-purple-800">For:</strong> ${catLabel} · ${(g.allowedPlans && g.allowedPlans.length > 0) ? g.allowedPlans.join('/') : 'All Plans'}
-                </p>
-            </div>
-        `;
-    }).join('');
+        html += '<div class="border-2 rounded-xl p-3 transition ' + cls + '"' +
+            (!isDisabled ? ' onclick="applyCheckoutCoupon(\'' + code + '\')"' : '') + '>' +
+            '<div class="flex justify-between items-center gap-2 mb-1 flex-wrap">' +
+                '<div class="flex items-center gap-2 min-w-0 flex-wrap">' +
+                    '<span class="coupon-badge">🎟️ ' + code + '</span>' +
+                    '<span class="text-[10px] font-black text-orange-600">' + discLabel + '</span>' +
+                '</div>' +
+                '<span class="text-[9px] font-black whitespace-nowrap ' + (isApplied ? 'text-green-700' : isExpired ? 'text-red-600' : 'text-purple-700') + '">' + statusText + '</span>' +
+            '</div>' +
+            '<p class="text-[10px] text-slate-600 font-semibold leading-snug"><strong class="text-purple-800">For:</strong> ' + catLabel + ' · ' + ((g.allowedPlans && g.allowedPlans.length > 0) ? g.allowedPlans.join('/') : 'All Plans') + '</p>' +
+        '</div>';
+    });
+    wrap.innerHTML = html;
 
-    const appliedWrap = document.getElementById('checkoutAppliedCoupons');
+    var appliedWrap = document.getElementById('checkoutAppliedCoupons');
     if (appliedCoupons.length > 0) {
-        appliedWrap.innerHTML = appliedCoupons.map((c, i) => `
-            <div class="bg-green-100 border border-green-300 rounded-lg p-2.5 flex justify-between items-center text-[11px] font-bold text-green-800">
-                <span>✅ ${c.code} ${c.type === 'flat' ? '(−₹' + c.value + ')' : '(−' + c.value + '%)'}</span>
-                <button onclick="removeCheckoutCoupon(${i})" class="text-red-600 underline">Remove</button>
-            </div>`).join('');
+        var ah = '';
+        appliedCoupons.forEach(function(c, i) {
+            ah += '<div class="bg-green-100 border border-green-300 rounded-lg p-2.5 flex justify-between items-center text-[11px] font-bold text-green-800">' +
+                '<span>✅ ' + c.code + ' ' + (c.type === 'flat' ? '(−₹' + c.value + ')' : '(−' + c.value + '%)') + '</span>' +
+                '<button onclick="removeCheckoutCoupon(' + i + ')" class="text-red-600 underline">Remove</button>' +
+            '</div>';
+        });
+        appliedWrap.innerHTML = ah;
     } else {
         appliedWrap.innerHTML = '';
     }
@@ -2187,58 +2021,61 @@ function renderCheckoutCoupons() {
 async function applyCheckoutCoupon(code) {
     if (!isOfferActive()) { showToast('⛔ Offer has expired', 'error'); return; }
 
-    const granted = currentStudent?.grantedCoupons || [];
-    const match = granted.find(g => (g.code || '').toUpperCase() === code.toUpperCase());
+    var granted = (currentStudent && currentStudent.grantedCoupons) ? currentStudent.grantedCoupons : [];
+    var match = null;
+    for (var i = 0; i < granted.length; i++) {
+        if ((granted[i].code || '').toUpperCase() === code.toUpperCase()) { match = granted[i]; break; }
+    }
     if (!match) { showToast('❌ Coupon not granted to you', 'error'); return; }
 
     if (match.expiresAt && new Date(match.expiresAt).getTime() < Date.now()) {
         showToast('❌ Coupon expired', 'error'); return;
     }
 
-    if (appliedCoupons.some(c => c.code === code)) { showToast('⚠️ Already applied', 'info'); return; }
+    if (appliedCoupons.some(function(c) { return c.code === code; })) { showToast('⚠️ Already applied', 'info'); return; }
 
-    const maxAllowed = allowMultipleCoupons() ? Math.min(MAX_COUPONS, granted.length) : 1;
+    var maxAllowed = allowMultipleCoupons() ? Math.min(MAX_COUPONS, granted.length) : 1;
     if (appliedCoupons.length >= maxAllowed) {
-        showToast(`⚠️ Max ${maxAllowed} coupon${maxAllowed > 1 ? 's' : ''} allowed`, 'error'); return;
+        showToast('⚠️ Max ' + maxAllowed + ' coupon' + (maxAllowed > 1 ? 's' : '') + ' allowed', 'error'); return;
     }
 
-    let c = coupons[code];
+    var c = coupons[code];
     if (!c) {
         try {
-            const snap = await db.collection('coupons').where('code', '==', code).limit(1).get();
+            var snap = await db.collection('coupons').where('code', '==', code).limit(1).get();
             if (!snap.empty) {
-                const fresh = snap.docs[0].data();
-                if (fresh.active !== false) { c = { ...fresh, _id: snap.docs[0].id }; coupons[code] = c; }
+                var fresh = snap.docs[0].data();
+                if (fresh.active !== false) { c = Object.assign({}, fresh, { _id: snap.docs[0].id }); coupons[code] = c; }
             }
         } catch (err) { console.error(err); }
     }
     if (!c) { showToast('❌ Coupon not found', 'error'); return; }
 
-    const couponCat = c.category || c.appliesTo;
+    var couponCat = c.category || c.appliesTo;
     if (couponCat && couponCat !== selectedPlan.category) {
-        showToast(`❌ Only for ${couponCat === 'oneOnOne' ? '1-on-1' : 'Group'} plans`, 'error');
+        showToast('❌ Only for ' + (couponCat === 'oneOnOne' ? '1-on-1' : 'Group') + ' plans', 'error');
         return;
     }
     if (c.allowedPlans && c.allowedPlans.length > 0) {
-        const planKey = `${selectedPlan.plan.days}d`;
-        if (!c.allowedPlans.includes(planKey)) {
-            showToast(`❌ Not valid for ${selectedPlan.plan.days}-day plan`, 'error');
+        var planKey = selectedPlan.plan.days + 'd';
+        if (c.allowedPlans.indexOf(planKey) === -1) {
+            showToast('❌ Not valid for ' + selectedPlan.plan.days + '-day plan', 'error');
             return;
         }
     }
 
-    appliedCoupons.push({ ...c, appliesTo: c.category || c.appliesTo });
+    appliedCoupons.push(Object.assign({}, c, { appliesTo: c.category || c.appliesTo }));
     saveSelectedPlan();
 
     renderCheckoutCoupons();
     renderCheckoutSavings();
     renderCheckoutSummary();
-    showToast(`🎉 ${code} applied!`, 'success');
+    showToast('🎉 ' + code + ' applied!', 'success');
 }
 
 function applyCheckoutManualCoupon() {
-    const input = document.getElementById('checkoutCouponInput');
-    const code = (input?.value || '').trim().toUpperCase();
+    var input = document.getElementById('checkoutCouponInput');
+    var code = (input && input.value ? input.value : '').trim().toUpperCase();
     if (!code) { showToast('⚠️ Enter a coupon code', 'error'); return; }
     if (!isCouponGrantedToStudent(code)) { showToast('❌ Not granted to you', 'error'); return; }
     applyCheckoutCoupon(code);
@@ -2254,45 +2091,40 @@ function removeCheckoutCoupon(idx) {
 }
 
 function renderCheckoutSavings() {
-    const box = document.getElementById('checkoutSavingsBox');
+    var box = document.getElementById('checkoutSavingsBox');
     if (!box || !selectedPlan) return;
 
-    const p = calculateSelectedPlanPricing();
-    if (!p || p.totalSave <= 0) { box.classList.add('hidden'); document.getElementById('checkoutOfferForYou').classList.add('hidden'); return; }
+    var p = calculateSelectedPlanPricing();
+    if (!p || p.totalSave <= 0) {
+        box.classList.add('hidden');
+        document.getElementById('checkoutOfferForYou').classList.add('hidden');
+        return;
+    }
 
-    const totalBefore = p.regularTotal + (p.admissionRegularFee || 0);
-    const pct = totalBefore > 0 ? Math.round((p.totalSave / totalBefore) * 100) : 0;
+    var totalBefore = p.regularTotal;
+    var pct = totalBefore > 0 ? Math.round((p.totalSave / totalBefore) * 100) : 0;
 
     box.classList.remove('hidden');
-    box.innerHTML = `
-        <div class="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 text-white rounded-2xl p-4 text-center shadow-lg">
-            <p class="text-[10px] font-black uppercase tracking-widest opacity-95 mb-1">🎉 You Are Saving</p>
-            <p class="text-3xl font-black">${money(p.totalSave)}</p>
-            <p class="text-xs font-bold opacity-95 mt-1">(${pct}% OFF)</p>
-            <div class="mt-2 pt-2 border-t border-white/30 text-[10px] font-semibold space-y-0.5">
-                ${p.active && p.specialBonusDiscount > 0 ? `<p>✨ Extra from discounted: ₹${p.specialBonusDiscount}</p>` : ''}
-                ${p.admissionSave > 0 ? `<p>🎓 Admission saving: ₹${p.admissionSave}</p>` : ''}
-                ${p.couponDisc > 0 ? `<p>🎟️ Coupon saving: ₹${p.couponDisc}</p>` : ''}
-            </div>
-        </div>
-    `;
+    box.innerHTML = '<div class="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 text-white rounded-2xl p-4 text-center shadow-lg">' +
+        '<p class="text-[10px] font-black uppercase tracking-widest opacity-95 mb-1">🎉 You Are Saving</p>' +
+        '<p class="text-3xl font-black">' + money(p.totalSave) + '</p>' +
+        '<p class="text-xs font-bold opacity-95 mt-1">(' + pct + '% OFF)</p>' +
+    '</div>';
 
-    const offerBox = document.getElementById('checkoutOfferForYou');
+    var offerBox = document.getElementById('checkoutOfferForYou');
     if (p.couponDisc > 0) {
         offerBox.classList.remove('hidden');
-        offerBox.innerHTML = `
-            <div class="offer-for-you-dark">
-                <div class="flex items-start gap-3">
-                    <div class="text-3xl flex-shrink-0">🎁</div>
-                    <div class="flex-1">
-                        <p class="text-[10px] font-black uppercase tracking-widest opacity-95">🎁 OFFER FOR YOU</p>
-                        <p class="text-xs font-bold mt-1">Coupon <strong>${p.usedCoupons.map(u => u.code).join(', ')}</strong> applied!</p>
-                        <p class="text-2xl font-black mt-1">Extra ${money(p.couponDisc)} off</p>
-                        <p class="text-[10px] font-semibold mt-1 opacity-95">Total savings now: ${money(p.totalSave)}</p>
-                    </div>
-                </div>
-            </div>
-        `;
+        var couponCodes = p.usedCoupons.map(function(u) { return u.code; }).join(', ');
+        offerBox.innerHTML = '<div class="offer-for-you-dark">' +
+            '<div class="flex items-start gap-3">' +
+                '<div class="text-3xl flex-shrink-0">🎁</div>' +
+                '<div class="flex-1">' +
+                    '<p class="text-[10px] font-black uppercase tracking-widest opacity-95">🎁 OFFER FOR YOU</p>' +
+                    '<p class="text-xs font-bold mt-1">Coupon <strong>' + couponCodes + '</strong> applied!</p>' +
+                    '<p class="text-2xl font-black mt-1">Extra ' + money(p.couponDisc) + ' off</p>' +
+                '</div>' +
+            '</div>' +
+        '</div>';
     } else {
         offerBox.classList.add('hidden');
     }
@@ -2300,35 +2132,18 @@ function renderCheckoutSavings() {
 
 function renderCheckoutSummary() {
     if (!selectedPlan) return;
-    const p = calculateSelectedPlanPricing();
+    var p = calculateSelectedPlanPricing();
     if (!p) return;
 
-    const summary = document.getElementById('checkoutSummary');
-
-    let rows = '';
-    rows += `<div class="flex justify-between items-center">
-        <span class="text-slate-600 font-semibold">📘 Package Fee</span>
-        <span class="font-black text-slate-800">${money(p.planPrice)}</span>
-    </div>`;
-
-    if (p.admissionFee > 0) {
-        rows += `<div class="flex justify-between items-center">
-            <span class="text-slate-600 font-semibold">🎓 Admission Fee</span>
-            <span class="font-black text-slate-800">${money(p.admissionFee)}</span>
-        </div>`;
-    }
+    var summary = document.getElementById('checkoutSummary');
+    var rows = '';
+    rows += '<div class="flex justify-between items-center"><span class="text-slate-600 font-semibold">📘 Package Fee</span><span class="font-black text-slate-800">' + money(p.planPrice) + '</span></div>';
 
     if (p.couponDisc > 0) {
-        rows += `<div class="flex justify-between items-center text-purple-700 font-bold">
-            <span>🎟️ Coupon Discount</span>
-            <span>− ${money(p.couponDisc)}</span>
-        </div>`;
+        rows += '<div class="flex justify-between items-center text-purple-700 font-bold"><span>🎟️ Coupon Discount</span><span>− ' + money(p.couponDisc) + '</span></div>';
     }
 
-    rows += `<div class="flex justify-between items-center pt-3 mt-1 border-t-2 border-slate-300">
-        <span class="text-slate-800 font-black text-sm">Total Payable</span>
-        <span class="text-2xl font-black text-orange-600">${money(p.final)}</span>
-    </div>`;
+    rows += '<div class="flex justify-between items-center pt-3 mt-1 border-t-2 border-slate-300"><span class="text-slate-800 font-black text-sm">Total Payable</span><span class="text-2xl font-black text-orange-600">' + money(p.final) + '</span></div>';
 
     summary.innerHTML = rows;
 }
@@ -2340,17 +2155,15 @@ function confirmCheckoutAndPay() {
     proceedToPayment();
 }
 
-/* ============ CALCULATE PRICING ============ */
 function calculateSelectedPlanPricing() {
     if (!selectedPlan) return null;
-    const plan = selectedPlan.plan;
-    const active = isOfferActive();
+    var plan = selectedPlan.plan;
+    var active = isOfferActive();
+    var days = Number(plan.days) || 0;
 
-    const days = Number(plan.days) || 0;
-
-    let regularRate = Number(plan.regularRate) || Number(plan.perClassRate) || 0;
-    let discountedRate = Number(plan.discountedRate) || regularRate;
-    let specialRate = Number(plan.specialRate) || (Number(plan.offerPrice) / days) || discountedRate;
+    var regularRate = Number(plan.regularRate) || Number(plan.perClassRate) || 0;
+    var discountedRate = Number(plan.discountedRate) || regularRate;
+    var specialRate = Number(plan.specialRate) || (Number(plan.offerPrice) / days) || discountedRate;
 
     if (!regularRate && selectedPlan.category === 'oneOnOne') {
         regularRate = pricing.oneOnOneRegular;
@@ -2363,83 +2176,64 @@ function calculateSelectedPlanPricing() {
         specialRate = pricing.groupRateSpecial;
     }
 
-    const regularTotal = days * regularRate;
-    const discountedTotal = days * discountedRate;
-    const specialTotal = days * specialRate;
+    var regularTotal = days * regularRate;
+    var discountedTotal = days * discountedRate;
+    var specialTotal = days * specialRate;
 
-    let planPrice;
+    var planPrice;
     if (active) planPrice = specialTotal;
     else planPrice = discountedTotal;
 
-    const specialBonusDiscount = active ? (discountedTotal - specialTotal) : 0;
-    const builtInSave = regularTotal - planPrice;
+    var builtInSave = regularTotal - planPrice;
 
-    let admissionFee = 0;
-    let admissionRegularFee = 0;
-    let admissionDiscountedFee = 0;
-    let admissionSave = 0;
-    if (selectedPlan.category === 'group' && selectedPlan.isNewStudent) {
-        admissionRegularFee = pricing.groupAdmissionRegular;
-        admissionDiscountedFee = pricing.groupAdmissionDiscounted;
-        admissionFee = active ? pricing.groupAdmissionSpecial : pricing.groupAdmissionDiscounted;
-        admissionSave = admissionRegularFee - admissionFee;
-    }
-
-    let couponDisc = 0;
-    const usedCoupons = [];
+    var couponDisc = 0;
+    var usedCoupons = [];
     if (active && hasCouponAccess() && appliedCoupons.length > 0) {
-        appliedCoupons.forEach(c => {
-            const cc = c.category || c.appliesTo;
-            const matchesCat =
-                (selectedPlan.category === 'oneOnOne' && cc === 'oneOnOne') ||
-                (selectedPlan.category === 'group' && cc === 'group');
+        appliedCoupons.forEach(function(c) {
+            var cc = c.category || c.appliesTo;
+            var matchesCat = (selectedPlan.category === 'oneOnOne' && cc === 'oneOnOne') || (selectedPlan.category === 'group' && cc === 'group');
             if (!matchesCat) return;
-            if (c.allowedPlans && !c.allowedPlans.includes(`${days}d`)) return;
+            if (c.allowedPlans && c.allowedPlans.indexOf(days + 'd') === -1) return;
 
-            const base = planPrice + admissionFee;
-            const disc = c.type === 'percent' ? Math.round(base * c.value / 100) : c.value;
+            var disc = c.type === 'percent' ? Math.round(planPrice * c.value / 100) : c.value;
             couponDisc += disc;
-            usedCoupons.push({ code: c.code, type: c.type, value: c.value, disc });
+            usedCoupons.push({ code: c.code, type: c.type, value: c.value, disc: disc });
         });
     }
-    couponDisc = Math.min(couponDisc, planPrice + admissionFee);
+    couponDisc = Math.min(couponDisc, planPrice);
 
-    const final = Math.max(0, planPrice + admissionFee - couponDisc);
-    const totalSave = builtInSave + admissionSave + couponDisc;
+    var final = Math.max(0, planPrice - couponDisc);
+    var totalSave = builtInSave + couponDisc;
 
-    return { 
-        planPrice, currentRate: active ? specialRate : discountedRate,
-        regularTotal, discountedTotal, specialTotal,
-        admissionFee, admissionRegularFee, admissionDiscountedFee, admissionSave,
-        couponDisc, usedCoupons, 
-        final, totalSave, 
-        active, days,
-        regularRate, discountedRate, specialRate,
-        specialBonusDiscount,
-        builtInSave
+    return {
+        planPrice: planPrice, currentRate: active ? specialRate : discountedRate,
+        regularTotal: regularTotal, discountedTotal: discountedTotal, specialTotal: specialTotal,
+        couponDisc: couponDisc, usedCoupons: usedCoupons,
+        final: final, totalSave: totalSave,
+        active: active, days: days,
+        regularRate: regularRate, discountedRate: discountedRate, specialRate: specialRate,
+        builtInSave: builtInSave
     };
 }
 
 /* ============ CONTACT ============ */
 function contactViaWhatsApp() {
-    const cleanPlan = selectedPlan ? cleanPlanName(selectedPlan.subCategoryDisplay + ' - ' + selectedPlan.plan.days + ' Classes') : '';
-    const planLine = cleanPlan ? `\n*Interested Plan:*\n*${cleanPlan}*\n` : '';
-    const msg = `💬 CONTACT REQUEST - English Spur\n\n*Student Details:*\n• Name: *${currentStudent.name}*\n• WhatsApp: *${currentStudent.mobile}*\n• Unique ID: ${currentStudent.uniqueId || currentStudent.id}\n${planLine}\nPlease help me with the course details.\n\nThank you!`;
-    window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+    var cleanPlan = selectedPlan ? cleanPlanName(selectedPlan.subCategoryDisplay + ' - ' + selectedPlan.plan.days + ' Classes') : '';
+    var planLine = cleanPlan ? '\n*Interested Plan:*\n*' + cleanPlan + '*\n' : '';
+    var msg = '💬 CONTACT REQUEST - English Spur\n\n*Student Details:*\n• Name: *' + currentStudent.name + '*\n• WhatsApp: *' + currentStudent.mobile + '*\n• Unique ID: ' + (currentStudent.uniqueId || currentStudent.id) + '\n' + planLine + '\nPlease help me with the course details.\n\nThank you!';
+    window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(msg), '_blank');
 }
 
 /* ============ PROCEED TO PAYMENT ============ */
 function proceedToPayment() {
     if (!selectedPlan) { alert('⚠️ Please select a plan.'); return; }
-    const p = calculateSelectedPlanPricing();
+    var p = calculateSelectedPlanPricing();
 
-    const planDisplayName = `${selectedPlan.subCategoryDisplay} — ${selectedPlan.plan.days} Classes`;
+    var planDisplayName = selectedPlan.subCategoryDisplay + ' — ' + selectedPlan.plan.days + ' Classes';
     document.getElementById('payPlanName').textContent = '📘 ' + planDisplayName;
 
-    let lines = '';
-    if (p.admissionFee > 0) lines = `Monthly: ${money(p.planPrice)} | Admission: ${money(p.admissionFee)}`;
-    else lines = `Package: ${money(p.planPrice)}`;
-    if (p.couponDisc > 0) lines += ` | Coupons: −${money(p.couponDisc)}`;
+    var lines = 'Package: ' + money(p.planPrice);
+    if (p.couponDisc > 0) lines += ' | Coupons: −' + money(p.couponDisc);
     document.getElementById('payLines').textContent = lines;
     document.getElementById('payAmount').textContent = money(p.final);
     document.getElementById('payStep4Amount').textContent = money(p.final);
@@ -2454,8 +2248,8 @@ function proceedToPayment() {
     document.getElementById('thankYouBox').classList.add('hidden');
     document.getElementById('screenshotWarning').classList.add('hidden');
 
-    document.querySelectorAll('.pay-method-radio').forEach(r => r.checked = false);
-    document.querySelectorAll('.checklist-item').forEach(el => el.classList.remove('checked'));
+    document.querySelectorAll('.pay-method-radio').forEach(function(r) { r.checked = false; });
+    document.querySelectorAll('.checklist-item').forEach(function(el) { el.classList.remove('checked'); });
     document.getElementById('payDoneRadio').checked = false;
     document.getElementById('screenshotAttachRadio').checked = false;
 
@@ -2475,16 +2269,16 @@ function proceedToPayment() {
 }
 
 function renderPayStage() {
-    [1, 2, 3, 4, 5].forEach(n => {
-        const el = document.getElementById('payStep' + n);
+    [1, 2, 3, 4, 5].forEach(function(n) {
+        var el = document.getElementById('payStep' + n);
         if (el) el.classList.add('hidden');
     });
-    const current = document.getElementById('payStep' + currentPayStep);
+    var current = document.getElementById('payStep' + currentPayStep);
     if (current) { current.classList.remove('hidden'); current.classList.add('fade-in'); }
 
-    for (let i = 1; i <= 5; i++) {
-        const c = document.getElementById('stepDot' + i + 'Circle');
-        const label = document.getElementById('stepLabel' + i);
+    for (var i = 1; i <= 5; i++) {
+        var c = document.getElementById('stepDot' + i + 'Circle');
+        var label = document.getElementById('stepLabel' + i);
         if (!c) continue;
         c.classList.remove('step-dot-complete');
         if (i < currentPayStep) {
@@ -2501,10 +2295,10 @@ function renderPayStage() {
             if (label) label.className = 'text-[9px] sm:text-[10px] font-bold text-slate-400 hidden sm:inline';
         }
     }
-    for (let i = 1; i <= 4; i++) {
-        const line = document.getElementById('stepLine' + i);
+    for (var j = 1; j <= 4; j++) {
+        var line = document.getElementById('stepLine' + j);
         if (!line) continue;
-        line.className = i < currentPayStep ? 'w-3 sm:w-6 h-1 bg-green-600 rounded' : 'w-3 sm:w-6 h-1 bg-slate-200 rounded';
+        line.className = j < currentPayStep ? 'w-3 sm:w-6 h-1 bg-green-600 rounded' : 'w-3 sm:w-6 h-1 bg-slate-200 rounded';
     }
 
     if (currentPayStep === 3) {
@@ -2518,7 +2312,7 @@ function renderPayStage() {
 
     if (currentPayStep === 4) {
         document.getElementById('payStep4Method').textContent = payMethodSelected || '—';
-        const sEl = document.getElementById('payStep4Screenshot');
+        var sEl = document.getElementById('payStep4Screenshot');
         if (screenshotBase64) { sEl.textContent = '✅ Uploaded'; sEl.className = 'text-green-700'; }
         else { sEl.textContent = '❌ Missing'; sEl.className = 'text-red-600'; }
     }
@@ -2532,8 +2326,8 @@ function payStageGo(n) {
 
 function togglePayDone() {
     payDoneChecked = !payDoneChecked;
-    const item = document.getElementById('payDoneChecklist');
-    const radio = document.getElementById('payDoneRadio');
+    var item = document.getElementById('payDoneChecklist');
+    var radio = document.getElementById('payDoneRadio');
     if (payDoneChecked) { item.classList.add('checked'); radio.checked = true; }
     else { item.classList.remove('checked'); radio.checked = false; }
     document.getElementById('stage1NextBtn').disabled = !payDoneChecked;
@@ -2541,13 +2335,13 @@ function togglePayDone() {
 
 function selectPayMethod(method, idx) {
     payMethodSelected = method;
-    document.querySelectorAll('.pay-method-radio').forEach(r => r.checked = false);
-    for (let i = 1; i <= 7; i++) {
-        const el = document.getElementById('methodItem' + i);
+    document.querySelectorAll('.pay-method-radio').forEach(function(r) { r.checked = false; });
+    for (var i = 1; i <= 7; i++) {
+        var el = document.getElementById('methodItem' + i);
         if (el) el.classList.remove('checked');
     }
-    const item = document.getElementById('methodItem' + idx);
-    const radio = item ? item.querySelector('.pay-method-radio') : null;
+    var item = document.getElementById('methodItem' + idx);
+    var radio = item ? item.querySelector('.pay-method-radio') : null;
     if (item) item.classList.add('checked');
     if (radio) radio.checked = true;
     document.getElementById('stage2NextBtn').disabled = false;
@@ -2560,8 +2354,8 @@ function toggleScreenshotCheck() {
         return;
     }
     screenshotCheckChecked = !screenshotCheckChecked;
-    const item = document.getElementById('screenshotAttachChecklist');
-    const radio = document.getElementById('screenshotAttachRadio');
+    var item = document.getElementById('screenshotAttachChecklist');
+    var radio = document.getElementById('screenshotAttachRadio');
     if (screenshotCheckChecked) { item.classList.add('checked'); radio.checked = true; }
     else { item.classList.remove('checked'); radio.checked = false; }
     document.getElementById('stage3NextBtn').disabled = !(screenshotCheckChecked && screenshotBase64);
@@ -2582,13 +2376,13 @@ function clearScreenshot() {
 
 function copyUpi() {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(UPI_ID).then(() => showToast('✅ UPI ID copied!', 'success')).catch(() => fallbackCopyUpi());
+        navigator.clipboard.writeText(UPI_ID).then(function() { showToast('✅ UPI ID copied!', 'success'); }).catch(function() { fallbackCopyUpi(); });
     } else {
         fallbackCopyUpi();
     }
 }
 function fallbackCopyUpi() {
-    const ta = document.createElement('textarea');
+    var ta = document.createElement('textarea');
     ta.value = UPI_ID;
     ta.style.position = 'fixed'; ta.style.opacity = '0';
     document.body.appendChild(ta); ta.select();
@@ -2601,24 +2395,24 @@ async function submitPurchase() {
     if (!screenshotBase64) { alert('⚠️ Please upload payment screenshot!'); return; }
     if (!selectedPlan) { alert('⚠️ Plan missing. Please reselect.'); return; }
 
-    const p = calculateSelectedPlanPricing();
-    const planDisplayName = `${selectedPlan.subCategoryDisplay} — ${selectedPlan.plan.days} Classes`;
-    const cleanPlan = cleanPlanName(planDisplayName);
-    const payMethod = payMethodSelected || 'Google Pay';
+    var p = calculateSelectedPlanPricing();
+    var planDisplayName = selectedPlan.subCategoryDisplay + ' — ' + selectedPlan.plan.days + ' Classes';
+    var cleanPlan = cleanPlanName(planDisplayName);
+    var payMethod = payMethodSelected || 'Google Pay';
 
-    const submitBtn = document.getElementById('paySubmitBtn');
+    var submitBtn = document.getElementById('paySubmitBtn');
     submitBtn.disabled = true;
     submitBtn.textContent = '⏳ Submitting...';
 
-    const orderId = 'ES-' + Date.now().toString().slice(-8) + '-' + Math.floor(Math.random() * 900 + 100);
+    var orderId = 'ES-' + Date.now().toString().slice(-8) + '-' + Math.floor(Math.random() * 900 + 100);
 
-    const appliedCouponData = p.usedCoupons.map(uc => {
-        const orig = appliedCoupons.find(c => c.code === uc.code);
+    var appliedCouponData = p.usedCoupons.map(function(uc) {
+        var orig = appliedCoupons.filter(function(c) { return c.code === uc.code; })[0];
         return { code: uc.code, type: uc.type, value: uc.value, discount: uc.disc, appliesTo: orig ? (orig.category || orig.appliesTo) : null };
     });
 
-    const order = {
-        orderId,
+    var order = {
+        orderId: orderId,
         studentId: currentStudent.id,
         studentName: currentStudent.name,
         studentMobile: currentStudent.mobile,
@@ -2639,9 +2433,9 @@ async function submitPurchase() {
         isRenewal: isExistingStudent,
         baseAmount: p.planPrice,
         originalAmount: p.regularTotal,
-        admissionFee: p.admissionFee,
+        admissionFee: 0,
         monthlyFee: p.planPrice,
-        couponCode: appliedCoupons.length > 0 ? appliedCoupons.map(c => c.code).join(',') : null,
+        couponCode: appliedCoupons.length > 0 ? appliedCoupons.map(function(c) { return c.code; }).join(',') : null,
         appliedCoupons: appliedCouponData,
         totalDiscount: p.couponDisc,
         finalAmount: p.final,
@@ -2653,39 +2447,37 @@ async function submitPurchase() {
 
     try {
         await db.collection('purchases').add(order);
-        logActivity('purchase_placed', { orderId, planName: planDisplayName, amount: p.final });
+        logActivity('purchase_placed', { orderId: orderId, planName: planDisplayName, amount: p.final });
 
         try {
-            const link = document.createElement('a');
+            var link = document.createElement('a');
             link.href = screenshotBase64;
-            link.download = `${orderId}_${currentStudent.uniqueId || currentStudent.id}.jpg`;
+            link.download = orderId + '_' + (currentStudent.uniqueId || currentStudent.id) + '.jpg';
             link.click();
         } catch (e) { console.error('Screenshot download failed:', e); }
 
-        let breakdown = `• Package Price: ${money(p.planPrice)}\n`;
-        if (p.admissionFee > 0) breakdown += `• Admission Fee: ${money(p.admissionFee)}\n`;
-        p.usedCoupons.forEach(uc => { breakdown += `• Coupon ${uc.code}: −${money(uc.disc)}\n`; });
-        breakdown += `• Final Total Payable: ${money(p.final)}`;
+        var breakdown = '• Package Price: ' + money(p.planPrice) + '\n';
+        p.usedCoupons.forEach(function(uc) { breakdown += '• Coupon ' + uc.code + ': −' + money(uc.disc) + '\n'; });
+        breakdown += '• Final Total Payable: ' + money(p.final);
 
-        const msg = `✅ *PAYMENT COMPLETED — English Spur*\n\n*🆔 ORDER ID: ${orderId}*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order.\n\n--- STUDENT DETAILS ---\n• Name: *${currentStudent.name}*\n• Mobile: *${currentStudent.mobile}*\n• Unique ID: ${currentStudent.uniqueId || currentStudent.id}\n${currentStudent.studentCode ? `• Student Code: ${currentStudent.studentCode}` : ''}\n\n--- PLAN ENROLLED ---\n*${cleanPlan}*\n\n--- FEE BREAKDOWN ---\n${breakdown}\n-------------------------\n*💵 Amount Paid: ${money(p.final)}*\n\n--- PAYMENT INFO ---\n• Method: ${payMethod}\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\nKindly verify and send me the receipt.\n\nThank you 🙏`;
-        window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+        var msg = '✅ *PAYMENT COMPLETED — English Spur*\n\n*🆔 ORDER ID: ' + orderId + '*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order.\n\n--- STUDENT DETAILS ---\n• Name: *' + currentStudent.name + '*\n• Mobile: *' + currentStudent.mobile + '*\n• Unique ID: ' + (currentStudent.uniqueId || currentStudent.id) + '\n\n--- PLAN ENROLLED ---\n*' + cleanPlan + '*\n\n--- FEE BREAKDOWN ---\n' + breakdown + '\n-------------------------\n*💵 Amount Paid: ' + money(p.final) + '*\n\n--- PAYMENT INFO ---\n• Method: ' + payMethod + '\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\nKindly verify and send me the receipt.\n\nThank you 🙏';
+        window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(msg), '_blank');
 
         document.getElementById('stage5OrderId').textContent = orderId;
 
         selectedPlan = null;
         appliedCoupons = [];
-        pendingCouponCodes = [];
         saveSelectedPlan();
 
-        [1, 2, 3, 4, 5].forEach(n => {
-            const el = document.getElementById('payStep' + n);
+        [1, 2, 3, 4, 5].forEach(function(n) {
+            var el = document.getElementById('payStep' + n);
             if (el) el.classList.add('hidden');
         });
         currentPayStep = 5;
         renderPayStage();
 
-        setTimeout(() => {
-            const tyb = document.getElementById('thankYouBox');
+        setTimeout(function() {
+            var tyb = document.getElementById('thankYouBox');
             tyb.classList.remove('hidden');
             tyb.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 350);
@@ -2711,25 +2503,19 @@ function backToDashboard() {
     showToast('🏠 Back to dashboard', 'success');
 }
 
-function switchToRenewal() {
-    if (!currentPlanData) { showToast('⚠️ No current plan to renew.', 'error'); return; }
-    showExplorePlans();
-    showToast('♻️ Select a plan to renew (no admission fee)', 'info');
-}
-
 /* ============ REFRESH ============ */
 async function refreshDashboard() {
     if (!currentStudent || !currentStudent.id) { showToast('⚠️ Please login first.', 'error'); return; }
-    const btn = document.getElementById('refreshBtn');
+    var btn = document.getElementById('refreshBtn');
     btn.disabled = true; btn.classList.add('spinning');
     showToast('🔄 Refreshing...', 'info');
 
     try {
-        const studentDoc = await db.collection('students').doc(currentStudent.id).get();
+        var studentDoc = await db.collection('students').doc(currentStudent.id).get();
         if (studentDoc.exists) {
-            const fresh = studentDoc.data();
+            var fresh = studentDoc.data();
             if (fresh.blocked === true) { alert('🚫 Your account has been blocked.'); studentLogout(); return; }
-            currentStudent = { id: studentDoc.id, ...fresh };
+            currentStudent = Object.assign({ id: studentDoc.id }, fresh);
             saveStudentToStorage(currentStudent);
             isExistingStudent = !!(currentStudent.studentCode || currentStudent.studentId);
             updateStudentInfo();
@@ -2748,125 +2534,322 @@ async function refreshDashboard() {
 
 /* ============ HISTORY ============ */
 function loadHistory() {
-    const hBadge = document.getElementById('historyBadge');
+    var hBadge = document.getElementById('historyBadge');
     if (hBadge) hBadge.classList.add('hidden');
-    const aBadge = document.getElementById('actionBadge');
+    var aBadge = document.getElementById('actionBadge');
     if (aBadge) aBadge.classList.add('hidden');
 
     if (!currentStudent) return;
-    const list = document.getElementById('historyList');
+    var list = document.getElementById('historyList');
     list.innerHTML = '<p class="text-center text-slate-500 py-6 text-sm">🔄 Loading...</p>';
 
     db.collection('purchases')
       .where('studentId', '==', currentStudent.id)
-      .onSnapshot(snap => {
+      .onSnapshot(function(snap) {
         list.innerHTML = '';
         if (snap.empty) {
             list.innerHTML = '<div class="text-center py-10 bg-slate-50 rounded-xl"><p class="text-3xl mb-2">📭</p><p class="text-slate-600 font-bold text-sm">No orders yet.</p></div>';
             return;
         }
-        const items = [];
-        snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-        items.sort((a, b) => {
-            const ta = a.createdAt ? a.createdAt.toDate().getTime() : 0;
-            const tb = b.createdAt ? b.createdAt.toDate().getTime() : 0;
+        var items = [];
+        snap.forEach(function(d) { items.push(Object.assign({ id: d.id }, d.data())); });
+        items.sort(function(a, b) {
+            var ta = a.createdAt ? a.createdAt.toDate().getTime() : 0;
+            var tb = b.createdAt ? b.createdAt.toDate().getTime() : 0;
             return tb - ta;
         });
 
-        items.forEach(p => {
-            const colors = { pending: 'bg-yellow-50 text-yellow-800 border-yellow-300', approved: 'bg-green-50 text-green-800 border-green-300', rejected: 'bg-red-50 text-red-800 border-red-300' };
-            const badges = { pending: 'bg-yellow-500', approved: 'bg-green-600', rejected: 'bg-red-600' };
-            const icons = { pending: '⏳', approved: '✅', rejected: '❌' };
-            const statusText = { pending: 'PENDING', approved: 'APPROVED', rejected: 'REJECTED' };
+        items.forEach(function(p) {
+            var colors = { pending: 'bg-yellow-50 text-yellow-800 border-yellow-300', approved: 'bg-green-50 text-green-800 border-green-300', rejected: 'bg-red-50 text-red-800 border-red-300' };
+            var badges = { pending: 'bg-yellow-500', approved: 'bg-green-600', rejected: 'bg-red-600' };
+            var icons = { pending: '⏳', approved: '✅', rejected: '❌' };
+            var statusText = { pending: 'PENDING', approved: 'APPROVED', rejected: 'REJECTED' };
 
-            const div = document.createElement('div');
-            div.className = `border-2 rounded-xl p-3.5 ${colors[p.status] || 'bg-slate-50 border-slate-200'}`;
-            div.innerHTML = `
-                <div class="flex justify-between items-start gap-2 flex-wrap mb-2">
-                    <div class="flex-1 min-w-0"><p class="font-black text-xs sm:text-sm text-slate-800 truncate">${p.planName}</p></div>
-                    <span class="text-white text-[10px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap ${badges[p.status]}">${icons[p.status]} ${statusText[p.status]}</span>
-                </div>
-                <div class="bg-white rounded-lg p-3 mb-2 space-y-1.5">
-                    <div class="flex justify-between items-center text-[11px] gap-2 bg-blue-50 border-2 border-blue-300 rounded-lg px-3 py-2 mb-1">
-                        <span class="text-blue-700 font-black text-[10px] uppercase tracking-wider">🆔 Order ID</span>
-                        <strong class="text-blue-800 text-right font-mono font-black text-[15px] tracking-widest">${p.orderId || '—'}</strong>
-                    </div>
-                    <div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">📅 Date:</span><strong class="text-slate-700 text-right">${formatFullTimestamp(p.createdAt)}</strong></div>
-                    <div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">💰 Amount:</span><strong class="text-orange-600 text-sm">${money(p.finalAmount)}</strong></div>
-                    ${p.couponCode ? `<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">🎟️ Coupon:</span><strong class="text-slate-700 text-right">${p.couponCode}</strong></div>` : ''}
-                    ${p.paymentMethod ? `<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">📱 UPI:</span><strong class="text-slate-700 text-right">${p.paymentMethod}</strong></div>` : ''}
-                    ${p.receiptNo ? `<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">🧾 Receipt:</span><strong class="text-green-700 text-right">${p.receiptNo}</strong></div>` : ''}
-                    ${p.rejectionReason ? `<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">⚠️ Reason:</span><strong class="text-red-700 text-right">${p.rejectionReason}</strong></div>` : ''}
-                </div>
-                ${p.status === 'approved' ? `<button onclick="viewReceipt('${p.id}')" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2.5 rounded-lg text-[11px] mb-2">📄 View Receipt</button>` : ''}
-                ${p.status === 'rejected' ? `<button onclick="openReuploadModal('${p.id}')" class="w-full bg-red-600 hover:bg-red-700 text-white font-black py-2.5 rounded-lg text-[12px] mb-2 shadow-md">🔄 Re-upload Screenshot</button>` : ''}
-            `;
+            var div = document.createElement('div');
+            div.className = 'border-2 rounded-xl p-3.5 ' + (colors[p.status] || 'bg-slate-50 border-slate-200');
+
+            var inner = '';
+            inner += '<div class="flex justify-between items-start gap-2 flex-wrap mb-2">';
+            inner += '<div class="flex-1 min-w-0"><p class="font-black text-xs sm:text-sm text-slate-800 truncate">' + (p.planName || '—') + '</p></div>';
+            inner += '<span class="text-white text-[10px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap ' + (badges[p.status] || '') + '">' + (icons[p.status] || '') + ' ' + (statusText[p.status] || '') + '</span>';
+            inner += '</div>';
+
+            inner += '<div class="bg-white rounded-lg p-3 mb-2 space-y-1.5">';
+            inner += '<div class="flex justify-between items-center text-[11px] gap-2 bg-blue-50 border-2 border-blue-300 rounded-lg px-3 py-2 mb-1">';
+            inner += '<span class="text-blue-700 font-black text-[10px] uppercase tracking-wider">🆔 Order ID</span>';
+            inner += '<strong class="text-blue-800 text-right font-mono font-black text-[15px] tracking-widest">' + (p.orderId || '—') + '</strong>';
+            inner += '</div>';
+            inner += '<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">📅 Date:</span><strong class="text-slate-700 text-right">' + formatFullTimestamp(p.createdAt) + '</strong></div>';
+            inner += '<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">💰 Amount:</span><strong class="text-orange-600 text-sm">' + money(p.finalAmount) + '</strong></div>';
+            if (p.couponCode) inner += '<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">🎟️ Coupon:</span><strong class="text-slate-700 text-right">' + p.couponCode + '</strong></div>';
+            if (p.paymentMethod) inner += '<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">📱 UPI:</span><strong class="text-slate-700 text-right">' + p.paymentMethod + '</strong></div>';
+            if (p.receiptNo) inner += '<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">🧾 Receipt:</span><strong class="text-green-700 text-right">' + p.receiptNo + '</strong></div>';
+            if (p.rejectionReason) inner += '<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">⚠️ Reason:</span><strong class="text-red-700 text-right">' + p.rejectionReason + '</strong></div>';
+            inner += '</div>';
+
+            if (p.status === 'approved') {
+                inner += '<button onclick="viewReceipt(\'' + p.id + '\')" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2.5 rounded-lg text-[11px] mb-2 flex items-center justify-center gap-2">📄 View Receipt & Download</button>';
+            }
+            if (p.status === 'rejected') {
+                inner += '<button onclick="openReuploadModal(\'' + p.id + '\')" class="w-full bg-red-600 hover:bg-red-700 text-white font-black py-2.5 rounded-lg text-[12px] mb-2 shadow-md">🔄 Re-upload Screenshot</button>';
+            }
+
+            div.innerHTML = inner;
             list.appendChild(div);
         });
-      }, err => {
+      }, function(err) {
         console.error(err);
         list.innerHTML = '<p class="text-center text-red-500 py-6 text-sm">Error: ' + err.message + '</p>';
       });
 }
 
-/* ============ RECEIPT ============ */
+/* ============ VIEW RECEIPT (AUTO DOWNLOAD + FULL SCREEN PREVIEW) ============ */
 async function viewReceipt(id) {
-    const doc = await db.collection('purchases').doc(id).get();
-    if (!doc.exists) return;
-    const p = doc.data();
-    const html = buildReceipt(p);
-    const w = window.open('', '_blank');
-    w.document.write(html);
-    w.document.close();
+    try {
+        var doc = await db.collection('purchases').doc(id).get();
+        if (!doc.exists) { showToast('⚠️ Receipt not found', 'error'); return; }
+        var p = doc.data();
+        var html = buildReceipt(p);
+        var safeName = String(p.orderId || p.receiptNo || Date.now()).replace(/[^a-zA-Z0-9_-]/g, '_');
+        var fileName = 'EnglishSpur_Receipt_' + safeName + '.html';
+
+        // Auto download to device
+        downloadReceiptFile(html, fileName);
+
+        // Show full-screen preview
+        showReceiptPreview(html);
+
+        showToast('✅ Receipt downloaded!', 'success');
+    } catch (err) {
+        console.error(err);
+        alert('❌ Error: ' + err.message);
+    }
 }
 
+function downloadReceiptFile(htmlContent, fileName) {
+    try {
+        var blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(function() {
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }, 1500);
+    } catch (err) {
+        console.error('Download failed:', err);
+        try {
+            var dataUrl = 'data:text/html;charset=utf-8,' + encodeURIComponent(htmlContent);
+            var link2 = document.createElement('a');
+            link2.href = dataUrl;
+            link2.download = fileName;
+            link2.click();
+        } catch (e2) {
+            alert('❌ Download failed. Please try again.');
+        }
+    }
+}
+
+function showReceiptPreview(html) {
+    // Always use fullscreen iframe overlay for consistent mobile experience
+    showReceiptInIframe(html);
+}
+
+function showReceiptInIframe(html) {
+    var existing = document.getElementById('receiptOverlay');
+    if (existing) existing.remove();
+
+    var overlay = document.createElement('div');
+    overlay.id = 'receiptOverlay';
+    overlay.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #f4f7f6; z-index: 999999; display: flex; flex-direction: column; overflow: hidden;';
+
+    var topBar = document.createElement('div');
+    topBar.style.cssText = 'background: linear-gradient(135deg, #1d4ed8, #1e40af); color: white; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.15); flex-shrink: 0;';
+    topBar.innerHTML = '<div style="display: flex; align-items: center; gap: 10px;">' +
+        '<span style="font-size: 22px;">🧾</span>' +
+        '<div><p style="font-size: 14px; font-weight: 900; margin: 0;">PAYMENT RECEIPT</p>' +
+        '<p style="font-size: 11px; margin: 2px 0 0; opacity: 0.9;">English Spur · Downloaded ✅</p></div></div>' +
+        '<button onclick="closeReceiptOverlay()" style="background: rgba(255,255,255,0.25); border: none; color: white; font-size: 22px; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center;">&times;</button>';
+
+    var iframe = document.createElement('iframe');
+    iframe.id = 'receiptIframe';
+    iframe.style.cssText = 'flex: 1; width: 100%; border: none; background: #f4f7f6;';
+
+    overlay.appendChild(topBar);
+    overlay.appendChild(iframe);
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+
+    var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    iframeDoc.open();
+    iframeDoc.write(html);
+    iframeDoc.close();
+}
+
+function closeReceiptOverlay() {
+    var overlay = document.getElementById('receiptOverlay');
+    if (overlay) {
+        overlay.remove();
+        document.body.style.overflow = '';
+    }
+}
+
+/* ============ BUILD RECEIPT (LARGE FONTS, NO TEMPLATE LITERALS) ============ */
 function buildReceipt(p) {
-    const date = p.verifiedAt ? formatDateOnly(p.verifiedAt) : new Date().toLocaleDateString('en-IN');
-    return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Receipt ${p.receiptNo}</title>
-    <style>* { box-sizing: border-box; } body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 15px; margin: 0; }
-    .paper { max-width: 620px; margin: auto; background: #fff; border: 2px solid #16a34a; border-radius: 12px; padding: 22px; }
-    .header { text-align: center; padding-bottom: 12px; border-bottom: 2px dashed #94a3b8; }
-    .brand { font-size: 22px; font-weight: 900; color: #1d4ed8; } .brand span { color: #ea580c; }
-    .org { font-size: 12px; font-weight: 800; color: #334155; margin-top: 3px; }
-    .addr { font-size: 10px; color: #64748b; margin-top: 2px; }
-    .title { text-align: center; margin: 16px 0; } .title h2 { font-size: 17px; font-weight: 900; letter-spacing: 2px; margin: 0; }
-    .orderid-box { background: #eff6ff; border: 2px solid #bfdbfe; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; text-align: center; }
-    .orderid-label { font-size: 10px; font-weight: 800; color: #1d4ed8; text-transform: uppercase; letter-spacing: 1px; }
-    .orderid-value { font-family: monospace; font-size: 22px; font-weight: 900; color: #1e40af; letter-spacing: 2px; margin-top: 3px; }
-    .meta { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 14px; flex-wrap: wrap; gap: 6px; }
-    .section { margin-bottom: 14px; } .section h3 { font-size: 11px; font-weight: 900; color: #1d4ed8; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; margin-bottom: 6px; text-transform: uppercase; }
-    .row { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; gap: 8px; } .row span:last-child { text-align: right; word-break: break-word; }
-    .total { background: linear-gradient(135deg, #1d4ed8, #1e40af); color: #fff; border-radius: 8px; padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; margin: 14px 0; }
-    .total .lbl { font-size: 11px; font-weight: 700; } .total .amt { font-size: 20px; font-weight: 900; }
-    .footer { text-align: center; margin-top: 16px; padding-top: 12px; border-top: 2px dashed #94a3b8; }
-    .footer p { font-size: 11px; color: #475569; margin: 3px 0; }
-    .noprint { text-align: center; margin-top: 18px; } .noprint button { background: #1d4ed8; color: #fff; border: none; padding: 12px 22px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
-    @media print { body { background: #fff; padding: 0; } .noprint { display: none; } }</style></head><body>
-    <div class="paper">
-        <div class="header"><div class="brand">ENGLISH <span>SPUR</span></div><div class="org">English Spur English Training Academy</div><div class="addr">Kanaipur, Bantul, Bagnan, Howrah - 711312</div><div class="addr">📞 +91 9875340842 · ✉️ englishspur2020@gmail.com</div></div>
-        <div class="title"><h2>PAYMENT RECEIPT</h2></div>
-        <div class="orderid-box"><div class="orderid-label">🆔 Order ID</div><div class="orderid-value">${p.orderId || '—'}</div></div>
-        <div class="meta"><div><strong>Receipt:</strong> ${p.receiptNo}</div><div><strong>Date:</strong> ${date}</div></div>
-        <div class="section"><h3>Student Details</h3><div class="row"><span>Name</span><strong>${p.studentName}</strong></div><div class="row"><span>Mobile</span><strong>${p.studentMobile}</strong></div>${p.studentCode ? `<div class="row"><span>Student Code</span><strong>${p.studentCode}</strong></div>` : ''}</div>
-        <div class="section"><h3>Plan Enrolled</h3><div style="font-size:13px; font-weight:800; color:#1e3a8a;">${p.planName}</div>
-        ${p.admissionFee > 0 ? `<div style="margin-top:6px; font-size:11px; color:#1e3a8a;"><strong>Admission Fee:</strong> ₹${p.admissionFee}</div>` : ''}
-        ${p.monthlyFee > 0 ? `<div style="margin-top:4px; font-size:11px; color:#1e3a8a;"><strong>Package Fee:</strong> ₹${p.monthlyFee}</div>` : ''}
-        ${p.appliedCoupons && p.appliedCoupons.length > 0 ? `<div style="margin-top:6px; font-size:11px; color:#166534;"><strong>Coupons applied:</strong><br>${p.appliedCoupons.map(c => `• ${c.code} → −₹${c.discount}`).join('<br>')}</div>` : ''}
-        </div>
-        <div class="total"><span class="lbl">AMOUNT PAID</span><span class="amt">${money(p.finalAmount)}</span></div>
-        <div class="section"><h3>Payment Info</h3><div class="row"><span>Method</span><strong>${p.paymentMethod || 'UPI'}</strong></div><div class="row"><span>Status</span><strong style="color:#16a34a;">✅ Verified</strong></div></div>
-        <div class="footer"><p>Thank you for choosing English Spur!</p><p style="font-weight:800; color:#1d4ed8;">— Sovan Kapri, Founder &amp; Lead Trainer</p></div>
-    </div>
-    <div class="noprint"><button onclick="window.print()">🖨️ Print / Save as PDF</button></div>
-    </body></html>`;
+    var date = p.verifiedAt ? formatDateOnly(p.verifiedAt) : new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' });
+
+    var html = '';
+    html += '<!DOCTYPE html>';
+    html += '<html lang="en">';
+    html += '<head>';
+    html += '<meta charset="UTF-8">';
+    html += '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">';
+    html += '<title>Receipt ' + (p.receiptNo || '') + '</title>';
+    html += '<style>';
+    html += '* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }';
+    html += 'html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f4f7f6; color: #1e293b; -webkit-text-size-adjust: 100%; min-height: 100vh; }';
+    html += '.receipt-page { max-width: 720px; width: 100%; margin: 0 auto; padding: 14px; min-height: 100vh; display: flex; flex-direction: column; }';
+    html += '.paper { background: #fff; border: 2px solid #16a34a; border-radius: 16px; padding: 22px 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); flex: 1; }';
+    html += '.header { text-align: center; padding-bottom: 16px; border-bottom: 2px dashed #94a3b8; }';
+    html += '.brand { font-size: 32px; font-weight: 900; color: #1d4ed8; letter-spacing: 1px; line-height: 1.1; }';
+    html += '.brand span { color: #ea580c; }';
+    html += '.org { font-size: 15px; font-weight: 800; color: #334155; margin-top: 6px; }';
+    html += '.addr { font-size: 13px; color: #64748b; margin-top: 4px; line-height: 1.5; }';
+    html += '.title { text-align: center; margin: 22px 0 20px; }';
+    html += '.title h2 { font-size: 24px; font-weight: 900; letter-spacing: 2px; margin: 0; color: #1e293b; }';
+    html += '.title p { font-size: 14px; color: #64748b; margin: 5px 0 0; font-weight: 600; }';
+    html += '.orderid-box { background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 2px solid #3b82f6; border-radius: 12px; padding: 16px 18px; margin-bottom: 20px; text-align: center; }';
+    html += '.orderid-label { font-size: 13px; font-weight: 800; color: #1d4ed8; text-transform: uppercase; letter-spacing: 1px; }';
+    html += '.orderid-value { font-family: "Courier New", monospace; font-size: 28px; font-weight: 900; color: #1e40af; letter-spacing: 2px; margin-top: 8px; word-break: break-all; }';
+    html += '.meta { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; background: #f8fafc; padding: 12px 14px; border-radius: 8px; }';
+    html += '.meta > div { font-weight: 700; color: #475569; }';
+    html += '.section { margin-bottom: 20px; }';
+    html += '.section h3 { font-size: 15px; font-weight: 900; color: #1d4ed8; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin: 0 0 12px 0; text-transform: uppercase; letter-spacing: 1px; }';
+    html += '.row { display: flex; justify-content: space-between; font-size: 16px; padding: 10px 0; gap: 12px; border-bottom: 1px dashed #f1f5f9; }';
+    html += '.row:last-child { border-bottom: none; }';
+    html += '.row span:first-child { color: #64748b; font-weight: 600; flex-shrink: 0; }';
+    html += '.row span:last-child { text-align: right; word-break: break-word; color: #1e293b; font-weight: 700; }';
+    html += '.plan-name { font-size: 18px; font-weight: 800; color: #1e3a8a; line-height: 1.5; padding: 12px 14px; background: #eff6ff; border-radius: 8px; border-left: 4px solid #1d4ed8; }';
+    html += '.sub-detail { margin-top: 10px; font-size: 15px; color: #1e3a8a; padding: 5px 0; font-weight: 600; }';
+    html += '.sub-detail strong { color: #1e40af; }';
+    html += '.coupon-info { margin-top: 12px; padding: 12px 14px; background: #f0fdf4; border-radius: 8px; border-left: 4px solid #16a34a; font-size: 14px; color: #166534; font-weight: 700; line-height: 1.7; }';
+    html += '.total { background: linear-gradient(135deg, #1d4ed8, #1e40af); color: #fff; border-radius: 12px; padding: 18px 20px; display: flex; justify-content: space-between; align-items: center; margin: 22px 0; box-shadow: 0 6px 20px rgba(29,78,216,0.35); }';
+    html += '.total .lbl { font-size: 15px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; opacity: 0.95; }';
+    html += '.total .amt { font-size: 34px; font-weight: 900; letter-spacing: 0.5px; }';
+    html += '.footer { text-align: center; margin-top: 22px; padding-top: 18px; border-top: 2px dashed #94a3b8; }';
+    html += '.footer p { font-size: 14px; color: #475569; margin: 5px 0; font-weight: 600; }';
+    html += '.footer .sig { font-weight: 900; color: #1d4ed8; font-size: 16px; margin-top: 10px; }';
+    html += '.noprint { text-align: center; margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; padding: 0 14px 24px; }';
+    html += '.noprint button { background: linear-gradient(135deg, #1d4ed8, #1e40af); color: #fff; border: none; padding: 16px 28px; border-radius: 12px; font-weight: 900; cursor: pointer; font-size: 15px; flex: 1; min-width: 150px; max-width: 300px; box-shadow: 0 6px 20px rgba(29,78,216,0.3); letter-spacing: 0.5px; text-transform: uppercase; }';
+    html += '.noprint button.green { background: linear-gradient(135deg, #16a34a, #15803d); }';
+    html += '</style>';
+    html += '</head>';
+    html += '<body>';
+    html += '<div class="receipt-page">';
+    html += '<div class="paper">';
+
+    html += '<div class="header">';
+    html += '<div class="brand">ENGLISH <span>SPUR</span></div>';
+    html += '<div class="org">English Spur English Training Academy</div>';
+    html += '<div class="addr">Kanaipur, Bantul, Bagnan, Howrah - 711312</div>';
+    html += '<div class="addr">📞 +91 9875340842 · ✉️ englishspur2020@gmail.com</div>';
+    html += '</div>';
+
+    html += '<div class="title">';
+    html += '<h2>PAYMENT RECEIPT</h2>';
+    html += '<p>পেমেন্ট রসিদ</p>';
+    html += '</div>';
+
+    html += '<div class="orderid-box">';
+    html += '<div class="orderid-label">🆔 Order ID</div>';
+    html += '<div class="orderid-value">' + (p.orderId || '—') + '</div>';
+    html += '</div>';
+
+    html += '<div class="meta">';
+    html += '<div><strong>Receipt:</strong> ' + (p.receiptNo || '—') + '</div>';
+    html += '<div><strong>Date:</strong> ' + date + '</div>';
+    html += '</div>';
+
+    html += '<div class="section">';
+    html += '<h3>👤 Student Details</h3>';
+    html += '<div class="row"><span>Name</span><span>' + (p.studentName || '—') + '</span></div>';
+    html += '<div class="row"><span>Mobile</span><span>' + (p.studentMobile || '—') + '</span></div>';
+    if (p.studentCode) html += '<div class="row"><span>Student Code</span><span>' + p.studentCode + '</span></div>';
+    if (p.courseEnrolled) html += '<div class="row"><span>Course</span><span>' + p.courseEnrolled + '</span></div>';
+    html += '</div>';
+
+    html += '<div class="section">';
+    html += '<h3>📘 Plan Enrolled</h3>';
+    html += '<div class="plan-name">' + (p.planName || '—') + '</div>';
+    if (p.planDays) html += '<div class="sub-detail">📚 Duration: <strong>' + p.planDays + ' Classes</strong></div>';
+    if (p.perClassRate) html += '<div class="sub-detail">💵 Per Class Rate: <strong>₹' + p.perClassRate + '</strong></div>';
+    if (p.appliedCoupons && p.appliedCoupons.length > 0) {
+        html += '<div class="coupon-info">';
+        html += '<strong>🎟️ Coupons Applied (' + p.appliedCoupons.length + '):</strong><br>';
+        p.appliedCoupons.forEach(function(c) {
+            html += '• ' + c.code + ' → −₹' + c.discount + '<br>';
+        });
+        if (p.totalDiscount) html += '<strong>💰 Total Discount: −₹' + p.totalDiscount + '</strong>';
+        html += '</div>';
+    }
+    html += '</div>';
+
+    html += '<div class="total">';
+    html += '<span class="lbl">Amount Paid</span>';
+    html += '<span class="amt">' + money(p.finalAmount || 0) + '</span>';
+    html += '</div>';
+
+    html += '<div class="section">';
+    html += '<h3>💳 Payment Information</h3>';
+    html += '<div class="row"><span>Payment Method</span><span>' + (p.paymentMethod || 'UPI') + '</span></div>';
+    html += '<div class="row"><span>Status</span><span style="color:#16a34a;font-weight:900;">✅ Verified & Approved</span></div>';
+    html += '</div>';
+
+    html += '<div class="footer">';
+    html += '<p>Thank you for choosing English Spur!</p>';
+    html += '<p class="sig">— Sovan Kapri, Founder & Lead Trainer</p>';
+    html += '</div>';
+
+    html += '</div>';
+
+    html += '<div class="noprint">';
+    html += '<button class="green" onclick="downloadThisReceipt()">⬇️ Download Again</button>';
+    html += '<button onclick="window.print()">🖨️ Print / PDF</button>';
+    html += '</div>';
+
+    html += '</div>';
+
+    html += '<scr' + 'ipt>';
+    html += 'function downloadThisReceipt() {';
+    html += '  var fullHtml = "<!DOCTYPE html>" + document.documentElement.outerHTML;';
+    html += '  var blob = new Blob([fullHtml], { type: "text/html;charset=utf-8" });';
+    html += '  var url = URL.createObjectURL(blob);';
+    html += '  var link = document.createElement("a");';
+    html += '  link.href = url;';
+    html += '  link.download = "EnglishSpur_Receipt_" + Date.now() + ".html";';
+    html += '  document.body.appendChild(link);';
+    html += '  link.click();';
+    html += '  document.body.removeChild(link);';
+    html += '  setTimeout(function() { URL.revokeObjectURL(url); }, 1500);';
+    html += '}';
+    html += '</scr' + 'ipt>';
+
+    html += '</body>';
+    html += '</html>';
+
+    return html;
 }
 
 /* ============ RE-UPLOAD ============ */
 async function openReuploadModal(orderId) {
     try {
-        const doc = await db.collection('purchases').doc(orderId).get();
+        var doc = await db.collection('purchases').doc(orderId).get();
         if (!doc.exists) { alert('⚠️ Order not found.'); return; }
-        const p = doc.data();
+        var p = doc.data();
 
         reuploadOrderId = orderId;
         reuploadOrderRef = p.orderId || '—';
@@ -2880,16 +2863,16 @@ async function openReuploadModal(orderId) {
         document.getElementById('reuploadScreenshotInput').value = '';
         document.getElementById('reuploadPreviewBox').classList.add('hidden');
         document.getElementById('reuploadPreviewImg').src = '';
-        document.querySelectorAll('input[name="reuploadMethod"]').forEach(r => r.checked = false);
-        document.querySelectorAll('.reupload-method-item').forEach(el => {
+        document.querySelectorAll('input[name="reuploadMethod"]').forEach(function(r) { r.checked = false; });
+        document.querySelectorAll('.reupload-method-item').forEach(function(el) {
             el.classList.remove('checked'); el.style.borderColor = ''; el.style.background = '';
         });
 
         if (p.paymentMethod) {
-            document.querySelectorAll('input[name="reuploadMethod"]').forEach(r => {
+            document.querySelectorAll('input[name="reuploadMethod"]').forEach(function(r) {
                 if (r.value === p.paymentMethod) {
                     r.checked = true;
-                    const parent = r.closest('.reupload-method-item');
+                    var parent = r.closest('.reupload-method-item');
                     if (parent) { parent.classList.add('checked'); parent.style.borderColor = '#16a34a'; parent.style.background = '#f0fdf4'; }
                     reuploadMethodSelected = p.paymentMethod;
                 }
@@ -2906,17 +2889,17 @@ function closeReuploadModal() {
     document.body.style.overflow = '';
     reuploadOrderId = null; reuploadOrderRef = null;
     reuploadScreenshotBase64 = null; reuploadMethodSelected = '';
-    const btn = document.getElementById('reuploadSubmitBtn');
+    var btn = document.getElementById('reuploadSubmitBtn');
     if (btn) { btn.disabled = false; btn.textContent = '🔄 Send via WhatsApp'; }
 }
 
 document.addEventListener('change', function(e) {
     if (e.target && e.target.name === 'reuploadMethod') {
         reuploadMethodSelected = e.target.value;
-        document.querySelectorAll('.reupload-method-item').forEach(el => {
+        document.querySelectorAll('.reupload-method-item').forEach(function(el) {
             el.classList.remove('checked'); el.style.borderColor = ''; el.style.background = '';
         });
-        const parent = e.target.closest('.reupload-method-item');
+        var parent = e.target.closest('.reupload-method-item');
         if (parent) { parent.classList.add('checked'); parent.style.borderColor = '#16a34a'; parent.style.background = '#f0fdf4'; }
     }
 });
@@ -2926,29 +2909,31 @@ async function submitReupload() {
     if (!reuploadScreenshotBase64) { alert('⚠️ Please upload the new screenshot.'); return; }
     if (!reuploadMethodSelected) { alert('⚠️ Please select your UPI app.'); return; }
 
-    const btn = document.getElementById('reuploadSubmitBtn');
+    var btn = document.getElementById('reuploadSubmitBtn');
     btn.disabled = true; btn.textContent = '⏳ Preparing...';
 
     try {
-        const docSnap = await db.collection('purchases').doc(reuploadOrderId).get();
+        var docSnap = await db.collection('purchases').doc(reuploadOrderId).get();
         if (!docSnap.exists) { alert('⚠️ Order not found.'); btn.disabled = false; btn.textContent = '🔄 Send via WhatsApp'; return; }
-        const p = docSnap.data();
-        const orderId = p.orderId || reuploadOrderId;
+        var p = docSnap.data();
+        var orderId = p.orderId || reuploadOrderId;
 
         try {
-            const link = document.createElement('a');
+            var link = document.createElement('a');
             link.href = reuploadScreenshotBase64;
-            link.download = `Reupload_${orderId}_${currentStudent.uniqueId || currentStudent.id}_${Date.now()}.jpg`;
+            link.download = 'Reupload_' + orderId + '_' + (currentStudent.uniqueId || currentStudent.id) + '_' + Date.now() + '.jpg';
             document.body.appendChild(link); link.click(); document.body.removeChild(link);
         } catch (e) { console.error(e); }
 
-        const cleanPlan = cleanPlanName(p.planName);
-        const msg = `🔄 *PAYMENT SCREENSHOT RE-SUBMISSION — English Spur*\n\n*🆔 ORDER ID: ${orderId}*\n\nMy previous screenshot was rejected. I have re-uploaded a new correct screenshot. Kindly re-verify.\n\n--- STUDENT DETAILS ---\n• Name: *${p.studentName}*\n• Mobile: *${p.studentMobile}*\n\n--- ORDER DETAILS ---\n• Plan: *${cleanPlan}*\n• Amount: *${money(p.finalAmount)}*\n• UPI App: ${reuploadMethodSelected}\n\n--- REJECTION REASON ---\n${p.rejectionReason || '(not specified)'}\n\n📸 *New Screenshot:* Auto-downloaded — attaching it.\n\nThank you 🙏`;
-        window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
+        var cleanPlan = cleanPlanName(p.planName);
+        var msg = '🔄 *PAYMENT SCREENSHOT RE-SUBMISSION — English Spur*\n\n*🆔 ORDER ID: ' + orderId + '*\n\nMy previous screenshot was rejected. I have re-uploaded a new correct screenshot. Kindly re-verify.\n\n--- STUDENT DETAILS ---\n• Name: *' + p.studentName + '*\n• Mobile: *' + p.studentMobile + '*\n\n--- ORDER DETAILS ---\n• Plan: *' + cleanPlan + '*\n• Amount: *' + money(p.finalAmount) + '*\n• UPI App: ' + reuploadMethodSelected + '\n\n--- REJECTION REASON ---\n' + (p.rejectionReason || '(not specified)') + '\n\n📸 *New Screenshot:* Auto-downloaded — attaching it.\n\nThank you 🙏';
+        window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(msg), '_blank');
 
         closeReuploadModal();
         showToast('✅ Screenshot ready!', 'success');
-        setTimeout(() => alert(`✅ New screenshot downloaded.\n\n🆔 ORDER ID: ${orderId}\n\n1️⃣ Attach the downloaded screenshot in WhatsApp\n2️⃣ Send to admin`), 400);
+        setTimeout(function() {
+            alert('✅ New screenshot downloaded.\n\n🆔 ORDER ID: ' + orderId + '\n\n1️⃣ Attach the downloaded screenshot in WhatsApp\n2️⃣ Send to admin');
+        }, 400);
     } catch (err) {
         alert('❌ Error: ' + err.message);
         btn.disabled = false; btn.textContent = '🔄 Send via WhatsApp';
@@ -2956,17 +2941,17 @@ async function submitReupload() {
 }
 
 function setupReuploadScreenshotUpload() {
-    const si = document.getElementById('reuploadScreenshotInput');
+    var si = document.getElementById('reuploadScreenshotInput');
     if (!si || si.dataset.bound === '1') return;
     si.dataset.bound = '1';
     si.addEventListener('change', function(e) {
-        const file = e.target.files[0]; if (!file) return;
-        const reader = new FileReader();
+        var file = e.target.files[0]; if (!file) return;
+        var reader = new FileReader();
         reader.onload = function(ev) {
-            const img = new Image();
+            var img = new Image();
             img.onload = function() {
-                const canvas = document.createElement('canvas');
-                let w = img.width, h = img.height; const max = 800;
+                var canvas = document.createElement('canvas');
+                var w = img.width, h = img.height; var max = 800;
                 if (w > h && w > max) { h = h * max / w; w = max; } else if (h > max) { w = w * max / h; h = max; }
                 canvas.width = w; canvas.height = h;
                 canvas.getContext('2d').drawImage(img, 0, 0, w, h);
@@ -2981,17 +2966,17 @@ function setupReuploadScreenshotUpload() {
 }
 
 function setupScreenshotUpload() {
-    const si = document.getElementById('screenshotInput');
+    var si = document.getElementById('screenshotInput');
     if (!si || si.dataset.bound === '1') return;
     si.dataset.bound = '1';
     si.addEventListener('change', function(e) {
-        const file = e.target.files[0]; if (!file) return;
-        const reader = new FileReader();
+        var file = e.target.files[0]; if (!file) return;
+        var reader = new FileReader();
         reader.onload = function(ev) {
-            const img = new Image();
+            var img = new Image();
             img.onload = function() {
-                const canvas = document.createElement('canvas');
-                let w = img.width, h = img.height; const max = 800;
+                var canvas = document.createElement('canvas');
+                var w = img.width, h = img.height; var max = 800;
                 if (w > h && w > max) { h = h * max / w; w = max; } else if (h > max) { w = w * max / h; h = max; }
                 canvas.width = w; canvas.height = h;
                 canvas.getContext('2d').drawImage(img, 0, 0, w, h);
@@ -3010,20 +2995,19 @@ function setupScreenshotUpload() {
 async function logActivity(type, extra) {
     if (!currentStudent) return;
     try {
-        await db.collection('logs').add({
+        await db.collection('logs').add(Object.assign({
             studentId: currentStudent.id,
             studentName: currentStudent.name || '',
             studentMobile: currentStudent.mobile || '',
             uniqueId: currentStudent.uniqueId || '',
-            type,
+            type: type,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            userAgent: navigator.userAgent.substring(0, 200),
-            ...(extra || {})
-        });
+            userAgent: navigator.userAgent.substring(0, 200)
+        }, extra || {}));
     } catch (e) {}
 }
 
-window.addEventListener('beforeunload', () => {
+window.addEventListener('beforeunload', function() {
     if (currentStudent && currentStudent.id) {
         try {
             db.collection('logs').add({
