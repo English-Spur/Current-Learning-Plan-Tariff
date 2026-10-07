@@ -21,6 +21,10 @@
     .fade-in { animation: fadeIn 0.3s ease-in; }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     @keyframes pulseGlow { 0%,100% { box-shadow: 0 0 0 0 rgba(245,158,11,0.5); } 50% { box-shadow: 0 0 0 8px rgba(245,158,11,0); } }
+    @keyframes modalPop { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+    .modal-pop { animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    @keyframes badgePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+    .badge-pulse { animation: badgePulse 1.5s ease-in-out infinite; }
 
     input:focus, select:focus, textarea:focus { outline: none; border-color: #1d4ed8 !important; box-shadow: 0 0 0 3px rgba(29,78,216,0.15); }
 
@@ -59,17 +63,6 @@
 
     .coupon-badge { font-family: 'Courier New', monospace; letter-spacing: 1px; background: #fef3c7; color: #92400e; border: 2px dashed #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 800; font-size: 12px; }
 
-    .save-badge {
-        display: inline-block;
-        color: #fff;
-        font-size: 10px;
-        font-weight: 900;
-        padding: 3px 10px;
-        border-radius: 999px;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-        margin-top: 4px;
-    }
-
     .special-badge {
         display: inline-block;
         background: linear-gradient(135deg, #f59e0b, #ea580c);
@@ -86,14 +79,11 @@
         background: linear-gradient(135deg, #fbbf24, #f59e0b);
         color: #fff;
         border-radius: 12px;
-        padding: 12px 14px;
-        margin-top: 10px;
+        padding: 14px 16px;
         box-shadow: 0 8px 20px rgba(245,158,11,0.4);
     }
 
     /* ═══════════════ PLAN COLOUR THEMES ═══════════════ */
-
-    /* Base plan row */
     .plan-row {
         background: #fff;
         border: 2px solid #e2e8f0;
@@ -105,7 +95,6 @@
         overflow: hidden;
     }
 
-    /* Icon badge */
     .plan-icon-badge {
         width: 42px;
         height: 42px;
@@ -119,92 +108,93 @@
     }
 
     /* 👑 1-on-1 ADULT — ROYAL BLUE */
-    .theme-adult-1on1 {
-        background: linear-gradient(135deg, #eff6ff, #dbeafe);
-        border-color: #3b82f6 !important;
-    }
-    .theme-adult-1on1:hover {
-        border-color: #1d4ed8 !important;
-        background: linear-gradient(135deg, #dbeafe, #bfdbfe);
-        box-shadow: 0 6px 20px rgba(29, 78, 216, 0.25) !important;
-    }
+    .theme-adult-1on1 { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #3b82f6 !important; }
+    .theme-adult-1on1:hover { border-color: #1d4ed8 !important; background: linear-gradient(135deg, #dbeafe, #bfdbfe); box-shadow: 0 6px 20px rgba(29, 78, 216, 0.25) !important; }
     .theme-adult-1on1 .plan-days-text { color: #1e40af; }
     .theme-adult-1on1 .plan-price-main { color: #1d4ed8; }
     .theme-adult-1on1 .plan-icon-badge { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-    .theme-adult-1on1 .save-badge { background: linear-gradient(135deg, #1d4ed8, #1e40af); }
 
     /* 👶 1-on-1 KIDS — PINK/ROSE */
-    .theme-kids-1on1 {
-        background: linear-gradient(135deg, #fdf2f8, #fce7f3);
-        border-color: #ec4899 !important;
-    }
-    .theme-kids-1on1:hover {
-        border-color: #db2777 !important;
-        background: linear-gradient(135deg, #fce7f3, #fbcfe8);
-        box-shadow: 0 6px 20px rgba(219, 39, 119, 0.25) !important;
-    }
+    .theme-kids-1on1 { background: linear-gradient(135deg, #fdf2f8, #fce7f3); border-color: #ec4899 !important; }
+    .theme-kids-1on1:hover { border-color: #db2777 !important; background: linear-gradient(135deg, #fce7f3, #fbcfe8); box-shadow: 0 6px 20px rgba(219, 39, 119, 0.25) !important; }
     .theme-kids-1on1 .plan-days-text { color: #be185d; }
     .theme-kids-1on1 .plan-price-main { color: #db2777; }
     .theme-kids-1on1 .plan-icon-badge { background: linear-gradient(135deg, #ec4899, #db2777); }
-    .theme-kids-1on1 .save-badge { background: linear-gradient(135deg, #db2777, #be185d); }
 
     /* 👥 GROUP ADULT — EMERALD GREEN */
-    .theme-adult-group {
-        background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-        border-color: #10b981 !important;
-    }
-    .theme-adult-group:hover {
-        border-color: #059669 !important;
-        background: linear-gradient(135deg, #dcfce7, #bbf7d0);
-        box-shadow: 0 6px 20px rgba(5, 150, 105, 0.25) !important;
-    }
+    .theme-adult-group { background: linear-gradient(135deg, #f0fdf4, #dcfce7); border-color: #10b981 !important; }
+    .theme-adult-group:hover { border-color: #059669 !important; background: linear-gradient(135deg, #dcfce7, #bbf7d0); box-shadow: 0 6px 20px rgba(5, 150, 105, 0.25) !important; }
     .theme-adult-group .plan-days-text { color: #047857; }
     .theme-adult-group .plan-price-main { color: #059669; }
     .theme-adult-group .plan-icon-badge { background: linear-gradient(135deg, #10b981, #059669); }
-    .theme-adult-group .save-badge { background: linear-gradient(135deg, #059669, #047857); }
 
     /* 🧸 GROUP KIDS — PURPLE/VIOLET */
-    .theme-kids-group {
-        background: linear-gradient(135deg, #faf5ff, #f3e8ff);
-        border-color: #a855f7 !important;
-    }
-    .theme-kids-group:hover {
-        border-color: #9333ea !important;
-        background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
-        box-shadow: 0 6px 20px rgba(147, 51, 234, 0.25) !important;
-    }
+    .theme-kids-group { background: linear-gradient(135deg, #faf5ff, #f3e8ff); border-color: #a855f7 !important; }
+    .theme-kids-group:hover { border-color: #9333ea !important; background: linear-gradient(135deg, #f3e8ff, #e9d5ff); box-shadow: 0 6px 20px rgba(147, 51, 234, 0.25) !important; }
     .theme-kids-group .plan-days-text { color: #7e22ce; }
     .theme-kids-group .plan-price-main { color: #9333ea; }
     .theme-kids-group .plan-icon-badge { background: linear-gradient(135deg, #a855f7, #9333ea); }
-    .theme-kids-group .save-badge { background: linear-gradient(135deg, #9333ea, #7e22ce); }
-
-    /* Selected states */
-    .theme-adult-1on1.selected {
-        border-color: #1d4ed8 !important;
-        border-width: 3px !important;
-        box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.15), 0 8px 24px rgba(29, 78, 216, 0.3) !important;
-    }
-    .theme-kids-1on1.selected {
-        border-color: #db2777 !important;
-        border-width: 3px !important;
-        box-shadow: 0 0 0 4px rgba(219, 39, 119, 0.15), 0 8px 24px rgba(219, 39, 119, 0.3) !important;
-    }
-    .theme-adult-group.selected {
-        border-color: #059669 !important;
-        border-width: 3px !important;
-        box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.15), 0 8px 24px rgba(5, 150, 105, 0.3) !important;
-    }
-    .theme-kids-group.selected {
-        border-color: #9333ea !important;
-        border-width: 3px !important;
-        box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.15), 0 8px 24px rgba(147, 51, 234, 0.3) !important;
-    }
 
     /* Section headers */
     .section-header-adult-1on1 { background: linear-gradient(90deg, #1d4ed8, #1e40af); }
     .section-header-kids-1on1 { background: linear-gradient(90deg, #db2777, #be185d); }
     .section-header-adult-group { background: linear-gradient(90deg, #059669, #047857); }
     .section-header-kids-group { background: linear-gradient(90deg, #9333ea, #7e22ce); }
+
+    /* ═══════════════ TELECOM-STYLE VALUE BADGES ═══════════════ */
+    .value-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        font-size: 9px;
+        font-weight: 900;
+        padding: 3px 8px;
+        border-radius: 999px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        white-space: nowrap;
+    }
+
+    .badge-best-value { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; animation: badgePulse 1.8s ease-in-out infinite; }
+    .badge-most-popular { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; }
+    .badge-longest { background: linear-gradient(135deg, #ec4899, #db2777); color: #fff; }
+
+    .savings-meter {
+        background: linear-gradient(90deg, #fef3c7, #fde68a);
+        border: 1.5px dashed #f59e0b;
+        border-radius: 10px;
+        padding: 8px 10px;
+        margin-top: 8px;
+        text-align: center;
+    }
+
+    .savings-meter .sm-pct {
+        font-size: 20px;
+        font-weight: 900;
+        color: #ea580c;
+        line-height: 1;
+    }
+
+    .savings-meter .sm-label {
+        font-size: 10px;
+        font-weight: 800;
+        color: #92400e;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 2px;
+    }
+
+    .length-tip {
+        background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+        border-left: 3px solid #10b981;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 10px;
+        font-weight: 700;
+        color: #065f46;
+        margin-top: 6px;
+    }
 
     @media (max-width: 640px) {
         body { padding: 6px; }
@@ -233,7 +223,7 @@
         <div class="bg-gradient-to-r from-blue-700 to-blue-900 p-6 text-center">
             <img src="logo.png" alt="English Spur" class="brand-logo mx-auto mb-2 bg-white rounded-full p-1.5" onerror="this.style.display='none'">
             <h2 class="text-xl font-black text-white">Welcome to English Spur!</h2>
-            <p class="text-blue-100 text-xs mt-1">Learn English. Speak Confident.</p>
+            <p class="text-blue-100 text-xs mt-1">Learn English. Speak Confidently.</p>
         </div>
         <div class="p-5 space-y-3">
             <button onclick="showScreen('newStudent')" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black p-4 rounded-xl transition shadow-md text-sm flex items-center justify-between">
@@ -339,8 +329,10 @@
         </div>
         <div class="flex items-center gap-1.5 flex-shrink-0">
             <button id="refreshBtn" onclick="refreshDashboard()" class="bg-green-100 hover:bg-green-200 text-green-700 text-lg font-bold w-10 h-10 rounded-lg" title="Refresh">🔄</button>
-            <button onclick="showView('history')" class="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-[10px] sm:text-xs px-2.5 py-2 rounded-lg text-left leading-tight">
+            <button onclick="showView('history')" class="relative bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-[10px] sm:text-xs px-2.5 py-2 rounded-lg text-left leading-tight">
                 📋 History
+                <span id="historyBadge" class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-black rounded-full min-w-[16px] h-[16px] flex items-center justify-center px-1 shadow-md badge-pulse"></span>
+                <span id="actionBadge" class="hidden absolute -bottom-1 -right-1 bg-yellow-500 text-white text-[9px] font-black rounded-full min-w-[16px] h-[16px] flex items-center justify-center px-1 shadow-md" title="Action Required">!</span>
             </button>
             <button onclick="studentLogout()" class="bg-red-500 hover:bg-red-600 text-white font-bold text-[10px] sm:text-xs px-2.5 py-2 rounded-lg">🚪</button>
         </div>
@@ -357,39 +349,91 @@
         </div>
     </div>
 
-    <div id="pendingBanner" class="hidden bg-gradient-to-br from-yellow-50 to-amber-50 border-2 border-yellow-400 rounded-2xl p-4 mb-3">
-        <div class="flex items-start gap-3">
-            <div class="text-3xl animate-pulse">⏳</div>
-            <div class="flex-1 min-w-0">
-                <p class="font-black text-amber-900 text-sm">Payment Under Review</p>
-                <p id="pendingBannerMsg" class="text-[11px] text-amber-800 mt-1"></p>
-                <p class="text-[10px] text-amber-700 mt-2">✅ Once admin approves, tap 🔄 to refresh.</p>
+    <!-- VIEW: CURRENT PLAN (DASHBOARD HOME) — LEARNING FOCUSED -->
+    <div id="viewCurrentPlan">
+        <!-- Big Explore CTA -->
+        <div class="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-2xl shadow-xl p-6 mb-4 text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-40 h-40 rounded-full bg-white/10 -mr-12 -mt-12"></div>
+            <div class="absolute bottom-0 left-0 w-28 h-28 rounded-full bg-white/5 -ml-10 -mb-10"></div>
+            <div class="relative z-10">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center text-4xl flex-shrink-0">
+                        🎯
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-[10px] font-black uppercase tracking-widest opacity-90">Level Up Your English!</p>
+                        <p class="text-xl font-black leading-tight">Explore Learning Plans</p>
+                    </div>
+                </div>
+                <p class="text-[12px] font-semibold opacity-95 mb-5 leading-relaxed">
+                    নতুন plan কিনে আপনার learning journey continue করুন। Exclusive offers এবং coupons available!
+                </p>
+                <button onclick="showExplorePlans()" class="w-full bg-white text-blue-700 hover:bg-blue-50 font-black py-4 rounded-xl text-sm uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2">
+                    🔍 Browse All Learning Plans →
+                </button>
             </div>
         </div>
-    </div>
 
-    <!-- CURRENT PLAN PURCHASED CARD -->
-    <div id="currentPlanCard" class="hidden mb-3"></div>
-
-    <!-- VIEW: CURRENT PLAN -->
-    <div id="viewCurrentPlan">
-        <div class="bg-white rounded-2xl shadow-xl p-4 mb-3 border-2 border-emerald-200">
+        <!-- Telecom-style Value Section -->
+        <div class="bg-white rounded-2xl shadow-xl p-5 mb-4 border-2 border-amber-200">
             <div class="flex items-center gap-2 mb-3">
-                <span class="text-xl">📘</span>
-                <p class="text-[11px] font-black text-slate-700 uppercase">Plan Details</p>
+                <span class="text-2xl">💎</span>
+                <div>
+                    <p class="text-[10px] font-black text-amber-700 uppercase tracking-widest">Smart Choice</p>
+                    <p class="text-base font-black text-slate-800">Why Longer Plans?</p>
+                </div>
             </div>
-            <div id="currentPlanDetail" class="text-sm space-y-1"></div>
-            <button onclick="showExplorePlans()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black p-3.5 rounded-xl text-xs uppercase tracking-wider transition mt-3 shadow-md">
-                🔍 Explore All Plans / সব প্ল্যান দেখুন
+            <div class="space-y-2.5">
+                <div class="flex items-start gap-2.5">
+                    <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span class="text-[11px]">💸</span>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-black text-slate-800">Bigger Discounts</p>
+                        <p class="text-[10px] text-slate-600 font-semibold leading-snug">বেশি classes কিনলে প্রতি class এর দাম কমে যায়</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-2.5">
+                    <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span class="text-[11px]">📚</span>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-black text-slate-800">Continuous Learning</p>
+                        <p class="text-[10px] text-slate-600 font-semibold leading-snug">একটানা practice করলে fluency দ্রুত আসে</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-2.5">
+                    <div class="w-6 h-6 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span class="text-[11px]">🎯</span>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-black text-slate-800">Better Results</p>
+                        <p class="text-[10px] text-slate-600 font-semibold leading-snug">Longer journey = Stronger foundation</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-2.5">
+                    <div class="w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <span class="text-[11px]">🎁</span>
+                    </div>
+                    <div>
+                        <p class="text-[11px] font-black text-slate-800">Extra Coupons</p>
+                        <p class="text-[10px] text-slate-600 font-semibold leading-snug">Boro plan এ extra discount coupon available</p>
+                    </div>
+                </div>
+            </div>
+            <button onclick="showExplorePlans()" class="w-full mt-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black py-3 rounded-xl text-xs uppercase tracking-wider transition shadow-lg">
+                🚀 See All Plans & Save More
             </button>
         </div>
 
-        <div class="bg-white rounded-2xl shadow-xl p-4 mb-3">
-            <div class="flex justify-between items-center mb-3">
-                <p class="text-[11px] font-black text-slate-700 uppercase">📦 Recent Orders</p>
-                <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-700">🟢 LIVE</span>
-            </div>
-            <div id="myOrdersList" class="space-y-2"></div>
+        <!-- Help Card -->
+        <div class="bg-white rounded-2xl shadow-lg p-5 text-center border border-slate-100">
+            <p class="text-3xl mb-2">💬</p>
+            <p class="text-sm text-slate-700 font-bold mb-1">Have a question about plans?</p>
+            <p class="text-[11px] text-slate-500 font-semibold mb-3">Our team is here to help you!</p>
+            <button onclick="contactViaWhatsApp()" class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-black text-xs px-6 py-3 rounded-full shadow-lg">
+                💬 WhatsApp: 9875340842
+            </button>
         </div>
     </div>
 
@@ -400,7 +444,6 @@
             <p class="text-[11px] font-black text-slate-700 uppercase">🔍 All Available Plans</p>
         </div>
 
-        <!-- OFFER BANNER -->
         <div id="offerBanner" class="hidden bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 text-white p-4 rounded-2xl mb-3 shadow-xl flash-offer">
             <div class="text-center">
                 <div class="text-[10px] font-extrabold uppercase tracking-widest opacity-95">⏰ Limited Time Special Rate</div>
@@ -418,7 +461,6 @@
             </div>
         </div>
 
-        <!-- Tab Buttons -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-3">
             <button onclick="switchTab('all')" id="tab-all" class="text-[10px] sm:text-[11px] font-bold py-2.5 px-1.5 rounded-lg tab-active">🌟 All Plans</button>
             <button onclick="switchTab('1on1-adult')" id="tab-1on1-adult" class="text-[10px] sm:text-[11px] font-bold py-2.5 px-1.5 rounded-lg tab-inactive">👑 1-on-1 Adult</button>
@@ -426,7 +468,6 @@
             <button onclick="switchTab('group')" id="tab-group" class="text-[10px] sm:text-[11px] font-bold py-2.5 px-1.5 rounded-lg tab-inactive">👥 Group</button>
         </div>
 
-        <!-- Course Filter Banner -->
         <div id="courseFilterBanner" class="hidden bg-gradient-to-r from-indigo-50 to-blue-50 border-2 border-indigo-300 rounded-xl p-3 mb-3">
             <div class="flex items-center justify-between gap-2 flex-wrap">
                 <div class="flex items-center gap-2 min-w-0">
@@ -442,44 +483,7 @@
             </div>
         </div>
 
-        <!-- DYNAMIC PLANS -->
         <div id="plansContainer" class="space-y-3"></div>
-
-        <!-- Coupon Section -->
-        <div id="couponSection" class="bg-amber-50 border border-amber-200 rounded-2xl p-4 mt-3 hidden">
-            <p class="text-[10px] font-black text-amber-900 uppercase mb-2">🎟️ Apply Coupon <span id="couponLimitText" class="text-slate-500 font-semibold normal-case"></span></p>
-
-            <div id="availableCouponsWrap" class="mb-3">
-                <p class="text-[10px] font-black text-purple-800 uppercase mb-2">🎁 Your Available Coupons — Click to Apply</p>
-                <div id="availableCouponsList" class="space-y-2"></div>
-            </div>
-
-            <details class="mb-2" id="manualCouponDetails">
-                <summary class="text-[10px] font-bold text-slate-600 cursor-pointer select-none">✏️ Or enter coupon code manually</summary>
-                <div class="flex gap-2 mt-2">
-                    <input type="text" id="couponInput" placeholder="Enter coupon code" class="flex-1 border-2 border-slate-200 rounded-lg p-2.5 text-xs font-bold uppercase" onkeydown="if(event.key==='Enter'){event.preventDefault();addCouponToList();}">
-                    <button onclick="addCouponToList()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] px-4 rounded-lg whitespace-nowrap">➕ Add</button>
-                </div>
-                <button id="applyCouponBtn" onclick="applyCouponList()" class="w-full mt-2 bg-green-600 hover:bg-green-700 text-white font-black text-[12px] py-2.5 rounded-lg shadow uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                    ✅ Apply Coupon (0)
-                </button>
-            </details>
-
-            <div id="appliedCouponsList" class="mt-3 space-y-1.5"></div>
-
-            <button onclick="requestCouponViaWhatsApp()" class="w-full mt-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-black text-[11px] px-4 py-2.5 rounded-xl shadow flex items-center justify-center gap-2 uppercase">
-                💬 Request More Coupons
-            </button>
-        </div>
-
-        <!-- Selected Plan Summary -->
-        <div id="summaryCard" class="hidden bg-white rounded-2xl shadow-xl p-4 mt-3 border-2 border-blue-300">
-            <p class="text-[11px] font-black text-slate-700 uppercase mb-2">📋 Selected Plan Summary</p>
-            <div id="summaryContent" class="text-sm space-y-1"></div>
-            <button onclick="proceedToPayment()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black p-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-md mt-3">
-                💳 Proceed to Payment →
-            </button>
-        </div>
 
         <div class="mt-4 bg-white rounded-2xl shadow-lg p-4 text-center border border-slate-100">
             <p class="text-xs text-slate-600 font-semibold mb-2">💬 Need help with admission?</p>
@@ -755,6 +759,17 @@
                 </div>
                 <button onclick="loadHistory()" class="bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold text-[11px] px-3 py-1.5 rounded-lg">🔄 Refresh</button>
             </div>
+
+            <div id="historyPendingBanner" class="hidden bg-gradient-to-br from-yellow-50 to-amber-50 border-2 border-yellow-400 rounded-2xl p-4 mb-3">
+                <div class="flex items-start gap-3">
+                    <div class="text-3xl animate-pulse">⏳</div>
+                    <div class="flex-1 min-w-0">
+                        <p class="font-black text-amber-900 text-sm">Payment Under Review</p>
+                        <p id="historyPendingMsg" class="text-[11px] text-amber-800 mt-1"></p>
+                    </div>
+                </div>
+            </div>
+
             <div id="historyList" class="space-y-3"></div>
             <button onclick="backToDashboard()" class="w-full bg-slate-200 text-slate-700 font-bold p-3 rounded-xl text-xs sm:text-sm mt-3 hover:bg-slate-300">
                 ← Back to Dashboard
@@ -762,6 +777,81 @@
         </div>
     </div>
 
+</div>
+
+<!-- ═══════════════ PLAN CHECKOUT MODAL ═══════════════ -->
+<div id="planCheckoutModal" class="fixed inset-0 z-[9999] hidden overflow-y-auto" style="background: rgba(15,23,42,0.85); backdrop-filter: blur(6px);">
+    <div class="min-h-screen flex items-start sm:items-center justify-center p-3 sm:p-5">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg my-auto overflow-hidden modal-pop">
+
+            <div id="checkoutModalHeader" class="bg-gradient-to-r from-blue-700 to-blue-900 p-4 flex justify-between items-center">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div id="checkoutModalIcon" class="w-11 h-11 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center text-2xl flex-shrink-0">
+                        👑
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-white font-black text-sm sm:text-base uppercase tracking-wide">Confirm Your Plan</p>
+                        <p id="checkoutModalSubtitle" class="text-blue-100 text-[10px] sm:text-xs font-semibold truncate">Please review before payment</p>
+                    </div>
+                </div>
+                <button onclick="closePlanCheckoutModal()" class="text-white/80 hover:text-white text-2xl font-bold leading-none flex-shrink-0">&times;</button>
+            </div>
+
+            <div class="p-4 sm:p-5 max-h-[70vh] overflow-y-auto">
+
+                <div id="checkoutPlanCard" class="rounded-2xl border-2 p-4 mb-4"></div>
+
+                <div id="checkoutCouponSection" class="mb-4 hidden">
+                    <div class="flex items-center justify-between mb-2">
+                        <p class="text-[11px] font-black text-purple-800 uppercase tracking-wider">🎟️ Apply Coupon <span id="checkoutCouponLimit" class="text-slate-500 font-semibold normal-case"></span></p>
+                    </div>
+
+                    <div id="checkoutAvailableCoupons" class="space-y-2 mb-3"></div>
+
+                    <details class="bg-amber-50 border border-amber-200 rounded-lg">
+                        <summary class="text-[10px] font-bold text-amber-900 cursor-pointer select-none p-2.5">✏️ Have a coupon code? Enter manually</summary>
+                        <div class="p-2.5 pt-0">
+                            <div class="flex gap-2">
+                                <input type="text" id="checkoutCouponInput" placeholder="COUPON CODE" class="flex-1 border-2 border-slate-200 rounded-lg p-2.5 text-xs font-bold uppercase" onkeydown="if(event.key==='Enter'){event.preventDefault();applyCheckoutManualCoupon();}">
+                                <button onclick="applyCheckoutManualCoupon()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold text-[11px] px-4 rounded-lg whitespace-nowrap">Apply</button>
+                            </div>
+                        </div>
+                    </details>
+
+                    <div id="checkoutAppliedCoupons" class="space-y-1.5 mt-2"></div>
+                </div>
+
+                <div id="checkoutSavingsBox" class="hidden mb-4"></div>
+
+                <div id="checkoutOfferForYou" class="hidden mb-4"></div>
+
+                <div class="bg-slate-50 rounded-2xl border-2 border-slate-200 p-4 mb-4">
+                    <div id="checkoutSummary" class="text-sm space-y-1.5"></div>
+                </div>
+
+                <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-4">
+                    <p class="text-[10px] font-black text-blue-900 uppercase tracking-wider mb-1">ℹ️ What's Next?</p>
+                    <ul class="text-[10px] text-blue-800 font-semibold space-y-0.5 ml-4 list-disc">
+                        <li>Click "Proceed to Payment" to continue</li>
+                        <li>Scan the QR / Use UPI to pay</li>
+                        <li>Upload payment screenshot</li>
+                        <li>Submit to admin for approval</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="p-4 border-t-2 border-slate-100 bg-slate-50 flex flex-col sm:flex-row gap-2">
+                <button onclick="closePlanCheckoutModal()" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-xl text-xs uppercase tracking-wider transition">
+                    ← Choose Different Plan
+                </button>
+                <button onclick="confirmCheckoutAndPay()" class="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-black py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg">
+                    💳 Proceed to Payment →
+                </button>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <!-- RE-UPLOAD MODAL -->
@@ -891,6 +981,7 @@ let ordersUnsubscribe = null;
 let studentUnsubscribe = null;
 let isLoggingOut = false;
 let studentListenerActive = false;
+let purchasedPlansCount = 0;
 
 let reuploadOrderId = null;
 let reuploadOrderRef = null;
@@ -902,7 +993,7 @@ const money = n => '₹' + Number(n).toLocaleString('en-IN');
 
 function cleanPlanName(name) {
     if (!name) return '';
-    return String(name).replace(/[\u{1F000}-\u{1FFFF}]/gu, '').replace(/[\u{2600}-\u{27BF}]/gu, '').replace(/[\u{2190}-\u{21FF}]/gu, '').replace(/[\u{FE00}-\u{FE0F}]/gu, '').replace(/[👑👶👥🧸📘🎟️⏰⚡🎉💬📞📸🚀✅❌⚠️🔒🔄🙏🔍🏦💳🎯💠💜💙🇮🇳🅰️🌟]/g, '').replace(/\s+/g, ' ').trim();
+    return String(name).replace(/[\u{1F000}-\u{1FFFF}]/gu, '').replace(/[\u{2600}-\u{27BF}]/gu, '').replace(/[\u{2190}-\u{21FF}]/gu, '').replace(/[\u{FE00}-\u{FE0F}]/gu, '').replace(/[👑👶👥🧸📘🎟️⏰⚡🎉💬📞📸🚀✅❌⚠️🔒🔄🙏🔍🏦💳🎯💠💜💙🇮🇳🅰️🌟💎🔥]/g, '').replace(/\s+/g, ' ').trim();
 }
 
 function formatFullTimestamp(ts) {
@@ -1011,15 +1102,24 @@ function showView(v) {
     if (v === 'explorePlans') {
         renderDynamicPlans();
         updateCourseFilterBanner();
-        renderCouponSection();
     }
-    if (v === 'currentPlan') renderCurrentPlanDetail();
+    if (v === 'currentPlan') {
+        const hBadge = document.getElementById('historyBadge');
+        if (hBadge) hBadge.classList.add('hidden');
+        const aBadge = document.getElementById('actionBadge');
+        if (aBadge) aBadge.classList.add('hidden');
+    }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function showCurrentPlanView() { showView('currentPlan'); }
-function showExplorePlans() { showView('explorePlans'); }
+function showExplorePlans() {
+    const modal = document.getElementById('planCheckoutModal');
+    if (modal) modal.classList.add('hidden');
+    document.body.style.overflow = '';
+    showView('explorePlans');
+}
 
 /* ============ INIT ============ */
 window.addEventListener('DOMContentLoaded', () => {
@@ -1082,10 +1182,7 @@ function enterDashboard() {
     renderDynamicPlans();
     updateCourseFilterBanner();
     showScreen('dashboard');
-    setTimeout(() => {
-        renderCurrentPlanDetail();
-        showCurrentPlanView();
-    }, 100);
+    showCurrentPlanView();
 }
 
 function updateStudentInfo() {
@@ -1267,7 +1364,6 @@ function startStudentListener() {
         }
         if (data.blocked === true) return;
         updateStudentBadges();
-        renderCouponSection();
         updateCourseFilterBanner();
         renderDynamicPlans();
     }, err => console.error('Listener error:', err));
@@ -1299,61 +1395,47 @@ function startOrdersListener() {
         }, err => console.warn('Orders listener failed:', err.message));
 }
 
+/* ============ RENDER ORDERS (only for badges + history banner) ============ */
 function renderOrders(orders) {
-    const list = document.getElementById('myOrdersList');
-    const banner = document.getElementById('pendingBanner');
-    const bannerMsg = document.getElementById('pendingBannerMsg');
+    const historyBanner = document.getElementById('historyPendingBanner');
+    const historyBannerMsg = document.getElementById('historyPendingMsg');
 
     if (!orders || orders.length === 0) {
-        banner.classList.add('hidden');
-        if (list) list.innerHTML = '<p class="text-center text-slate-400 text-xs py-3">No orders yet.</p>';
+        if (historyBanner) historyBanner.classList.add('hidden');
+        updateActionBadge(0);
         return;
     }
 
     const pending = orders.filter(o => o.status === 'pending');
-    if (pending.length > 0) {
-        banner.classList.remove('hidden');
-        bannerMsg.innerHTML = pending.length === 1
+    if (pending.length > 0 && historyBanner) {
+        historyBanner.classList.remove('hidden');
+        historyBannerMsg.innerHTML = pending.length === 1
             ? `Order <strong>${pending[0].orderId || '—'}</strong> is being verified by admin.`
             : `You have <strong>${pending.length} pending orders</strong> being verified.`;
-    } else {
-        banner.classList.add('hidden');
+    } else if (historyBanner) {
+        historyBanner.classList.add('hidden');
     }
 
-    if (!list) return;
-    list.innerHTML = '';
-    orders.slice(0, 5).forEach(o => {
-        const statusMap = {
-            pending: { icon: '⏳', label: 'PENDING', cls: 'bg-yellow-100 text-yellow-800 border-yellow-300' },
-            approved: { icon: '✅', label: 'APPROVED', cls: 'bg-green-100 text-green-800 border-green-300' },
-            rejected: { icon: '❌', label: 'REJECTED', cls: 'bg-red-100 text-red-800 border-red-300' }
-        };
-        const st = statusMap[o.status] || { icon: '•', label: (o.status || '').toUpperCase(), cls: 'bg-slate-100 text-slate-700 border-slate-300' };
-        const dateStr = o.createdAt ? new Date(o.createdAt.toDate()).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '—';
+    const actionCount = orders.filter(o => o.status === 'pending' || o.status === 'rejected').length;
+    updateActionBadge(actionCount);
+}
 
-        const div = document.createElement('div');
-        div.className = `border-2 rounded-xl p-3 ${st.cls}`;
-        div.innerHTML = `
-            <div class="flex justify-between items-start flex-wrap gap-2">
-                <div class="min-w-0 flex-1">
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <span class="text-lg">${st.icon}</span>
-                        <span class="font-black text-[11px]">${st.label}</span>
-                        ${o.orderId ? `<span class="order-id-badge">🆔 ${o.orderId}</span>` : ''}
-                    </div>
-                    <p class="font-bold text-slate-800 text-xs mt-1.5 truncate">📘 ${o.planName || '—'}</p>
-                    <p class="text-[10px] text-slate-600 mt-0.5">
-                        Amount: <strong>${money(o.finalAmount || 0)}</strong>
-                        ${o.couponCode ? ` · 🎟️ ${o.couponCode}` : ''}
-                    </p>
-                    <p class="text-[10px] text-slate-500 mt-0.5">📅 ${dateStr}</p>
-                </div>
-            </div>
-            ${o.status === 'approved' ? `<button onclick="viewReceipt('${o.id}')" class="w-full mt-2 bg-green-600 hover:bg-green-700 text-white font-bold py-2 rounded-lg text-[11px]">🧾 View Receipt</button>` : ''}
-            ${o.status === 'rejected' ? `<button onclick="openReuploadModal('${o.id}')" class="w-full mt-2 bg-red-600 hover:bg-red-700 text-white font-black py-2 rounded-lg text-[12px] shadow-md">🔄 Re-upload Screenshot</button>` : ''}
-        `;
-        list.appendChild(div);
-    });
+function updateActionBadge(count) {
+    const badge = document.getElementById('actionBadge');
+    if (!badge) return;
+    if (count > 0) badge.classList.remove('hidden');
+    else badge.classList.add('hidden');
+}
+
+function updateHistoryBadge(count) {
+    const badge = document.getElementById('historyBadge');
+    if (!badge) return;
+    if (count > 0) {
+        badge.textContent = count > 9 ? '9+' : count;
+        badge.classList.remove('hidden');
+    } else {
+        badge.classList.add('hidden');
+    }
 }
 
 /* ============ LOAD CURRENT PLAN ============ */
@@ -1362,139 +1444,44 @@ async function loadCurrentPlan() {
     try {
         const snap = await db.collection('purchases')
             .where('studentId', '==', currentStudent.id)
-            .where('status', '==', 'approved')
-            .limit(20)
+            .limit(50)
             .get();
 
         if (snap.empty) {
             currentPlanData = null;
-            document.getElementById('currentPlanCard').classList.add('hidden');
-            renderCurrentPlanDetail();
+            purchasedPlansCount = 0;
+            updateHistoryBadge(0);
+            updateActionBadge(0);
             return;
         }
 
-        const approved = [];
-        snap.forEach(d => approved.push({ id: d.id, ...d.data() }));
-        approved.sort((a, b) => {
-            const ta = a.verifiedAt ? a.verifiedAt.toDate().getTime() : 0;
-            const tb = b.verifiedAt ? b.verifiedAt.toDate().getTime() : 0;
-            return tb - ta;
-        });
-        currentPlanData = approved[0];
-        showCurrentPlan(approved[0]);
+        const allOrders = [];
+        snap.forEach(d => allOrders.push({ id: d.id, ...d.data() }));
+
+        const approved = allOrders.filter(o => o.status === 'approved');
+        const actionable = allOrders.filter(o => o.status === 'pending' || o.status === 'rejected');
+
+        purchasedPlansCount = approved.length;
+        updateHistoryBadge(purchasedPlansCount);
+        updateActionBadge(actionable.length);
+
+        if (approved.length > 0) {
+            approved.sort((a, b) => {
+                const ta = a.verifiedAt ? a.verifiedAt.toDate().getTime() : 0;
+                const tb = b.verifiedAt ? b.verifiedAt.toDate().getTime() : 0;
+                return tb - ta;
+            });
+            currentPlanData = approved[0];
+        } else {
+            currentPlanData = null;
+        }
     } catch (err) {
         console.error('Load plan error:', err);
-        document.getElementById('currentPlanCard').classList.add('hidden');
-        renderCurrentPlanDetail();
+        currentPlanData = null;
+        purchasedPlansCount = 0;
+        updateHistoryBadge(0);
+        updateActionBadge(0);
     }
-}
-
-function showCurrentPlan(p) {
-    const card = document.getElementById('currentPlanCard');
-    if (!card) return;
-    const purchaseDate = p.verifiedAt ? formatDateOnly(p.verifiedAt) : '—';
-    const purchaseDateTime = p.verifiedAt ? formatFullTimestamp(p.verifiedAt) : '—';
-
-    const catLabel = p.planCategory === 'oneOnOne' ? '👑 1-on-1' : p.planCategory === 'group' ? '👥 Group' : '📘';
-
-    card.classList.remove('hidden');
-    card.innerHTML = `
-        <div class="bg-gradient-to-br from-emerald-50 to-white border-2 border-emerald-400 rounded-2xl p-4 shadow-lg">
-            <div class="flex items-center justify-between gap-2 mb-3 flex-wrap">
-                <div class="flex items-center gap-2">
-                    <div class="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white font-black text-lg flex-shrink-0">✓</div>
-                    <div>
-                        <p class="text-[10px] font-black text-emerald-900 uppercase tracking-wider">✅ Your Purchased Plan</p>
-                        <p class="text-[9px] text-emerald-700 font-semibold">Active & Confirmed</p>
-                    </div>
-                </div>
-                <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-emerald-600 text-white">✅ ACTIVE</span>
-            </div>
-
-            <div class="bg-white rounded-xl p-3 border border-emerald-200 mb-3">
-                <p class="text-[10px] font-black text-slate-500 uppercase mb-1">${catLabel} Plan</p>
-                <p class="text-sm font-black text-slate-800 leading-snug">${p.planName || '—'}</p>
-                ${p.planDays ? `<p class="text-[11px] text-slate-600 mt-1 font-semibold">📚 ${p.planDays} Classes</p>` : ''}
-            </div>
-
-            <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl p-3 mb-3">
-                <p class="text-[10px] font-black text-blue-800 uppercase tracking-wider mb-1.5">🛒 You Purchased This Plan On</p>
-                <p class="text-sm font-black text-blue-900">${purchaseDate}</p>
-                <p class="text-[10px] text-blue-700 font-semibold mt-0.5">${purchaseDateTime}</p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
-                ${p.orderId ? `
-                <div class="bg-white rounded-lg p-2.5 border-2 border-blue-200">
-                    <p class="text-[9px] font-black text-blue-700 uppercase mb-0.5">🆔 Order ID</p>
-                    <p class="font-mono font-black text-blue-800 text-[13px] break-all">${p.orderId}</p>
-                </div>` : ''}
-                ${p.receiptNo ? `
-                <div class="bg-white rounded-lg p-2.5 border-2 border-green-200">
-                    <p class="text-[9px] font-black text-green-700 uppercase mb-0.5">🧾 Receipt No.</p>
-                    <p class="font-mono font-black text-green-800 text-[13px] break-all">${p.receiptNo}</p>
-                </div>` : ''}
-            </div>
-
-            <div class="bg-white rounded-xl p-3 border border-slate-200 space-y-1.5">
-                <div class="flex justify-between items-center text-[11px]">
-                    <span class="text-slate-600 font-semibold">💰 Amount Paid</span>
-                    <strong class="text-orange-600 text-base">${money(p.finalAmount || 0)}</strong>
-                </div>
-                ${p.admissionFee > 0 ? `
-                <div class="flex justify-between items-center text-[11px]">
-                    <span class="text-slate-600 font-semibold">🎓 Admission Fee</span>
-                    <strong class="text-slate-700">${money(p.admissionFee)}</strong>
-                </div>` : ''}
-                ${p.monthlyFee > 0 ? `
-                <div class="flex justify-between items-center text-[11px]">
-                    <span class="text-slate-600 font-semibold">📘 Package Fee</span>
-                    <strong class="text-slate-700">${money(p.monthlyFee)}</strong>
-                </div>` : ''}
-                ${p.couponCode ? `
-                <div class="flex justify-between items-center text-[11px] pt-1.5 border-t border-dashed border-slate-200">
-                    <span class="text-purple-700 font-bold">🎟️ Coupon Used</span>
-                    <strong class="text-purple-700">${p.couponCode}</strong>
-                </div>` : ''}
-                ${p.paymentMethod ? `
-                <div class="flex justify-between items-center text-[11px]">
-                    <span class="text-slate-600 font-semibold">📱 Payment Method</span>
-                    <strong class="text-slate-700">${p.paymentMethod}</strong>
-                </div>` : ''}
-            </div>
-
-            <button onclick="switchToRenewal()" class="w-full bg-green-600 hover:bg-green-700 text-white font-black p-3 rounded-xl text-xs uppercase tracking-wider transition shadow-md mt-3">
-                ♻️ Renew This Plan
-            </button>
-        </div>
-    `;
-
-    renderCurrentPlanDetail();
-}
-
-function renderCurrentPlanDetail() {
-    const detailEl = document.getElementById('currentPlanDetail');
-    if (!detailEl) return;
-    if (!currentPlanData) {
-        detailEl.innerHTML = `
-            <div class="text-center py-6">
-                <p class="text-4xl mb-3">📭</p>
-                <p class="text-slate-600 font-bold text-sm">No active plan yet.</p>
-                <p class="text-slate-500 text-xs mt-1">এখনো কোনো সক্রিয় প্ল্যান নেই।</p>
-                <p class="text-slate-400 text-[11px] mt-2">Explore plans to purchase your first plan.</p>
-            </div>`;
-        return;
-    }
-    const p = currentPlanData;
-    const dateStr = p.verifiedAt ? formatDateOnly(p.verifiedAt) : '—';
-    detailEl.innerHTML = `
-        <div class="flex justify-between text-slate-700"><span>📘 Plan</span><span class="font-bold text-right">${p.planName || '—'}</span></div>
-        ${p.planDays ? `<div class="flex justify-between text-slate-700"><span>📚 Duration</span><span class="font-bold">${p.planDays} Classes</span></div>` : ''}
-        <div class="flex justify-between text-slate-700"><span>💰 Amount Paid</span><span class="font-bold text-orange-600">${money(p.finalAmount || 0)}</span></div>
-        <div class="flex justify-between text-slate-700"><span>📅 Purchased On</span><span class="font-bold">${dateStr}</span></div>
-        ${p.receiptNo ? `<div class="flex justify-between text-slate-700"><span>🧾 Receipt No.</span><span class="font-bold font-mono text-green-700">${p.receiptNo}</span></div>` : ''}
-        ${p.orderId ? `<div class="flex justify-between text-slate-700"><span>🆔 Order ID</span><span class="font-bold font-mono text-blue-700 text-[11px]">${p.orderId}</span></div>` : ''}
-    `;
 }
 
 /* ============ LOAD OFFER CONFIG ============ */
@@ -1566,8 +1553,6 @@ function loadOfferConfig() {
         }
 
         renderDynamicPlans();
-        renderCouponSection();
-        if (selectedPlan) refreshSelectedPlanSummary();
         tickTimer();
     }, err => console.error('❌ Offer listener error:', err));
 
@@ -1638,7 +1623,6 @@ function handleExpiry() {
     }
     appliedCoupons = [];
     renderDynamicPlans();
-    if (selectedPlan) refreshSelectedPlanSummary();
 }
 
 /* ============ COURSE FILTER ============ */
@@ -1743,34 +1727,29 @@ function renderDynamicPlans() {
 function renderSubCategoryBlock(cat, subKey, subData) {
     const plans = subData.plans || [];
 
-    // Determine theme based on cat + subKey
     const keyLower = (subKey || '').toLowerCase();
     const isKids = keyLower.includes('kid');
-    let themeClass, headerClass, icon, shortLabel, subTitle;
+    let themeClass, headerClass, icon, subTitle;
 
     if (cat === 'oneOnOne' && !isKids) {
         themeClass = 'theme-adult-1on1';
         headerClass = 'section-header-adult-1on1';
         icon = '👑';
-        shortLabel = '1-on-1 Adult';
         subTitle = 'Personal Coaching for Adults';
     } else if (cat === 'oneOnOne' && isKids) {
         themeClass = 'theme-kids-1on1';
         headerClass = 'section-header-kids-1on1';
         icon = '👶';
-        shortLabel = '1-on-1 Kids';
         subTitle = 'Personal Coaching for Kids';
     } else if (cat === 'group' && !isKids) {
         themeClass = 'theme-adult-group';
         headerClass = 'section-header-adult-group';
         icon = '👥';
-        shortLabel = 'Group Adult';
         subTitle = 'Group Class for Adults';
     } else {
         themeClass = 'theme-kids-group';
         headerClass = 'section-header-kids-group';
         icon = '🧸';
-        shortLabel = 'Group Kids';
         subTitle = 'Group Class for Kids';
     }
 
@@ -1818,9 +1797,9 @@ function renderSubCategoryBlock(cat, subKey, subData) {
     `;
 }
 
+/* ============ RENDER PLAN ROW (TELECOM-STYLE) ============ */
 function renderPlanRow(cat, subKey, subData, plan, idx, themeClass, icon) {
     const planId = `${cat}_${subData.subCategoryId || subKey}_${idx}`;
-    const isSelected = selectedPlan && selectedPlan.planId === planId;
 
     const days = Number(plan.days) || 0;
     const active = isOfferActive();
@@ -1859,31 +1838,43 @@ function renderPlanRow(cat, subKey, subData, plan, idx, themeClass, icon) {
     const totalSavePercent = regularTotal > 0 ? Math.round((totalSave / regularTotal) * 100) : 0;
     const specialBonusDiscount = active ? (discountedTotal - specialTotal) : 0;
 
+    // Telecom badges
+    const allPlans = subData.plans || [];
+    const maxDays = Math.max(...allPlans.map(p => Number(p.days) || 0));
+    const planDaysList = allPlans.map(p => Number(p.days) || 0).sort((a,b) => a-b);
+    const middleIdx = Math.floor(planDaysList.length / 2);
+    const mostPopularDays = planDaysList[middleIdx] || 16;
+
+    let planBadges = '';
+    if (days === maxDays && days >= 16 && planDaysList.length > 2) {
+        planBadges += `<span class="value-badge badge-longest">💎 Longest</span>`;
+    }
+    if (days === mostPopularDays && planDaysList.length > 2 && days !== maxDays) {
+        planBadges += `<span class="value-badge badge-most-popular">🔥 Popular</span>`;
+    }
+
+    const savingsMeter = totalSave > 0 ? `
+        <div class="savings-meter">
+            <div class="sm-pct">${totalSavePercent}% OFF</div>
+            <div class="sm-label">🎉 Save ${money(totalSave)}</div>
+        </div>
+    ` : '';
+
+    let lengthTip = '';
+    if (days <= 8) {
+        lengthTip = `<div class="length-tip">💡 Larger plans = Bigger discounts!</div>`;
+    } else if (days >= 16 && days < maxDays) {
+        lengthTip = `<div class="length-tip">✨ Going longer saves even more →</div>`;
+    } else if (days === maxDays && maxDays >= 24) {
+        lengthTip = `<div class="length-tip">🏆 Best value — Maximum savings!</div>`;
+    }
+
     let admissionFee = 0;
     let admissionRegularFee = 0;
     if (cat === 'group' && !isExistingStudent) {
         admissionRegularFee = pricing.groupAdmissionRegular;
         admissionFee = active ? pricing.groupAdmissionSpecial : pricing.groupAdmissionDiscounted;
     }
-    const admissionSave = admissionRegularFee - admissionFee;
-
-    let couponDisc = 0;
-    if (active && hasCouponAccess() && appliedCoupons.length > 0) {
-        appliedCoupons.forEach(c => {
-            const cc = c.category || c.appliesTo;
-            const matchesCat = (cat === 'oneOnOne' && cc === 'oneOnOne') || (cat === 'group' && cc === 'group');
-            if (matchesCat) {
-                if (!c.allowedPlans || c.allowedPlans.includes(`${days}d`)) {
-                    const base = finalPrice + admissionFee;
-                    const disc = c.type === 'percent' ? Math.round(base * c.value / 100) : c.value;
-                    couponDisc += disc;
-                }
-            }
-        });
-    }
-
-    const finalTotal = Math.max(0, finalPrice + admissionFee - couponDisc);
-    const grandTotalSave = totalSave + admissionSave + couponDisc;
 
     let priceHTML = '';
     if (cat === 'group' && !isExistingStudent && admissionFee > 0) {
@@ -1896,13 +1887,7 @@ function renderPlanRow(cat, subKey, subData, plan, idx, themeClass, icon) {
                 <div class="mt-2 pt-2 border-t border-dashed border-slate-300">
                     <div class="text-[9px] font-black text-slate-500 uppercase mb-1">Admission Fee</div>
                     <div class="text-[10px] text-slate-400 line-through">Regular: ${money(admissionRegularFee)}</div>
-                    ${active ? `<div class="text-[10px] text-slate-400 line-through">Discounted: ${money(pricing.groupAdmissionDiscounted)}</div>` : `<div class="text-[10px] text-slate-600 font-bold">Discounted: ${money(pricing.groupAdmissionDiscounted)}</div>`}
                     ${active ? `<div class="text-sm font-black plan-price-main">🌟 ${money(admissionFee)}</div>` : `<div class="text-sm font-black plan-price-main">💰 ${money(admissionFee)}</div>`}
-                </div>
-                <div class="mt-2 pt-2 border-t-2 border-slate-300">
-                    <div class="text-[9px] font-black text-slate-700 uppercase">Total Payable</div>
-                    <div class="text-lg font-black plan-price-main">${money(finalTotal)}</div>
-                    ${grandTotalSave > 0 ? `<span class="save-badge">🎉 Save ${money(grandTotalSave)} (${totalSavePercent}%)</span>` : ''}
                 </div>
             </div>
         `;
@@ -1914,22 +1899,19 @@ function renderPlanRow(cat, subKey, subData, plan, idx, themeClass, icon) {
                     ? `<div class="text-[10px] text-slate-400 line-through">Discounted: ${money(discountedTotal)}</div>`
                     : `<div class="text-[10px] text-slate-600 font-bold">Discounted: ${money(discountedTotal)}</div>`
                 }
-                <div class="text-lg font-black plan-price-main mt-1">${money(finalTotal)}</div>
-                ${totalSave > 0 ? `<span class="save-badge">🎉 Save ${money(totalSave)} (${totalSavePercent}%)</span>` : ''}
+                <div class="text-lg font-black plan-price-main mt-1">${money(finalPrice)}</div>
             </div>
         `;
     }
 
-    const couponLine = couponDisc > 0 
-        ? `<div class="mt-1.5 bg-purple-50 border border-purple-200 rounded-lg px-2 py-1">
-             <p class="text-[10px] font-black text-purple-800">🎟️ + Extra coupon: −${money(couponDisc)}</p>
-           </div>` 
-        : '';
-
     return `
-        <div class="plan-row ${themeClass} ${isSelected ? 'selected' : ''}"
+        <div class="plan-row ${themeClass}"
              data-plan-id="${planId}"
-             onclick="selectPlanRow('${cat}', '${subKey.replace(/'/g, "\\'")}', '${(subData.subCategoryId || '').replace(/'/g, "\\'")}', '${(subData.displayName || subKey).replace(/'/g, "\\'")}', ${idx})">
+             onclick="selectPlanRow('${cat}', '${subKey.replace(/'/g, "\\'")}', '${(subData.subCategoryId || '').replace(/'/g, "\\'")}', '${(subData.displayName || subKey).replace(/'/g, "\\'")}', ${idx})"
+             style="position: relative;">
+            
+            ${planBadges ? `<div style="position:absolute; top:8px; right:8px; display:flex; flex-direction:column; gap:3px; align-items:flex-end; z-index:2;">${planBadges}</div>` : ''}
+
             <div class="flex items-start gap-3">
                 <div class="plan-icon-badge">${icon}</div>
                 <div class="flex-1 min-w-0 flex justify-between items-start gap-2 flex-wrap">
@@ -1937,17 +1919,19 @@ function renderPlanRow(cat, subKey, subData, plan, idx, themeClass, icon) {
                         <p class="font-black plan-days-text text-sm">${days} Classes</p>
                         <p class="text-[10px] text-slate-600 font-semibold">${cat === 'oneOnOne' ? '1-on-1' : 'Group'} · ₹${currentRate}/class</p>
                         ${active ? `<span class="special-badge mt-1 inline-block">${priceLabel}</span>` : ''}
-                        ${active && specialBonusDiscount > 0 ? `<p class="text-[10px] text-emerald-700 font-bold mt-1">✨ Extra from discounted: ₹${specialBonusDiscount}</p>` : ''}
-                        ${couponLine}
+                        ${active && specialBonusDiscount > 0 ? `<p class="text-[10px] text-emerald-700 font-bold mt-1">✨ Extra: ₹${specialBonusDiscount}</p>` : ''}
                     </div>
                     <div class="flex-shrink-0">${priceHTML}</div>
                 </div>
             </div>
+
+            ${savingsMeter}
+            ${lengthTip}
         </div>
     `;
 }
 
-/* ============ SELECT PLAN ============ */
+/* ============ SELECT PLAN → CHECKOUT MODAL ============ */
 function selectPlanRow(cat, subKey, subCategoryId, subCategoryDisplay, planIndex) {
     const subData = dynamicCategories[cat][subKey];
     if (!subData) return;
@@ -1957,10 +1941,7 @@ function selectPlanRow(cat, subKey, subCategoryId, subCategoryDisplay, planIndex
     const planId = `${cat}_${subCategoryId}_${planIndex}`;
 
     if (selectedPlan && selectedPlan.planId !== planId) {
-        if (appliedCoupons.length > 0) {
-            if (!confirm('⚠️ Changing plan will reset applied coupons.\n\nContinue?')) return;
-            appliedCoupons = [];
-        }
+        appliedCoupons = [];
         pendingCouponCodes = [];
     }
 
@@ -1974,129 +1955,392 @@ function selectPlanRow(cat, subKey, subCategoryId, subCategoryDisplay, planIndex
 
     saveSelectedPlan();
 
-    document.querySelectorAll('.plan-row').forEach(el => el.classList.remove('selected'));
-    document.querySelectorAll('.plan-row').forEach(el => {
-        if (el.getAttribute('data-plan-id') === planId) el.classList.add('selected');
-    });
+    const keyLower = (subKey || '').toLowerCase();
+    const isKids = keyLower.includes('kid');
+    let themeIcon, themeColorFrom, themeColorTo;
+    if (cat === 'oneOnOne' && !isKids) {
+        themeIcon = '👑'; themeColorFrom = '#1d4ed8'; themeColorTo = '#1e40af';
+    } else if (cat === 'oneOnOne' && isKids) {
+        themeIcon = '👶'; themeColorFrom = '#db2777'; themeColorTo = '#be185d';
+    } else if (cat === 'group' && !isKids) {
+        themeIcon = '👥'; themeColorFrom = '#059669'; themeColorTo = '#047857';
+    } else {
+        themeIcon = '🧸'; themeColorFrom = '#9333ea'; themeColorTo = '#7e22ce';
+    }
 
-    refreshSelectedPlanSummary();
-    renderCouponSection();
-    showToast('✅ Plan selected!', 'success');
+    openPlanCheckoutModal(themeIcon, themeColorFrom, themeColorTo);
 }
 
-/* ============ SELECTED PLAN SUMMARY ============ */
-function refreshSelectedPlanSummary() {
-    const summaryCard = document.getElementById('summaryCard');
-    const summaryContent = document.getElementById('summaryContent');
-    if (!summaryCard || !summaryContent) return;
+/* ============ CHECKOUT MODAL ============ */
+function openPlanCheckoutModal(icon, colorFrom, colorTo) {
+    if (!selectedPlan) return;
 
-    if (!selectedPlan) { summaryCard.classList.add('hidden'); return; }
+    const modal = document.getElementById('planCheckoutModal');
+    const header = document.getElementById('checkoutModalHeader');
+    const iconEl = document.getElementById('checkoutModalIcon');
+
+    iconEl.textContent = icon;
+    header.style.background = `linear-gradient(135deg, ${colorFrom}, ${colorTo})`;
+
+    document.getElementById('checkoutModalSubtitle').textContent = 
+        `${selectedPlan.subCategoryDisplay} — ${selectedPlan.plan.days} Classes`;
+
+    renderCheckoutPlanCard(colorFrom, colorTo);
+    renderCheckoutCoupons();
+    renderCheckoutSavings();
+    renderCheckoutSummary();
+
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closePlanCheckoutModal() {
+    const modal = document.getElementById('planCheckoutModal');
+    if (modal) modal.classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+/* ============ CHECKOUT PLAN CARD (with tips) ============ */
+function renderCheckoutPlanCard(colorFrom, colorTo) {
+    if (!selectedPlan) return;
+    const p = calculateSelectedPlanPricing();
+    if (!p) return;
+
+    const card = document.getElementById('checkoutPlanCard');
+    const days = selectedPlan.plan.days;
+
+    // Compare with other plans in same subcategory
+    const subData = dynamicCategories[selectedPlan.category]?.[selectedPlan.subCategoryKey];
+    const allPlans = subData?.plans || [];
+    const longerPlans = allPlans.filter(pl => Number(pl.days) > days);
+    const shorterPlans = allPlans.filter(pl => Number(pl.days) < days);
+    const maxDays = Math.max(...allPlans.map(pl => Number(pl.days) || 0));
+    
+    let tipMessage = '';
+    if (shorterPlans.length === 0 && longerPlans.length > 0) {
+        tipMessage = `💡 This is the shortest plan. Go longer to save more!`;
+    } else if (longerPlans.length === 0 && shorterPlans.length > 0 && maxDays >= 24) {
+        tipMessage = `🏆 Best value plan! Maximum savings of all!`;
+    } else if (longerPlans.length > 0) {
+        const nextPlan = longerPlans.sort((a,b) => a.days - b.days)[0];
+        const extraSave = (Number(nextPlan.days) - days) * (p.regularRate - p.currentRate);
+        tipMessage = `✨ ${nextPlan.days} classes কিনলে আরও ${money(extraSave)} বাঁচাতে পারতেন!`;
+    }
+
+    let html = `
+        <div class="flex items-start justify-between gap-3 mb-3">
+            <div class="min-w-0 flex-1">
+                <p class="text-[10px] font-black text-slate-500 uppercase tracking-wider mb-1">Selected Plan</p>
+                <p class="text-sm font-black text-slate-800 leading-snug">${selectedPlan.subCategoryDisplay}</p>
+                <p class="text-[11px] text-slate-600 font-semibold mt-1">📚 ${days} Classes · ${selectedPlan.category === 'oneOnOne' ? '1-on-1' : 'Group'}</p>
+            </div>
+            <div class="text-right flex-shrink-0">
+                ${p.active ? `<div class="inline-block bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">🌟 Special Offer</div>` 
+                    : `<div class="inline-block bg-sky-500 text-white text-[9px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider">💰 Discounted</div>`}
+            </div>
+        </div>
+    `;
+
+    html += `<div class="bg-white rounded-xl border-2 border-slate-100 p-3 space-y-2">`;
+
+    html += `
+        <div class="flex justify-between items-center text-xs">
+            <span class="text-slate-500 font-semibold">Regular Price (₹${p.regularRate} × ${days})</span>
+            <span class="text-slate-400 line-through font-bold">${money(p.regularTotal)}</span>
+        </div>
+    `;
+
+    if (p.active) {
+        html += `
+            <div class="flex justify-between items-center text-xs">
+                <span class="text-sky-600 font-semibold">Discounted (₹${p.discountedRate} × ${days})</span>
+                <span class="text-sky-500 line-through font-bold">${money(p.discountedTotal)}</span>
+            </div>
+            <div class="flex justify-between items-center text-xs pt-1.5 border-t border-dashed border-slate-200">
+                <span class="font-black" style="color: ${colorFrom};">🌟 Special Offer Price</span>
+                <span class="font-black text-base" style="color: ${colorFrom};">${money(p.specialTotal)}</span>
+            </div>
+        `;
+    } else {
+        html += `
+            <div class="flex justify-between items-center text-xs">
+                <span class="text-sky-700 font-bold">💰 Discounted Price</span>
+                <span class="text-sky-700 font-black">${money(p.discountedTotal)}</span>
+            </div>
+        `;
+    }
+
+    if (p.admissionFee > 0) {
+        html += `
+            <div class="pt-2 border-t-2 border-slate-200 space-y-1.5">
+                <p class="text-[10px] font-black text-slate-500 uppercase tracking-wider">🎓 Admission Fee (New Student)</p>
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-slate-500 font-semibold">Regular</span>
+                    <span class="text-slate-400 line-through font-bold">${money(p.admissionRegularFee)}</span>
+                </div>
+                ${p.active ? `
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-sky-600 font-semibold">Discounted</span>
+                    <span class="text-sky-500 line-through font-bold">${money(p.admissionDiscountedFee)}</span>
+                </div>
+                <div class="flex justify-between items-center text-xs">
+                    <span class="font-black" style="color: ${colorFrom};">🌟 Special Offer</span>
+                    <span class="font-black" style="color: ${colorFrom};">${money(p.admissionFee)}</span>
+                </div>` : `
+                <div class="flex justify-between items-center text-xs">
+                    <span class="text-sky-700 font-bold">💰 Discounted</span>
+                    <span class="text-sky-700 font-black">${money(p.admissionFee)}</span>
+                </div>`}
+            </div>
+        `;
+    }
+
+    html += `</div>`;
+
+    if (tipMessage) {
+        html += `
+            <div class="mt-3 bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-300 rounded-xl p-3">
+                <p class="text-[11px] font-bold text-amber-900 leading-snug">${tipMessage}</p>
+            </div>
+        `;
+    }
+
+    card.innerHTML = html;
+    card.style.background = `linear-gradient(135deg, ${colorFrom}11, ${colorTo}11)`;
+    card.style.borderColor = colorFrom;
+}
+
+function renderCheckoutCoupons() {
+    const section = document.getElementById('checkoutCouponSection');
+    if (!section) return;
+
+    const grantedCount = getGrantedCouponIds().length;
+    const maxAllowed = allowMultipleCoupons() ? Math.min(MAX_COUPONS, grantedCount) : 1;
+
+    if (!hasCouponAccess() || grantedCount === 0 || !isOfferActive()) {
+        section.classList.add('hidden');
+        return;
+    }
+
+    section.classList.remove('hidden');
+    const limitEl = document.getElementById('checkoutCouponLimit');
+    if (limitEl) limitEl.textContent = `(Max ${maxAllowed})`;
+
+    const wrap = document.getElementById('checkoutAvailableCoupons');
+    const granted = currentStudent?.grantedCoupons || [];
+    const appliedCodes = appliedCoupons.map(c => c.code);
+    const atLimit = appliedCoupons.length >= maxAllowed;
+
+    wrap.innerHTML = granted.map(g => {
+        const code = (g.code || '').toUpperCase();
+        const isApplied = appliedCodes.includes(code);
+        const isExpired = g.expiresAt && new Date(g.expiresAt).getTime() < Date.now();
+        const cat = g.category || g.appliesTo || '';
+        const catMatches = !cat || cat === selectedPlan.category;
+        const catLabel = cat === 'oneOnOne' ? '👑 1-on-1' : cat === 'group' ? '👥 Group' : '🌟 All';
+        const discLabel = g.type === 'flat' ? `₹${g.value} OFF` : `${g.value}% OFF`;
+
+        let statusText = '';
+        if (isApplied) statusText = '✅ APPLIED';
+        else if (isExpired) statusText = '⛔ EXPIRED';
+        else if (atLimit) statusText = '⚠️ LIMIT';
+        else if (!catMatches) statusText = '❌ WRONG CATEGORY';
+        else statusText = '👆 TAP TO APPLY';
+
+        const isDisabled = isApplied || isExpired || atLimit || !catMatches;
+        const cls = isApplied ? 'bg-green-50 border-green-400'
+            : isExpired ? 'bg-slate-100 border-slate-300 opacity-60'
+            : !catMatches ? 'bg-red-50 border-red-200 opacity-70'
+            : 'bg-white border-purple-300 hover:border-purple-500 hover:shadow-md cursor-pointer';
+
+        return `
+            <div class="border-2 rounded-xl p-3 transition ${cls}"
+                 ${!isDisabled ? `onclick="applyCheckoutCoupon('${code}')"` : ''}>
+                <div class="flex justify-between items-center gap-2 mb-1 flex-wrap">
+                    <div class="flex items-center gap-2 min-w-0 flex-wrap">
+                        <span class="coupon-badge">🎟️ ${code}</span>
+                        <span class="text-[10px] font-black text-orange-600">${discLabel}</span>
+                    </div>
+                    <span class="text-[9px] font-black whitespace-nowrap ${isApplied ? 'text-green-700' : isExpired ? 'text-red-600' : 'text-purple-700'}">
+                        ${statusText}
+                    </span>
+                </div>
+                <p class="text-[10px] text-slate-600 font-semibold leading-snug">
+                    <strong class="text-purple-800">For:</strong> ${catLabel} · ${(g.allowedPlans && g.allowedPlans.length > 0) ? g.allowedPlans.join('/') : 'All Plans'}
+                </p>
+            </div>
+        `;
+    }).join('');
+
+    const appliedWrap = document.getElementById('checkoutAppliedCoupons');
+    if (appliedCoupons.length > 0) {
+        appliedWrap.innerHTML = appliedCoupons.map((c, i) => `
+            <div class="bg-green-100 border border-green-300 rounded-lg p-2.5 flex justify-between items-center text-[11px] font-bold text-green-800">
+                <span>✅ ${c.code} ${c.type === 'flat' ? '(−₹' + c.value + ')' : '(−' + c.value + '%)'}</span>
+                <button onclick="removeCheckoutCoupon(${i})" class="text-red-600 underline">Remove</button>
+            </div>`).join('');
+    } else {
+        appliedWrap.innerHTML = '';
+    }
+}
+
+async function applyCheckoutCoupon(code) {
+    if (!isOfferActive()) { showToast('⛔ Offer has expired', 'error'); return; }
+
+    const granted = currentStudent?.grantedCoupons || [];
+    const match = granted.find(g => (g.code || '').toUpperCase() === code.toUpperCase());
+    if (!match) { showToast('❌ Coupon not granted to you', 'error'); return; }
+
+    if (match.expiresAt && new Date(match.expiresAt).getTime() < Date.now()) {
+        showToast('❌ Coupon expired', 'error'); return;
+    }
+
+    if (appliedCoupons.some(c => c.code === code)) { showToast('⚠️ Already applied', 'info'); return; }
+
+    const maxAllowed = allowMultipleCoupons() ? Math.min(MAX_COUPONS, granted.length) : 1;
+    if (appliedCoupons.length >= maxAllowed) {
+        showToast(`⚠️ Max ${maxAllowed} coupon${maxAllowed > 1 ? 's' : ''} allowed`, 'error'); return;
+    }
+
+    let c = coupons[code];
+    if (!c) {
+        try {
+            const snap = await db.collection('coupons').where('code', '==', code).limit(1).get();
+            if (!snap.empty) {
+                const fresh = snap.docs[0].data();
+                if (fresh.active !== false) { c = { ...fresh, _id: snap.docs[0].id }; coupons[code] = c; }
+            }
+        } catch (err) { console.error(err); }
+    }
+    if (!c) { showToast('❌ Coupon not found', 'error'); return; }
+
+    const couponCat = c.category || c.appliesTo;
+    if (couponCat && couponCat !== selectedPlan.category) {
+        showToast(`❌ Only for ${couponCat === 'oneOnOne' ? '1-on-1' : 'Group'} plans`, 'error');
+        return;
+    }
+    if (c.allowedPlans && c.allowedPlans.length > 0) {
+        const planKey = `${selectedPlan.plan.days}d`;
+        if (!c.allowedPlans.includes(planKey)) {
+            showToast(`❌ Not valid for ${selectedPlan.plan.days}-day plan`, 'error');
+            return;
+        }
+    }
+
+    appliedCoupons.push({ ...c, appliesTo: c.category || c.appliesTo });
+    saveSelectedPlan();
+
+    renderCheckoutCoupons();
+    renderCheckoutSavings();
+    renderCheckoutSummary();
+    showToast(`🎉 ${code} applied!`, 'success');
+}
+
+function applyCheckoutManualCoupon() {
+    const input = document.getElementById('checkoutCouponInput');
+    const code = (input?.value || '').trim().toUpperCase();
+    if (!code) { showToast('⚠️ Enter a coupon code', 'error'); return; }
+    if (!isCouponGrantedToStudent(code)) { showToast('❌ Not granted to you', 'error'); return; }
+    applyCheckoutCoupon(code);
+    if (input) input.value = '';
+}
+
+function removeCheckoutCoupon(idx) {
+    appliedCoupons.splice(idx, 1);
+    saveSelectedPlan();
+    renderCheckoutCoupons();
+    renderCheckoutSavings();
+    renderCheckoutSummary();
+}
+
+function renderCheckoutSavings() {
+    const box = document.getElementById('checkoutSavingsBox');
+    if (!box || !selectedPlan) return;
 
     const p = calculateSelectedPlanPricing();
-    summaryCard.classList.remove('hidden');
+    if (!p || p.totalSave <= 0) { box.classList.add('hidden'); document.getElementById('checkoutOfferForYou').classList.add('hidden'); return; }
 
-    const totalSavePercent = p.regularTotal > 0 
-        ? Math.round((p.totalSave / (p.regularTotal + (p.admissionRegularFee || 0))) * 100) 
-        : 0;
+    const totalBefore = p.regularTotal + (p.admissionRegularFee || 0);
+    const pct = totalBefore > 0 ? Math.round((p.totalSave / totalBefore) * 100) : 0;
+
+    box.classList.remove('hidden');
+    box.innerHTML = `
+        <div class="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 text-white rounded-2xl p-4 text-center shadow-lg">
+            <p class="text-[10px] font-black uppercase tracking-widest opacity-95 mb-1">🎉 You Are Saving</p>
+            <p class="text-3xl font-black">${money(p.totalSave)}</p>
+            <p class="text-xs font-bold opacity-95 mt-1">(${pct}% OFF)</p>
+            <div class="mt-2 pt-2 border-t border-white/30 text-[10px] font-semibold space-y-0.5">
+                ${p.active && p.specialBonusDiscount > 0 ? `<p>✨ Extra from discounted: ₹${p.specialBonusDiscount}</p>` : ''}
+                ${p.admissionSave > 0 ? `<p>🎓 Admission saving: ₹${p.admissionSave}</p>` : ''}
+                ${p.couponDisc > 0 ? `<p>🎟️ Coupon saving: ₹${p.couponDisc}</p>` : ''}
+            </div>
+        </div>
+    `;
+
+    const offerBox = document.getElementById('checkoutOfferForYou');
+    if (p.couponDisc > 0) {
+        offerBox.classList.remove('hidden');
+        offerBox.innerHTML = `
+            <div class="offer-for-you-dark">
+                <div class="flex items-start gap-3">
+                    <div class="text-3xl flex-shrink-0">🎁</div>
+                    <div class="flex-1">
+                        <p class="text-[10px] font-black uppercase tracking-widest opacity-95">🎁 OFFER FOR YOU</p>
+                        <p class="text-xs font-bold mt-1">Coupon <strong>${p.usedCoupons.map(u => u.code).join(', ')}</strong> applied!</p>
+                        <p class="text-2xl font-black mt-1">Extra ${money(p.couponDisc)} off</p>
+                        <p class="text-[10px] font-semibold mt-1 opacity-95">Total savings now: ${money(p.totalSave)}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        offerBox.classList.add('hidden');
+    }
+}
+
+function renderCheckoutSummary() {
+    if (!selectedPlan) return;
+    const p = calculateSelectedPlanPricing();
+    if (!p) return;
+
+    const summary = document.getElementById('checkoutSummary');
 
     let rows = '';
-
-    rows += `<div class="flex justify-between text-slate-800 font-bold">
-        <span>📘 ${selectedPlan.subCategoryDisplay}</span>
-        <span>${selectedPlan.plan.days} Classes</span>
-    </div>`;
-
-    rows += `<div class="mt-2 pt-2 border-t border-dashed border-slate-200">
-        <div class="text-[10px] font-black text-slate-500 uppercase mb-1">Package Fee</div>
-        <div class="flex justify-between text-slate-500">
-            <span>Regular (₹${p.regularRate}×${p.days})</span>
-            <span class="line-through">${money(p.regularTotal)}</span>
-        </div>
-        ${p.active ? `
-        <div class="flex justify-between text-sky-600">
-            <span>💰 Discounted (₹${p.discountedRate}×${p.days})</span>
-            <span class="line-through">${money(p.discountedTotal)}</span>
-        </div>
-        <div class="flex justify-between text-amber-700 font-black">
-            <span>🌟 Special Offer (₹${p.specialRate}×${p.days})</span>
-            <span>${money(p.planPrice)}</span>
-        </div>` : `
-        <div class="flex justify-between text-sky-700 font-black">
-            <span>💰 Discounted (₹${p.discountedRate}×${p.days})</span>
-            <span>${money(p.planPrice)}</span>
-        </div>`}
+    rows += `<div class="flex justify-between items-center">
+        <span class="text-slate-600 font-semibold">📘 Package Fee</span>
+        <span class="font-black text-slate-800">${money(p.planPrice)}</span>
     </div>`;
 
     if (p.admissionFee > 0) {
-        rows += `<div class="mt-2 pt-2 border-t border-dashed border-slate-200">
-            <div class="text-[10px] font-black text-slate-500 uppercase mb-1">Admission Fee</div>
-            <div class="flex justify-between text-slate-500">
-                <span>Regular</span>
-                <span class="line-through">${money(p.admissionRegularFee)}</span>
-            </div>
-            ${p.active ? `
-            <div class="flex justify-between text-sky-600">
-                <span>💰 Discounted</span>
-                <span class="line-through">${money(p.admissionDiscountedFee)}</span>
-            </div>
-            <div class="flex justify-between text-amber-700 font-black">
-                <span>🌟 Special Offer</span>
-                <span>${money(p.admissionFee)}</span>
-            </div>` : `
-            <div class="flex justify-between text-sky-700 font-black">
-                <span>💰 Discounted</span>
-                <span>${money(p.admissionFee)}</span>
-            </div>`}
+        rows += `<div class="flex justify-between items-center">
+            <span class="text-slate-600 font-semibold">🎓 Admission Fee</span>
+            <span class="font-black text-slate-800">${money(p.admissionFee)}</span>
         </div>`;
     }
 
     if (p.couponDisc > 0) {
-        rows += `<div class="mt-2 pt-2 border-t border-dashed border-slate-200">
-            <div class="text-[10px] font-black text-purple-700 uppercase mb-1">🎟️ Coupon Discount</div>`;
-        p.usedCoupons.forEach(uc => {
-            rows += `<div class="flex justify-between text-purple-700 font-bold">
-                <span>${uc.code} (${uc.type === 'flat' ? '₹' + uc.value : uc.value + '%'})</span>
-                <span>− ${money(uc.disc)}</span>
-            </div>`;
-        });
-        rows += `</div>`;
+        rows += `<div class="flex justify-between items-center text-purple-700 font-bold">
+            <span>🎟️ Coupon Discount</span>
+            <span>− ${money(p.couponDisc)}</span>
+        </div>`;
     }
 
-    rows += `<div class="mt-3 pt-3 border-t-2 border-slate-300 flex justify-between items-center">
-        <span class="font-black text-slate-800 text-sm">Total Payable</span>
-        <span class="font-black text-orange-700 text-xl">${money(p.final)}</span>
+    rows += `<div class="flex justify-between items-center pt-3 mt-1 border-t-2 border-slate-300">
+        <span class="text-slate-800 font-black text-sm">Total Payable</span>
+        <span class="text-2xl font-black text-orange-600">${money(p.final)}</span>
     </div>`;
 
-    if (p.totalSave > 0) {
-        rows += `
-            <div class="mt-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl p-3 text-center shadow-lg">
-                <p class="text-[10px] font-bold uppercase tracking-wider opacity-90">🎉 You Are Saving</p>
-                <p class="text-2xl font-black">${money(p.totalSave)}</p>
-                <p class="text-[11px] font-bold opacity-95">(${totalSavePercent}% OFF)</p>
-                ${p.active && p.specialBonusDiscount > 0 ? `
-                    <p class="text-[10px] mt-1.5 pt-1.5 border-t border-white/30 font-semibold">
-                        ✨ Extra from discounted: ₹${p.specialBonusDiscount}
-                        ${p.admissionSave > 0 ? ` · Admission: ₹${p.admissionSave}` : ''}
-                        ${p.couponDisc > 0 ? ` · Coupon: ₹${p.couponDisc}` : ''}
-                    </p>` : ''}
-            </div>
-        `;
-    }
-
-    if (p.couponDisc > 0) {
-        rows += `
-            <div class="offer-for-you-dark mt-3">
-                <p class="text-[10px] font-black uppercase tracking-widest opacity-95">🎁 Offer For You</p>
-                <p class="text-[11px] font-bold mt-1 opacity-95">Coupon <strong>${p.usedCoupons.map(u=>u.code).join(', ')}</strong> applied</p>
-                <p class="text-2xl font-black mt-1">You save extra ${money(p.couponDisc)}</p>
-                <p class="text-[10px] font-semibold mt-1 opacity-90">🎉 Total savings: ${money(p.totalSave)}</p>
-            </div>
-        `;
-    }
-
-    summaryContent.innerHTML = rows;
+    summary.innerHTML = rows;
 }
 
+function confirmCheckoutAndPay() {
+    if (!selectedPlan) { showToast('⚠️ No plan selected', 'error'); return; }
+    document.getElementById('planCheckoutModal').classList.add('hidden');
+    document.body.style.overflow = '';
+    proceedToPayment();
+}
+
+/* ============ CALCULATE PRICING ============ */
 function calculateSelectedPlanPricing() {
     if (!selectedPlan) return null;
     const plan = selectedPlan.plan;
@@ -2176,261 +2420,11 @@ function calculateSelectedPlanPricing() {
     };
 }
 
-/* ============ COUPON SECTION ============ */
-function renderCouponSection() {
-    const couponSection = document.getElementById('couponSection');
-    if (!couponSection) return;
-
-    const grantedIds = getGrantedCouponIds();
-    const grantedCount = grantedIds.length;
-    const maxAllowed = allowMultipleCoupons() ? Math.min(MAX_COUPONS, grantedCount) : 1;
-
-    if (hasCouponAccess() && grantedCount > 0) {
-        couponSection.classList.remove('hidden');
-        const limitText = document.getElementById('couponLimitText');
-        if (limitText) limitText.textContent = `(Max ${maxAllowed})`;
-
-        renderAvailableCoupons();
-
-        const listEl = document.getElementById('appliedCouponsList');
-        if (appliedCoupons.length > 0) {
-            listEl.innerHTML = appliedCoupons.map((c, i) => `
-                <div class="bg-green-100 border border-green-300 rounded-lg p-2.5 text-[11px] font-bold text-green-800">
-                    <div class="flex justify-between items-center gap-2">
-                        <span>✅ ${c.code} ${c.type === 'flat' ? '(−₹' + c.value + ')' : '(−' + c.value + '%)'}</span>
-                        <button onclick="removeCouponByIndex(${i})" class="text-red-600 underline">Remove</button>
-                    </div>
-                </div>`).join('');
-        } else {
-            listEl.innerHTML = '';
-        }
-        updateApplyButton();
-    } else {
-        couponSection.classList.add('hidden');
-    }
-}
-
-function renderAvailableCoupons() {
-    const wrap = document.getElementById('availableCouponsWrap');
-    const list = document.getElementById('availableCouponsList');
-    if (!wrap || !list) return;
-
-    const granted = currentStudent?.grantedCoupons || [];
-    if (granted.length === 0) { wrap.classList.add('hidden'); return; }
-
-    wrap.classList.remove('hidden');
-
-    const appliedCodes = appliedCoupons.map(c => c.code);
-    const maxAllowed = allowMultipleCoupons() ? Math.min(MAX_COUPONS, granted.length) : 1;
-    const atLimit = appliedCoupons.length >= maxAllowed;
-
-    list.innerHTML = granted.map(g => {
-        const code = (g.code || '').toUpperCase();
-        const isApplied = appliedCodes.includes(code);
-        const isExpired = g.expiresAt && new Date(g.expiresAt).getTime() < Date.now();
-        const isDisabled = isApplied || isExpired || atLimit || !isOfferActive();
-
-        const cat = g.category || g.appliesTo || '';
-        const catLabel = cat === 'oneOnOne' ? '👑 1-on-1' : cat === 'group' ? '👥 Group' : '🌟 All';
-        const subLabel = g.subCategoryDisplay ? ` · ${g.subCategoryDisplay}` : '';
-        const planLabel = (g.allowedPlans && g.allowedPlans.length > 0)
-            ? ` · Plans: ${g.allowedPlans.join(', ')}`
-            : ' · All Plans';
-        const discountLabel = g.type === 'flat' ? `₹${g.value} OFF` : `${g.value}% OFF`;
-
-        let statusText = '';
-        if (isApplied) statusText = '✅ APPLIED';
-        else if (isExpired) statusText = '⛔ EXPIRED';
-        else if (atLimit) statusText = '⚠️ LIMIT REACHED';
-        else if (!isOfferActive()) statusText = '⛔ OFFER ENDED';
-        else statusText = '👆 TAP TO APPLY';
-
-        const cls = isApplied ? 'bg-green-50 border-green-400'
-            : isExpired ? 'bg-slate-100 border-slate-300 opacity-60'
-            : 'bg-white border-purple-300 hover:border-purple-500 hover:shadow-md cursor-pointer';
-
-        return `
-            <div class="border-2 rounded-xl p-3 transition ${cls}"
-                 ${!isDisabled ? `onclick="applyCouponByCode('${code}')"` : ''}>
-                <div class="flex justify-between items-center gap-2 mb-1 flex-wrap">
-                    <div class="flex items-center gap-2 min-w-0 flex-wrap">
-                        <span class="coupon-badge">🎟️ ${code}</span>
-                        <span class="text-[10px] font-black text-orange-600">${discountLabel}</span>
-                    </div>
-                    <span class="text-[9px] font-black whitespace-nowrap ${isApplied ? 'text-green-700' : isExpired ? 'text-red-600' : atLimit ? 'text-amber-700' : 'text-purple-700'}">
-                        ${statusText}
-                    </span>
-                </div>
-                <p class="text-[10px] text-slate-600 font-semibold leading-snug">
-                    <strong class="text-purple-800">Applies to:</strong> ${catLabel}${subLabel}${planLabel}
-                </p>
-                ${g.expiresAt ? `<p class="text-[9px] text-slate-500 mt-1">📅 Valid until: ${new Date(g.expiresAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</p>` : `<p class="text-[9px] text-green-700 mt-1">♾️ No expiry</p>`}
-            </div>
-        `;
-    }).join('');
-}
-
-async function applyCouponByCode(code) {
-    if (!isOfferActive()) { showToast('⛔ Offer has expired', 'error'); return; }
-
-    const granted = currentStudent?.grantedCoupons || [];
-    const match = granted.find(g => (g.code || '').toUpperCase() === code.toUpperCase());
-    if (!match) { showToast('❌ Coupon not granted to you', 'error'); return; }
-
-    if (match.expiresAt && new Date(match.expiresAt).getTime() < Date.now()) {
-        showToast('❌ Coupon expired', 'error'); return;
-    }
-
-    if (appliedCoupons.some(c => c.code === code)) { showToast('⚠️ Already applied', 'info'); return; }
-
-    const maxAllowed = allowMultipleCoupons() ? Math.min(MAX_COUPONS, granted.length) : 1;
-    if (appliedCoupons.length >= maxAllowed) {
-        showToast(`⚠️ Max ${maxAllowed} coupon${maxAllowed > 1 ? 's' : ''} allowed`, 'error'); return;
-    }
-
-    let c = coupons[code];
-    if (!c) {
-        try {
-            const snap = await db.collection('coupons').where('code', '==', code).limit(1).get();
-            if (!snap.empty) {
-                const fresh = snap.docs[0].data();
-                if (fresh.active !== false) { c = { ...fresh, _id: snap.docs[0].id }; coupons[code] = c; }
-            }
-        } catch (err) { console.error(err); }
-    }
-    if (!c) { showToast('❌ Coupon not found', 'error'); return; }
-
-    if (selectedPlan) {
-        const couponCat = c.category || c.appliesTo;
-        if (couponCat && couponCat !== selectedPlan.category) {
-            showToast(`❌ Only for ${couponCat === 'oneOnOne' ? '1-on-1' : 'Group'} plans`, 'error');
-            return;
-        }
-        if (c.allowedPlans && c.allowedPlans.length > 0) {
-            const planKey = `${selectedPlan.plan.days}d`;
-            if (!c.allowedPlans.includes(planKey)) {
-                showToast(`❌ Not valid for ${selectedPlan.plan.days}-day plan`, 'error');
-                return;
-            }
-        }
-    }
-
-    appliedCoupons.push({ ...c, appliesTo: c.category || c.appliesTo });
-    saveSelectedPlan();
-    renderCouponSection();
-    refreshSelectedPlanSummary();
-    showToast(`🎉 ${code} applied! Offer for you!`, 'success');
-}
-
-function addCouponToList() {
-    if (!hasCouponAccess()) { alert('🚫 Coupon access required.'); return; }
-    if (!isOfferActive()) { alert('⛔ Offer has expired.'); return; }
-
-    const input = document.getElementById('couponInput');
-    const code = (input ? input.value : '').trim().toUpperCase();
-    if (!code) { alert('⚠️ Enter a coupon code.'); return; }
-
-    const grantedIds = getGrantedCouponIds();
-    const maxAllowed = allowMultipleCoupons() ? Math.min(MAX_COUPONS, grantedIds.length) : 1;
-    const totalCount = appliedCoupons.length + pendingCouponCodes.length;
-
-    if (totalCount >= maxAllowed) { alert(`⚠️ Maximum ${maxAllowed} coupon${maxAllowed > 1 ? 's' : ''} allowed.`); return; }
-    if (pendingCouponCodes.includes(code)) { alert('⚠️ Already added.'); return; }
-    if (appliedCoupons.some(c => c.code === code)) { alert('⚠️ Already applied.'); return; }
-    if (!isCouponGrantedToStudent(code)) { alert('❌ This coupon is not assigned to you.'); return; }
-
-    pendingCouponCodes.push(code);
-    if (input) input.value = '';
-    updateApplyButton();
-    showToast('➕ Added: ' + code, 'info');
-}
-
-async function applyCouponList() {
-    if (!hasCouponAccess()) { alert('🚫 Coupon access required.'); return; }
-    if (!isOfferActive()) { alert('⛔ Offer has expired.'); return; }
-    if (pendingCouponCodes.length === 0) { alert('⚠️ No coupon added yet.'); return; }
-
-    const validated = [];
-    const errors = [];
-
-    for (const code of pendingCouponCodes) {
-        let c = coupons[code];
-        if (!c) {
-            try {
-                const snap = await db.collection('coupons').where('code', '==', code).limit(1).get();
-                if (!snap.empty) {
-                    const fresh = snap.docs[0].data();
-                    if (fresh.active !== false) { c = { ...fresh, _id: snap.docs[0].id }; coupons[code] = c; }
-                }
-            } catch (err) { console.error(err); }
-        }
-
-        if (!c) { errors.push(`${code}: Invalid coupon`); continue; }
-        if (!isCouponGrantedToStudent(code)) { errors.push(`${code}: Not granted`); continue; }
-
-        if (c.validFrom && c.validUntil) {
-            const fromTime = new Date(c.validFrom).getTime();
-            const untilTime = new Date(c.validUntil).getTime();
-            if (fromTime > Date.now()) { errors.push(`${code}: Not yet active`); continue; }
-            if (untilTime < Date.now()) { errors.push(`${code}: Expired`); continue; }
-        }
-
-        if (selectedPlan) {
-            const couponCat = c.category || c.appliesTo;
-            if (couponCat && couponCat !== selectedPlan.category) { errors.push(`${code}: Wrong category`); continue; }
-        }
-
-        validated.push(c);
-    }
-
-    if (errors.length > 0) {
-        alert('⚠️ Some coupons failed:\n\n' + errors.join('\n'));
-        pendingCouponCodes = pendingCouponCodes.filter(code => validated.some(v => v.code === code));
-        updateApplyButton();
-        if (validated.length === 0) return;
-    }
-
-    validated.forEach(c => {
-        if (!appliedCoupons.some(a => a.code === c.code)) {
-            appliedCoupons.push({ ...c, appliesTo: c.category || c.appliesTo });
-        }
-    });
-
-    pendingCouponCodes = [];
-    saveSelectedPlan();
-    renderCouponSection();
-    refreshSelectedPlanSummary();
-    showToast('🎉 Coupon applied! Offer for you!', 'success');
-}
-
-function updateApplyButton() {
-    const btn = document.getElementById('applyCouponBtn');
-    if (!btn) return;
-    btn.disabled = pendingCouponCodes.length === 0;
-    btn.textContent = pendingCouponCodes.length > 0
-        ? `✅ Apply Coupon (${pendingCouponCodes.length})`
-        : '✅ Apply Coupon';
-}
-
-function removeCouponByIndex(idx) {
-    appliedCoupons.splice(idx, 1);
-    saveSelectedPlan();
-    renderCouponSection();
-    refreshSelectedPlanSummary();
-}
-
 /* ============ CONTACT ============ */
 function contactViaWhatsApp() {
     const cleanPlan = selectedPlan ? cleanPlanName(selectedPlan.subCategoryDisplay + ' - ' + selectedPlan.plan.days + ' Classes') : '';
     const planLine = cleanPlan ? `\n*Interested Plan:*\n*${cleanPlan}*\n` : '';
     const msg = `💬 CONTACT REQUEST - English Spur\n\n*Student Details:*\n• Name: *${currentStudent.name}*\n• WhatsApp: *${currentStudent.mobile}*\n• Unique ID: ${currentStudent.uniqueId || currentStudent.id}\n${planLine}\nPlease help me with the course details.\n\nThank you!`;
-    window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
-}
-
-function requestCouponViaWhatsApp() {
-    if (!hasCouponAccess()) { alert('🚫 Coupon access required.'); return; }
-    if (!isOfferActive()) { alert('⛔ Offer expired.'); return; }
-    const msg = `🎟️ COUPON REQUEST — English Spur\n\n*Student Details:*\n• Name: *${currentStudent.name}*\n• WhatsApp: *${currentStudent.mobile}*\n• Unique ID: ${currentStudent.uniqueId || currentStudent.id}\n\nPlease send me a Special Coupon Code.\n\nThank you!`;
     window.open(`https://wa.me/${PHONE}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
@@ -2707,19 +2701,13 @@ function backToDashboard() {
     selectedPlan = null;
     appliedCoupons = [];
     screenshotBase64 = null;
-    const ci = document.getElementById('couponInput');
-    if (ci) ci.value = '';
-    document.getElementById('summaryCard').classList.add('hidden');
 
     if (currentStudent && currentStudent.id) {
         loadCurrentPlan();
         renderDynamicPlans();
     }
     showScreen('dashboard');
-    setTimeout(() => {
-        renderCurrentPlanDetail();
-        showCurrentPlanView();
-    }, 100);
+    showCurrentPlanView();
     showToast('🏠 Back to dashboard', 'success');
 }
 
@@ -2760,6 +2748,11 @@ async function refreshDashboard() {
 
 /* ============ HISTORY ============ */
 function loadHistory() {
+    const hBadge = document.getElementById('historyBadge');
+    if (hBadge) hBadge.classList.add('hidden');
+    const aBadge = document.getElementById('actionBadge');
+    if (aBadge) aBadge.classList.add('hidden');
+
     if (!currentStudent) return;
     const list = document.getElementById('historyList');
     list.innerHTML = '<p class="text-center text-slate-500 py-6 text-sm">🔄 Loading...</p>';
