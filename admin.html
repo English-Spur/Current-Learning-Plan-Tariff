@@ -32,27 +32,10 @@
     .badge-purple { background: #9333ea; color: #fff; }
     .badge-blue { background: #1d4ed8; color: #fff; }
     .badge-fuchsia { background: #c026d3; color: #fff; }
+    .badge-orange { background: #ea580c; color: #fff; }
+    .badge-slate { background: #64748b; color: #fff; }
     .order-id-badge { font-family: 'Courier New', monospace; letter-spacing: 1px; background: #dbeafe; color: #1e40af; border: 2px solid #93c5fd; padding: 3px 10px; border-radius: 8px; font-weight: 900; display: inline-block; font-size: 12px; }
     .order-id-badge-lg { font-family: 'Courier New', monospace; letter-spacing: 2px; background: #dbeafe; color: #1e40af; border: 2px solid #3b82f6; padding: 5px 14px; border-radius: 10px; font-weight: 900; display: inline-block; font-size: 15px; }
-    @media print { .noprint { display: none !important; } }
-    #previewPanel { position: fixed; top: 10px; right: 10px; width: 380px; max-height: 95vh; background: #ffffff; border: 3px solid #1d4ed8; border-radius: 14px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); z-index: 1000; display: none; overflow: hidden; }
-    #previewPanel.show { display: block; }
-    .preview-header { background: linear-gradient(135deg, #1d4ed8, #1e40af); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
-    .preview-header .preview-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
-    .preview-header .preview-toggle { background: rgba(255,255,255,0.2); border: none; color: #fff; font-size: 16px; cursor: pointer; padding: 4px 10px; border-radius: 6px; font-weight: 700; }
-    .preview-body { padding: 12px; overflow-y: auto; max-height: calc(95vh - 55px); background: #f8fafc; }
-    .preview-plan-table { background: #fff; border-radius: 10px; overflow: hidden; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-    .preview-plan-header { background: #1e40af; color: #fff; font-size: 10px; font-weight: 800; text-transform: uppercase; padding: 8px; text-align: center; letter-spacing: 0.05em; }
-    .preview-plan-header.green { background: #047857; }
-    .preview-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-bottom: 1px solid #f1f5f9; font-size: 11px; }
-    .preview-row:last-child { border-bottom: none; }
-    .preview-row .pr-name { font-weight: 700; color: #1e293b; flex: 1; }
-    .preview-row .pr-price { font-weight: 900; color: #ea580c; font-size: 12px; text-align: right; }
-    .preview-row .pr-old { font-size: 9px; color: #94a3b8; text-decoration: line-through; display: block; }
-    #previewToggleBtn { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #1d4ed8, #1e40af); color: #fff; border: none; cursor: pointer; box-shadow: 0 8px 20px rgba(29,78,216,0.4); font-size: 24px; z-index: 999; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
-    #previewToggleBtn:hover { transform: scale(1.08); }
-    #previewToggleBtn.hidden { display: none; }
-    @media (max-width: 768px) { #previewPanel { width: calc(100vw - 20px); right: 10px; left: 10px; max-height: 90vh; } }
     .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: none; align-items: flex-start; justify-content: center; padding: 16px; overflow-y: auto; }
     .modal-overlay.show { display: flex; }
     .plan-row { background: #fff; border: 2px solid #e2e8f0; border-radius: 10px; padding: 10px; }
@@ -60,6 +43,10 @@
     .plan-row-input { width: 100%; border: 2px solid #e2e8f0; border-radius: 8px; padding: 8px; background: #f8fafc; font-weight: 700; font-size: 13px; }
     .price-box { background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 2px solid #93c5fd; border-radius: 12px; padding: 12px; }
     .price-box.special { background: linear-gradient(135deg, #fef3c7, #fde68a); border-color: #f59e0b; }
+    .stat-card { background: linear-gradient(135deg, #ffffff, #f8fafc); border: 2px solid #e2e8f0; border-radius: 12px; padding: 12px; text-align: center; }
+    .stat-card .stat-value { font-size: 24px; font-weight: 900; line-height: 1; }
+    .stat-card .stat-label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+    @media print { .noprint { display: none !important; } }
     @media (max-width: 640px) {
         body { padding: 6px; }
         .tab-btn { padding: 7px 10px; font-size: 11px; }
@@ -113,16 +100,67 @@
         </div>
 
         <div class="flex flex-wrap gap-2 mb-5">
-            <button onclick="switchTab('offer')" id="tab-offer" class="tab-btn active">🎯 Offer & Pricing</button>
+            <button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-btn active">📊 Dashboard</button>
+            <button onclick="switchTab('offer')" id="tab-offer" class="tab-btn inactive">🎯 Offer & Pricing</button>
             <button onclick="switchTab('coupons')" id="tab-coupons" class="tab-btn inactive">🎟️ Coupons</button>
+            <button onclick="switchTab('grant')" id="tab-grant" class="tab-btn inactive">🎫 Grant Manager</button>
             <button onclick="switchTab('pending')" id="tab-pending" class="tab-btn inactive">⏳ Pending <span id="pendingBadge"></span></button>
             <button onclick="switchTab('all')" id="tab-all" class="tab-btn inactive">📋 Purchases</button>
             <button onclick="switchTab('students')" id="tab-students" class="tab-btn inactive">👥 Students <span id="studentsBadge"></span></button>
             <button onclick="switchTab('logs')" id="tab-logs" class="tab-btn inactive">📊 Logs</button>
         </div>
 
+        <!-- ============ DASHBOARD TAB ============ -->
+        <div id="content-dashboard" class="tab-content fade-in">
+            <h2 class="text-base sm:text-lg font-black text-blue-900 mb-4">📊 Business Overview</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
+                <div class="stat-card">
+                    <div class="stat-value text-blue-700" id="statTotalStudents">0</div>
+                    <div class="stat-label">Total Students</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value text-green-600" id="statActiveStudents">0</div>
+                    <div class="stat-label">Active Students</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value text-orange-600" id="statTotalPurchases">0</div>
+                    <div class="stat-label">Total Purchases</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value text-purple-600" id="statTotalRevenue">₹0</div>
+                    <div class="stat-label">Total Revenue</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value text-yellow-600" id="statPending">0</div>
+                    <div class="stat-label">Pending</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value text-red-600" id="statRejected">0</div>
+                    <div class="stat-label">Rejected</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value text-indigo-600" id="statCoupons">0</div>
+                    <div class="stat-label">Total Coupons</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value text-amber-600" id="statGrants">0</div>
+                    <div class="stat-label">Coupon Grants</div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 rounded-xl p-4 mb-4">
+                <h3 class="text-sm font-black text-blue-900 mb-3">🕒 Recent Purchases (Last 5)</h3>
+                <div id="recentPurchases" class="space-y-2"></div>
+            </div>
+
+            <div class="bg-gradient-to-br from-purple-50 to-white border-2 border-purple-200 rounded-xl p-4">
+                <h3 class="text-sm font-black text-purple-900 mb-3">🎟️ Top Used Coupons</h3>
+                <div id="topCoupons" class="space-y-2"></div>
+            </div>
+        </div>
+
         <!-- ============ OFFER TAB ============ -->
-        <div id="content-offer" class="tab-content fade-in">
+        <div id="content-offer" class="tab-content hidden fade-in">
             <div class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 rounded-xl p-4 sm:p-5">
                 <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                     <h2 class="text-base sm:text-lg font-black text-blue-900">🎯 Offer & Pricing Control</h2>
@@ -178,18 +216,9 @@
                         </div>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹ / class</label>
-                            <input type="number" id="cfg1on1Regular" value="500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹ / class</label>
-                            <input type="number" id="cfg1on1Discounted" value="350" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special Offer ₹ / class</label>
-                            <input type="number" id="cfg1on1Special" value="250" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm">
-                        </div>
+                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹ / class</label><input type="number" id="cfg1on1Regular" value="500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
+                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹ / class</label><input type="number" id="cfg1on1Discounted" value="350" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
+                        <div><label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special Offer ₹ / class</label><input type="number" id="cfg1on1Special" value="250" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm"></div>
                     </div>
                 </div>
 
@@ -201,47 +230,18 @@
                             <p class="text-[10px] text-amber-700">Admission + Per Class Rate</p>
                         </div>
                     </div>
-
                     <p class="text-[11px] font-black text-amber-900 uppercase mb-2">🎓 Admission Fee (New Students)</p>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹</label>
-                            <input type="number" id="cfgGroupAdmissionRegular" value="2500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹</label>
-                            <input type="number" id="cfgGroupAdmissionDiscounted" value="2000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special Offer ₹</label>
-                            <input type="number" id="cfgGroupAdmissionSpecial" value="1500" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm">
-                        </div>
+                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfgGroupAdmissionRegular" value="2500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
+                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfgGroupAdmissionDiscounted" value="2000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
+                        <div><label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special Offer ₹</label><input type="number" id="cfgGroupAdmissionSpecial" value="1500" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm"></div>
                     </div>
-
                     <p class="text-[11px] font-black text-amber-900 uppercase mb-2">📚 Per Class Rate</p>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹ / class</label>
-                            <input type="number" id="cfgGroupRateRegular" value="200" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹ / class</label>
-                            <input type="number" id="cfgGroupRateDiscounted" value="180" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special Offer ₹ / class</label>
-                            <input type="number" id="cfgGroupRateSpecial" value="170" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm">
-                        </div>
+                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹ / class</label><input type="number" id="cfgGroupRateRegular" value="200" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
+                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹ / class</label><input type="number" id="cfgGroupRateDiscounted" value="180" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
+                        <div><label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special Offer ₹ / class</label><input type="number" id="cfgGroupRateSpecial" value="170" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm"></div>
                     </div>
-                </div>
-
-                <div class="bg-amber-50 border-2 border-amber-300 rounded-xl p-3 mb-4">
-                    <p class="text-[11px] font-bold text-amber-900">⚠️ Note:</p>
-                    <ul class="text-[10px] text-amber-800 space-y-0.5 ml-4 list-disc mt-1">
-                        <li>Admission fee শুধু <strong>New Group Students</strong>-এর জন্য প্রযোজ্য</li>
-                        <li>Existing students renew করলে admission fee থাকবে না</li>
-                        <li>Special offer শুধু offer active থাকলে apply হবে</li>
-                    </ul>
                 </div>
 
                 <div class="space-y-4 mb-4">
@@ -255,7 +255,6 @@
                         </div>
                         <div id="oneOnOneCategories" class="space-y-3"></div>
                     </div>
-
                     <div class="bg-gradient-to-br from-emerald-100 to-white border-2 border-emerald-400 rounded-xl p-4">
                         <div class="flex items-center gap-2 mb-3">
                             <span class="text-2xl">👥</span>
@@ -268,101 +267,75 @@
                     </div>
                 </div>
 
-                <button onclick="saveOffer()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold p-3.5 rounded-xl text-sm">
-                    💾 Save All Settings
-                </button>
+                <button onclick="saveOffer()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold p-3.5 rounded-xl text-sm">💾 Save All Settings</button>
                 <p id="offerSaveMsg" class="text-green-700 text-sm text-center mt-3 hidden font-bold p-2 bg-green-50 rounded-lg">✅ Saved!</p>
             </div>
         </div>
 
-        <!-- ============ COUPONS TAB ============ -->
+        <!-- ============ COUPONS TAB (UPGRADED) ============ -->
         <div id="content-coupons" class="tab-content hidden fade-in">
             <div class="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-200 rounded-xl p-4 sm:p-5">
-                <h2 class="text-base sm:text-lg font-black text-amber-900 mb-4">🎟️ Coupon Management</h2>
+                <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                    <h2 class="text-base sm:text-lg font-black text-amber-900">🎟️ Coupon Management</h2>
+                    <button onclick="showCouponForm()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs px-4 py-2 rounded-lg">➕ Add New Coupon</button>
+                </div>
 
-                <div class="bg-white border-2 border-slate-200 rounded-xl p-4 mb-4">
-                    <!-- ✅ Edit Mode Banner -->
-                    <div id="editModeBanner" class="hidden bg-gradient-to-r from-amber-100 to-orange-100 border-2 border-amber-400 rounded-lg p-3 mb-3">
-                        <div class="flex items-center justify-between gap-2 flex-wrap">
-                            <div class="flex items-center gap-2">
-                                <span class="text-xl">✏️</span>
-                                <div>
-                                    <p class="font-black text-amber-900 text-sm">Editing Coupon: <span id="editModeCouponCode" class="font-mono"></span></p>
-                                    <p class="text-[10px] text-amber-700 font-semibold">Modify fields below and click Update</p>
-                                </div>
-                            </div>
-                            <button onclick="cancelEditCoupon()" class="bg-red-500 hover:bg-red-600 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg">✕ Cancel Edit</button>
-                        </div>
+                <!-- Stats -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+                    <div class="stat-card"><div class="stat-value text-blue-700 text-lg" id="coupStatTotal">0</div><div class="stat-label">Total</div></div>
+                    <div class="stat-card"><div class="stat-value text-green-600 text-lg" id="coupStatActive">0</div><div class="stat-label">Active</div></div>
+                    <div class="stat-card"><div class="stat-value text-red-600 text-lg" id="coupStatExpired">0</div><div class="stat-label">Expired</div></div>
+                    <div class="stat-card"><div class="stat-value text-purple-600 text-lg" id="coupStatGrants">0</div><div class="stat-label">Total Grants</div></div>
+                </div>
+
+                <!-- Filters -->
+                <div class="bg-white border-2 border-slate-200 rounded-xl p-3 mb-3">
+                    <p class="text-[10px] font-black text-slate-600 uppercase mb-2">🔍 Filter Coupons</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2">
+                        <input type="text" id="couponSearch" oninput="renderCouponsList()" placeholder="🔍 Search code..." class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold">
+                        <select id="couponFilterCategory" onchange="renderCouponsList()" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white">
+                            <option value="">All Categories</option>
+                            <option value="oneOnOne">👑 1-on-1</option>
+                            <option value="group">👥 Group</option>
+                        </select>
+                        <select id="couponFilterType" onchange="renderCouponsList()" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white">
+                            <option value="">All Types</option>
+                            <option value="flat">Flat ₹</option>
+                            <option value="percent">Percent %</option>
+                        </select>
+                        <select id="couponFilterStatus" onchange="renderCouponsList()" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white">
+                            <option value="">All Status</option>
+                            <option value="active">🟢 Active Only</option>
+                            <option value="inactive">⚪ Inactive Only</option>
+                            <option value="expired">⛔ Expired Only</option>
+                            <option value="noexpiry">♾️ No Expiry</option>
+                        </select>
                     </div>
-
-                    <p class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase mb-3">➕ Add New Coupon</p>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase">Category</label>
-                            <select id="newCouponCategory" onchange="onCouponCategoryChange()" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm">
-                                <option value="oneOnOne">One on One</option>
-                                <option value="group">Group Class</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase">Sub-Category</label>
-                            <select id="newCouponSubCategory" onchange="renderCouponPlansCheckboxes()" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm"></select>
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase">Coupon Code</label>
-                            <input type="text" id="newCouponCode" placeholder="CODE" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm uppercase">
-                        </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <button onclick="resetCouponFilters()" class="text-[11px] font-bold text-blue-600 hover:text-blue-800 underline">↺ Reset Filters</button>
+                        <span id="couponFilterCount" class="text-[10px] text-slate-500 font-bold ml-auto"></span>
                     </div>
-
-                    <div class="grid grid-cols-2 gap-2 mb-3">
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase">Type</label>
-                            <select id="newCouponType" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm">
-                                <option value="flat">Flat ₹</option>
-                                <option value="percent">Percent %</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase">Value</label>
-                            <input type="number" id="newCouponValue" placeholder="Value" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm">
-                        </div>
-                    </div>
-
-                    <div class="bg-amber-50 border-2 border-amber-300 rounded-lg p-3 mb-3">
-                        <label class="flex items-center gap-2 mb-2 cursor-pointer">
-                            <input type="checkbox" id="enableCouponValidity" onchange="toggleCouponValidity()" class="w-4 h-4 accent-amber-600">
-                            <span class="text-[11px] font-black text-amber-900 uppercase">⏰ Set Validity (Optional)</span>
-                        </label>
-                        <div id="couponValidityInputs" class="hidden">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                <div>
-                                    <label class="text-[10px] font-bold text-slate-600 uppercase">Valid From</label>
-                                    <input type="datetime-local" id="newCouponValidFrom" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
-                                </div>
-                                <div>
-                                    <label class="text-[10px] font-bold text-slate-600 uppercase">Valid Until</label>
-                                    <input type="datetime-local" id="newCouponValidUntil" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
-                                </div>
-                            </div>
-                            <div class="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-1.5">
-                                <button type="button" onclick="setCouponValidity(1)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 1 Day</button>
-                                <button type="button" onclick="setCouponValidity(7)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 7 Days</button>
-                                <button type="button" onclick="setCouponValidity(30)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 30 Days</button>
-                                <button type="button" onclick="setCouponValidity(90)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 90 Days</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="couponPlansRow" class="bg-blue-50 rounded-lg p-3 mb-3">
-                        <p class="text-[10px] sm:text-xs font-bold text-blue-900 mb-2">Allowed Plans (leave empty = all plans):</p>
-                        <div id="couponPlansCheckboxes" class="grid grid-cols-2 md:grid-cols-4 gap-2"></div>
-                    </div>
-
-                    <button id="addCouponBtn" onclick="addCoupon()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold p-3 rounded-xl text-sm">➕ Add Coupon</button>
                 </div>
 
                 <div id="couponsList" class="space-y-2"></div>
+            </div>
+        </div>
+
+        <!-- ============ GRANT MANAGER TAB (NEW) ============ -->
+        <div id="content-grant" class="tab-content hidden fade-in">
+            <div class="bg-gradient-to-br from-purple-50 to-white border-2 border-purple-200 rounded-xl p-4 sm:p-5">
+                <h2 class="text-base sm:text-lg font-black text-purple-900 mb-2">🎫 Coupon Grant Manager</h2>
+                <p class="text-[11px] text-slate-600 font-semibold mb-4">কোন coupon কে কত জন student পেয়েছে তা দেখুন, এবং reverse view এ manage করুন</p>
+
+                <div class="bg-white border-2 border-slate-200 rounded-xl p-3 mb-3">
+                    <p class="text-[10px] font-black text-slate-600 uppercase mb-2">🔍 Select Coupon to View / Manage</p>
+                    <select id="grantCouponSelect" onchange="renderGrantView()" class="w-full border-2 border-slate-200 rounded-lg p-2.5 text-sm font-bold bg-white">
+                        <option value="">-- Select a coupon --</option>
+                    </select>
+                    <div id="grantStats" class="mt-2 hidden"></div>
+                </div>
+
+                <div id="grantStudentList" class="space-y-2"></div>
             </div>
         </div>
 
@@ -378,16 +351,43 @@
             <div id="allPurchasesList" class="space-y-3"></div>
         </div>
 
-        <!-- ============ STUDENTS TAB ============ -->
+        <!-- ============ STUDENTS TAB (UPGRADED) ============ -->
         <div id="content-students" class="tab-content hidden fade-in">
-            <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+            <div class="flex justify-between items-center mb-3 flex-wrap gap-2">
                 <h2 class="text-base sm:text-lg font-black text-blue-900">👥 Students</h2>
                 <div class="flex gap-2 items-center flex-wrap">
-                    <input type="text" id="studentSearch" oninput="filterStudents()" placeholder="🔍 Search" class="border-2 border-slate-200 rounded-lg p-2 text-xs w-48">
                     <span id="studentsCount" class="text-xs font-bold bg-blue-100 text-blue-800 px-3 py-1 rounded-full"></span>
-                    <button onclick="openAddStudentModal()" class="bg-green-600 hover:bg-green-700 text-white text-xs font-bold px-3 py-2 rounded-lg">➕ Add</button>
+                    <button onclick="openAddStudentModal()" class="bg-green-600 hover:bg-green-700 text-white text-xs font-bold px-3 py-2 rounded-lg">➕ Add Student</button>
                 </div>
             </div>
+
+            <!-- Filters -->
+            <div class="bg-white border-2 border-slate-200 rounded-xl p-3 mb-3">
+                <p class="text-[10px] font-black text-slate-600 uppercase mb-2">🔍 Filter Students</p>
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2">
+                    <input type="text" id="studentSearch" oninput="filterStudents()" placeholder="🔍 Name / mobile / ID" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold">
+                    <select id="studentFilterCourse" onchange="filterStudents()" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white">
+                        <option value="">All Courses</option>
+                        <option value="Power Speak for Adults">Power Speak for Adults</option>
+                        <option value="Fearless English for Kids">Fearless English for Kids</option>
+                    </select>
+                    <select id="studentFilterStatus" onchange="filterStudents()" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white">
+                        <option value="">All Status</option>
+                        <option value="active">🟢 Active</option>
+                        <option value="blocked">🚫 Blocked</option>
+                        <option value="coupon">🎟️ Has Coupon</option>
+                        <option value="vip">⭐ VIP</option>
+                    </select>
+                    <select id="studentFilterBatch" onchange="filterStudents()" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white">
+                        <option value="">All Batches</option>
+                    </select>
+                </div>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <button onclick="resetStudentFilters()" class="text-[11px] font-bold text-blue-600 hover:text-blue-800 underline">↺ Reset Filters</button>
+                    <span id="studentFilterCount" class="text-[10px] text-slate-500 font-bold ml-auto"></span>
+                </div>
+            </div>
+
             <div id="studentsList" class="space-y-2"></div>
         </div>
 
@@ -409,38 +409,101 @@
     </div>
 </div>
 
-<!-- RECEIPT MODAL -->
-<div id="receiptModal" class="fixed inset-0 bg-black/70 z-50 hidden overflow-y-auto p-3">
-    <div class="max-w-2xl mx-auto bg-white rounded-2xl p-4 sm:p-6 my-6">
-        <div id="receiptContent"></div>
-        <div class="flex gap-2 mt-4 noprint">
-            <button onclick="window.print()" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 rounded-xl text-sm">🖨️ Print</button>
-            <button onclick="closeReceiptModal()" class="flex-1 bg-slate-300 hover:bg-slate-400 text-slate-700 font-bold py-3 rounded-xl text-sm">Close</button>
-        </div>
-    </div>
-</div>
-
-<!-- MANAGE COUPONS MODAL -->
-<div id="couponManageModal" class="modal-overlay">
+<!-- COUPON FORM MODAL -->
+<div id="couponFormModal" class="modal-overlay">
     <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full my-auto p-5" style="max-width: 640px;">
         <div class="flex justify-between items-center mb-4 pb-3 border-b-2 border-slate-100">
             <div>
-                <h3 class="text-lg font-black text-blue-900">🎫 Manage Granted Coupons</h3>
-                <p id="manageStudentName" class="text-xs text-slate-500 font-semibold"></p>
+                <h3 id="couponFormTitle" class="text-lg font-black text-amber-900">➕ Add Coupon</h3>
+                <p class="text-[11px] text-slate-500 font-semibold">Create or edit coupon</p>
             </div>
-            <button onclick="closeCouponModal()" class="text-slate-400 hover:text-red-600 text-2xl font-bold leading-none">&times;</button>
+            <button onclick="closeCouponForm()" class="text-slate-400 hover:text-red-600 text-2xl font-bold leading-none">&times;</button>
         </div>
-        <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-4">
-            <p class="text-[11px] font-bold text-blue-900">ℹ️ Student can ONLY apply coupons granted here.</p>
+
+        <div id="editModeBanner" class="hidden bg-gradient-to-r from-amber-100 to-orange-100 border-2 border-amber-400 rounded-lg p-3 mb-3">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">✏️</span>
+                    <div>
+                        <p class="font-black text-amber-900 text-sm">Editing: <span id="editModeCouponCode" class="font-mono"></span></p>
+                        <p class="text-[10px] text-amber-700 font-semibold">Modify fields below</p>
+                    </div>
+                </div>
+                <button onclick="cancelEditCoupon()" class="bg-red-500 hover:bg-red-600 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg">✕ Cancel Edit</button>
+            </div>
         </div>
-        <div id="manageCouponList" class="space-y-2 max-h-[50vh] overflow-y-auto"></div>
-        <button onclick="closeCouponModal()" class="w-full mt-4 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3 rounded-xl text-sm">Close</button>
+
+        <div class="space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <div>
+                    <label class="text-[10px] font-bold text-slate-600 uppercase">Category</label>
+                    <select id="newCouponCategory" onchange="onCouponCategoryChange()" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm">
+                        <option value="oneOnOne">One on One</option>
+                        <option value="group">Group Class</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-600 uppercase">Sub-Category</label>
+                    <select id="newCouponSubCategory" onchange="renderCouponPlansCheckboxes()" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm"></select>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-600 uppercase">Coupon Code</label>
+                    <input type="text" id="newCouponCode" placeholder="CODE" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm uppercase">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="text-[10px] font-bold text-slate-600 uppercase">Type</label>
+                    <select id="newCouponType" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm">
+                        <option value="flat">Flat ₹</option>
+                        <option value="percent">Percent %</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-600 uppercase">Value</label>
+                    <input type="number" id="newCouponValue" placeholder="Value" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm">
+                </div>
+            </div>
+
+            <div class="bg-amber-50 border-2 border-amber-300 rounded-lg p-3">
+                <label class="flex items-center gap-2 mb-2 cursor-pointer">
+                    <input type="checkbox" id="enableCouponValidity" onchange="toggleCouponValidity()" class="w-4 h-4 accent-amber-600">
+                    <span class="text-[11px] font-black text-amber-900 uppercase">⏰ Set Validity (Optional)</span>
+                </label>
+                <div id="couponValidityInputs" class="hidden">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">Valid From</label>
+                            <input type="datetime-local" id="newCouponValidFrom" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">Valid Until</label>
+                            <input type="datetime-local" id="newCouponValidUntil" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                    </div>
+                    <div class="mt-2 grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+                        <button type="button" onclick="setCouponValidity(1)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 1 Day</button>
+                        <button type="button" onclick="setCouponValidity(7)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 7 Days</button>
+                        <button type="button" onclick="setCouponValidity(30)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 30 Days</button>
+                        <button type="button" onclick="setCouponValidity(90)" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-[10px] py-2 rounded-lg">+ 90 Days</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="couponPlansRow" class="bg-blue-50 rounded-lg p-3">
+                <p class="text-[10px] sm:text-xs font-bold text-blue-900 mb-2">Allowed Plans (leave empty = all plans):</p>
+                <div id="couponPlansCheckboxes" class="grid grid-cols-2 md:grid-cols-4 gap-2"></div>
+            </div>
+
+            <button id="addCouponBtn" onclick="saveCoupon()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold p-3 rounded-xl text-sm">➕ Add Coupon</button>
+        </div>
     </div>
 </div>
 
-<!-- ADD/EDIT STUDENT MODAL -->
+<!-- STUDENT ADD/EDIT MODAL (UPGRADED) -->
 <div id="studentModal" class="modal-overlay">
-    <div class="max-w-md mx-auto bg-white rounded-2xl p-5 my-8">
+    <div class="max-w-lg mx-auto bg-white rounded-2xl p-5 my-8 w-full">
         <div class="flex justify-between items-center mb-4 pb-3 border-b-2 border-slate-100">
             <h3 id="studentModalTitle" class="text-lg font-black text-blue-900">➕ Add Student</h3>
             <button onclick="closeStudentModal()" class="text-slate-400 hover:text-red-600 text-2xl font-bold leading-none">&times;</button>
@@ -452,11 +515,17 @@
             </div>
             <div>
                 <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">WhatsApp Number *</label>
-                <input type="tel" id="newStudentMobile" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
+                <input type="tel" id="newStudentMobile" placeholder="+91 9876543210" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
             </div>
-            <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Student ID *</label>
-                <input type="text" id="newStudentId" placeholder="e.g. ES2026-2710" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm uppercase">
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Student ID *</label>
+                    <input type="text" id="newStudentId" placeholder="ES2026-XXXX" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm uppercase">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Joined Date</label>
+                    <input type="date" id="newStudentJoined" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
+                </div>
             </div>
             <div>
                 <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Course Enrolled *</label>
@@ -468,7 +537,20 @@
             </div>
             <div>
                 <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Batch Name</label>
-                <input type="text" id="newStudentBatch" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
+                <input type="text" id="newStudentBatch" placeholder="e.g. Batch A 2026" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
+            </div>
+            <div>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Tags (comma separated)</label>
+                <input type="text" id="newStudentTags" placeholder="VIP, Referral, Kids" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
+                <p class="text-[10px] text-slate-500 mt-1">উদাহরণ: VIP, Referral, Kids, Demo</p>
+            </div>
+            <div>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Referral Source</label>
+                <input type="text" id="newStudentReferral" placeholder="e.g. Facebook / Friend / Walk-in" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
+            </div>
+            <div>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Admin Notes (internal)</label>
+                <textarea id="newStudentNotes" rows="2" placeholder="Any notes about this student..." class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm"></textarea>
             </div>
             <p id="studentModalError" class="text-red-600 text-xs font-semibold hidden p-2 bg-red-50 rounded-lg"></p>
             <button onclick="saveStudent()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black p-3.5 rounded-xl text-xs uppercase">💾 Save Student</button>
@@ -476,9 +558,61 @@
     </div>
 </div>
 
+<!-- STUDENT PROFILE MODAL -->
+<div id="studentProfileModal" class="modal-overlay">
+    <div class="max-w-2xl mx-auto bg-white rounded-2xl p-5 my-8 w-full">
+        <div class="flex justify-between items-center mb-4 pb-3 border-b-2 border-slate-100">
+            <div>
+                <h3 class="text-lg font-black text-blue-900">👤 Student Profile</h3>
+                <p id="profileStudentName" class="text-xs text-slate-500 font-semibold"></p>
+            </div>
+            <button onclick="closeStudentProfile()" class="text-slate-400 hover:text-red-600 text-2xl font-bold leading-none">&times;</button>
+        </div>
+        <div id="profileContent" class="space-y-3 max-h-[70vh] overflow-y-auto"></div>
+    </div>
+</div>
+
+<!-- MANAGE GRANTED COUPONS MODAL -->
+<div id="couponManageModal" class="modal-overlay">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full my-auto p-5" style="max-width: 700px;">
+        <div class="flex justify-between items-center mb-4 pb-3 border-b-2 border-slate-100">
+            <div>
+                <h3 class="text-lg font-black text-blue-900">🎫 Manage Granted Coupons</h3>
+                <p id="manageStudentName" class="text-xs text-slate-500 font-semibold"></p>
+            </div>
+            <button onclick="closeCouponModal()" class="text-slate-400 hover:text-red-600 text-2xl font-bold leading-none">&times;</button>
+        </div>
+        <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-4">
+            <p class="text-[11px] font-bold text-blue-900">ℹ️ Student can ONLY apply coupons granted here.</p>
+        </div>
+        <div class="bg-amber-50 border-2 border-amber-200 rounded-xl p-3 mb-4">
+            <input type="text" id="manageCouponSearch" oninput="renderManageCoupons()" placeholder="🔍 Search coupon code..." class="w-full border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white mb-2">
+            <div class="flex items-center gap-2 flex-wrap">
+                <label class="flex items-center gap-1.5 text-[11px] font-bold text-slate-700 cursor-pointer bg-white px-2.5 py-1.5 rounded-lg border-2 border-slate-200">
+                    <input type="checkbox" id="manageCouponShowGrantedOnly" onchange="renderManageCoupons()" class="w-3.5 h-3.5 accent-purple-600"> ✅ Granted Only
+                </label>
+                <span id="manageCouponCount" class="text-[10px] text-slate-500 font-semibold ml-auto"></span>
+            </div>
+        </div>
+        <div id="manageCouponList" class="space-y-2 max-h-[50vh] overflow-y-auto"></div>
+        <button onclick="closeCouponModal()" class="w-full mt-4 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3 rounded-xl text-sm">Close</button>
+    </div>
+</div>
+
+<!-- RECEIPT MODAL -->
+<div id="receiptModal" class="fixed inset-0 bg-black/70 z-50 hidden overflow-y-auto p-3">
+    <div class="max-w-2xl mx-auto bg-white rounded-2xl p-4 sm:p-6 my-6">
+        <div id="receiptContent"></div>
+        <div class="flex gap-2 mt-4 noprint">
+            <button onclick="window.print()" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 rounded-xl text-sm">🖨️ Print</button>
+            <button onclick="closeReceiptModal()" class="flex-1 bg-slate-300 hover:bg-slate-400 text-slate-700 font-bold py-3 rounded-xl text-sm">Close</button>
+        </div>
+    </div>
+</div>
+
 <script>
 /* ============ FIREBASE ============ */
-const firebaseConfig = {
+var firebaseConfig = {
   apiKey: "AIzaSyBAmO9v4NOOSSuM59yXY8JppFJzrZUGADM",
   authDomain: "es-tariff.firebaseapp.com",
   projectId: "es-tariff",
@@ -487,16 +621,16 @@ const firebaseConfig = {
   appId: "1:113483091618:web:1bb7cfb608ba85382011fb"
 };
 firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const auth = firebase.auth();
-const ADMIN_EMAIL = 'englishspur2020@gmail.com';
+var db = firebase.firestore();
+var auth = firebase.auth();
+var ADMIN_EMAIL = 'englishspur2020@gmail.com';
 
 /* ============ HELPERS ============ */
 function money(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
 function formatDT(ts) {
     if (!ts) return '—';
     try {
-        const d = ts.toDate ? ts.toDate() : new Date(ts);
+        var d = ts.toDate ? ts.toDate() : new Date(ts);
         if (isNaN(d.getTime())) return '—';
         return d.toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
     } catch (e) { return '—'; }
@@ -507,28 +641,27 @@ function formatCouponDate(isoString) {
     catch (e) { return '—'; }
 }
 function isCouponExpired(c) { return c.validUntil && new Date(c.validUntil).getTime() < Date.now(); }
-function isCouponNotStarted(c) { return c.validFrom && new Date(c.validFrom).getTime() > Date.now(); }
 function togglePassword() {
-    const inp = document.getElementById('adminPassword');
-    const icon = document.getElementById('eyeIcon');
+    var inp = document.getElementById('adminPassword');
+    var icon = document.getElementById('eyeIcon');
     if (inp.type === 'password') { inp.type = 'text'; icon.textContent = '🙈'; }
     else { inp.type = 'password'; icon.textContent = '👁️'; }
 }
 function toggleCouponValidity() {
-    const chk = document.getElementById('enableCouponValidity').checked;
+    var chk = document.getElementById('enableCouponValidity').checked;
     document.getElementById('couponValidityInputs').classList.toggle('hidden', !chk);
 }
 function setCouponValidity(days) {
-    const now = new Date();
-    const until = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
-    const pad = n => String(n).padStart(2, '0');
-    const fmt = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    var now = new Date();
+    var until = new Date(now.getTime() + days * 24 * 60 * 60 * 1000);
+    var pad = function(n) { return String(n).padStart(2, '0'); };
+    var fmt = function(d) { return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes()); };
     document.getElementById('newCouponValidFrom').value = fmt(now);
     document.getElementById('newCouponValidUntil').value = fmt(until);
 }
 
 /* ============ CONSTANTS ============ */
-const FIXED_SUBCATEGORIES = {
+var FIXED_SUBCATEGORIES = {
     oneOnOne: [
         { key: "Power Speak for Adults", id: "power_speak_adults_1on1", displayName: "Power Speak for Adults — One on One" },
         { key: "Fearless English for Kids", id: "fearless_kids_1on1", displayName: "Fearless English for Kids — One on One" }
@@ -540,7 +673,7 @@ const FIXED_SUBCATEGORIES = {
 };
 
 /* ============ AUTH ============ */
-auth.onAuthStateChanged(user => {
+auth.onAuthStateChanged(function(user) {
     if (user && user.email === ADMIN_EMAIL) {
         document.getElementById('loginScreen').classList.add('hidden');
         document.getElementById('adminPanel').classList.remove('hidden');
@@ -554,17 +687,17 @@ auth.onAuthStateChanged(user => {
 });
 
 function adminLogin() {
-    const email = document.getElementById('adminEmail').value.trim().toLowerCase();
-    const pass = document.getElementById('adminPassword').value;
-    const errEl = document.getElementById('loginError');
+    var email = document.getElementById('adminEmail').value.trim().toLowerCase();
+    var pass = document.getElementById('adminPassword').value;
+    var errEl = document.getElementById('loginError');
     errEl.classList.add('hidden');
     if (email !== ADMIN_EMAIL) {
         errEl.textContent = '❌ This is not the admin email.';
         errEl.classList.remove('hidden');
         return;
     }
-    auth.signInWithEmailAndPassword(email, pass).catch(err => {
-        let msg = err.message;
+    auth.signInWithEmailAndPassword(email, pass).catch(function(err) {
+        var msg = err.message;
         if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password') msg = 'Invalid email or password.';
         errEl.textContent = '❌ ' + msg;
         errEl.classList.remove('hidden');
@@ -573,16 +706,22 @@ function adminLogin() {
 function adminLogout() { if (confirm('Logout?')) auth.signOut(); }
 
 function switchTab(tab) {
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.add('hidden'); });
     document.getElementById('content-' + tab).classList.remove('hidden');
-    ['offer','coupons','pending','all','students','logs'].forEach(t => {
+    ['dashboard','offer','coupons','grant','pending','all','students','logs'].forEach(function(t) {
         document.getElementById('tab-' + t).className = (t === tab) ? 'tab-btn active' : 'tab-btn inactive';
     });
     if (tab === 'logs') loadLogs();
-    if (tab === 'coupons') initCouponSubCategoryDropdown();
+    if (tab === 'coupons') {
+        initCouponSubCategoryDropdown();
+        renderCouponsList();
+    }
+    if (tab === 'grant') loadGrantManager();
+    if (tab === 'dashboard') loadDashboardStats();
 }
 
 function loadAll() {
+    loadDashboardStats();
     loadOffer();
     loadCoupons();
     loadPending();
@@ -592,28 +731,109 @@ function loadAll() {
     initCouponSubCategoryDropdown();
 }
 
+/* ============ DASHBOARD STATS ============ */
+function loadDashboardStats() {
+    db.collection('students').onSnapshot(function(snap) {
+        var total = snap.size;
+        var active = 0;
+        snap.forEach(function(d) {
+            var s = d.data();
+            if (s.blocked !== true) active++;
+        });
+        document.getElementById('statTotalStudents').textContent = total;
+        document.getElementById('statActiveStudents').textContent = active;
+    });
+
+    db.collection('purchases').onSnapshot(function(snap) {
+        var total = snap.size;
+        var revenue = 0;
+        var pending = 0;
+        var rejected = 0;
+        var recent = [];
+        snap.forEach(function(d) {
+            var p = d.data();
+            if (p.status === 'approved') revenue += Number(p.finalAmount) || 0;
+            if (p.status === 'pending') pending++;
+            if (p.status === 'rejected') rejected++;
+            recent.push(Object.assign({ id: d.id }, p));
+        });
+        document.getElementById('statTotalPurchases').textContent = total;
+        document.getElementById('statTotalRevenue').textContent = money(revenue);
+        document.getElementById('statPending').textContent = pending;
+        document.getElementById('statRejected').textContent = rejected;
+
+        recent.sort(function(a, b) {
+            var ta = a.createdAt ? a.createdAt.toDate().getTime() : 0;
+            var tb = b.createdAt ? b.createdAt.toDate().getTime() : 0;
+            return tb - ta;
+        });
+
+        var recentHtml = '';
+        recent.slice(0, 5).forEach(function(p) {
+            var colors = { pending: 'bg-yellow-50 border-yellow-300', approved: 'bg-green-50 border-green-300', rejected: 'bg-red-50 border-red-300' };
+            var icons = { pending: '⏳', approved: '✅', rejected: '❌' };
+            recentHtml += '<div class="border-2 rounded-lg p-2.5 ' + (colors[p.status] || 'bg-slate-50 border-slate-200') + '">';
+            recentHtml += '<div class="flex justify-between items-center gap-2 flex-wrap">';
+            recentHtml += '<div class="min-w-0 flex-1">';
+            recentHtml += '<p class="text-xs font-black text-slate-800 truncate">' + icons[p.status] + ' ' + (p.studentName || '—') + '</p>';
+            recentHtml += '<p class="text-[10px] text-slate-600 truncate">' + (p.planName || '—') + '</p>';
+            recentHtml += '</div>';
+            recentHtml += '<div class="text-right flex-shrink-0">';
+            recentHtml += '<p class="text-sm font-black text-orange-600">' + money(p.finalAmount) + '</p>';
+            recentHtml += '<p class="text-[9px] text-slate-400">' + formatDT(p.createdAt) + '</p>';
+            recentHtml += '</div></div></div>';
+        });
+        document.getElementById('recentPurchases').innerHTML = recentHtml || '<p class="text-xs text-slate-500 text-center py-3">No purchases yet.</p>';
+
+        var couponCount = {};
+        recent.forEach(function(p) {
+            if (p.couponCode) {
+                p.couponCode.split(',').forEach(function(c) {
+                    c = c.trim();
+                    couponCount[c] = (couponCount[c] || 0) + 1;
+                });
+            }
+        });
+        var sortedCoupons = Object.keys(couponCount).map(function(k) {
+            return { code: k, count: couponCount[k] };
+        }).sort(function(a, b) { return b.count - a.count; }).slice(0, 5);
+
+        var topHtml = '';
+        sortedCoupons.forEach(function(c) {
+            topHtml += '<div class="flex justify-between items-center bg-white rounded-lg p-2.5 border border-purple-200">';
+            topHtml += '<span class="font-mono font-black text-purple-800 text-sm">🎟️ ' + c.code + '</span>';
+            topHtml += '<span class="text-xs font-bold text-slate-600">Used ' + c.count + ' time' + (c.count > 1 ? 's' : '') + '</span>';
+            topHtml += '</div>';
+        });
+        document.getElementById('topCoupons').innerHTML = topHtml || '<p class="text-xs text-slate-500 text-center py-3">No coupon usage yet.</p>';
+    });
+
+    db.collection('coupons').onSnapshot(function(snap) {
+        document.getElementById('statCoupons').textContent = snap.size;
+    });
+}
+
 /* ============ OFFER ============ */
-let currentOffer = null;
+var currentOffer = null;
 
 function formatDateTimeLocal(date) {
-    const pad = n => String(n).padStart(2, '0');
-    return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+    var pad = function(n) { return String(n).padStart(2, '0'); };
+    return date.getFullYear() + '-' + pad(date.getMonth()+1) + '-' + pad(date.getDate()) + 'T' + pad(date.getHours()) + ':' + pad(date.getMinutes());
 }
 
 function loadOffer() {
-    db.collection('config').doc('offer').onSnapshot(doc => {
-        let d = doc.exists ? doc.data() : {};
-        
+    db.collection('config').doc('offer').onSnapshot(function(doc) {
+        var d = doc.exists ? doc.data() : {};
         if (!d.oneOnOnePricing) {
             d.oneOnOnePricing = {
-                regularPrice: d.planPricing?.singleRegular || 500,
-                discountedPrice: d.planPricing?.discountedSingle || 350,
-                specialOfferPrice: d.planPricing?.singleSpecial || 250
+                regularPrice: (d.planPricing && d.planPricing.singleRegular) || 500,
+                discountedPrice: 350,
+                specialOfferPrice: (d.planPricing && d.planPricing.singleSpecial) || 250
             };
         }
         if (!d.groupPricing) {
             d.groupPricing = {
-                regularAdmission: d.planPricing?.groupAdmission || 2500,
+                regularAdmission: (d.planPricing && d.planPricing.groupAdmission) || 2500,
                 discountedAdmission: 2000,
                 specialAdmission: 1500,
                 regularPerClass: 200,
@@ -631,11 +851,9 @@ function loadOffer() {
         document.getElementById('offerActive').checked = d.active !== false;
         document.getElementById('offerTitle').value = d.title || '';
         document.getElementById('offerDescription').value = d.description || '';
-
         document.getElementById('cfg1on1Regular').value = d.oneOnOnePricing.regularPrice || 500;
         document.getElementById('cfg1on1Discounted').value = d.oneOnOnePricing.discountedPrice || 350;
         document.getElementById('cfg1on1Special').value = d.oneOnOnePricing.specialOfferPrice || 250;
-
         document.getElementById('cfgGroupAdmissionRegular').value = d.groupPricing.regularAdmission || 2500;
         document.getElementById('cfgGroupAdmissionDiscounted').value = d.groupPricing.discountedAdmission || 2000;
         document.getElementById('cfgGroupAdmissionSpecial').value = d.groupPricing.specialAdmission || 1500;
@@ -643,11 +861,8 @@ function loadOffer() {
         document.getElementById('cfgGroupRateDiscounted').value = d.groupPricing.discountedPerClass || 180;
         document.getElementById('cfgGroupRateSpecial').value = d.groupPricing.specialPerClass || 170;
 
-        if (d.endDateTime) {
-            document.getElementById('offerEndDateTime').value = d.endDateTime;
-        } else {
-            document.getElementById('offerEndDateTime').value = formatDateTimeLocal(new Date(Date.now() + 30 * 60 * 1000));
-        }
+        if (d.endDateTime) document.getElementById('offerEndDateTime').value = d.endDateTime;
+        else document.getElementById('offerEndDateTime').value = formatDateTimeLocal(new Date(Date.now() + 30 * 60 * 1000));
 
         updateStatusBadge(d);
         renderCategories(d.categories);
@@ -655,139 +870,108 @@ function loadOffer() {
 }
 
 function renderCategories(categories) {
-    const oneContainer = document.getElementById('oneOnOneCategories');
+    var oneContainer = document.getElementById('oneOnOneCategories');
     oneContainer.innerHTML = '';
-    FIXED_SUBCATEGORIES.oneOnOne.forEach(sub => {
-        const subData = categories.oneOnOne?.[sub.key] || { subCategoryId: sub.id, displayName: sub.displayName, plans: [] };
+    FIXED_SUBCATEGORIES.oneOnOne.forEach(function(sub) {
+        var subData = (categories.oneOnOne && categories.oneOnOne[sub.key]) || { subCategoryId: sub.id, displayName: sub.displayName, plans: [] };
         oneContainer.appendChild(buildSubCategoryBlock('oneOnOne', sub.key, subData));
     });
-
-    const groupContainer = document.getElementById('groupCategories');
+    var groupContainer = document.getElementById('groupCategories');
     groupContainer.innerHTML = '';
-    FIXED_SUBCATEGORIES.group.forEach(sub => {
-        const subData = categories.group?.[sub.key] || { subCategoryId: sub.id, displayName: sub.displayName, plans: [] };
+    FIXED_SUBCATEGORIES.group.forEach(function(sub) {
+        var subData = (categories.group && categories.group[sub.key]) || { subCategoryId: sub.id, displayName: sub.displayName, plans: [] };
         groupContainer.appendChild(buildSubCategoryBlock('group', sub.key, subData));
     });
 }
 
 function buildSubCategoryBlock(cat, key, subData) {
-    const block = document.createElement('div');
+    var block = document.createElement('div');
     block.className = 'bg-white border-2 border-slate-200 rounded-lg p-3';
-    const safeKey = key.replace(/[^a-zA-Z0-9]/g, '_');
-
-    block.innerHTML = `
-        <div class="flex justify-between items-center mb-2 flex-wrap gap-2">
-            <div class="flex items-center gap-2">
-                <span class="text-lg">${cat === 'oneOnOne' ? '👑' : '👥'}</span>
-                <p class="font-black text-slate-800 text-xs">${subData.displayName || key}</p>
-            </div>
-            <button type="button" onclick="addPlanToSub('${cat}', '${key.replace(/'/g, "\\'")}')"
-                class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg">➕ Add Plan</button>
-        </div>
-        <div class="plans-list space-y-2" id="plans_${cat}_${safeKey}"></div>
-    `;
-
-    setTimeout(() => {
-        const list = document.getElementById(`plans_${cat}_${safeKey}`);
+    var safeKey = key.replace(/[^a-zA-Z0-9]/g, '_');
+    block.innerHTML =
+        '<div class="flex justify-between items-center mb-2 flex-wrap gap-2">' +
+            '<div class="flex items-center gap-2">' +
+                '<span class="text-lg">' + (cat === 'oneOnOne' ? '👑' : '👥') + '</span>' +
+                '<p class="font-black text-slate-800 text-xs">' + (subData.displayName || key) + '</p>' +
+            '</div>' +
+            '<button type="button" onclick="addPlanToSub(\'' + cat + '\', \'' + key.replace(/'/g, "\\'") + '\')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg">➕ Add Plan</button>' +
+        '</div>' +
+        '<div class="plans-list space-y-2" id="plans_' + cat + '_' + safeKey + '"></div>';
+    setTimeout(function() {
+        var list = document.getElementById('plans_' + cat + '_' + safeKey);
         if (!list) return;
         list.innerHTML = '';
-        (subData.plans || []).forEach((p, idx) => {
+        (subData.plans || []).forEach(function(p, idx) {
             list.appendChild(buildPlanRow(cat, key, idx, p));
         });
     }, 0);
-
     return block;
 }
 
 function buildPlanRow(cat, subKey, idx, plan) {
-    const div = document.createElement('div');
+    var div = document.createElement('div');
     div.className = 'plan-row';
-    const safeKey = subKey.replace(/[^a-zA-Z0-9]/g, '_');
-    const rowId = `plan_${cat}_${safeKey}_${idx}_${Date.now()}_${Math.random().toString(36).slice(2,6)}`;
+    var safeKey = subKey.replace(/[^a-zA-Z0-9]/g, '_');
+    var rowId = 'plan_' + cat + '_' + safeKey + '_' + idx + '_' + Date.now() + '_' + Math.random().toString(36).slice(2,6);
     div.id = rowId;
-
-    div.innerHTML = `
-        <div class="grid grid-cols-12 gap-2 items-end">
-            <div class="col-span-6 sm:col-span-2">
-                <label class="plan-row-label">Classes</label>
-                <input type="number" class="plan-row-input plan-days" value="${plan.days || 8}" min="1" oninput="recalcPlanRow('${rowId}')">
-            </div>
-            <div class="col-span-6 sm:col-span-2">
-                <label class="plan-row-label">Regular ₹ / class</label>
-                <input type="number" class="plan-row-input plan-regular-rate" value="${plan.regularRate || plan.perClassRate || 250}" min="1" oninput="recalcPlanRow('${rowId}')">
-            </div>
-            <div class="col-span-6 sm:col-span-2">
-                <label class="plan-row-label">Discounted ₹ / class</label>
-                <input type="number" class="plan-row-input plan-disc-rate" value="${plan.discountedRate || plan.perClassRate || 200}" min="1" oninput="recalcPlanRow('${rowId}')">
-            </div>
-            <div class="col-span-6 sm:col-span-2">
-                <label class="plan-row-label">Special ₹ / class</label>
-                <input type="number" class="plan-row-input plan-special-rate" value="${plan.specialRate || plan.perClassRate || 150}" min="1" oninput="recalcPlanRow('${rowId}')">
-            </div>
-            <div class="col-span-10 sm:col-span-3 flex items-end">
-                <div class="w-full">
-                    <label class="plan-row-label">Totals (R/D/S)</label>
-                    <div class="plan-row-input plan-totals" style="background:#f1f5f9;color:#475569;text-align:center;font-size:11px;">—</div>
-                </div>
-            </div>
-            <div class="col-span-2 sm:col-span-1">
-                <button type="button" onclick="removePlanRow('${rowId}')" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg text-xs">🗑️</button>
-            </div>
-        </div>
-    `;
-
-    setTimeout(() => recalcPlanRow(rowId), 0);
+    div.innerHTML =
+        '<div class="grid grid-cols-12 gap-2 items-end">' +
+            '<div class="col-span-6 sm:col-span-2"><label class="plan-row-label">Classes</label><input type="number" class="plan-row-input plan-days" value="' + (plan.days || 8) + '" min="1" oninput="recalcPlanRow(\'' + rowId + '\')"></div>' +
+            '<div class="col-span-6 sm:col-span-2"><label class="plan-row-label">Regular ₹ / class</label><input type="number" class="plan-row-input plan-regular-rate" value="' + (plan.regularRate || plan.perClassRate || 250) + '" min="1" oninput="recalcPlanRow(\'' + rowId + '\')"></div>' +
+            '<div class="col-span-6 sm:col-span-2"><label class="plan-row-label">Discounted ₹ / class</label><input type="number" class="plan-row-input plan-disc-rate" value="' + (plan.discountedRate || plan.perClassRate || 200) + '" min="1" oninput="recalcPlanRow(\'' + rowId + '\')"></div>' +
+            '<div class="col-span-6 sm:col-span-2"><label class="plan-row-label">Special ₹ / class</label><input type="number" class="plan-row-input plan-special-rate" value="' + (plan.specialRate || plan.perClassRate || 150) + '" min="1" oninput="recalcPlanRow(\'' + rowId + '\')"></div>' +
+            '<div class="col-span-10 sm:col-span-3 flex items-end"><div class="w-full"><label class="plan-row-label">Totals (R/D/S)</label><div class="plan-row-input plan-totals" style="background:#f1f5f9;color:#475569;text-align:center;font-size:11px;">—</div></div></div>' +
+            '<div class="col-span-2 sm:col-span-1"><button type="button" onclick="removePlanRow(\'' + rowId + '\')" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg text-xs">🗑️</button></div>' +
+        '</div>';
+    setTimeout(function() { recalcPlanRow(rowId); }, 0);
     return div;
 }
 
 function recalcPlanRow(rowId) {
-    const row = document.getElementById(rowId);
+    var row = document.getElementById(rowId);
     if (!row) return;
-    const days = Number(row.querySelector('.plan-days').value) || 0;
-    const regularRate = Number(row.querySelector('.plan-regular-rate').value) || 0;
-    const discRate = Number(row.querySelector('.plan-disc-rate').value) || 0;
-    const specialRate = Number(row.querySelector('.plan-special-rate').value) || 0;
-
-    const regTotal = days * regularRate;
-    const discTotal = days * discRate;
-    const specialTotal = days * specialRate;
-
-    row.querySelector('.plan-totals').textContent = 
-        `${money(regTotal)} / ${money(discTotal)} / ${money(specialTotal)}`;
+    var days = Number(row.querySelector('.plan-days').value) || 0;
+    var regularRate = Number(row.querySelector('.plan-regular-rate').value) || 0;
+    var discRate = Number(row.querySelector('.plan-disc-rate').value) || 0;
+    var specialRate = Number(row.querySelector('.plan-special-rate').value) || 0;
+    var regTotal = days * regularRate;
+    var discTotal = days * discRate;
+    var specialTotal = days * specialRate;
+    row.querySelector('.plan-totals').textContent = money(regTotal) + ' / ' + money(discTotal) + ' / ' + money(specialTotal);
 }
 
 function addPlanToSub(cat, subKey) {
-    const safeKey = subKey.replace(/[^a-zA-Z0-9]/g, '_');
-    const list = document.getElementById(`plans_${cat}_${safeKey}`);
+    var safeKey = subKey.replace(/[^a-zA-Z0-9]/g, '_');
+    var list = document.getElementById('plans_' + cat + '_' + safeKey);
     if (!list) return;
-    const newPlan = { days: 8, regularRate: 500, discountedRate: 350, specialRate: 250 };
+    var newPlan = { days: 8, regularRate: 500, discountedRate: 350, specialRate: 250 };
     list.appendChild(buildPlanRow(cat, subKey, list.children.length, newPlan));
 }
 
 function removePlanRow(rowId) {
-    const row = document.getElementById(rowId);
+    var row = document.getElementById(rowId);
     if (row) row.remove();
 }
 
 function collectPlansFromForm() {
-    const result = { oneOnOne: {}, group: {} };
-    ['oneOnOne', 'group'].forEach(cat => {
-        FIXED_SUBCATEGORIES[cat].forEach(sub => {
-            const safeKey = sub.key.replace(/[^a-zA-Z0-9]/g, '_');
-            const list = document.getElementById(`plans_${cat}_${safeKey}`);
+    var result = { oneOnOne: {}, group: {} };
+    ['oneOnOne', 'group'].forEach(function(cat) {
+        FIXED_SUBCATEGORIES[cat].forEach(function(sub) {
+            var safeKey = sub.key.replace(/[^a-zA-Z0-9]/g, '_');
+            var list = document.getElementById('plans_' + cat + '_' + safeKey);
             if (!list) return;
-            const plans = [];
-            list.querySelectorAll('.plan-row').forEach(row => {
-                const days = Number(row.querySelector('.plan-days').value) || 0;
-                const regularRate = Number(row.querySelector('.plan-regular-rate').value) || 0;
-                const discRate = Number(row.querySelector('.plan-disc-rate').value) || 0;
-                const specialRate = Number(row.querySelector('.plan-special-rate').value) || 0;
+            var plans = [];
+            list.querySelectorAll('.plan-row').forEach(function(row) {
+                var days = Number(row.querySelector('.plan-days').value) || 0;
+                var regularRate = Number(row.querySelector('.plan-regular-rate').value) || 0;
+                var discRate = Number(row.querySelector('.plan-disc-rate').value) || 0;
+                var specialRate = Number(row.querySelector('.plan-special-rate').value) || 0;
                 if (days > 0) {
                     plans.push({
-                        days,
-                        regularRate,
+                        days: days,
+                        regularRate: regularRate,
                         discountedRate: discRate,
-                        specialRate,
+                        specialRate: specialRate,
                         perClassRate: specialRate,
                         regularTotal: days * regularRate,
                         discountedTotal: days * discRate,
@@ -796,53 +980,48 @@ function collectPlansFromForm() {
                     });
                 }
             });
-            plans.sort((a, b) => a.days - b.days);
-            result[cat][sub.key] = { subCategoryId: sub.id, displayName: sub.displayName, plans };
+            plans.sort(function(a, b) { return a.days - b.days; });
+            result[cat][sub.key] = { subCategoryId: sub.id, displayName: sub.displayName, plans: plans };
         });
     });
     return result;
 }
 
 function applyQuickSet() {
-    const sel = document.getElementById('quickSetSelect');
-    const val = sel.value;
+    var sel = document.getElementById('quickSetSelect');
+    var val = sel.value;
     if (!val) return;
-    const now = Date.now();
-    const map = { '30m': 30*60*1000, '1h': 60*60*1000, '6h': 6*60*60*1000, '12h': 12*60*60*1000, '1d': 24*60*60*1000, '3d': 3*24*60*60*1000, '7d': 7*24*60*60*1000, '30d': 30*24*60*60*1000 };
-    if (map[val]) {
-        document.getElementById('offerEndDateTime').value = formatDateTimeLocal(new Date(now + map[val]));
-    }
+    var now = Date.now();
+    var map = { '30m': 30*60*1000, '1h': 60*60*1000, '6h': 6*60*60*1000, '12h': 12*60*60*1000, '1d': 24*60*60*1000, '3d': 3*24*60*60*1000, '7d': 7*24*60*60*1000, '30d': 30*24*60*60*1000 };
+    if (map[val]) document.getElementById('offerEndDateTime').value = formatDateTimeLocal(new Date(now + map[val]));
     sel.value = '';
 }
 
 function updateStatusBadge(d) {
-    const badge = document.getElementById('offerStatusBadge');
+    var badge = document.getElementById('offerStatusBadge');
     if (!badge) return;
     if (!d.active) { badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-slate-200 text-slate-700'; badge.textContent = '⚪ OFF'; return; }
     if (!d.endDateTime) { badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-amber-200 text-amber-800'; badge.textContent = '⏸️ No end'; return; }
-    const remaining = new Date(d.endDateTime).getTime() - Date.now();
+    var remaining = new Date(d.endDateTime).getTime() - Date.now();
     if (remaining <= 0) { badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-red-200 text-red-800'; badge.textContent = '⛔ Expired'; return; }
-    const days = Math.floor(remaining / 86400000);
-    const hours = Math.floor((remaining % 86400000) / 3600000);
-    const mins = Math.floor((remaining % 3600000) / 60000);
-    let t = days > 0 ? `${days}d ${hours}h` : hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
+    var days = Math.floor(remaining / 86400000);
+    var hours = Math.floor((remaining % 86400000) / 3600000);
+    var mins = Math.floor((remaining % 3600000) / 60000);
+    var t = days > 0 ? days + 'd ' + hours + 'h' : hours > 0 ? hours + 'h ' + mins + 'm' : mins + 'm';
     badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-green-200 text-green-800';
-    badge.textContent = `🟢 Live · ${t}`;
+    badge.textContent = '🟢 Live · ' + t;
 }
-setInterval(() => { if (currentOffer) updateStatusBadge(currentOffer); }, 30000);
+setInterval(function() { if (currentOffer) updateStatusBadge(currentOffer); }, 30000);
 
 function saveOffer() {
-    const endDT = document.getElementById('offerEndDateTime').value;
+    var endDT = document.getElementById('offerEndDateTime').value;
     if (!endDT) { alert('⚠️ Please select Offer End Date & Time.'); return; }
-
-    const categories = collectPlansFromForm();
-
-    const data = {
+    var categories = collectPlansFromForm();
+    var data = {
         active: document.getElementById('offerActive').checked,
         endDateTime: endDT,
         title: document.getElementById('offerTitle').value,
         description: document.getElementById('offerDescription').value,
-        
         oneOnOnePricing: {
             regularPrice: Number(document.getElementById('cfg1on1Regular').value) || 500,
             discountedPrice: Number(document.getElementById('cfg1on1Discounted').value) || 350,
@@ -861,417 +1040,453 @@ function saveOffer() {
             singleSpecial: Number(document.getElementById('cfg1on1Special').value) || 250,
             groupAdmission: Number(document.getElementById('cfgGroupAdmissionRegular').value) || 2500
         },
-        categories,
+        categories: categories,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     };
-
-    db.collection('config').doc('offer').set(data, { merge: true }).then(() => {
-        const msg = document.getElementById('offerSaveMsg');
+    db.collection('config').doc('offer').set(data, { merge: true }).then(function() {
+        var msg = document.getElementById('offerSaveMsg');
         msg.textContent = '✅ Saved!';
         msg.classList.remove('hidden');
-        setTimeout(() => msg.classList.add('hidden'), 2500);
+        setTimeout(function() { msg.classList.add('hidden'); }, 2500);
         renderCouponPlansCheckboxes();
-    }).catch(err => alert('Error: ' + err.message));
+    }).catch(function(err) { alert('Error: ' + err.message); });
 }
 
 /* ============ COUPONS ============ */
+var allCoupons = [];
+var allStudents = [];
+
 function initCouponSubCategoryDropdown() {
-    const catSel = document.getElementById('newCouponCategory');
+    var catSel = document.getElementById('newCouponCategory');
     if (!catSel) return;
-    const subSel = document.getElementById('newCouponSubCategory');
+    var subSel = document.getElementById('newCouponSubCategory');
     if (subSel && subSel.options.length === 0) onCouponCategoryChange();
 }
 
 function onCouponCategoryChange() {
-    const cat = document.getElementById('newCouponCategory').value;
-    const subSel = document.getElementById('newCouponSubCategory');
+    var cat = document.getElementById('newCouponCategory').value;
+    var subSel = document.getElementById('newCouponSubCategory');
     subSel.innerHTML = '';
-    const subcats = FIXED_SUBCATEGORIES[cat] || [];
-    if (subcats.length === 0) {
-        const opt = document.createElement('option');
-        opt.value = ''; opt.textContent = '-- No sub-categories --';
+    FIXED_SUBCATEGORIES[cat].forEach(function(sub) {
+        var opt = document.createElement('option');
+        opt.value = sub.id;
+        opt.textContent = sub.displayName;
         subSel.appendChild(opt);
-    } else {
-        subcats.forEach(sub => {
-            const opt = document.createElement('option');
-            opt.value = sub.id; opt.textContent = sub.displayName;
-            subSel.appendChild(opt);
-        });
-    }
+    });
     renderCouponPlansCheckboxes();
 }
 
 function renderCouponPlansCheckboxes() {
-    const cat = document.getElementById('newCouponCategory').value;
-    const subId = document.getElementById('newCouponSubCategory').value;
-    const container = document.getElementById('couponPlansCheckboxes');
+    var cat = document.getElementById('newCouponCategory').value;
+    var subId = document.getElementById('newCouponSubCategory').value;
+    var container = document.getElementById('couponPlansCheckboxes');
     if (!container) return;
-
-    const found = FIXED_SUBCATEGORIES[cat].find(s => s.id === subId);
+    var found = null;
+    FIXED_SUBCATEGORIES[cat].forEach(function(s) { if (s.id === subId) found = s; });
     if (!found) { container.innerHTML = ''; return; }
-
-    const offer = currentOffer || {};
-    const subData = offer.categories?.[cat]?.[found.key];
-    const plans = subData?.plans || [];
-
+    var offer = currentOffer || {};
+    var subData = offer.categories && offer.categories[cat] && offer.categories[cat][found.key];
+    var plans = (subData && subData.plans) || [];
     if (plans.length === 0) {
         container.innerHTML = '<p class="text-[11px] text-slate-500 italic col-span-4">No plans configured.</p>';
         return;
     }
-
-    const currentlyChecked = Array.from(container.querySelectorAll('.plan-check:checked')).map(c => c.value);
-    container.innerHTML = plans.map(p => {
-        const value = `${p.days}d`;
-        const checked = currentlyChecked.includes(value) ? 'checked' : '';
-        return `<label class="text-[11px] font-bold flex items-center gap-1"><input type="checkbox" class="plan-check" value="${value}" ${checked}> ${p.days} Days</label>`;
+    var currentlyChecked = [];
+    container.querySelectorAll('.plan-check:checked').forEach(function(c) { currentlyChecked.push(c.value); });
+    container.innerHTML = plans.map(function(p) {
+        var value = p.days + 'd';
+        var checked = currentlyChecked.indexOf(value) !== -1 ? 'checked' : '';
+        return '<label class="text-[11px] font-bold flex items-center gap-1"><input type="checkbox" class="plan-check" value="' + value + '" ' + checked + '> ' + p.days + ' Days</label>';
     }).join('');
 }
 
-/* ============ COUPONS: Load with Edit + Copy Buttons ============ */
 function loadCoupons() {
-    db.collection('coupons').onSnapshot(snap => {
-        const list = document.getElementById('couponsList');
-        list.innerHTML = '';
-        if (snap.empty) {
-            list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No coupons yet.</p>';
-            return;
-        }
-        snap.forEach(doc => {
-            const c = doc.data();
-            const hasValidity = !!(c.validFrom && c.validUntil);
-            const expired = hasValidity && isCouponExpired(c);
-            const notStarted = hasValidity && isCouponNotStarted(c);
-            const isActive = c.active !== false;
-
-            let statusBadge = '';
-            if (!isActive) statusBadge = '<span class="bg-slate-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">⚪ INACTIVE</span>';
-            else if (hasValidity) {
-                if (expired) statusBadge = '<span class="bg-red-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">⛔ EXPIRED</span>';
-                else if (notStarted) statusBadge = '<span class="bg-yellow-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">⏳ NOT STARTED</span>';
-                else statusBadge = '<span class="bg-green-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">🟢 ACTIVE</span>';
-            } else statusBadge = '<span class="bg-blue-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">♾️ NO EXPIRY</span>';
-
-            const catLabel = c.category === 'oneOnOne' ? '👑 1-on-1' : '👥 Group';
-            const subLabel = c.subCategoryDisplay || c.subCategory || '';
-            const planLabel = c.allowedPlans ? ` (${c.allowedPlans.join('/')})` : '';
-
-            const validityText = hasValidity
-                ? `📅 ${formatCouponDate(c.validFrom)} → ${formatCouponDate(c.validUntil)}`
-                : '♾️ No expiry';
-
-            const div = document.createElement('div');
-            div.className = `bg-white border-2 rounded-xl p-3 transition ${expired ? 'border-red-300 bg-red-50' : (!isActive ? 'border-slate-300 bg-slate-50 opacity-75' : 'border-slate-200 hover:border-amber-400')}`;
-            div.innerHTML = `
-                <div class="flex justify-between items-start gap-3 flex-wrap">
-                    <div class="flex items-start gap-3 min-w-0 flex-1">
-                        <div class="w-10 h-10 ${expired ? 'bg-red-100 text-red-700' : (!isActive ? 'bg-slate-200 text-slate-500' : 'bg-amber-100 text-amber-700')} rounded-lg flex items-center justify-center font-black text-xs flex-shrink-0">
-                            ${c.type === 'flat' ? '₹' : '%'}
-                        </div>
-                        <div class="min-w-0">
-                            <div class="flex items-center flex-wrap gap-1">
-                                <p class="font-black ${isActive ? 'text-amber-700' : 'text-slate-500'} text-sm">${c.code}</p>
-                                <button onclick="copyCouponCode('${c.code}')" class="text-blue-600 hover:text-blue-800 text-[11px] px-1.5 py-0.5 rounded hover:bg-blue-50 transition font-bold">📋 Copy</button>
-                                ${statusBadge}
-                            </div>
-                            <p class="text-[10px] text-slate-500 truncate mt-0.5">${catLabel} · ${subLabel}${planLabel}</p>
-                            <p class="text-[10px] text-slate-600 mt-0.5">${c.type === 'flat' ? '₹' + c.value + ' off' : c.value + '% off'}</p>
-                            <p class="text-[10px] ${expired ? 'text-red-700 font-bold' : 'text-slate-600'} mt-1">${validityText}</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-1 flex-shrink-0">
-                        <button onclick="toggleCouponActive('${doc.id}', ${isActive})" title="${isActive ? 'Deactivate' : 'Activate'}" class="text-orange-600 hover:text-orange-800 font-bold text-xs px-2 py-1.5 rounded-lg hover:bg-orange-50">
-                            ${isActive ? '⏸️' : '▶️'}
-                        </button>
-                        <button onclick="editCoupon('${doc.id}')" title="Edit" class="text-blue-600 hover:text-blue-800 font-bold text-xs px-2.5 py-1.5 rounded-lg hover:bg-blue-50">✏️</button>
-                        <button onclick="duplicateCoupon('${doc.id}')" title="Duplicate" class="text-purple-600 hover:text-purple-800 font-bold text-xs px-2.5 py-1.5 rounded-lg hover:bg-purple-50">📋</button>
-                        <button onclick="deleteCoupon('${doc.id}')" title="Delete" class="text-red-600 hover:text-red-800 font-bold text-xs px-2.5 py-1.5 rounded-lg hover:bg-red-50">🗑️</button>
-                    </div>
-                </div>
-            `;
-            list.appendChild(div);
+    db.collection('coupons').onSnapshot(function(snap) {
+        allCoupons = [];
+        snap.forEach(function(doc) {
+            allCoupons.push(Object.assign({ id: doc.id }, doc.data()));
         });
+        updateCouponStats();
+        renderCouponsList();
+        populateGrantCouponDropdown();
     });
 }
 
-/* ============ COUPON: Copy Code ============ */
+function updateCouponStats() {
+    var total = allCoupons.length;
+    var active = 0;
+    var expired = 0;
+    allCoupons.forEach(function(c) {
+        if (isCouponExpired(c)) expired++;
+        else if (c.active !== false) active++;
+    });
+    document.getElementById('coupStatTotal').textContent = total;
+    document.getElementById('coupStatActive').textContent = active;
+    document.getElementById('coupStatExpired').textContent = expired;
+
+    var totalGrants = 0;
+    allStudents.forEach(function(s) {
+        if (s.grantedCoupons) totalGrants += s.grantedCoupons.length;
+    });
+    document.getElementById('coupStatGrants').textContent = totalGrants;
+    document.getElementById('statGrants').textContent = totalGrants;
+}
+
+function resetCouponFilters() {
+    document.getElementById('couponSearch').value = '';
+    document.getElementById('couponFilterCategory').value = '';
+    document.getElementById('couponFilterType').value = '';
+    document.getElementById('couponFilterStatus').value = '';
+    renderCouponsList();
+}
+
+function renderCouponsList() {
+    var list = document.getElementById('couponsList');
+    var search = (document.getElementById('couponSearch').value || '').toLowerCase().trim();
+    var catFilter = document.getElementById('couponFilterCategory').value;
+    var typeFilter = document.getElementById('couponFilterType').value;
+    var statusFilter = document.getElementById('couponFilterStatus').value;
+
+    var filtered = allCoupons.filter(function(c) {
+        if (search && (c.code || '').toLowerCase().indexOf(search) === -1) return false;
+        if (catFilter && c.category !== catFilter) return false;
+        if (typeFilter && c.type !== typeFilter) return false;
+        if (statusFilter) {
+            var expired = isCouponExpired(c);
+            if (statusFilter === 'active' && (expired || c.active === false)) return false;
+            if (statusFilter === 'inactive' && c.active !== false) return false;
+            if (statusFilter === 'expired' && !expired) return false;
+            if (statusFilter === 'noexpiry' && (c.validFrom || c.validUntil)) return false;
+        }
+        return true;
+    });
+
+    filtered.sort(function(a, b) {
+        return (a.code || '').localeCompare(b.code || '');
+    });
+
+    document.getElementById('couponFilterCount').textContent = 'Showing ' + filtered.length + ' of ' + allCoupons.length;
+
+    if (filtered.length === 0) {
+        list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No coupons match.</p>';
+        return;
+    }
+
+    list.innerHTML = '';
+    filtered.forEach(function(c) {
+        var hasValidity = !!(c.validFrom && c.validUntil);
+        var expired = hasValidity && isCouponExpired(c);
+        var isActive = c.active !== false;
+        var statusBadge = '';
+        if (!isActive) statusBadge = '<span class="bg-slate-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">⚪ INACTIVE</span>';
+        else if (hasValidity) {
+            if (expired) statusBadge = '<span class="bg-red-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">⛔ EXPIRED</span>';
+            else statusBadge = '<span class="bg-green-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">🟢 ACTIVE</span>';
+        } else statusBadge = '<span class="bg-blue-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full ml-2">♾️ NO EXPIRY</span>';
+
+        var catLabel = c.category === 'oneOnOne' ? '👑 1-on-1' : '👥 Group';
+        var subLabel = c.subCategoryDisplay || '';
+        var planLabel = c.allowedPlans ? ' (' + c.allowedPlans.join('/') + ')' : '';
+
+        var grantsCount = 0;
+        allStudents.forEach(function(s) {
+            if (s.grantedCoupons) {
+                s.grantedCoupons.forEach(function(g) {
+                    if (g.id === c.id) grantsCount++;
+                });
+            }
+        });
+
+        var div = document.createElement('div');
+        div.className = 'bg-white border-2 rounded-xl p-3 ' + (expired ? 'border-red-300 bg-red-50' : (!isActive ? 'border-slate-300 bg-slate-50 opacity-75' : 'border-slate-200'));
+        div.innerHTML =
+            '<div class="flex justify-between items-start gap-3 flex-wrap">' +
+                '<div class="flex items-start gap-3 min-w-0 flex-1">' +
+                    '<div class="w-10 h-10 ' + (expired ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700') + ' rounded-lg flex items-center justify-center font-black text-xs flex-shrink-0">' + (c.type === 'flat' ? '₹' : '%') + '</div>' +
+                    '<div class="min-w-0 flex-1">' +
+                        '<div class="flex items-center flex-wrap gap-1">' +
+                            '<p class="font-black text-amber-700 text-sm font-mono">' + c.code + '</p>' +
+                            '<button onclick="copyCouponCode(\'' + c.code + '\')" class="text-blue-600 hover:text-blue-800 text-[11px] px-1.5 py-0.5 rounded hover:bg-blue-50 font-bold">📋</button>' +
+                            statusBadge +
+                        '</div>' +
+                        '<p class="text-[10px] text-slate-500 truncate mt-0.5">' + catLabel + ' · ' + subLabel + planLabel + '</p>' +
+                        '<p class="text-[10px] text-slate-600 mt-0.5">' + (c.type === 'flat' ? '₹' + c.value + ' off' : c.value + '% off') + ' · <span class="font-bold text-purple-700">🎫 ' + grantsCount + ' grant' + (grantsCount !== 1 ? 's' : '') + '</span></p>' +
+                        (hasValidity ? '<p class="text-[10px] ' + (expired ? 'text-red-700 font-bold' : 'text-slate-600') + ' mt-1">📅 ' + formatCouponDate(c.validFrom) + ' → ' + formatCouponDate(c.validUntil) + '</p>' : '<p class="text-[10px] text-slate-600 mt-1">♾️ No expiry</p>') +
+                    '</div>' +
+                '</div>' +
+                '<div class="flex items-center gap-1 flex-shrink-0">' +
+                    '<button onclick="toggleCouponActive(\'' + c.id + '\', ' + isActive + ')" class="text-orange-600 hover:text-orange-800 font-bold text-xs px-2 py-1.5 rounded-lg hover:bg-orange-50">' + (isActive ? '⏸️' : '▶️') + '</button>' +
+                    '<button onclick="editCoupon(\'' + c.id + '\')" class="text-blue-600 hover:text-blue-800 font-bold text-xs px-2.5 py-1.5 rounded-lg hover:bg-blue-50">✏️</button>' +
+                    '<button onclick="duplicateCoupon(\'' + c.id + '\')" class="text-purple-600 hover:text-purple-800 font-bold text-xs px-2.5 py-1.5 rounded-lg hover:bg-purple-50">📋</button>' +
+                    '<button onclick="deleteCoupon(\'' + c.id + '\')" class="text-red-600 hover:text-red-800 font-bold text-xs px-2.5 py-1.5 rounded-lg hover:bg-red-50">🗑️</button>' +
+                '</div>' +
+            '</div>';
+        list.appendChild(div);
+    });
+}
+
 function copyCouponCode(code) {
     if (!code) return;
     if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(code).then(() => toast('📋 Copied: ' + code)).catch(() => fallbackCopyCode(code));
-    } else {
-        fallbackCopyCode(code);
-    }
+        navigator.clipboard.writeText(code).then(function() { toast('📋 Copied: ' + code); }).catch(function() { fallbackCopyCode(code); });
+    } else fallbackCopyCode(code);
 }
 function fallbackCopyCode(code) {
-    const ta = document.createElement('textarea');
+    var ta = document.createElement('textarea');
     ta.value = code;
     ta.style.position = 'fixed'; ta.style.opacity = '0';
     document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); toast('📋 Copied: ' + code); }
-    catch (e) { alert('❌ Copy failed: ' + code); }
+    try { document.execCommand('copy'); toast('📋 Copied: ' + code); } catch (e) { alert('❌ Copy failed: ' + code); }
     document.body.removeChild(ta);
 }
 
-/* ============ COUPON: Edit ============ */
-let editingCouponId = null;
+function showCouponForm() {
+    document.getElementById('couponFormModal').classList.add('show');
+    document.getElementById('couponFormTitle').textContent = '➕ Add Coupon';
+}
+function closeCouponForm() {
+    document.getElementById('couponFormModal').classList.remove('show');
+    cancelEditCoupon();
+}
 
-async function editCoupon(id) {
-    try {
-        const doc = await db.collection('coupons').doc(id).get();
-        if (!doc.exists) { alert('⚠️ Coupon not found.'); return; }
-        const c = doc.data();
-        editingCouponId = id;
+var editingCouponId = null;
+function editCoupon(id) {
+    var c = null;
+    allCoupons.forEach(function(x) { if (x.id === id) c = x; });
+    if (!c) return;
+    editingCouponId = id;
 
-        const banner = document.getElementById('editModeBanner');
-        if (banner) {
-            banner.classList.remove('hidden');
-            document.getElementById('editModeCouponCode').textContent = c.code;
-        }
+    document.getElementById('couponFormModal').classList.add('show');
+    document.getElementById('couponFormTitle').textContent = '✏️ Edit Coupon';
+    document.getElementById('editModeBanner').classList.remove('hidden');
+    document.getElementById('editModeCouponCode').textContent = c.code;
 
-        const btn = document.getElementById('addCouponBtn');
-        if (btn) {
-            btn.textContent = '💾 Update Coupon';
-            btn.classList.remove('bg-amber-600', 'hover:bg-amber-700');
-            btn.classList.add('bg-blue-600', 'hover:bg-blue-700');
-        }
+    document.getElementById('newCouponCategory').value = c.category || 'oneOnOne';
+    onCouponCategoryChange();
+    setTimeout(function() {
+        document.getElementById('newCouponSubCategory').value = c.subCategory || '';
+        renderCouponPlansCheckboxes();
+        setTimeout(function() {
+            var allowed = c.allowedPlans || [];
+            document.querySelectorAll('.plan-check').forEach(function(chk) {
+                chk.checked = allowed.indexOf(chk.value) !== -1;
+            });
+        }, 50);
+    }, 100);
 
-        document.getElementById('newCouponCategory').value = c.category || 'oneOnOne';
-        onCouponCategoryChange();
+    document.getElementById('newCouponCode').value = c.code || '';
+    document.getElementById('newCouponType').value = c.type || 'flat';
+    document.getElementById('newCouponValue').value = c.value || '';
 
-        setTimeout(() => {
-            document.getElementById('newCouponSubCategory').value = c.subCategory || '';
-            renderCouponPlansCheckboxes();
-
-            setTimeout(() => {
-                const allowed = c.allowedPlans || [];
-                document.querySelectorAll('.plan-check').forEach(chk => {
-                    chk.checked = allowed.includes(chk.value);
-                });
-            }, 50);
-        }, 100);
-
-        document.getElementById('newCouponCode').value = c.code || '';
-        document.getElementById('newCouponType').value = c.type || 'flat';
-        document.getElementById('newCouponValue').value = c.value || '';
-
-        if (c.validFrom && c.validUntil) {
-            document.getElementById('enableCouponValidity').checked = true;
-            document.getElementById('couponValidityInputs').classList.remove('hidden');
-            document.getElementById('newCouponValidFrom').value = c.validFrom;
-            document.getElementById('newCouponValidUntil').value = c.validUntil;
-        } else {
-            document.getElementById('enableCouponValidity').checked = false;
-            document.getElementById('couponValidityInputs').classList.add('hidden');
-            document.getElementById('newCouponValidFrom').value = '';
-            document.getElementById('newCouponValidUntil').value = '';
-        }
-
-        document.querySelector('#content-coupons .bg-white.border-2').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        toast('✏️ Editing: ' + c.code);
-    } catch (err) {
-        alert('Error: ' + err.message);
+    if (c.validFrom && c.validUntil) {
+        document.getElementById('enableCouponValidity').checked = true;
+        document.getElementById('couponValidityInputs').classList.remove('hidden');
+        document.getElementById('newCouponValidFrom').value = c.validFrom;
+        document.getElementById('newCouponValidUntil').value = c.validUntil;
+    } else {
+        document.getElementById('enableCouponValidity').checked = false;
+        document.getElementById('couponValidityInputs').classList.add('hidden');
     }
 }
 
 function cancelEditCoupon() {
     editingCouponId = null;
-    const banner = document.getElementById('editModeBanner');
-    if (banner) banner.classList.add('hidden');
-
+    document.getElementById('editModeBanner').classList.add('hidden');
     document.getElementById('newCouponCode').value = '';
     document.getElementById('newCouponValue').value = '';
     document.getElementById('newCouponValidFrom').value = '';
     document.getElementById('newCouponValidUntil').value = '';
     document.getElementById('enableCouponValidity').checked = false;
     document.getElementById('couponValidityInputs').classList.add('hidden');
-    document.querySelectorAll('.plan-check').forEach(c => c.checked = false);
-
-    const btn = document.getElementById('addCouponBtn');
-    if (btn) {
-        btn.textContent = '➕ Add Coupon';
-        btn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
-        btn.classList.add('bg-amber-600', 'hover:bg-amber-700');
-    }
+    document.querySelectorAll('.plan-check').forEach(function(c) { c.checked = false; });
 }
 
-/* ============ COUPON: Duplicate ============ */
-async function duplicateCoupon(id) {
-    try {
-        const doc = await db.collection('coupons').doc(id).get();
-        if (!doc.exists) { alert('⚠️ Not found.'); return; }
-        const c = doc.data();
-
-        const newCode = prompt('Enter new coupon code (must be unique):', c.code + 'COPY');
-        if (!newCode) return;
-        const cleanCode = newCode.trim().toUpperCase();
-        if (!cleanCode) return;
-
-        const dup = await db.collection('coupons').where('code', '==', cleanCode).get();
-        if (!dup.empty) { alert('❌ This code already exists!'); return; }
-
-        const newCoupon = {
-            code: cleanCode,
-            category: c.category,
-            subCategory: c.subCategory,
-            subCategoryDisplay: c.subCategoryDisplay,
-            type: c.type,
-            value: c.value,
-            active: true,
-            createdAt: new Date().toISOString()
-        };
-        if (c.validFrom) newCoupon.validFrom = c.validFrom;
-        if (c.validUntil) newCoupon.validUntil = c.validUntil;
-        if (c.allowedPlans) newCoupon.allowedPlans = c.allowedPlans;
-
-        await db.collection('coupons').add(newCoupon);
-        toast('📋 Duplicated as: ' + cleanCode);
-    } catch (err) {
-        alert('Error: ' + err.message);
-    }
-}
-
-/* ============ COUPON: Toggle Active ============ */
-async function toggleCouponActive(id, currentlyActive) {
-    try {
-        await db.collection('coupons').doc(id).update({
-            active: !currentlyActive,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        toast(currentlyActive ? '⏸️ Deactivated' : '▶️ Activated');
-    } catch (err) {
-        alert('Error: ' + err.message);
-    }
-}
-
-/* ============ COUPON: Add / Update ============ */
-async function addCoupon() {
-    const code = document.getElementById('newCouponCode').value.trim().toUpperCase();
-    const category = document.getElementById('newCouponCategory').value;
-    const subCategoryId = document.getElementById('newCouponSubCategory').value;
-    const subOpt = document.getElementById('newCouponSubCategory').selectedOptions[0];
-    const subCategoryDisplay = subOpt ? subOpt.textContent : '';
-    const type = document.getElementById('newCouponType').value;
-    const value = Number(document.getElementById('newCouponValue').value);
-    const validityEnabled = document.getElementById('enableCouponValidity').checked;
-    const validFrom = document.getElementById('newCouponValidFrom').value;
-    const validUntil = document.getElementById('newCouponValidUntil').value;
+async function saveCoupon() {
+    var code = document.getElementById('newCouponCode').value.trim().toUpperCase();
+    var category = document.getElementById('newCouponCategory').value;
+    var subCategoryId = document.getElementById('newCouponSubCategory').value;
+    var subOpt = document.getElementById('newCouponSubCategory').selectedOptions[0];
+    var subCategoryDisplay = subOpt ? subOpt.textContent : '';
+    var type = document.getElementById('newCouponType').value;
+    var value = Number(document.getElementById('newCouponValue').value);
+    var validityEnabled = document.getElementById('enableCouponValidity').checked;
+    var validFrom = document.getElementById('newCouponValidFrom').value;
+    var validUntil = document.getElementById('newCouponValidUntil').value;
 
     if (!code || !value) { alert('⚠️ Please fill code and value.'); return; }
     if (value <= 0) { alert('⚠️ Value must be > 0.'); return; }
-
     if (validityEnabled) {
-        if (!validFrom || !validUntil) { alert('⚠️ Please set both Valid From and Valid Until.'); return; }
+        if (!validFrom || !validUntil) { alert('⚠️ Set both validity dates.'); return; }
         if (new Date(validUntil) <= new Date(validFrom)) { alert('⚠️ Valid Until must be AFTER Valid From.'); return; }
     }
+    var plans = [];
+    document.querySelectorAll('.plan-check:checked').forEach(function(c) { plans.push(c.value); });
 
-    const plans = Array.from(document.querySelectorAll('.plan-check:checked')).map(c => c.value);
-
-    const data = {
-        code, category, subCategory: subCategoryId, subCategoryDisplay,
-        type, value
-    };
+    var data = { code: code, category: category, subCategory: subCategoryId, subCategoryDisplay: subCategoryDisplay, type: type, value: value };
     if (validityEnabled) { data.validFrom = validFrom; data.validUntil = validUntil; }
     if (plans.length > 0) data.allowedPlans = plans;
 
     try {
+        var dup = await db.collection('coupons').where('code', '==', code).get();
+        var conflict = null;
+        dup.forEach(function(d) { if (d.id !== editingCouponId) conflict = d.id; });
+        if (conflict) { alert('❌ This code already exists!'); return; }
+
         if (editingCouponId) {
             data.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
-
-            const dup = await db.collection('coupons').where('code', '==', code).get();
-            const conflict = dup.docs.find(d => d.id !== editingCouponId);
-            if (conflict) { alert('❌ This code is used by another coupon!'); return; }
-
-            if (!validityEnabled) {
-                data.validFrom = firebase.firestore.FieldValue.delete();
-                data.validUntil = firebase.firestore.FieldValue.delete();
-            }
-            if (plans.length === 0) {
-                data.allowedPlans = firebase.firestore.FieldValue.delete();
-            }
-
+            if (!validityEnabled) { data.validFrom = firebase.firestore.FieldValue.delete(); data.validUntil = firebase.firestore.FieldValue.delete(); }
+            if (plans.length === 0) data.allowedPlans = firebase.firestore.FieldValue.delete();
             await db.collection('coupons').doc(editingCouponId).update(data);
             alert('✅ Coupon updated!');
             cancelEditCoupon();
+            closeCouponForm();
         } else {
             data.active = true;
             data.createdAt = new Date().toISOString();
-
-            const dup = await db.collection('coupons').where('code', '==', code).get();
-            if (!dup.empty) { alert('❌ This code already exists!'); return; }
-
             await db.collection('coupons').add(data);
             alert('✅ Coupon added!');
-
-            document.getElementById('newCouponCode').value = '';
-            document.getElementById('newCouponValue').value = '';
-            document.getElementById('newCouponValidFrom').value = '';
-            document.getElementById('newCouponValidUntil').value = '';
-            document.getElementById('enableCouponValidity').checked = false;
-            document.getElementById('couponValidityInputs').classList.add('hidden');
-            document.querySelectorAll('.plan-check').forEach(c => c.checked = false);
+            closeCouponForm();
         }
-    } catch (err) {
-        alert('Error: ' + err.message);
-    }
+    } catch (err) { alert('Error: ' + err.message); }
 }
 
-/* ============ COUPON: Delete ============ */
-async function deleteCoupon(id) {
+function deleteCoupon(id) {
     if (!confirm('⚠️ Delete this coupon?')) return;
-    if (!confirm('⚠️ FINAL CONFIRMATION — really delete?')) return;
-    try {
-        await db.collection('coupons').doc(id).delete();
-        toast('🗑️ Coupon deleted');
+    db.collection('coupons').doc(id).delete().then(function() {
+        toast('🗑️ Deleted');
         if (editingCouponId === id) cancelEditCoupon();
-    } catch (err) {
-        alert('Error: ' + err.message);
-    }
+    }).catch(function(err) { alert('Error: ' + err.message); });
 }
 
-/* ============ TOAST ============ */
-function toast(msg, type) {
-    const t = document.createElement('div');
-    t.style.cssText = `position:fixed;top:20px;left:50%;transform:translateX(-50%);background:${type === 'error' ? '#dc2626' : '#16a34a'};color:#fff;padding:12px 22px;border-radius:999px;font-size:13px;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,0.3);z-index:99999;max-width:90vw;`;
-    t.textContent = msg;
-    document.body.appendChild(t);
-    setTimeout(() => { t.style.transition='opacity 0.3s'; t.style.opacity='0'; setTimeout(()=>t.remove(),300); }, 1800);
+function toggleCouponActive(id, currentlyActive) {
+    db.collection('coupons').doc(id).update({
+        active: !currentlyActive,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function() { toast(currentlyActive ? '⏸️ Deactivated' : '▶️ Activated'); }).catch(function(err) { alert('Error: ' + err.message); });
+}
+
+async function duplicateCoupon(id) {
+    try {
+        var c = null;
+        allCoupons.forEach(function(x) { if (x.id === id) c = x; });
+        if (!c) return;
+        var newCode = prompt('Enter new coupon code:', c.code + 'COPY');
+        if (!newCode) return;
+        var cleanCode = newCode.trim().toUpperCase();
+        var dup = await db.collection('coupons').where('code', '==', cleanCode).get();
+        if (!dup.empty) { alert('❌ Code already exists!'); return; }
+        var newCoupon = { code: cleanCode, category: c.category, subCategory: c.subCategory, subCategoryDisplay: c.subCategoryDisplay, type: c.type, value: c.value, active: true, createdAt: new Date().toISOString() };
+        if (c.validFrom) newCoupon.validFrom = c.validFrom;
+        if (c.validUntil) newCoupon.validUntil = c.validUntil;
+        if (c.allowedPlans) newCoupon.allowedPlans = c.allowedPlans;
+        await db.collection('coupons').add(newCoupon);
+        toast('📋 Duplicated as: ' + cleanCode);
+    } catch (err) { alert('Error: ' + err.message); }
+}
+
+/* ============ GRANT MANAGER ============ */
+function populateGrantCouponDropdown() {
+    var sel = document.getElementById('grantCouponSelect');
+    if (!sel) return;
+    var currentVal = sel.value;
+    sel.innerHTML = '<option value="">-- Select a coupon --</option>';
+    allCoupons.forEach(function(c) {
+        var opt = document.createElement('option');
+        opt.value = c.id;
+        opt.textContent = c.code + ' (' + (c.type === 'flat' ? '₹' + c.value : c.value + '%') + ')';
+        sel.appendChild(opt);
+    });
+    if (currentVal && allCoupons.some(function(c) { return c.id === currentVal; })) sel.value = currentVal;
+}
+
+function loadGrantManager() {
+    populateGrantCouponDropdown();
+}
+
+function renderGrantView() {
+    var couponId = document.getElementById('grantCouponSelect').value;
+    var statsEl = document.getElementById('grantStats');
+    var listEl = document.getElementById('grantStudentList');
+
+    if (!couponId) {
+        statsEl.classList.add('hidden');
+        listEl.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">Select a coupon to view grants.</p>';
+        return;
+    }
+
+    var coupon = null;
+    allCoupons.forEach(function(c) { if (c.id === couponId) coupon = c; });
+    if (!coupon) return;
+
+    var grantedStudents = allStudents.filter(function(s) {
+        if (!s.grantedCoupons) return false;
+        var found = false;
+        s.grantedCoupons.forEach(function(g) { if (g.id === couponId) found = true; });
+        return found;
+    });
+
+    statsEl.classList.remove('hidden');
+    statsEl.innerHTML =
+        '<div class="grid grid-cols-3 gap-2 mt-3">' +
+            '<div class="stat-card"><div class="stat-value text-purple-700 text-lg">' + grantedStudents.length + '</div><div class="stat-label">Granted To</div></div>' +
+            '<div class="stat-card"><div class="stat-value text-green-600 text-lg">' + allStudents.length + '</div><div class="stat-label">Total Students</div></div>' +
+            '<div class="stat-card"><div class="stat-value text-blue-600 text-lg">' + (coupon.type === 'flat' ? '₹' + coupon.value : coupon.value + '%') + '</div><div class="stat-label">Discount</div></div>' +
+        '</div>';
+
+    if (grantedStudents.length === 0) {
+        listEl.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No students have this coupon yet.</p>';
+        return;
+    }
+
+    listEl.innerHTML = '';
+    grantedStudents.forEach(function(s) {
+        var div = document.createElement('div');
+        div.className = 'bg-white border-2 border-purple-300 rounded-xl p-3 flex justify-between items-center gap-2 flex-wrap';
+        div.innerHTML =
+            '<div class="min-w-0 flex-1">' +
+                '<p class="font-black text-slate-800 text-sm truncate">' + (s.name || '—') + '</p>' +
+                '<p class="text-[10px] text-slate-500">📱 ' + (s.mobile || '—') + ' · 🏷️ ' + (s.studentCode || s.studentId || '—') + '</p>' +
+            '</div>' +
+            '<button onclick="toggleGrantedCoupon(\'' + s.id + '\', \'' + couponId + '\', true)" class="bg-red-500 hover:bg-red-600 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg">❌ Revoke</button>';
+        listEl.appendChild(div);
+    });
 }
 
 /* ============ PENDING ============ */
 function loadPending() {
-    db.collection('purchases').where('status', '==', 'pending').onSnapshot(snap => {
-        const list = document.getElementById('pendingList');
+    db.collection('purchases').where('status', '==', 'pending').onSnapshot(function(snap) {
+        var list = document.getElementById('pendingList');
         list.innerHTML = '';
-        const badge = document.getElementById('pendingBadge');
+        var badge = document.getElementById('pendingBadge');
         if (snap.empty) {
             list.innerHTML = '<div class="text-center py-10 bg-green-50 border-2 border-green-200 rounded-xl"><p class="text-4xl mb-2">🎉</p><p class="text-slate-600 font-bold text-sm">No pending payments!</p></div>';
             badge.textContent = '';
             return;
         }
-        badge.textContent = `(${snap.size})`;
-        snap.forEach(doc => {
-            const p = doc.data();
-            const div = document.createElement('div');
+        badge.textContent = '(' + snap.size + ')';
+        badge.className = 'bg-red-500 text-white text-[9px] rounded-full px-1.5 py-0.5 ml-1 inline-block';
+        snap.forEach(function(doc) {
+            var p = doc.data();
+            var div = document.createElement('div');
             div.className = 'bg-yellow-50 border-2 border-yellow-300 rounded-xl p-3.5';
-            div.innerHTML = `
-                <div class="flex justify-between items-start flex-wrap gap-2 mb-3">
-                    <div class="min-w-0">
-                        <p class="font-black text-base text-blue-900 truncate">${p.studentName}</p>
-                        ${p.orderId ? `<p class="mt-1.5"><span class="order-id-badge-lg">🆔 ${p.orderId}</span></p>` : ''}
-                        <p class="text-[11px] text-slate-600 truncate mt-1.5">📱 ${p.studentMobile}</p>
-                    </div>
-                    <span class="bg-yellow-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">⏳ PENDING</span>
-                </div>
-                <div class="bg-white rounded-lg p-3 mb-3">
-                    <p class="text-sm font-bold text-slate-800">📘 ${p.planName}</p>
-                    <p class="text-[11px] text-slate-500 mt-1">Amount: <strong class="text-orange-600">${money(p.finalAmount)}</strong>${p.couponCode ? ` · Coupon: <strong>${p.couponCode}</strong>` : ''}</p>
-                </div>
-                ${p.screenshot ? `<div class="mb-3"><img src="${p.screenshot}" class="screenshot-img mx-auto" onclick="window.open(this.src)"></div>` : ''}
-                <div class="flex gap-2">
-                    <button onclick="approvePurchase('${doc.id}')" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs">✅ Approve</button>
-                    <button onclick="rejectPurchase('${doc.id}')" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-lg text-xs">❌ Reject</button>
-                </div>
-            `;
+            div.innerHTML =
+                '<div class="flex justify-between items-start flex-wrap gap-2 mb-3">' +
+                    '<div class="min-w-0">' +
+                        '<p class="font-black text-base text-blue-900 truncate">' + p.studentName + '</p>' +
+                        (p.orderId ? '<p class="mt-1.5"><span class="order-id-badge-lg">🆔 ' + p.orderId + '</span></p>' : '') +
+                        '<p class="text-[11px] text-slate-600 truncate mt-1.5">📱 ' + p.studentMobile + '</p>' +
+                    '</div>' +
+                    '<span class="bg-yellow-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">⏳ PENDING</span>' +
+                '</div>' +
+                '<div class="bg-white rounded-lg p-3 mb-3">' +
+                    '<p class="text-sm font-bold text-slate-800">📘 ' + p.planName + '</p>' +
+                    '<p class="text-[11px] text-slate-500 mt-1">Amount: <strong class="text-orange-600">' + money(p.finalAmount) + '</strong>' + (p.couponCode ? ' · Coupon: <strong>' + p.couponCode + '</strong>' : '') + '</p>' +
+                '</div>' +
+                (p.screenshot ? '<div class="mb-3"><img src="' + p.screenshot + '" class="screenshot-img mx-auto" onclick="window.open(this.src)"></div>' : '') +
+                '<div class="flex gap-2">' +
+                    '<button onclick="approvePurchase(\'' + doc.id + '\')" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs">✅ Approve</button>' +
+                    '<button onclick="rejectPurchase(\'' + doc.id + '\')" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-lg text-xs">❌ Reject</button>' +
+                '</div>';
             list.appendChild(div);
         });
     });
@@ -1279,158 +1494,287 @@ function loadPending() {
 
 function approvePurchase(id) {
     if (!confirm('Approve?')) return;
-    const receiptNo = 'ES-' + Date.now().toString().slice(-8);
-    db.collection('purchases').doc(id).update({
-        status: 'approved', receiptNo,
-        verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => alert('✅ Approved! Receipt: ' + receiptNo));
+    var receiptNo = 'ES-' + Date.now().toString().slice(-8);
+    db.collection('purchases').doc(id).update({ status: 'approved', receiptNo: receiptNo, verifiedAt: firebase.firestore.FieldValue.serverTimestamp() })
+      .then(function() { alert('✅ Approved! Receipt: ' + receiptNo); });
 }
-
 function rejectPurchase(id) {
-    const reason = prompt('Reason:') || '';
-    db.collection('purchases').doc(id).update({
-        status: 'rejected', rejectionReason: reason,
-        verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => alert('❌ Rejected.'));
+    var reason = prompt('Reason:') || '';
+    db.collection('purchases').doc(id).update({ status: 'rejected', rejectionReason: reason, verifiedAt: firebase.firestore.FieldValue.serverTimestamp() })
+      .then(function() { alert('❌ Rejected.'); });
 }
 
 /* ============ ALL PURCHASES ============ */
 function loadAllPurchases() {
-    db.collection('purchases').orderBy('createdAt', 'desc').limit(100).onSnapshot(snap => {
-        const list = document.getElementById('allPurchasesList');
+    db.collection('purchases').orderBy('createdAt', 'desc').limit(100).onSnapshot(function(snap) {
+        var list = document.getElementById('allPurchasesList');
         list.innerHTML = '';
         if (snap.empty) { list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No purchases.</p>'; return; }
-        snap.forEach(doc => {
-            const p = doc.data();
-            const colors = { pending: 'bg-yellow-100 text-yellow-800 border-yellow-300', approved: 'bg-green-100 text-green-800 border-green-300', rejected: 'bg-red-100 text-red-800 border-red-300' };
-            const icons = { pending: '⏳', approved: '✅', rejected: '❌' };
-            const div = document.createElement('div');
-            div.className = `border-2 rounded-xl p-3 ${colors[p.status] || 'bg-slate-50 border-slate-200'}`;
-            div.innerHTML = `
-                <div class="flex justify-between items-center flex-wrap gap-2">
-                    <div class="min-w-0 flex-1">
-                        <div class="flex items-center gap-2 mb-1.5 flex-wrap">
-                            <p class="font-bold text-slate-800 text-xs truncate">${p.studentName}</p>
-                            ${p.orderId ? `<span class="order-id-badge">🆔 ${p.orderId}</span>` : ''}
-                        </div>
-                        <p class="text-[10px] text-slate-600">${p.planName}</p>
-                        <p class="text-[10px] text-slate-600">${money(p.finalAmount)}${p.couponCode ? ' · ' + p.couponCode : ''}</p>
-                        <p class="text-[10px] text-slate-400">📅 ${formatDT(p.createdAt)}</p>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-[10px] font-bold px-2 py-0.5 rounded-full">${icons[p.status]} ${p.status.toUpperCase()}</span>
-                        <button onclick="deletePurchase('${doc.id}')" class="text-red-600 font-bold text-[10px] px-1.5 py-0.5 rounded">🗑️</button>
-                    </div>
-                </div>
-            `;
+        snap.forEach(function(doc) {
+            var p = doc.data();
+            var colors = { pending: 'bg-yellow-100 text-yellow-800 border-yellow-300', approved: 'bg-green-100 text-green-800 border-green-300', rejected: 'bg-red-100 text-red-800 border-red-300' };
+            var icons = { pending: '⏳', approved: '✅', rejected: '❌' };
+            var div = document.createElement('div');
+            div.className = 'border-2 rounded-xl p-3 ' + (colors[p.status] || 'bg-slate-50 border-slate-200');
+            div.innerHTML =
+                '<div class="flex justify-between items-center flex-wrap gap-2">' +
+                    '<div class="min-w-0 flex-1">' +
+                        '<div class="flex items-center gap-2 mb-1.5 flex-wrap">' +
+                            '<p class="font-bold text-slate-800 text-xs truncate">' + p.studentName + '</p>' +
+                            (p.orderId ? '<span class="order-id-badge">🆔 ' + p.orderId + '</span>' : '') +
+                        '</div>' +
+                        '<p class="text-[10px] text-slate-600">' + p.planName + '</p>' +
+                        '<p class="text-[10px] text-slate-600">' + money(p.finalAmount) + (p.couponCode ? ' · ' + p.couponCode : '') + '</p>' +
+                        '<p class="text-[10px] text-slate-400">📅 ' + formatDT(p.createdAt) + '</p>' +
+                    '</div>' +
+                    '<div class="flex items-center gap-2">' +
+                        '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full">' + icons[p.status] + ' ' + p.status.toUpperCase() + '</span>' +
+                        '<button onclick="deletePurchase(\'' + doc.id + '\')" class="text-red-600 font-bold text-[10px] px-1.5 py-0.5 rounded">🗑️</button>' +
+                    '</div>' +
+                '</div>';
             list.appendChild(div);
         });
     });
 }
 
-async function deletePurchase(id) {
+function deletePurchase(id) {
     if (!confirm('Delete?')) return;
-    try { await db.collection('purchases').doc(id).delete(); } catch (err) { alert('Error: ' + err.message); }
+    db.collection('purchases').doc(id).delete().catch(function(err) { alert('Error: ' + err.message); });
 }
 
 /* ============ STUDENTS ============ */
-let allStudents = [];
-
 function loadStudents() {
-    db.collection('students').orderBy('createdAt', 'desc').onSnapshot(snap => {
+    db.collection('students').orderBy('createdAt', 'desc').onSnapshot(function(snap) {
         allStudents = [];
-        snap.forEach(doc => allStudents.push({ id: doc.id, ...doc.data() }));
+        snap.forEach(function(doc) { allStudents.push(Object.assign({ id: doc.id }, doc.data())); });
         renderStudents(allStudents);
-        document.getElementById('studentsCount').textContent = `${allStudents.length} total`;
-        document.getElementById('studentsBadge').textContent = allStudents.length > 0 ? `(${allStudents.length})` : '';
+        updateStudentBatchDropdown();
+        document.getElementById('studentsCount').textContent = allStudents.length + ' total';
+        document.getElementById('studentsBadge').textContent = allStudents.length > 0 ? '(' + allStudents.length + ')' : '';
+        updateCouponStats();
     });
 }
 
-function renderStudents(students) {
-    const list = document.getElementById('studentsList');
-    list.innerHTML = '';
-    if (students.length === 0) { list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No students.</p>'; return; }
-    students.forEach(s => {
-        const initial = (s.name || '?')[0].toUpperCase();
-        const isBlocked = s.blocked === true;
-        const hasCoupon = s.couponAccess === true;
-        const multiCoupon = s.allowMultipleCoupons === true;
+function updateStudentBatchDropdown() {
+    var sel = document.getElementById('studentFilterBatch');
+    if (!sel) return;
+    var currentVal = sel.value;
+    var batches = {};
+    allStudents.forEach(function(s) {
+        if (s.batchName) batches[s.batchName] = true;
+    });
+    sel.innerHTML = '<option value="">All Batches</option>';
+    Object.keys(batches).sort().forEach(function(b) {
+        var opt = document.createElement('option');
+        opt.value = b;
+        opt.textContent = b;
+        sel.appendChild(opt);
+    });
+    sel.value = currentVal;
+}
 
-        const div = document.createElement('div');
+function resetStudentFilters() {
+    document.getElementById('studentSearch').value = '';
+    document.getElementById('studentFilterCourse').value = '';
+    document.getElementById('studentFilterStatus').value = '';
+    document.getElementById('studentFilterBatch').value = '';
+    filterStudents();
+}
+
+function filterStudents() {
+    var q = (document.getElementById('studentSearch').value || '').toLowerCase().trim();
+    var courseFilter = document.getElementById('studentFilterCourse').value;
+    var statusFilter = document.getElementById('studentFilterStatus').value;
+    var batchFilter = document.getElementById('studentFilterBatch').value;
+
+    var filtered = allStudents.filter(function(s) {
+        if (q) {
+            var name = (s.name || '').toLowerCase();
+            var mobile = (s.mobile || '').toLowerCase();
+            var sid = (s.studentId || '').toLowerCase();
+            var scode = (s.studentCode || '').toLowerCase();
+            if (name.indexOf(q) === -1 && mobile.indexOf(q) === -1 && sid.indexOf(q) === -1 && scode.indexOf(q) === -1) return false;
+        }
+        if (courseFilter && s.courseEnrolled !== courseFilter) return false;
+        if (batchFilter && s.batchName !== batchFilter) return false;
+        if (statusFilter) {
+            var tags = (s.tags || []).map(function(t) { return t.toLowerCase(); });
+            if (statusFilter === 'active' && s.blocked === true) return false;
+            if (statusFilter === 'blocked' && s.blocked !== true) return false;
+            if (statusFilter === 'coupon' && s.couponAccess !== true) return false;
+            if (statusFilter === 'vip' && tags.indexOf('vip') === -1) return false;
+        }
+        return true;
+    });
+
+    document.getElementById('studentFilterCount').textContent = 'Showing ' + filtered.length + ' of ' + allStudents.length;
+    renderStudents(filtered);
+}
+
+function renderStudents(students) {
+    var list = document.getElementById('studentsList');
+    list.innerHTML = '';
+    if (students.length === 0) { list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No students match.</p>'; return; }
+    students.forEach(function(s) {
+        var initial = (s.name || '?')[0].toUpperCase();
+        var isBlocked = s.blocked === true;
+        var hasCoupon = s.couponAccess === true;
+        var multiCoupon = s.allowMultipleCoupons === true;
+        var tags = s.tags || [];
+
+        var div = document.createElement('div');
         div.className = 'student-card ' + (isBlocked ? 'blocked' : '');
-        div.innerHTML = `
-            <div class="flex items-start gap-3 flex-wrap">
-                <div class="w-12 h-12 rounded-full ${isBlocked ? 'bg-gradient-to-br from-red-500 to-red-700' : 'bg-gradient-to-br from-blue-500 to-blue-700'} flex items-center justify-center text-white font-black text-lg flex-shrink-0">
-                    ${isBlocked ? '🚫' : initial}
-                </div>
-                <div class="flex-1 min-w-0">
-                    <div class="flex items-center gap-2 flex-wrap">
-                        <p class="font-black text-slate-800 text-sm truncate uppercase">${s.name || '—'}</p>
-                        ${isBlocked ? '<span class="badge-red text-[9px] font-bold px-2 py-0.5 rounded-full">BLOCKED</span>' : '<span class="badge-green text-[9px] font-bold px-2 py-0.5 rounded-full">ACTIVE</span>'}
-                        ${hasCoupon ? '<span class="badge-purple text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ COUPON</span>' : ''}
-                        ${multiCoupon ? '<span class="badge-fuchsia text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ MULTI</span>' : ''}
-                        ${s.studentId ? `<span class="badge-blue text-[9px] font-bold px-2 py-0.5 rounded-full">🔑 ${s.studentId}</span>` : ''}
-                    </div>
-                    <div class="mt-1.5 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-0.5">
-                        <p class="text-[11px] text-slate-600 truncate">📱 ${s.mobile || '—'}</p>
-                        <p class="text-[11px] text-slate-600 truncate">📚 ${s.courseEnrolled || '—'}</p>
-                        <p class="text-[10px] text-slate-500">🔐 Logins: <strong class="text-green-700">${s.loginCount || 0}</strong></p>
-                        <p class="text-[10px] text-slate-500">🚪 Logouts: <strong class="text-red-700">${s.logoutCount || 0}</strong></p>
-                    </div>
-                    ${(s.grantedCoupons && s.grantedCoupons.length > 0) ? `
-                    <div class="mt-2 pt-2 border-t border-slate-200">
-                        <p class="text-[10px] font-bold text-purple-700 mb-1">🎟️ Granted (${s.grantedCoupons.length}):</p>
-                        <div class="flex flex-wrap gap-1">
-                            ${s.grantedCoupons.map(c => `<span class="bg-purple-100 text-purple-800 text-[9px] font-bold px-2 py-0.5 rounded-full">${c.code}</span>`).join('')}
-                        </div>
-                    </div>` : ''}
-                </div>
-            </div>
-            <div class="mt-3 pt-3 border-t border-slate-200 flex flex-wrap gap-2">
-                <button onclick="openEditStudentModal('${s.id}')" class="flex-1 min-w-[90px] bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 rounded-lg text-[11px]">✏️ Edit</button>
-                <button onclick="toggleBlock('${s.id}', ${isBlocked})" class="flex-1 min-w-[90px] ${isBlocked ? 'bg-green-600' : 'bg-orange-600'} text-white font-bold py-2 rounded-lg text-[11px]">${isBlocked ? '✅ Unblock' : '🚫 Block'}</button>
-                <button onclick="manageGrantedCoupons('${s.id}', '${(s.name || '').replace(/'/g, "\\'")}')" class="flex-1 min-w-[110px] bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 rounded-lg text-[11px]">🎫 Coupons</button>
-                <button onclick="toggleMultiCoupon('${s.id}', ${multiCoupon})" class="flex-1 min-w-[130px] ${multiCoupon ? 'bg-fuchsia-600' : 'bg-slate-500'} text-white font-bold py-2 rounded-lg text-[11px]">${multiCoupon ? '🎟️ Multi ON' : '🎟️ Multi OFF'}</button>
-                <button onclick="deleteStudent('${s.id}', '${(s.name || '').replace(/'/g, "\\'")}')" class="flex-1 min-w-[90px] bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg text-[11px]">🗑️ Delete</button>
-            </div>
-        `;
+        var html = '';
+        html += '<div class="flex items-start gap-3 flex-wrap">';
+        html += '<div class="w-12 h-12 rounded-full ' + (isBlocked ? 'bg-gradient-to-br from-red-500 to-red-700' : 'bg-gradient-to-br from-blue-500 to-blue-700') + ' flex items-center justify-center text-white font-black text-lg flex-shrink-0">' + (isBlocked ? '🚫' : initial) + '</div>';
+        html += '<div class="flex-1 min-w-0">';
+        html += '<div class="flex items-center gap-2 flex-wrap">';
+        html += '<p class="font-black text-slate-800 text-sm truncate uppercase">' + (s.name || '—') + '</p>';
+        if (isBlocked) html += '<span class="badge-red text-[9px] font-bold px-2 py-0.5 rounded-full">BLOCKED</span>';
+        else html += '<span class="badge-green text-[9px] font-bold px-2 py-0.5 rounded-full">ACTIVE</span>';
+        if (hasCoupon) html += '<span class="badge-purple text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ COUPON</span>';
+        if (multiCoupon) html += '<span class="badge-fuchsia text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ MULTI</span>';
+        if (s.studentId) html += '<span class="badge-blue text-[9px] font-bold px-2 py-0.5 rounded-full">🔑 ' + s.studentId + '</span>';
+        if (s.isVip) html += '<span class="badge-orange text-[9px] font-bold px-2 py-0.5 rounded-full">⭐ VIP</span>';
+        html += '</div>';
+        html += '<div class="mt-1.5 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-0.5">';
+        html += '<p class="text-[11px] text-slate-600 truncate">📱 ' + (s.mobile || '—') + '</p>';
+        html += '<p class="text-[11px] text-slate-600 truncate">📚 ' + (s.courseEnrolled || '—') + '</p>';
+        if (s.batchName) html += '<p class="text-[10px] text-slate-500 truncate">🎓 ' + s.batchName + '</p>';
+        html += '<p class="text-[10px] text-slate-500">🔐 Logins: <strong class="text-green-700">' + (s.loginCount || 0) + '</strong></p>';
+        html += '</div>';
+        if (tags.length > 0) {
+            html += '<div class="flex flex-wrap gap-1 mt-1.5">';
+            tags.forEach(function(t) {
+                html += '<span class="bg-slate-100 text-slate-700 text-[9px] font-bold px-2 py-0.5 rounded-full border border-slate-300">🏷️ ' + t + '</span>';
+            });
+            html += '</div>';
+        }
+        if (s.grantedCoupons && s.grantedCoupons.length > 0) {
+            html += '<div class="mt-2 pt-2 border-t border-slate-200">';
+            html += '<p class="text-[10px] font-bold text-purple-700 mb-1">🎟️ Granted (' + s.grantedCoupons.length + '):</p>';
+            html += '<div class="flex flex-wrap gap-1">';
+            s.grantedCoupons.forEach(function(c) {
+                html += '<span class="bg-purple-100 text-purple-800 text-[9px] font-bold px-2 py-0.5 rounded-full">' + c.code + '</span>';
+            });
+            html += '</div></div>';
+        }
+        html += '</div></div>';
+
+        html += '<div class="mt-3 pt-3 border-t border-slate-200 flex flex-wrap gap-2">';
+        html += '<button onclick="viewStudentProfile(\'' + s.id + '\')" class="flex-1 min-w-[110px] bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-lg text-[11px]">👁️ Profile</button>';
+        html += '<button onclick="openEditStudentModal(\'' + s.id + '\')" class="flex-1 min-w-[90px] bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 rounded-lg text-[11px]">✏️ Edit</button>';
+        html += '<button onclick="toggleBlock(\'' + s.id + '\', ' + isBlocked + ')" class="flex-1 min-w-[90px] ' + (isBlocked ? 'bg-green-600 hover:bg-green-700' : 'bg-orange-600 hover:bg-orange-700') + ' text-white font-bold py-2 rounded-lg text-[11px]">' + (isBlocked ? '✅ Unblock' : '🚫 Block') + '</button>';
+        html += '<button onclick="manageGrantedCoupons(\'' + s.id + '\', \'' + (s.name || '').replace(/'/g, "\\'") + '\')" class="flex-1 min-w-[110px] bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 rounded-lg text-[11px]">🎫 Coupons</button>';
+        html += '<button onclick="toggleMultiCoupon(\'' + s.id + '\', ' + multiCoupon + ')" class="flex-1 min-w-[130px] ' + (multiCoupon ? 'bg-fuchsia-600 hover:bg-fuchsia-700' : 'bg-slate-500 hover:bg-slate-600') + ' text-white font-bold py-2 rounded-lg text-[11px]">' + (multiCoupon ? '🎟️ Multi ON' : '🎟️ Multi OFF') + '</button>';
+        html += '<button onclick="deleteStudent(\'' + s.id + '\', \'' + (s.name || '').replace(/'/g, "\\'") + '\')" class="flex-1 min-w-[90px] bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg text-[11px]">🗑️ Delete</button>';
+        html += '</div>';
+
+        div.innerHTML = html;
         list.appendChild(div);
     });
 }
 
-function filterStudents() {
-    const q = (document.getElementById('studentSearch').value || '').toLowerCase().trim();
-    if (!q) { renderStudents(allStudents); return; }
-    const filtered = allStudents.filter(s =>
-        (s.name || '').toLowerCase().includes(q) ||
-        (s.mobile || '').toLowerCase().includes(q) ||
-        (s.studentId || '').toLowerCase().includes(q) ||
-        (s.courseEnrolled || '').toLowerCase().includes(q)
-    );
-    renderStudents(filtered);
+/* ============ STUDENT PROFILE MODAL ============ */
+function viewStudentProfile(id) {
+    var s = null;
+    allStudents.forEach(function(x) { if (x.id === id) s = x; });
+    if (!s) return;
+
+    document.getElementById('profileStudentName').textContent = (s.name || '—') + ' · ' + (s.studentId || s.studentCode || '—');
+
+    var html = '';
+    html += '<div class="bg-gradient-to-r from-blue-50 to-white rounded-xl p-4 border-2 border-blue-200">';
+    html += '<p class="text-xs font-black text-blue-900 uppercase mb-2">📋 Basic Info</p>';
+    html += '<div class="grid grid-cols-2 gap-2 text-xs">';
+    html += '<div><span class="text-slate-500 font-semibold">Name:</span> <strong>' + (s.name || '—') + '</strong></div>';
+    html += '<div><span class="text-slate-500 font-semibold">Mobile:</span> <strong>' + (s.mobile || '—') + '</strong></div>';
+    html += '<div><span class="text-slate-500 font-semibold">Student Code:</span> <strong>' + (s.studentCode || s.studentId || '—') + '</strong></div>';
+    html += '<div><span class="text-slate-500 font-semibold">Course:</span> <strong>' + (s.courseEnrolled || '—') + '</strong></div>';
+    html += '<div><span class="text-slate-500 font-semibold">Batch:</span> <strong>' + (s.batchName || '—') + '</strong></div>';
+    html += '<div><span class="text-slate-500 font-semibold">Status:</span> <strong>' + (s.blocked ? '🚫 Blocked' : '🟢 Active') + '</strong></div>';
+    if (s.referral) html += '<div class="col-span-2"><span class="text-slate-500 font-semibold">Referral:</span> <strong>' + s.referral + '</strong></div>';
+    if (s.tags && s.tags.length) html += '<div class="col-span-2"><span class="text-slate-500 font-semibold">Tags:</span> ' + s.tags.map(function(t) { return '<span class="bg-slate-100 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-slate-300">' + t + '</span>'; }).join(' ') + '</div>';
+    html += '</div></div>';
+
+    html += '<div class="bg-gradient-to-r from-green-50 to-white rounded-xl p-4 border-2 border-green-200 mt-3">';
+    html += '<p class="text-xs font-black text-green-900 uppercase mb-2">📊 Activity Stats</p>';
+    html += '<div class="grid grid-cols-3 gap-2 text-center">';
+    html += '<div><p class="text-2xl font-black text-green-700">' + (s.loginCount || 0) + '</p><p class="text-[10px] text-slate-500 font-bold">Logins</p></div>';
+    html += '<div><p class="text-2xl font-black text-red-700">' + (s.logoutCount || 0) + '</p><p class="text-[10px] text-slate-500 font-bold">Logouts</p></div>';
+    html += '<div><p class="text-2xl font-black text-purple-700">' + (s.grantedCoupons ? s.grantedCoupons.length : 0) + '</p><p class="text-[10px] text-slate-500 font-bold">Coupons</p></div>';
+    html += '</div></div>';
+
+    if (s.notes) {
+        html += '<div class="bg-amber-50 rounded-xl p-3 border-2 border-amber-200 mt-3">';
+        html += '<p class="text-xs font-black text-amber-900 uppercase mb-1">📝 Admin Notes</p>';
+        html += '<p class="text-xs text-slate-700">' + s.notes + '</p>';
+        html += '</div>';
+    }
+
+    html += '<div class="bg-slate-50 rounded-xl p-3 border-2 border-slate-200 mt-3">';
+    html += '<p class="text-xs font-black text-slate-700 uppercase mb-2">📦 Purchase History</p>';
+    html += '<div id="profilePurchases" class="space-y-2"><p class="text-xs text-slate-500">Loading...</p></div>';
+    html += '</div>';
+
+    document.getElementById('profileContent').innerHTML = html;
+    document.getElementById('studentProfileModal').classList.add('show');
+
+    db.collection('purchases').where('studentId', '==', s.id).limit(20).get().then(function(snap) {
+        var items = [];
+        snap.forEach(function(d) { items.push(d.data()); });
+        items.sort(function(a, b) {
+            var ta = a.createdAt ? a.createdAt.toDate().getTime() : 0;
+            var tb = b.createdAt ? b.createdAt.toDate().getTime() : 0;
+            return tb - ta;
+        });
+        var ph = '';
+        if (items.length === 0) ph = '<p class="text-xs text-slate-500">No purchases yet.</p>';
+        items.forEach(function(p) {
+            var icons = { pending: '⏳', approved: '✅', rejected: '❌' };
+            ph += '<div class="bg-white rounded-lg p-2 border border-slate-200 flex justify-between items-center gap-2">';
+            ph += '<div class="min-w-0 flex-1"><p class="text-[11px] font-bold text-slate-800 truncate">' + icons[p.status] + ' ' + (p.planName || '—') + '</p>';
+            ph += '<p class="text-[10px] text-slate-500">' + (p.orderId || '—') + ' · ' + formatDT(p.createdAt) + '</p></div>';
+            ph += '<p class="text-sm font-black text-orange-600">' + money(p.finalAmount) + '</p>';
+            ph += '</div>';
+        });
+        document.getElementById('profilePurchases').innerHTML = ph;
+    });
 }
 
-let editingStudentId = null;
+function closeStudentProfile() {
+    document.getElementById('studentProfileModal').classList.remove('show');
+}
+
+/* ============ STUDENT ADD/EDIT ============ */
+var editingStudentId = null;
 
 function openAddStudentModal() {
     editingStudentId = null;
     document.getElementById('studentModalTitle').textContent = '➕ Add Student';
-    ['newStudentName','newStudentMobile','newStudentId','newStudentBatch'].forEach(id => document.getElementById(id).value = '');
+    ['newStudentName','newStudentMobile','newStudentId','newStudentBatch','newStudentTags','newStudentReferral','newStudentNotes','newStudentJoined'].forEach(function(id) {
+        document.getElementById(id).value = '';
+    });
     document.getElementById('newStudentCourse').value = '';
     document.getElementById('studentModalError').classList.add('hidden');
     document.getElementById('studentModal').classList.add('show');
 }
 
 function openEditStudentModal(id) {
-    const s = allStudents.find(x => x.id === id);
+    var s = null;
+    allStudents.forEach(function(x) { if (x.id === id) s = x; });
     if (!s) return;
     editingStudentId = id;
     document.getElementById('studentModalTitle').textContent = '✏️ Edit Student';
     document.getElementById('newStudentName').value = s.name || '';
     document.getElementById('newStudentMobile').value = s.mobile || '';
-    document.getElementById('newStudentId').value = s.studentId || '';
+    document.getElementById('newStudentId').value = s.studentId || s.studentCode || '';
     document.getElementById('newStudentCourse').value = s.courseEnrolled || '';
     document.getElementById('newStudentBatch').value = s.batchName || '';
+    document.getElementById('newStudentTags').value = (s.tags || []).join(', ');
+    document.getElementById('newStudentReferral').value = s.referral || '';
+    document.getElementById('newStudentNotes').value = s.notes || '';
+    document.getElementById('newStudentJoined').value = s.joinedDate || '';
     document.getElementById('studentModalError').classList.add('hidden');
     document.getElementById('studentModal').classList.add('show');
 }
@@ -1441,27 +1785,50 @@ function closeStudentModal() {
 }
 
 async function saveStudent() {
-    const name = document.getElementById('newStudentName').value.trim();
-    const mobile = document.getElementById('newStudentMobile').value.trim();
-    const studentId = document.getElementById('newStudentId').value.trim().toUpperCase();
-    const courseEnrolled = document.getElementById('newStudentCourse').value;
-    const batchName = document.getElementById('newStudentBatch').value.trim();
-    const errEl = document.getElementById('studentModalError');
+    var name = document.getElementById('newStudentName').value.trim();
+    var mobile = document.getElementById('newStudentMobile').value.trim();
+    var studentId = document.getElementById('newStudentId').value.trim().toUpperCase();
+    var courseEnrolled = document.getElementById('newStudentCourse').value;
+    var batchName = document.getElementById('newStudentBatch').value.trim();
+    var tagsRaw = document.getElementById('newStudentTags').value.trim();
+    var referral = document.getElementById('newStudentReferral').value.trim();
+    var notes = document.getElementById('newStudentNotes').value.trim();
+    var joinedDate = document.getElementById('newStudentJoined').value;
+    var errEl = document.getElementById('studentModalError');
     errEl.classList.add('hidden');
 
-    if (!name || !mobile || !studentId || !courseEnrolled) { errEl.textContent = '❌ All * fields required.'; errEl.classList.remove('hidden'); return; }
+    if (!name || !mobile || !studentId || !courseEnrolled) {
+        errEl.textContent = '❌ Name, Mobile, ID & Course required.';
+        errEl.classList.remove('hidden');
+        return;
+    }
+
+    var tags = tagsRaw ? tagsRaw.split(',').map(function(t) { return t.trim(); }).filter(function(t) { return t.length > 0; }) : [];
+    var isVip = tags.some(function(t) { return t.toLowerCase() === 'vip'; });
 
     try {
         if (editingStudentId) {
+            var dup = await db.collection('students').where('studentId', '==', studentId).get();
+            var conflict = null;
+            dup.forEach(function(d) { if (d.id !== editingStudentId) conflict = d.id; });
+            if (conflict) { errEl.textContent = '❌ Student ID already used!'; errEl.classList.remove('hidden'); return; }
             await db.collection('students').doc(editingStudentId).update({
-                name, mobile, studentId, courseEnrolled, batchName,
-                studentCode: studentId
+                name: name, mobile: mobile, studentId: studentId, courseEnrolled: courseEnrolled, batchName: batchName,
+                studentCode: studentId, tags: tags, referral: referral, notes: notes, joinedDate: joinedDate, isVip: isVip,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
-            alert('✅ Updated!');
+            alert('✅ Student updated!');
         } else {
+            var dupId = await db.collection('students').where('studentId', '==', studentId).get();
+            if (!dupId.empty) { errEl.textContent = '❌ Student ID already exists!'; errEl.classList.remove('hidden'); return; }
+            var dupMobile = await db.collection('students').where('mobile', '==', mobile).get();
+            if (!dupMobile.empty) { errEl.textContent = '❌ Mobile already exists!'; errEl.classList.remove('hidden'); return; }
+
             await db.collection('students').add({
-                name, mobile, uniqueId: mobile, studentId, studentCode: studentId,
-                trackId: 'TRK-' + mobile, courseEnrolled, batchName,
+                name: name, mobile: mobile, uniqueId: mobile, studentId: studentId, studentCode: studentId,
+                trackId: 'TRK-' + mobile.replace(/\D/g, '').slice(-10),
+                courseEnrolled: courseEnrolled, batchName: batchName,
+                tags: tags, referral: referral, notes: notes, joinedDate: joinedDate, isVip: isVip,
                 isExisting: true, blocked: false, couponAccess: false,
                 allowMultipleCoupons: false, grantedCoupons: [],
                 loginCount: 0, logoutCount: 0,
@@ -1477,79 +1844,93 @@ async function saveStudent() {
     }
 }
 
-async function toggleBlock(id, currentlyBlocked) {
-    if (!confirm(`${currentlyBlocked ? 'Unblock' : 'Block'} this student?`)) return;
-    try {
-        await db.collection('students').doc(id).update({ blocked: !currentlyBlocked });
-        alert('✅ Done!');
-    } catch (err) { alert('Error: ' + err.message); }
+function toggleBlock(id, currentlyBlocked) {
+    if (!confirm((currentlyBlocked ? 'Unblock' : 'Block') + ' this student?')) return;
+    db.collection('students').doc(id).update({ blocked: !currentlyBlocked })
+      .then(function() { alert('✅ Done!'); }).catch(function(err) { alert('Error: ' + err.message); });
 }
 
-async function toggleMultiCoupon(id, currentlyOn) {
-    if (!confirm(`${currentlyOn ? 'Disable' : 'Enable'} multi-coupon?`)) return;
-    try {
-        await db.collection('students').doc(id).update({ allowMultipleCoupons: !currentlyOn });
-        alert('✅ Done!');
-    } catch (err) { alert('Error: ' + err.message); }
+function toggleMultiCoupon(id, currentlyOn) {
+    if (!confirm((currentlyOn ? 'Disable' : 'Enable') + ' multi-coupon?')) return;
+    db.collection('students').doc(id).update({ allowMultipleCoupons: !currentlyOn })
+      .then(function() { alert('✅ Done!'); }).catch(function(err) { alert('Error: ' + err.message); });
+}
+
+function deleteStudent(id, name) {
+    if (!confirm('⚠️ DELETE ' + name + '?')) return;
+    if (!confirm('⚠️ FINAL CONFIRMATION?')) return;
+    db.collection('students').doc(id).delete().then(function() { alert('🗑️ Deleted.'); }).catch(function(err) { alert('Error: ' + err.message); });
 }
 
 /* ============ MANAGE GRANTED COUPONS ============ */
-let currentManageStudentId = null;
-let currentManageGranted = [];
-let currentManageAllCoupons = [];
+var currentManageStudentId = null;
+var currentManageGranted = [];
 
-async function manageGrantedCoupons(studentId, studentName) {
+function manageGrantedCoupons(studentId, studentName) {
     closeCouponModal();
-    const student = allStudents.find(s => s.id === studentId);
+    var student = null;
+    allStudents.forEach(function(s) { if (s.id === studentId) student = s; });
     if (!student) return;
 
     currentManageStudentId = studentId;
     currentManageGranted = student.grantedCoupons || [];
 
-    const snap = await db.collection('coupons').get();
-    currentManageAllCoupons = [];
-    snap.forEach(doc => currentManageAllCoupons.push({ id: doc.id, ...doc.data() }));
-
-    if (currentManageAllCoupons.length === 0) { alert('⚠️ No coupons exist yet.'); return; }
-
     document.getElementById('manageStudentName').textContent = 'Student: ' + studentName;
+    document.getElementById('manageCouponSearch').value = '';
+    document.getElementById('manageCouponShowGrantedOnly').checked = false;
     renderManageCoupons();
     document.getElementById('couponManageModal').classList.add('show');
     document.body.style.overflow = 'hidden';
 }
 
 function renderManageCoupons() {
-    const listEl = document.getElementById('manageCouponList');
+    var listEl = document.getElementById('manageCouponList');
     if (!listEl) return;
-    if (currentManageAllCoupons.length === 0) {
-        listEl.innerHTML = '<p class="text-center text-slate-500 py-6">No coupons.</p>';
+
+    var search = (document.getElementById('manageCouponSearch').value || '').toLowerCase().trim();
+    var showGrantedOnly = document.getElementById('manageCouponShowGrantedOnly').checked;
+
+    var filtered = allCoupons.filter(function(c) {
+        if (search && (c.code || '').toLowerCase().indexOf(search) === -1) return false;
+        if (showGrantedOnly) {
+            var isG = currentManageGranted.some(function(g) { return g.id === c.id; });
+            if (!isG) return false;
+        }
+        return true;
+    });
+
+    filtered.sort(function(a, b) {
+        var aG = currentManageGranted.some(function(g) { return g.id === a.id; });
+        var bG = currentManageGranted.some(function(g) { return g.id === b.id; });
+        if (aG && !bG) return -1;
+        if (!aG && bG) return 1;
+        return (a.code || '').localeCompare(b.code || '');
+    });
+
+    document.getElementById('manageCouponCount').textContent = 'Showing ' + filtered.length + ' · ' + currentManageGranted.length + ' granted';
+
+    if (filtered.length === 0) {
+        listEl.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No coupons match.</p>';
         return;
     }
-    listEl.innerHTML = '';
-    currentManageAllCoupons.forEach(c => {
-        const isGranted = currentManageGranted.some(g => g.id === c.id);
-        const isExpired = c.validUntil && new Date(c.validUntil).getTime() < Date.now();
-        const catLabel = c.category === 'oneOnOne' ? '👑 1-on-1' : '👥 Group';
 
-        const div = document.createElement('div');
-        div.style.cssText = `display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:2px solid ${isGranted ? '#9333ea' : '#e2e8f0'};border-radius:10px;background:${isGranted ? '#faf5ff' : '#fff'};`;
-        div.innerHTML = `
-            <div style="min-width:0;flex:1;">
-                <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
-                    <strong style="color:#1e293b;font-size:13px;font-family:'Courier New',monospace;">${c.code}</strong>
-                    ${isGranted ? '<span style="background:#9333ea;color:white;font-size:9px;font-weight:800;padding:2px 6px;border-radius:99px;">✅ GRANTED</span>' : ''}
-                    ${isExpired ? '<span style="background:#dc2626;color:white;font-size:9px;font-weight:800;padding:2px 6px;border-radius:99px;">⛔ EXPIRED</span>' : ''}
-                </div>
-                <span style="font-size:10px;color:#64748b;display:block;margin-top:3px;">
-                    ${catLabel} · ${c.type === 'flat' ? '₹' + c.value + ' off' : c.value + '% off'}
-                </span>
-            </div>
-            <button onclick="toggleGrantedCoupon('${currentManageStudentId}', '${c.id}', ${isGranted})"
-                style="padding:6px 14px;font-size:11px;font-weight:800;border-radius:8px;border:none;cursor:pointer;flex-shrink:0;margin-left:8px;
-                ${isGranted ? 'background:#ef4444;color:white;' : 'background:#9333ea;color:white;'}">
-                ${isGranted ? '❌ Revoke' : '✅ Grant'}
-            </button>
-        `;
+    listEl.innerHTML = '';
+    filtered.forEach(function(c) {
+        var isGranted = currentManageGranted.some(function(g) { return g.id === c.id; });
+        var isExpired = isCouponExpired(c);
+        var catLabel = c.category === 'oneOnOne' ? '👑 1-on-1' : '👥 Group';
+        var div = document.createElement('div');
+        div.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:2px solid ' + (isGranted ? '#9333ea' : '#e2e8f0') + ';border-radius:10px;background:' + (isGranted ? '#faf5ff' : '#fff') + ';';
+        div.innerHTML =
+            '<div style="min-width:0;flex:1;">' +
+                '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">' +
+                    '<strong style="color:#1e293b;font-size:13px;font-family:Courier New,monospace;">' + c.code + '</strong>' +
+                    (isGranted ? '<span style="background:#9333ea;color:white;font-size:9px;font-weight:800;padding:2px 6px;border-radius:99px;">✅ GRANTED</span>' : '') +
+                    (isExpired ? '<span style="background:#dc2626;color:white;font-size:9px;font-weight:800;padding:2px 6px;border-radius:99px;">⛔ EXPIRED</span>' : '') +
+                '</div>' +
+                '<span style="font-size:10px;color:#64748b;display:block;margin-top:3px;">' + catLabel + ' · ' + (c.type === 'flat' ? '₹' + c.value + ' off' : c.value + '% off') + '</span>' +
+            '</div>' +
+            '<button onclick="toggleGrantedCoupon(\'' + currentManageStudentId + '\', \'' + c.id + '\', ' + isGranted + ')" style="padding:6px 14px;font-size:11px;font-weight:800;border-radius:8px;border:none;cursor:pointer;flex-shrink:0;margin-left:8px;background:' + (isGranted ? '#ef4444' : '#9333ea') + ';color:white;">' + (isGranted ? '❌ Revoke' : '✅ Grant') + '</button>';
         listEl.appendChild(div);
     });
 }
@@ -1559,22 +1940,21 @@ function closeCouponModal() {
     document.body.style.overflow = '';
     currentManageStudentId = null;
     currentManageGranted = [];
-    currentManageAllCoupons = [];
 }
 
 async function toggleGrantedCoupon(studentId, couponId, currentlyGranted) {
     try {
-        const studentRef = db.collection('students').doc(studentId);
-        const studentDoc = await studentRef.get();
-        const student = studentDoc.data();
-        let granted = student.grantedCoupons || [];
+        var studentRef = db.collection('students').doc(studentId);
+        var studentDoc = await studentRef.get();
+        var student = studentDoc.data();
+        var granted = student.grantedCoupons || [];
 
         if (currentlyGranted) {
-            granted = granted.filter(g => g.id !== couponId);
+            granted = granted.filter(function(g) { return g.id !== couponId; });
         } else {
-            const couponDoc = await db.collection('coupons').doc(couponId).get();
+            var couponDoc = await db.collection('coupons').doc(couponId).get();
             if (couponDoc.exists) {
-                const c = couponDoc.data();
+                var c = couponDoc.data();
                 granted.push({
                     id: couponId, code: c.code, type: c.type, value: c.value,
                     category: c.category, appliesTo: c.category,
@@ -1598,36 +1978,37 @@ async function toggleGrantedCoupon(studentId, couponId, currentlyGranted) {
     } catch (err) { alert('Error: ' + err.message); }
 }
 
-async function deleteStudent(id, name) {
-    if (!confirm(`⚠️ DELETE ${name}?`)) return;
-    if (!confirm('⚠️ FINAL CONFIRMATION?')) return;
-    try { await db.collection('students').doc(id).delete(); alert('🗑️ Deleted.'); }
-    catch (err) { alert('Error: ' + err.message); }
-}
-
 /* ============ LOGS ============ */
 function loadLogs() {
-    const limit = Number(document.getElementById('logFilter').value) || 100;
-    db.collection('logs').orderBy('timestamp', 'desc').limit(limit).onSnapshot(snap => {
-        const list = document.getElementById('logsList');
+    var limit = Number(document.getElementById('logFilter').value) || 100;
+    db.collection('logs').orderBy('timestamp', 'desc').limit(limit).onSnapshot(function(snap) {
+        var list = document.getElementById('logsList');
         list.innerHTML = '';
         if (snap.empty) { list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No logs.</p>'; return; }
-        const icons = { login: '🔓', logout: '🔒', first_visit: '🆕', page_close: '📄', purchase_placed: '🛒' };
-        snap.forEach(doc => {
-            const log = doc.data();
-            const div = document.createElement('div');
+        var icons = { login: '🔓', logout: '🔒', first_visit: '🆕', page_close: '📄', purchase_placed: '🛒' };
+        snap.forEach(function(doc) {
+            var log = doc.data();
+            var div = document.createElement('div');
             div.className = 'bg-white border-2 border-slate-200 rounded-xl p-3';
-            div.innerHTML = `
-                <p class="font-bold text-slate-800 text-xs">${icons[log.type] || '•'} ${log.studentName || 'Unknown'} <span class="text-[10px] font-normal text-slate-500">${(log.type || '').toUpperCase()}</span></p>
-                <p class="text-[10px] text-slate-500">📱 ${log.studentMobile || '—'}</p>
-                <p class="text-[10px] text-slate-400">📅 ${formatDT(log.timestamp)}</p>
-            `;
+            div.innerHTML =
+                '<p class="font-bold text-slate-800 text-xs">' + (icons[log.type] || '•') + ' ' + (log.studentName || 'Unknown') + ' <span class="text-[10px] font-normal text-slate-500">' + (log.type || '').toUpperCase() + '</span></p>' +
+                '<p class="text-[10px] text-slate-500">📱 ' + (log.studentMobile || '—') + '</p>' +
+                '<p class="text-[10px] text-slate-400">📅 ' + formatDT(log.timestamp) + '</p>';
             list.appendChild(div);
         });
     });
 }
 
 function closeReceiptModal() { document.getElementById('receiptModal').classList.add('hidden'); }
+
+/* ============ TOAST ============ */
+function toast(msg, type) {
+    var t = document.createElement('div');
+    t.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:' + (type === 'error' ? '#dc2626' : '#16a34a') + ';color:#fff;padding:12px 22px;border-radius:999px;font-size:13px;font-weight:800;box-shadow:0 10px 30px rgba(0,0,0,0.3);z-index:99999;max-width:90vw;';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function() { t.style.transition = 'opacity 0.3s'; t.style.opacity = '0'; setTimeout(function() { t.remove(); }, 300); }, 1800);
+}
 </script>
 </body>
 </html>
