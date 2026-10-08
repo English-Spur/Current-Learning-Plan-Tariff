@@ -14,8 +14,6 @@
     html, body { overflow-x: hidden; }
     body { font-family: 'Poppins', sans-serif; background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%); margin: 0; padding: 8px; min-height: 100vh; color: #1e293b; }
 
-    @keyframes flashBorder { 0%,100% { box-shadow: 0 0 0 0 rgba(234,88,12,0.7); } 50% { box-shadow: 0 0 0 6px rgba(234,88,12,0); } }
-    .flash-offer { animation: flashBorder 2s infinite; }
     @keyframes timerPulse { 0%,100% { color: #fef08a; } 50% { color: #ffffff; text-shadow: 0 0 20px rgba(255,255,255,0.9); } }
     .timer-low { animation: timerPulse 1s infinite; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -110,7 +108,6 @@
 
     .length-tip { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-left: 3px solid #10b981; padding: 6px 10px; border-radius: 6px; font-size: 10px; font-weight: 700; color: #065f46; margin-top: 6px; }
 
-    /* NEW: Tag styling */
     .tag-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 800; padding: 3px 9px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.3px; }
     .tag-vip { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #fff; box-shadow: 0 2px 8px rgba(245,158,11,0.4); }
     .tag-referral { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; }
@@ -274,7 +271,7 @@
         </div>
     </div>
 
-    <!-- Welcome Back Panel with joined date + referral (only shows if data exists) -->
+    <!-- Welcome Back Panel with joined date + referral -->
     <div id="welcomeBackPanel" class="hidden bg-gradient-to-r from-indigo-50 to-blue-50 border-2 border-indigo-300 rounded-2xl p-4 mb-3">
         <div class="flex items-center gap-2 mb-2">
             <span class="text-2xl">🎉</span>
@@ -338,23 +335,6 @@
         <div class="bg-white rounded-2xl shadow-xl p-3 mb-3 flex items-center gap-2">
             <button onclick="showCurrentPlanView()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-3 py-2 rounded-lg text-xs">← Back</button>
             <p class="text-[11px] font-black text-slate-700 uppercase">🔍 All Available Plans</p>
-        </div>
-
-        <div id="offerBanner" class="hidden bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 text-white p-4 rounded-2xl mb-3 shadow-xl flash-offer">
-            <div class="text-center">
-                <div class="text-[10px] font-extrabold uppercase tracking-widest opacity-95">⏰ Limited Time Special Rate</div>
-                <div class="text-xl sm:text-2xl font-black mt-1.5 leading-tight">
-                    Regular <span class="line-through opacity-75" id="bannerReg">₹500</span>/class → NOW
-                    <span class="text-yellow-300" id="bannerSpec">₹250</span>/class
-                </div>
-                <div class="mt-3 text-[10px] font-bold uppercase tracking-wider opacity-95">⚡ Offer expires in</div>
-                <div id="countdown" class="font-mono text-2xl sm:text-3xl font-black text-yellow-200 leading-tight">--:--</div>
-                <div class="text-[10px] mt-1.5 font-semibold opacity-95 max-w-md mx-auto" id="bannerTitle"></div>
-                <div class="mt-3 flex flex-wrap justify-center gap-2">
-                    <button onclick="contactViaWhatsApp()" class="bg-[#25D366] hover:bg-[#1ebe5d] text-white text-[10px] sm:text-[11px] font-black px-3.5 py-2 rounded-full shadow-lg flex items-center gap-1.5 uppercase">💬 WhatsApp Us</button>
-                    <a href="tel:+919875340842" class="bg-black/30 hover:bg-black/50 text-white text-[10px] sm:text-[11px] font-bold px-3.5 py-2 rounded-full flex items-center gap-1.5">📞 Call</a>
-                </div>
-            </div>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 mb-3">
@@ -931,11 +911,9 @@ function updateStudentBadges() {
     if (!badges) return;
     badges.innerHTML = '';
 
-    /* Student Code badge */
     var code = currentStudent.studentCode || currentStudent.studentId;
     if (code) badges.innerHTML += '<span class="bg-indigo-100 text-indigo-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🏷️ ' + code + '</span>';
 
-    /* Course badge */
     if (currentStudent.courseEnrolled) {
         var courseText = currentStudent.courseEnrolled;
         var courseClass = courseText.toLowerCase().indexOf('kid') !== -1
@@ -944,16 +922,13 @@ function updateStudentBadges() {
         badges.innerHTML += '<span class="' + courseClass + ' text-[9px] font-bold px-2 py-0.5 rounded-full">📚 ' + courseText + '</span>';
     }
 
-    /* Batch badge */
     if (currentStudent.batchName) {
         badges.innerHTML += '<span class="bg-teal-100 text-teal-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🎓 ' + currentStudent.batchName + '</span>';
     }
 
-    /* Coupon badge */
     if (currentStudent.couponAccess) badges.innerHTML += '<span class="bg-purple-100 text-purple-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ Coupon</span>';
     if (currentStudent.allowMultipleCoupons) badges.innerHTML += '<span class="bg-fuchsia-100 text-fuchsia-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ Multi</span>';
 
-    /* Tags from admin */
     if (currentStudent.tags && currentStudent.tags.length > 0) {
         currentStudent.tags.forEach(function(tag) {
             var tagLower = String(tag).toLowerCase().trim();
@@ -968,7 +943,6 @@ function updateStudentBadges() {
         });
     }
 
-    /* Active status badge */
     badges.innerHTML += '<span class="bg-green-100 text-green-800 text-[9px] font-bold px-2 py-0.5 rounded-full">✅ Active</span>';
 }
 
@@ -987,10 +961,8 @@ function renderWelcomeBackPanel() {
 
     panel.classList.remove('hidden');
 
-    /* Title with name */
     document.getElementById('welcomeBackTitle').textContent = 'Hello, ' + (currentStudent.name || 'Student') + '!';
 
-    /* Joined date */
     var joinedWrap = document.getElementById('welcomeJoinedWrap');
     if (hasJoined) {
         joinedWrap.classList.remove('hidden');
@@ -999,7 +971,6 @@ function renderWelcomeBackPanel() {
         joinedWrap.classList.add('hidden');
     }
 
-    /* Referral */
     var refWrap = document.getElementById('welcomeReferralWrap');
     if (hasReferral) {
         refWrap.classList.remove('hidden');
@@ -1170,7 +1141,6 @@ function startStudentListener() {
         }
         if (data.blocked === true) return;
 
-        /* Re-render student info when admin updates anything */
         updateStudentInfo();
         updateCourseFilterBanner();
         renderDynamicPlans();
@@ -1286,7 +1256,7 @@ async function loadCurrentPlan() {
     }
 }
 
-/* ============ LOAD OFFER CONFIG ============ */
+/* ============ LOAD OFFER CONFIG (banner removed) ============ */
 function loadOfferConfig() {
     db.collection('coupons').onSnapshot(function(snap) {
         coupons = {};
@@ -1334,20 +1304,7 @@ function loadOfferConfig() {
             offerExpiredHandled = false;
         }
 
-        var bR = document.getElementById('bannerReg');
-        var bO = document.getElementById('bannerSpec');
-        var bT = document.getElementById('bannerTitle');
-        if (bR) bR.textContent = money(pricing.oneOnOneRegular);
-        if (bO) bO.textContent = money(pricing.oneOnOneSpecial);
-        if (bT) bT.textContent = data.title || '';
-
-        var banner = document.getElementById('offerBanner');
-        if (banner) {
-            var isActive = data.active !== false && offerDeadline > Date.now();
-            if (isActive) banner.classList.remove('hidden');
-            else banner.classList.add('hidden');
-        }
-
+        // Banner removed — no DOM update needed
         renderDynamicPlans();
         tickTimer();
     }, function(err) { console.error('Offer listener error:', err); });
@@ -1369,16 +1326,12 @@ function startTimer() {
     tickTimer();
     timerInterval = setInterval(tickTimer, 1000);
 }
+
 function tickTimer() {
     var diff = Math.max(0, offerDeadline - Date.now());
-    var el = document.getElementById('countdown');
-    if (el) {
-        el.textContent = formatDuration(diff);
-        if (diff <= 5 * 60 * 1000 && diff > 0) el.classList.add('timer-low');
-        else el.classList.remove('timer-low');
-    }
     if (diff <= 0 && !offerExpiredHandled) { offerExpiredHandled = true; handleExpiry(); }
 }
+
 function formatDuration(ms) {
     if (ms <= 0) return '00:00';
     var s = Math.floor(ms / 1000); var d = Math.floor(s / 86400); var h = Math.floor((s % 86400) / 3600);
@@ -1391,11 +1344,6 @@ function formatDuration(ms) {
 function isOfferActive() { return offerDeadline > Date.now() && offerConfig && offerConfig.active !== false; }
 
 function handleExpiry() {
-    var banner = document.getElementById('offerBanner');
-    if (banner) {
-        banner.className = 'w-full bg-gradient-to-r from-slate-600 to-slate-700 text-white p-4 rounded-2xl mb-3 text-center shadow-xl';
-        banner.innerHTML = '<div class="text-sm font-black uppercase tracking-widest">⛔ Offer Expired</div><div class="text-[12px] mt-1 font-bold">Special rate window has ended.</div><div class="text-[11px] mt-1 opacity-95">📞 Helpline: <strong>9875340842</strong></div>';
-    }
     appliedCoupons = [];
     renderDynamicPlans();
 }
