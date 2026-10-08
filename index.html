@@ -14,8 +14,6 @@
     html, body { overflow-x: hidden; }
     body { font-family: 'Poppins', sans-serif; background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%); margin: 0; padding: 8px; min-height: 100vh; color: #1e293b; }
 
-    @keyframes timerPulse { 0%,100% { color: #fef08a; } 50% { color: #ffffff; text-shadow: 0 0 20px rgba(255,255,255,0.9); } }
-    .timer-low { animation: timerPulse 1s infinite; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     .fade-in { animation: fadeIn 0.3s ease-in; }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -259,7 +257,6 @@
         </div>
     </div>
 
-    <!-- Student Info Bar with Tags -->
     <div class="bg-gradient-to-r from-blue-50 to-white rounded-2xl shadow-sm p-3 mb-3 border border-blue-100">
         <div class="flex items-center gap-3">
             <div id="studentAvatar" class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-black text-lg flex-shrink-0">?</div>
@@ -271,7 +268,6 @@
         </div>
     </div>
 
-    <!-- Welcome Back Panel with joined date + referral -->
     <div id="welcomeBackPanel" class="hidden bg-gradient-to-r from-indigo-50 to-blue-50 border-2 border-indigo-300 rounded-2xl p-4 mb-3">
         <div class="flex items-center gap-2 mb-2">
             <span class="text-2xl">🎉</span>
@@ -750,12 +746,14 @@ function showToast(message, type) {
     }, 2500);
 }
 
+/* saveSelectedPlan: ONLY saves selectedPlan to localStorage.
+   Coupons are intentionally NOT saved — Back/Refresh এ coupon মুছে যাবে */
 function saveSelectedPlan() {
     try {
         if (selectedPlan) localStorage.setItem(PLAN_KEY, JSON.stringify(selectedPlan));
         else localStorage.removeItem(PLAN_KEY);
-        if (appliedCoupons.length > 0) localStorage.setItem(COUPON_KEY, JSON.stringify(appliedCoupons.map(function(c) { return c.code; })));
-        else localStorage.removeItem(COUPON_KEY);
+        // Always remove coupon key — coupons never persist
+        localStorage.removeItem(COUPON_KEY);
     } catch (e) {}
 }
 function loadStudentFromStorage() { try { var d = localStorage.getItem(STORAGE_KEY); return d ? JSON.parse(d) : null; } catch (e) { return null; } }
@@ -852,6 +850,17 @@ window.addEventListener('DOMContentLoaded', function() {
 
     currentStudent = loadStudentFromStorage();
     if (currentStudent && currentStudent.id && currentStudent.name) {
+        // Restore selectedPlan only — coupons intentionally NOT restored
+        try {
+            var savedPlan = localStorage.getItem(PLAN_KEY);
+            if (savedPlan) {
+                var parsed = JSON.parse(savedPlan);
+                if (parsed && parsed.planId && parsed.plan) selectedPlan = parsed;
+            }
+        } catch (e) { console.error('Plan restore error:', e); }
+        // Always start with empty coupons after page load
+        appliedCoupons = [];
+        try { localStorage.removeItem(COUPON_KEY); } catch (e) {}
         checkBlockedAndEnter();
     } else {
         showScreen('welcome');
@@ -1144,6 +1153,14 @@ function startStudentListener() {
         updateStudentInfo();
         updateCourseFilterBanner();
         renderDynamicPlans();
+
+        // If checkout modal open, refresh coupon list (in case admin granted/revoked)
+        var modal = document.getElementById('planCheckoutModal');
+        if (modal && !modal.classList.contains('hidden')) {
+            renderCheckoutCoupons();
+            renderCheckoutSavings();
+            renderCheckoutSummary();
+        }
     }, function(err) { console.error('Listener error:', err); });
 }
 
@@ -1256,7 +1273,7 @@ async function loadCurrentPlan() {
     }
 }
 
-/* ============ LOAD OFFER CONFIG (banner removed) ============ */
+/* ============ LOAD OFFER CONFIG ============ */
 function loadOfferConfig() {
     db.collection('coupons').onSnapshot(function(snap) {
         coupons = {};
@@ -1266,6 +1283,13 @@ function loadOfferConfig() {
                 coupons[c.code.toUpperCase().trim()] = Object.assign({}, c, { _id: d.id });
             }
         });
+        // Re-render checkout coupons if modal open
+        var modal = document.getElementById('planCheckoutModal');
+        if (modal && !modal.classList.contains('hidden')) {
+            renderCheckoutCoupons();
+            renderCheckoutSavings();
+            renderCheckoutSummary();
+        }
     });
 
     db.collection('config').doc('offer').onSnapshot(function(offerDoc) {
@@ -1304,9 +1328,17 @@ function loadOfferConfig() {
             offerExpiredHandled = false;
         }
 
-        // Banner removed — no DOM update needed
         renderDynamicPlans();
         tickTimer();
+
+        // Re-render checkout if modal open (offer status changed)
+        var modal = document.getElementById('planCheckoutModal');
+        if (modal && !modal.classList.contains('hidden') && selectedPlan) {
+            renderCheckoutPlanCard('#1d4ed8', '#1e40af');
+            renderCheckoutCoupons();
+            renderCheckoutSavings();
+            renderCheckoutSummary();
+        }
     }, function(err) { console.error('Offer listener error:', err); });
 
     startTimer();
@@ -1344,8 +1376,12 @@ function formatDuration(ms) {
 function isOfferActive() { return offerDeadline > Date.now() && offerConfig && offerConfig.active !== false; }
 
 function handleExpiry() {
-    appliedCoupons = [];
     renderDynamicPlans();
+    var modal = document.getElementById('planCheckoutModal');
+    if (modal && !modal.classList.contains('hidden') && selectedPlan) {
+        renderCheckoutPlanCard('#1d4ed8', '#1e40af');
+        renderCheckoutSummary();
+    }
 }
 
 /* ============ COURSE FILTER ============ */
@@ -1555,6 +1591,7 @@ function selectPlanRow(cat, subKey, subCategoryId, subCategoryDisplay, planIndex
     var plan = subData.plans[planIndex];
     if (!plan) return;
     var planId = cat + '_' + subCategoryId + '_' + planIndex;
+    // Different plan select করলে coupon clear করো (কারণ category/days mismatch হতে পারে)
     if (selectedPlan && selectedPlan.planId !== planId) appliedCoupons = [];
     var isNewStudent = (cat === 'group') ? !isExistingStudent : false;
     selectedPlan = {
@@ -1626,18 +1663,23 @@ function renderCheckoutPlanCard(colorFrom, colorTo) {
     card.style.borderColor = colorFrom;
 }
 
+/* ============ COUPON SECTION — offer-independent ============ */
 function renderCheckoutCoupons() {
     var section = document.getElementById('checkoutCouponSection');
     if (!section) return;
+    if (!selectedPlan) { section.classList.add('hidden'); return; }
+
     var grantedCount = getGrantedCouponIds().length;
-    var maxAllowed = allowMultipleCoupons() ? Math.min(MAX_COUPONS, grantedCount) : 1;
-    if (!hasCouponAccess() || grantedCount === 0 || !isOfferActive()) {
+    if (!hasCouponAccess() || grantedCount === 0) {
         section.classList.add('hidden');
         return;
     }
     section.classList.remove('hidden');
+
+    var maxAllowed = allowMultipleCoupons() ? Math.min(MAX_COUPONS, grantedCount) : 1;
     var limitEl = document.getElementById('checkoutCouponLimit');
     if (limitEl) limitEl.textContent = '(Max ' + maxAllowed + ')';
+
     var wrap = document.getElementById('checkoutAvailableCoupons');
     var granted = (currentStudent && currentStudent.grantedCoupons) ? currentStudent.grantedCoupons : [];
     var appliedCodes = appliedCoupons.map(function(c) { return c.code; });
@@ -1689,7 +1731,7 @@ function renderCheckoutCoupons() {
 }
 
 async function applyCheckoutCoupon(code) {
-    if (!isOfferActive()) { showToast('⛔ Offer has expired', 'error'); return; }
+    // No offer-active check — coupon works regardless of offer status
     var granted = (currentStudent && currentStudent.grantedCoupons) ? currentStudent.grantedCoupons : [];
     var match = null;
     for (var i = 0; i < granted.length; i++) {
@@ -1811,7 +1853,9 @@ function calculateSelectedPlanPricing() {
     var builtInSave = regularTotal - planPrice;
     var couponDisc = 0;
     var usedCoupons = [];
-    if (active && hasCouponAccess() && appliedCoupons.length > 0) {
+
+    // Coupon applies regardless of offer status — always allowed if granted
+    if (hasCouponAccess() && appliedCoupons.length > 0) {
         appliedCoupons.forEach(function(c) {
             var cc = c.category || c.appliesTo;
             var matchesCat = (selectedPlan.category === 'oneOnOne' && cc === 'oneOnOne') || (selectedPlan.category === 'group' && cc === 'group');
@@ -2083,8 +2127,9 @@ async function submitPurchase() {
 }
 
 function backToDashboard() {
-    selectedPlan = null;
+    // Coupons clear হবে, selectedPlan রাখা হবে
     appliedCoupons = [];
+    saveSelectedPlan();
     screenshotBase64 = null;
     if (currentStudent && currentStudent.id) {
         loadCurrentPlan();
