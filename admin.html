@@ -107,6 +107,7 @@
             <button onclick="switchTab('pending')" id="tab-pending" class="tab-btn inactive">⏳ Pending <span id="pendingBadge"></span></button>
             <button onclick="switchTab('all')" id="tab-all" class="tab-btn inactive">📋 Purchases</button>
             <button onclick="switchTab('students')" id="tab-students" class="tab-btn inactive">👥 Students <span id="studentsBadge"></span></button>
+            <button onclick="switchTab('agreements')" id="tab-agreements" class="tab-btn inactive">📋 Agreements <span id="agreementsBadge"></span></button>
             <button onclick="switchTab('logs')" id="tab-logs" class="tab-btn inactive">📊 Logs</button>
         </div>
 
@@ -272,7 +273,7 @@
             </div>
         </div>
 
-        <!-- ============ COUPONS TAB (UPGRADED) ============ -->
+        <!-- ============ COUPONS TAB ============ -->
         <div id="content-coupons" class="tab-content hidden fade-in">
             <div class="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-200 rounded-xl p-4 sm:p-5">
                 <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
@@ -280,7 +281,6 @@
                     <button onclick="showCouponForm()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs px-4 py-2 rounded-lg">➕ Add New Coupon</button>
                 </div>
 
-                <!-- Stats -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
                     <div class="stat-card"><div class="stat-value text-blue-700 text-lg" id="coupStatTotal">0</div><div class="stat-label">Total</div></div>
                     <div class="stat-card"><div class="stat-value text-green-600 text-lg" id="coupStatActive">0</div><div class="stat-label">Active</div></div>
@@ -288,7 +288,6 @@
                     <div class="stat-card"><div class="stat-value text-purple-600 text-lg" id="coupStatGrants">0</div><div class="stat-label">Total Grants</div></div>
                 </div>
 
-                <!-- Filters -->
                 <div class="bg-white border-2 border-slate-200 rounded-xl p-3 mb-3">
                     <p class="text-[10px] font-black text-slate-600 uppercase mb-2">🔍 Filter Coupons</p>
                     <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2">
@@ -321,7 +320,7 @@
             </div>
         </div>
 
-        <!-- ============ GRANT MANAGER TAB (NEW) ============ -->
+        <!-- ============ GRANT MANAGER TAB ============ -->
         <div id="content-grant" class="tab-content hidden fade-in">
             <div class="bg-gradient-to-br from-purple-50 to-white border-2 border-purple-200 rounded-xl p-4 sm:p-5">
                 <h2 class="text-base sm:text-lg font-black text-purple-900 mb-2">🎫 Coupon Grant Manager</h2>
@@ -351,7 +350,7 @@
             <div id="allPurchasesList" class="space-y-3"></div>
         </div>
 
-        <!-- ============ STUDENTS TAB (UPGRADED) ============ -->
+        <!-- ============ STUDENTS TAB ============ -->
         <div id="content-students" class="tab-content hidden fade-in">
             <div class="flex justify-between items-center mb-3 flex-wrap gap-2">
                 <h2 class="text-base sm:text-lg font-black text-blue-900">👥 Students</h2>
@@ -361,7 +360,6 @@
                 </div>
             </div>
 
-            <!-- Filters -->
             <div class="bg-white border-2 border-slate-200 rounded-xl p-3 mb-3">
                 <p class="text-[10px] font-black text-slate-600 uppercase mb-2">🔍 Filter Students</p>
                 <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2">
@@ -389,6 +387,26 @@
             </div>
 
             <div id="studentsList" class="space-y-2"></div>
+        </div>
+
+        <!-- ============ AGREEMENTS TAB ============ -->
+        <div id="content-agreements" class="tab-content hidden fade-in">
+            <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                <h2 class="text-base sm:text-lg font-black text-blue-900">📋 Student Agreement Records</h2>
+                <div class="flex gap-2 items-center flex-wrap">
+                    <input type="text" id="agreementSearch" oninput="renderAgreements()" placeholder="🔍 Search name/mobile..." class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold">
+                    <select id="agreementFilter" onchange="renderAgreements()" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white">
+                        <option value="">All Students</option>
+                        <option value="given">✅ Consent Given</option>
+                        <option value="not-given">❌ Not Given</option>
+                    </select>
+                    <button onclick="exportAgreements()" class="bg-green-600 hover:bg-green-700 text-white text-xs font-bold px-3 py-2 rounded-lg">📥 Export CSV</button>
+                </div>
+            </div>
+            <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-4">
+                <p class="text-[11px] font-bold text-blue-900">ℹ️ Complete agreement records with date, time, and details of all students.</p>
+            </div>
+            <div id="agreementsList" class="space-y-3"></div>
         </div>
 
         <!-- ============ LOGS TAB ============ -->
@@ -501,7 +519,7 @@
     </div>
 </div>
 
-<!-- STUDENT ADD/EDIT MODAL (UPGRADED) -->
+<!-- STUDENT ADD/EDIT MODAL -->
 <div id="studentModal" class="modal-overlay">
     <div class="max-w-lg mx-auto bg-white rounded-2xl p-5 my-8 w-full">
         <div class="flex justify-between items-center mb-4 pb-3 border-b-2 border-slate-100">
@@ -708,7 +726,7 @@ function adminLogout() { if (confirm('Logout?')) auth.signOut(); }
 function switchTab(tab) {
     document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.add('hidden'); });
     document.getElementById('content-' + tab).classList.remove('hidden');
-    ['dashboard','offer','coupons','grant','pending','all','students','logs'].forEach(function(t) {
+    ['dashboard','offer','coupons','grant','pending','all','students','agreements','logs'].forEach(function(t) {
         document.getElementById('tab-' + t).className = (t === tab) ? 'tab-btn active' : 'tab-btn inactive';
     });
     if (tab === 'logs') loadLogs();
@@ -718,6 +736,7 @@ function switchTab(tab) {
     }
     if (tab === 'grant') loadGrantManager();
     if (tab === 'dashboard') loadDashboardStats();
+    if (tab === 'agreements') renderAgreements();
 }
 
 function loadAll() {
@@ -1000,10 +1019,28 @@ function applyQuickSet() {
 function updateStatusBadge(d) {
     var badge = document.getElementById('offerStatusBadge');
     if (!badge) return;
-    if (!d.active) { badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-slate-200 text-slate-700'; badge.textContent = '⚪ OFF'; return; }
-    if (!d.endDateTime) { badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-amber-200 text-amber-800'; badge.textContent = '⏸️ No end'; return; }
-    var remaining = new Date(d.endDateTime).getTime() - Date.now();
-    if (remaining <= 0) { badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-red-200 text-red-800'; badge.textContent = '⛔ Expired'; return; }
+    if (!d.active) {
+        badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-slate-200 text-slate-700';
+        badge.textContent = '⚪ OFF — Student panel এ দেখাবে না';
+        return;
+    }
+    if (!d.endDateTime) {
+        badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-amber-200 text-amber-800';
+        badge.textContent = '⏸️ No end date set';
+        return;
+    }
+    var endMs = new Date(d.endDateTime).getTime();
+    if (isNaN(endMs)) {
+        badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-red-200 text-red-800';
+        badge.textContent = '⚠️ Invalid date';
+        return;
+    }
+    var remaining = endMs - Date.now();
+    if (remaining <= 0) {
+        badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-red-200 text-red-800';
+        badge.textContent = '⛔ Expired';
+        return;
+    }
     var days = Math.floor(remaining / 86400000);
     var hours = Math.floor((remaining % 86400000) / 3600000);
     var mins = Math.floor((remaining % 3600000) / 60000);
@@ -1552,6 +1589,9 @@ function loadStudents() {
         document.getElementById('studentsCount').textContent = allStudents.length + ' total';
         document.getElementById('studentsBadge').textContent = allStudents.length > 0 ? '(' + allStudents.length + ')' : '';
         updateCouponStats();
+        if (document.getElementById('content-agreements') && !document.getElementById('content-agreements').classList.contains('hidden')) {
+            renderAgreements();
+        }
     });
 }
 
@@ -1697,6 +1737,20 @@ function viewStudentProfile(id) {
     if (s.tags && s.tags.length) html += '<div class="col-span-2"><span class="text-slate-500 font-semibold">Tags:</span> ' + s.tags.map(function(t) { return '<span class="bg-slate-100 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-slate-300">' + t + '</span>'; }).join(' ') + '</div>';
     html += '</div></div>';
 
+    html += '<div class="bg-gradient-to-r from-purple-50 to-white rounded-xl p-4 border-2 border-purple-200 mt-3">';
+    html += '<p class="text-xs font-black text-purple-900 uppercase mb-2">📋 Agreement / Consent</p>';
+    if (s.consentGiven === true) {
+        html += '<div class="flex items-center gap-2 mb-2"><span class="bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">✅ AGREED</span></div>';
+        html += '<div class="grid grid-cols-2 gap-2 text-xs">';
+        html += '<div><span class="text-slate-500 font-semibold">Date:</span> <strong>' + (s.consentDate ? new Date(s.consentDate).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }) : '—') + '</strong></div>';
+        html += '<div><span class="text-slate-500 font-semibold">Version:</span> <strong>' + (s.consentVersion || '1.0') + '</strong></div>';
+        html += '<div class="col-span-2 text-[10px] text-slate-600">✅ Recording Consent · ✅ Social Media · ✅ No Future Objection · ✅ Rules · ✅ Privacy</div>';
+        html += '</div>';
+    } else {
+        html += '<p class="text-xs text-red-700 font-bold">❌ Not given yet</p>';
+    }
+    html += '</div>';
+
     html += '<div class="bg-gradient-to-r from-green-50 to-white rounded-xl p-4 border-2 border-green-200 mt-3">';
     html += '<p class="text-xs font-black text-green-900 uppercase mb-2">📊 Activity Stats</p>';
     html += '<div class="grid grid-cols-3 gap-2 text-center">';
@@ -1832,6 +1886,7 @@ async function saveStudent() {
                 isExisting: true, blocked: false, couponAccess: false,
                 allowMultipleCoupons: false, grantedCoupons: [],
                 loginCount: 0, logoutCount: 0,
+                consentGiven: false,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 addedBy: ADMIN_EMAIL
             });
@@ -1978,6 +2033,129 @@ async function toggleGrantedCoupon(studentId, couponId, currentlyGranted) {
     } catch (err) { alert('Error: ' + err.message); }
 }
 
+/* ============ AGREEMENTS ============ */
+function renderAgreements() {
+    var list = document.getElementById('agreementsList');
+    if (!list) return;
+
+    var search = (document.getElementById('agreementSearch').value || '').toLowerCase().trim();
+    var filter = document.getElementById('agreementFilter').value;
+
+    var filtered = allStudents.filter(function(s) {
+        if (search) {
+            var name = (s.name || '').toLowerCase();
+            var mobile = (s.mobile || '').toLowerCase();
+            var sid = (s.studentId || '').toLowerCase();
+            var scode = (s.studentCode || '').toLowerCase();
+            if (name.indexOf(search) === -1 && mobile.indexOf(search) === -1 && sid.indexOf(search) === -1 && scode.indexOf(search) === -1) return false;
+        }
+        if (filter === 'given' && s.consentGiven !== true) return false;
+        if (filter === 'not-given' && s.consentGiven === true) return false;
+        return true;
+    });
+
+    filtered.sort(function(a, b) {
+        if (a.consentGiven && !b.consentGiven) return -1;
+        if (!a.consentGiven && b.consentGiven) return 1;
+        var da = a.consentDate ? new Date(a.consentDate).getTime() : 0;
+        var db = b.consentDate ? new Date(b.consentDate).getTime() : 0;
+        return db - da;
+    });
+
+    var givenCount = allStudents.filter(function(s) { return s.consentGiven === true; }).length;
+    var badgeEl = document.getElementById('agreementsBadge');
+    if (badgeEl) badgeEl.textContent = givenCount > 0 ? '(' + givenCount + ')' : '';
+
+    if (filtered.length === 0) {
+        list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No students match.</p>';
+        return;
+    }
+
+    list.innerHTML = '';
+    filtered.forEach(function(s) {
+        var isGiven = s.consentGiven === true;
+        var div = document.createElement('div');
+        div.className = 'border-2 rounded-xl p-4 ' + (isGiven ? 'border-green-300 bg-green-50' : 'border-red-300 bg-red-50');
+
+        var html = '';
+        html += '<div class="flex justify-between items-start gap-2 flex-wrap mb-3">';
+        html += '<div class="min-w-0 flex-1">';
+        html += '<div class="flex items-center gap-2 flex-wrap">';
+        html += '<p class="font-black text-slate-800 text-sm">' + (s.name || '—') + '</p>';
+        html += isGiven
+            ? '<span class="bg-green-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">✅ AGREED</span>'
+            : '<span class="bg-red-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">❌ NOT AGREED</span>';
+        html += '</div>';
+        html += '<p class="text-[11px] text-slate-600 mt-1">📱 ' + (s.mobile || '—') + ' · 🆔 ' + (s.studentId || s.studentCode || '—') + '</p>';
+        html += '<p class="text-[11px] text-slate-600">📚 ' + (s.courseEnrolled || '—') + '</p>';
+        html += '</div>';
+        html += '<button onclick="viewStudentProfile(\'' + s.id + '\')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg">👁️ Profile</button>';
+        html += '</div>';
+
+        if (isGiven) {
+            html += '<div class="bg-white rounded-lg p-3 border border-green-200">';
+            html += '<p class="text-[10px] font-black text-green-800 uppercase mb-2">📋 Agreement Details</p>';
+            html += '<div class="grid grid-cols-2 gap-2 text-[10px]">';
+            html += '<div><span class="text-slate-500">Date:</span> <strong>' + formatConsentDate(s.consentDate) + '</strong></div>';
+            html += '<div><span class="text-slate-500">Version:</span> <strong>' + (s.consentVersion || '1.0') + '</strong></div>';
+            html += '<div class="col-span-2"><span class="text-slate-500">Recording Consent:</span> <strong class="text-green-700">✅ Yes</strong></div>';
+            html += '<div class="col-span-2"><span class="text-slate-500">Social Media Consent:</span> <strong class="text-green-700">✅ Yes</strong></div>';
+            html += '<div class="col-span-2"><span class="text-slate-500">No Future Objection:</span> <strong class="text-green-700">✅ Yes</strong></div>';
+            html += '<div class="col-span-2"><span class="text-slate-500">Rules Accepted:</span> <strong class="text-green-700">✅ Yes</strong></div>';
+            html += '<div class="col-span-2"><span class="text-slate-500">Privacy Accepted:</span> <strong class="text-green-700">✅ Yes</strong></div>';
+            html += '</div>';
+            html += '</div>';
+        } else {
+            html += '<div class="bg-white rounded-lg p-3 border border-red-200 text-center">';
+            html += '<p class="text-[11px] text-red-700 font-bold">⚠️ This student has not given consent yet.</p>';
+            html += '<p class="text-[10px] text-slate-500 mt-1">They will be prompted on next login.</p>';
+            html += '</div>';
+        }
+
+        div.innerHTML = html;
+        list.appendChild(div);
+    });
+}
+
+function formatConsentDate(isoStr) {
+    if (!isoStr) return '—';
+    try {
+        var d = new Date(isoStr);
+        if (isNaN(d.getTime())) return '—';
+        return d.toLocaleString('en-IN', {
+            weekday: 'short', day: '2-digit', month: 'short', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
+        });
+    } catch (e) { return '—'; }
+}
+
+function exportAgreements() {
+    var givenStudents = allStudents.filter(function(s) { return s.consentGiven === true; });
+    if (givenStudents.length === 0) {
+        alert('⚠️ No agreement records to export.');
+        return;
+    }
+
+    var csv = 'Name,Mobile,Student ID,Course,Consent Date,Version,Recording,Social Media,No Objection,Rules,Privacy\n';
+    givenStudents.forEach(function(s) {
+        csv += '"' + (s.name || '') + '",';
+        csv += '"' + (s.mobile || '') + '",';
+        csv += '"' + (s.studentId || s.studentCode || '') + '",';
+        csv += '"' + (s.courseEnrolled || '') + '",';
+        csv += '"' + (s.consentDate || '') + '",';
+        csv += '"' + (s.consentVersion || '1.0') + '",';
+        csv += '"Yes","Yes","Yes","Yes","Yes"\n';
+    });
+
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = 'EnglishSpur_Agreements_' + new Date().toISOString().slice(0,10) + '.csv';
+    link.click();
+    setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+}
+
 /* ============ LOGS ============ */
 function loadLogs() {
     var limit = Number(document.getElementById('logFilter').value) || 100;
@@ -1985,7 +2163,7 @@ function loadLogs() {
         var list = document.getElementById('logsList');
         list.innerHTML = '';
         if (snap.empty) { list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No logs.</p>'; return; }
-        var icons = { login: '🔓', logout: '🔒', first_visit: '🆕', page_close: '📄', purchase_placed: '🛒' };
+        var icons = { login: '🔓', logout: '🔒', first_visit: '🆕', page_close: '📄', purchase_placed: '🛒', consent_given: '📋' };
         snap.forEach(function(doc) {
             var log = doc.data();
             var div = document.createElement('div');
