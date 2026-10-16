@@ -441,7 +441,7 @@
                     <div class="flex justify-between text-xs gap-2"><span class="text-slate-600 flex-shrink-0 font-semibold">🆔 Unique ID</span><strong class="text-slate-800 text-right break-all" id="payStep4Uid">—</strong></div>
                     <div class="flex justify-between text-xs gap-2"><span class="text-slate-600 flex-shrink-0 font-semibold">📘 Plan</span><strong class="text-slate-800 text-right max-w-[60%]" id="payStep4Plan">—</strong></div>
                     <div class="flex justify-between text-xs gap-2"><span class="text-slate-600 flex-shrink-0 font-semibold">📱 UPI App</span><strong class="text-slate-800 text-right" id="payStep4Method">—</strong></div>
-                    <div class="border-t border-dashed border-slate-300 pt-2.5 flex justify-between text-sm"><span class="font-black text-slate-700">Net Amount Received</span><strong class="text-orange-600 text-base" id="payStep4Amount">₹0</strong></div>
+                    <div class="border-t border-dashed border-slate-300 pt-2.5 flex justify-between text-sm"><span class="font-black text-slate-700">Net Amount Paid</span><strong class="text-orange-600 text-base" id="payStep4Amount">₹0</strong></div>
                     <div class="flex justify-between text-xs gap-2"><span class="text-slate-600 flex-shrink-0 font-semibold">📸 Screenshot</span><strong class="text-green-700" id="payStep4Screenshot">✅ Uploaded</strong></div>
                 </div>
                 <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 p-4 rounded-r-xl mb-4">
@@ -2434,8 +2434,8 @@ async function submitPurchase() {
         breakdown += '• Course/Package Fee: ' + money(p.coursePrice) + '\n';
         breakdown += '• Subtotal: ' + money(p.subtotal) + '\n';
         p.usedCoupons.forEach(function(uc) { breakdown += '• Coupon ' + uc.code + ': −' + money(uc.disc) + '\n'; });
-        breakdown += '• Net Amount Received: ' + money(p.final);
-        var msg = '✅ *PAYMENT COMPLETED — English Spur*\n\n*🆔 ORDER ID: ' + orderId + '*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order.\n\n--- STUDENT DETAILS ---\n• Name: *' + currentStudent.name + '*\n• Unique ID: *' + (currentStudent.uniqueId || '—') + '*\n' + (currentStudent.studentCode ? '• Student Code: *' + currentStudent.studentCode + '*\n' : '') + '\n--- PLAN ENROLLED ---\n*' + cleanPlan + '*\n\n--- FEE BREAKDOWN ---\n' + breakdown + '\n-------------------------\n*💵 Net Amount Received: ' + money(p.final) + '*\n\n--- PAYMENT INFO ---\n• Method: ' + payMethod + '\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\nKindly verify and send me the receipt.\n\nThank you 🙏';
+        breakdown += '• Net Amount Paid: ' + money(p.final);
+        var msg = '✅ *PAYMENT COMPLETED — English Spur*\n\n*🆔 ORDER ID: ' + orderId + '*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order.\n\n--- STUDENT DETAILS ---\n• Name: *' + currentStudent.name + '*\n• Unique ID: *' + (currentStudent.uniqueId || '—') + '*\n' + (currentStudent.studentCode ? '• Student Code: *' + currentStudent.studentCode + '*\n' : '') + '\n--- PLAN ENROLLED ---\n*' + cleanPlan + '*\n\n--- FEE BREAKDOWN ---\n' + breakdown + '\n-------------------------\n*💵 Net Amount Paid: ' + money(p.final) + '*\n\n--- PAYMENT INFO ---\n• Method: ' + payMethod + '\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\nKindly verify and send me the receipt.\n\nThank you 🙏';
         window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(msg), '_blank');
         document.getElementById('stage5OrderId').textContent = orderId;
         selectedPlan = null;
