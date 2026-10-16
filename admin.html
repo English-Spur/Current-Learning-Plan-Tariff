@@ -46,6 +46,13 @@
     .stat-card { background: linear-gradient(135deg, #ffffff, #f8fafc); border: 2px solid #e2e8f0; border-radius: 12px; padding: 12px; text-align: center; }
     .stat-card .stat-value { font-size: 24px; font-weight: 900; line-height: 1; }
     .stat-card .stat-label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+    .course-block { background: #fff; border: 2px solid #93c5fd; border-radius: 12px; padding: 14px; }
+    .course-block-title { font-size: 13px; font-weight: 900; color: #1e40af; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .month-highlight { display: inline-block; font-size: 10px; font-weight: 900; padding: 3px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; margin-left: 6px; }
+    .month-basic { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; }
+    .month-intermediate { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; }
+    .month-advanced { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; }
+    .month-master { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; }
     @media print { .noprint { display: none !important; } }
     @media (max-width: 640px) {
         body { padding: 6px; }
@@ -109,44 +116,21 @@
             <button onclick="switchTab('students')" id="tab-students" class="tab-btn inactive">👥 Students <span id="studentsBadge"></span></button>
             <button onclick="switchTab('agreements')" id="tab-agreements" class="tab-btn inactive">📋 Agreements <span id="agreementsBadge"></span></button>
             <button onclick="switchTab('logs')" id="tab-logs" class="tab-btn inactive">📊 Logs</button>
+            <button onclick="switchTab('tools')" id="tab-tools" class="tab-btn inactive">🛠️ System Tools</button>
         </div>
 
         <!-- ============ DASHBOARD TAB ============ -->
         <div id="content-dashboard" class="tab-content fade-in">
             <h2 class="text-base sm:text-lg font-black text-blue-900 mb-4">📊 Business Overview</h2>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
-                <div class="stat-card">
-                    <div class="stat-value text-blue-700" id="statTotalStudents">0</div>
-                    <div class="stat-label">Total Students</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value text-green-600" id="statActiveStudents">0</div>
-                    <div class="stat-label">Active Students</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value text-orange-600" id="statTotalPurchases">0</div>
-                    <div class="stat-label">Total Purchases</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value text-purple-600" id="statTotalRevenue">₹0</div>
-                    <div class="stat-label">Total Revenue</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value text-yellow-600" id="statPending">0</div>
-                    <div class="stat-label">Pending</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value text-red-600" id="statRejected">0</div>
-                    <div class="stat-label">Rejected</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value text-indigo-600" id="statCoupons">0</div>
-                    <div class="stat-label">Total Coupons</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value text-amber-600" id="statGrants">0</div>
-                    <div class="stat-label">Coupon Grants</div>
-                </div>
+                <div class="stat-card"><div class="stat-value text-blue-700" id="statTotalStudents">0</div><div class="stat-label">Total Students</div></div>
+                <div class="stat-card"><div class="stat-value text-green-600" id="statActiveStudents">0</div><div class="stat-label">Active Students</div></div>
+                <div class="stat-card"><div class="stat-value text-orange-600" id="statTotalPurchases">0</div><div class="stat-label">Total Purchases</div></div>
+                <div class="stat-card"><div class="stat-value text-purple-600" id="statTotalRevenue">₹0</div><div class="stat-label">Total Revenue</div></div>
+                <div class="stat-card"><div class="stat-value text-yellow-600" id="statPending">0</div><div class="stat-label">Pending</div></div>
+                <div class="stat-card"><div class="stat-value text-red-600" id="statRejected">0</div><div class="stat-label">Rejected</div></div>
+                <div class="stat-card"><div class="stat-value text-indigo-600" id="statCoupons">0</div><div class="stat-label">Total Coupons</div></div>
+                <div class="stat-card"><div class="stat-value text-amber-600" id="statGrants">0</div><div class="stat-label">Coupon Grants</div></div>
             </div>
 
             <div class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 rounded-xl p-4 mb-4">
@@ -212,14 +196,120 @@
                     <div class="flex items-center gap-2 mb-3">
                         <span class="text-2xl">👑</span>
                         <div>
-                            <p class="font-black text-blue-900 text-sm uppercase">1-on-1 Pricing (Per Class Rate)</p>
-                            <p class="text-[10px] text-blue-700">Regular → Discounted → Special Offer</p>
+                            <p class="font-black text-blue-900 text-sm uppercase">1-on-1 Complete Course (One-Time Payment)</p>
+                            <p class="text-[10px] text-blue-700">Admission Fee + Full Course Fee + Class Details</p>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹ / class</label><input type="number" id="cfg1on1Regular" value="500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
-                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹ / class</label><input type="number" id="cfg1on1Discounted" value="350" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
-                        <div><label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special Offer ₹ / class</label><input type="number" id="cfg1on1Special" value="250" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm"></div>
+                    <p class="text-[11px] font-black text-blue-900 uppercase mb-2">🎓 Admission Fee (One Time)</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1AdmissionRegular" value="2500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
+                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1AdmissionDiscounted" value="2000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
+                        <div><label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special ₹</label><input type="number" id="cfg1on1AdmissionSpecial" value="1500" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm"></div>
+                    </div>
+
+                    <p class="text-[11px] font-black text-blue-900 uppercase mb-2">📅 Complete Course Packages</p>
+                    <div class="space-y-3">
+                        <div class="course-block">
+                            <div class="course-block-title">🔵 3 Months Course <span class="month-highlight month-basic">Basic</span></div>
+                            <div class="grid grid-cols-3 gap-2 mb-3">
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1_3m_regular" value="15000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1_3m_disc" value="13500" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                                <div><label class="text-[9px] font-bold text-amber-700 uppercase">Special ₹</label><input type="number" id="cfg1on1_3m_special" value="12000" class="w-full border-2 border-amber-400 rounded-lg p-2 bg-amber-50 font-bold text-xs"></div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 mb-2">
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_3m_classes" value="30" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_3m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
+                                <input type="text" id="cfg1on1_3m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
+                                <textarea id="cfg1on1_3m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
+Class recording provided
+PDF notes & materials
+WhatsApp support</textarea>
+                            </div>
+                        </div>
+
+                        <div class="course-block">
+                            <div class="course-block-title">🟣 6 Months Course <span class="month-highlight month-intermediate">Intermediate</span></div>
+                            <div class="grid grid-cols-3 gap-2 mb-3">
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1_6m_regular" value="28000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1_6m_disc" value="25000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                                <div><label class="text-[9px] font-bold text-amber-700 uppercase">Special ₹</label><input type="number" id="cfg1on1_6m_special" value="22000" class="w-full border-2 border-amber-400 rounded-lg p-2 bg-amber-50 font-bold text-xs"></div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 mb-2">
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_6m_classes" value="60" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_6m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
+                                <input type="text" id="cfg1on1_6m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
+                                <textarea id="cfg1on1_6m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
+Class recording provided
+PDF notes & materials
+WhatsApp support
+Monthly progress report</textarea>
+                            </div>
+                        </div>
+
+                        <div class="course-block">
+                            <div class="course-block-title">🟠 9 Months Course <span class="month-highlight month-advanced">Advanced</span></div>
+                            <div class="grid grid-cols-3 gap-2 mb-3">
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1_9m_regular" value="40000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1_9m_disc" value="36000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                                <div><label class="text-[9px] font-bold text-amber-700 uppercase">Special ₹</label><input type="number" id="cfg1on1_9m_special" value="32000" class="w-full border-2 border-amber-400 rounded-lg p-2 bg-amber-50 font-bold text-xs"></div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 mb-2">
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_9m_classes" value="90" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_9m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
+                                <input type="text" id="cfg1on1_9m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
+                                <textarea id="cfg1on1_9m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
+Class recording provided
+PDF notes & materials
+WhatsApp support
+Monthly progress report
+Mock tests & feedback</textarea>
+                            </div>
+                        </div>
+
+                        <div class="course-block">
+                            <div class="course-block-title">🟢 12 Months Course <span class="month-highlight month-master">Master</span></div>
+                            <div class="grid grid-cols-3 gap-2 mb-3">
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1_12m_regular" value="52000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1_12m_disc" value="46000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                                <div><label class="text-[9px] font-bold text-amber-700 uppercase">Special ₹</label><input type="number" id="cfg1on1_12m_special" value="40000" class="w-full border-2 border-amber-400 rounded-lg p-2 bg-amber-50 font-bold text-xs"></div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-2 mb-2">
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_12m_classes" value="120" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_12m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
+                                <input type="text" id="cfg1on1_12m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
+                            </div>
+                            <div>
+                                <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
+                                <textarea id="cfg1on1_12m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
+Class recording provided
+PDF notes & materials
+WhatsApp support
+Monthly progress report
+Mock tests & feedback
+Certificate on completion</textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -228,7 +318,7 @@
                         <span class="text-2xl">👥</span>
                         <div>
                             <p class="font-black text-amber-900 text-sm uppercase">Group Class Pricing</p>
-                            <p class="text-[10px] text-amber-700">Admission + Per Class Rate</p>
+                            <p class="text-[10px] text-amber-700">Admission Fee + Lumpsum Amount per Plan</p>
                         </div>
                     </div>
                     <p class="text-[11px] font-black text-amber-900 uppercase mb-2">🎓 Admission Fee (New Students)</p>
@@ -237,11 +327,9 @@
                         <div><label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfgGroupAdmissionDiscounted" value="2000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
                         <div><label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special Offer ₹</label><input type="number" id="cfgGroupAdmissionSpecial" value="1500" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm"></div>
                     </div>
-                    <p class="text-[11px] font-black text-amber-900 uppercase mb-2">📚 Per Class Rate</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹ / class</label><input type="number" id="cfgGroupRateRegular" value="200" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
-                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹ / class</label><input type="number" id="cfgGroupRateDiscounted" value="180" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
-                        <div><label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special Offer ₹ / class</label><input type="number" id="cfgGroupRateSpecial" value="170" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm"></div>
+                    <div class="bg-white border-2 border-dashed border-amber-400 rounded-lg p-3">
+                        <p class="text-[11px] font-bold text-amber-900">ℹ️ Per-class rate আর নেই</p>
+                        <p class="text-[10px] text-slate-600 mt-1">এখন প্রতিটি plan এর জন্য সরাসরি lumpsum amount (Regular / Discounted / Special) নিচের "Group Class Plans" section এ বসাবেন।</p>
                     </div>
                 </div>
 
@@ -251,7 +339,7 @@
                             <span class="text-2xl">👑</span>
                             <div>
                                 <p class="font-black text-blue-900 text-sm uppercase">One on One</p>
-                                <p class="text-[10px] text-blue-700">Personal coaching plans</p>
+                                <p class="text-[10px] text-blue-700">Complete course packages (3/6/9/12 Months)</p>
                             </div>
                         </div>
                         <div id="oneOnOneCategories" class="space-y-3"></div>
@@ -261,7 +349,7 @@
                             <span class="text-2xl">👥</span>
                             <div>
                                 <p class="font-black text-emerald-900 text-sm uppercase">Group Class</p>
-                                <p class="text-[10px] text-emerald-700">Group learning plans</p>
+                                <p class="text-[10px] text-emerald-700">Group learning plans (lumpsum amounts)</p>
                             </div>
                         </div>
                         <div id="groupCategories" class="space-y-3"></div>
@@ -341,6 +429,9 @@
         <!-- ============ PENDING TAB ============ -->
         <div id="content-pending" class="tab-content hidden fade-in">
             <h2 class="text-base sm:text-lg font-black text-blue-900 mb-4">⏳ Pending Payments</h2>
+            <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-4">
+                <p class="text-[11px] font-bold text-blue-900">ℹ️ New submissions AND re-uploaded screenshots both appear here. Re-uploaded ones are highlighted in <strong class="text-orange-700">orange</strong>.</p>
+            </div>
             <div id="pendingList" class="space-y-3"></div>
         </div>
 
@@ -423,6 +514,87 @@
                 </div>
             </div>
             <div id="logsList" class="space-y-2"></div>
+        </div>
+
+        <!-- ============ SYSTEM TOOLS TAB ============ -->
+        <div id="content-tools" class="tab-content hidden fade-in">
+            <div class="bg-gradient-to-br from-rose-50 to-white border-2 border-rose-200 rounded-xl p-4 sm:p-5 mb-4">
+                <h2 class="text-base sm:text-lg font-black text-rose-900 mb-2">🛠️ System Tools</h2>
+                <p class="text-[11px] text-slate-600 font-semibold mb-4">Backup / Restore / Reset — carefully use these tools</p>
+
+                <div class="bg-white border-2 border-slate-200 rounded-xl p-4 mb-4">
+                    <p class="text-[11px] font-black text-slate-700 uppercase mb-3">📊 Live Data Count</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                        <div class="stat-card"><div class="stat-value text-blue-700 text-lg" id="toolCountStudents">0</div><div class="stat-label">Students</div></div>
+                        <div class="stat-card"><div class="stat-value text-orange-600 text-lg" id="toolCountPurchases">0</div><div class="stat-label">Purchases</div></div>
+                        <div class="stat-card"><div class="stat-value text-indigo-600 text-lg" id="toolCountCoupons">0</div><div class="stat-label">Coupons</div></div>
+                        <div class="stat-card"><div class="stat-value text-purple-600 text-lg" id="toolCountLogs">0</div><div class="stat-label">Logs</div></div>
+                        <div class="stat-card"><div class="stat-value text-slate-600 text-lg" id="toolCountConfig">0</div><div class="stat-label">Config Docs</div></div>
+                    </div>
+                    <button onclick="refreshToolCounts()" class="mt-3 text-[11px] font-bold text-blue-600 hover:text-blue-800 underline">🔄 Refresh Counts</button>
+                </div>
+
+                <div class="bg-white border-2 border-emerald-300 rounded-xl p-4 mb-4">
+                    <div class="flex items-start gap-3 mb-3">
+                        <span class="text-3xl">📥</span>
+                        <div class="flex-1">
+                            <p class="font-black text-emerald-900 text-sm uppercase">Backup All Data</p>
+                            <p class="text-[11px] text-slate-600 mt-1">Download sob Firestore data (students, purchases, coupons, logs, config) ekta <b>.json</b> file hisebe.</p>
+                        </div>
+                    </div>
+                    <button onclick="backupAllData()" id="backupBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-black py-3 rounded-xl text-sm uppercase tracking-wider transition shadow-md">
+                        📥 Download Backup (JSON)
+                    </button>
+                    <p id="backupMsg" class="text-emerald-700 text-xs text-center mt-2 font-bold hidden p-2 bg-emerald-50 rounded-lg"></p>
+                </div>
+
+                <div class="bg-white border-2 border-blue-300 rounded-xl p-4 mb-4">
+                    <div class="flex items-start gap-3 mb-3">
+                        <span class="text-3xl">📤</span>
+                        <div class="flex-1">
+                            <p class="font-black text-blue-900 text-sm uppercase">Restore From Backup</p>
+                            <p class="text-[11px] text-slate-600 mt-1">Backup JSON file upload korun — data Firestore e restore hobe.</p>
+                        </div>
+                    </div>
+                    <input type="file" id="restoreFile" accept=".json" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-xs mb-3">
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-lg mb-3">
+                        <p class="text-[10px] font-black text-amber-900 uppercase mb-1">⚠️ Warning</p>
+                        <p class="text-[11px] text-amber-800 font-semibold">Restore existing data <b>overwrite</b> korbe jodi same ID thake. Age backup niye rakhen.</p>
+                    </div>
+                    <button onclick="restoreFromBackup()" id="restoreBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-3 rounded-xl text-sm uppercase tracking-wider transition shadow-md">
+                        📤 Restore From File
+                    </button>
+                    <p id="restoreMsg" class="text-blue-700 text-xs text-center mt-2 font-bold hidden p-2 bg-blue-50 rounded-lg"></p>
+                </div>
+
+                <div class="bg-white border-2 border-red-400 rounded-xl p-4">
+                    <div class="flex items-start gap-3 mb-3">
+                        <span class="text-3xl">🔴</span>
+                        <div class="flex-1">
+                            <p class="font-black text-red-900 text-sm uppercase">Reset Everything</p>
+                            <p class="text-[11px] text-slate-600 mt-1">Sob Firestore data <b>permanently delete</b> hobe — students, purchases, coupons, logs, config. Eta <b>undo hoy na</b>.</p>
+                        </div>
+                    </div>
+                    <div class="bg-red-50 border-l-4 border-red-600 p-3 rounded-r-lg mb-3">
+                        <p class="text-[10px] font-black text-red-900 uppercase mb-1">⛔ Danger Zone</p>
+                        <p class="text-[11px] text-red-800 font-semibold">Test data clean korte use korun. Live korar age reset korun jate fresh entry neoya jay.</p>
+                    </div>
+
+                    <label class="flex items-center gap-2 mb-3 cursor-pointer bg-slate-50 border-2 border-slate-200 rounded-lg p-3">
+                        <input type="checkbox" id="resetConfirm1" class="w-4 h-4 accent-red-600">
+                        <span class="text-[11px] font-bold text-slate-700">I understand this will permanently delete all data</span>
+                    </label>
+                    <label class="flex items-center gap-2 mb-3 cursor-pointer bg-slate-50 border-2 border-slate-200 rounded-lg p-3">
+                        <input type="checkbox" id="resetConfirm2" class="w-4 h-4 accent-red-600">
+                        <span class="text-[11px] font-bold text-slate-700">I have taken a backup of important data</span>
+                    </label>
+
+                    <button onclick="resetAllData()" id="resetBtn" disabled class="w-full bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-xl text-sm uppercase tracking-wider transition shadow-md disabled:opacity-40 disabled:cursor-not-allowed">
+                        🔴 Reset All Data
+                    </button>
+                    <p id="resetMsg" class="text-red-700 text-xs text-center mt-2 font-bold hidden p-2 bg-red-50 rounded-lg"></p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -510,7 +682,7 @@
             </div>
 
             <div id="couponPlansRow" class="bg-blue-50 rounded-lg p-3">
-                <p class="text-[10px] sm:text-xs font-bold text-blue-900 mb-2">Allowed Plans (leave empty = all plans):</p>
+                <p class="text-[10px] sm:text-xs font-bold text-blue-900 mb-2">Allowed Courses (leave empty = all):</p>
                 <div id="couponPlansCheckboxes" class="grid grid-cols-2 md:grid-cols-4 gap-2"></div>
             </div>
 
@@ -560,7 +732,6 @@
             <div>
                 <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Tags (comma separated)</label>
                 <input type="text" id="newStudentTags" placeholder="VIP, Referral, Kids" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
-                <p class="text-[10px] text-slate-500 mt-1">উদাহরণ: VIP, Referral, Kids, Demo</p>
             </div>
             <div>
                 <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Referral Source</label>
@@ -617,17 +788,6 @@
     </div>
 </div>
 
-<!-- RECEIPT MODAL -->
-<div id="receiptModal" class="fixed inset-0 bg-black/70 z-50 hidden overflow-y-auto p-3">
-    <div class="max-w-2xl mx-auto bg-white rounded-2xl p-4 sm:p-6 my-6">
-        <div id="receiptContent"></div>
-        <div class="flex gap-2 mt-4 noprint">
-            <button onclick="window.print()" class="flex-1 bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 rounded-xl text-sm">🖨️ Print</button>
-            <button onclick="closeReceiptModal()" class="flex-1 bg-slate-300 hover:bg-slate-400 text-slate-700 font-bold py-3 rounded-xl text-sm">Close</button>
-        </div>
-    </div>
-</div>
-
 <script>
 /* ============ FIREBASE ============ */
 var firebaseConfig = {
@@ -643,8 +803,10 @@ var db = firebase.firestore();
 var auth = firebase.auth();
 var ADMIN_EMAIL = 'englishspur2020@gmail.com';
 
+var ALL_COLLECTIONS = ['students', 'purchases', 'coupons', 'logs', 'config'];
+
 /* ============ HELPERS ============ */
-function money(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
+function money(n) { return '₹' + Number(n || 0).toLocaleString('en-IN'); }
 function formatDT(ts) {
     if (!ts) return '—';
     try {
@@ -677,12 +839,62 @@ function setCouponValidity(days) {
     document.getElementById('newCouponValidFrom').value = fmt(now);
     document.getElementById('newCouponValidUntil').value = fmt(until);
 }
+function formatDateTimeLocal(date) {
+    var pad = function(n) { return String(n).padStart(2, '0'); };
+    return date.getFullYear() + '-' + pad(date.getMonth()+1) + '-' + pad(date.getDate()) + 'T' + pad(date.getHours()) + ':' + pad(date.getMinutes());
+}
+function planValueToLabel(value) {
+    if (!value) return '';
+    var v = String(value).trim().toLowerCase();
+    if (v.indexOf('m') !== -1) {
+        var months = parseInt(v, 10);
+        if (!isNaN(months)) return months + ' Month' + (months > 1 ? 's' : '');
+    }
+    if (v.indexOf('d') !== -1) {
+        var days = parseInt(v, 10);
+        if (!isNaN(days)) return days + ' Day' + (days > 1 ? 's' : '');
+    }
+    return value;
+}
+function getMonthBadgeClass(months) {
+    if (months === 3) return 'month-basic';
+    if (months === 6) return 'month-intermediate';
+    if (months === 9) return 'month-advanced';
+    if (months === 12) return 'month-master';
+    return 'month-basic';
+}
+function migrateCouponPlanValue(value) {
+    if (!value) return value;
+    var v = String(value).trim().toLowerCase();
+    var mapping = { '90d': '3m', '180d': '6m', '270d': '9m', '360d': '12m' };
+    return mapping[v] || value;
+}
 
 /* ============ CONSTANTS ============ */
 var FIXED_SUBCATEGORIES = {
     oneOnOne: [
-        { key: "Power Speak for Adults", id: "power_speak_adults_1on1", displayName: "Power Speak for Adults — One on One" },
-        { key: "Fearless English for Kids", id: "fearless_kids_1on1", displayName: "Fearless English for Kids — One on One" }
+        {
+            key: "Power Speak for Adults",
+            id: "power_speak_adults_1on1",
+            displayName: "Power Speak for Adults — One on One",
+            fixedPlans: [
+                { days: 90,  label: "3 Months",  months: 3,  value: "3m"  },
+                { days: 180, label: "6 Months",  months: 6,  value: "6m"  },
+                { days: 270, label: "9 Months",  months: 9,  value: "9m"  },
+                { days: 360, label: "12 Months", months: 12, value: "12m" }
+            ]
+        },
+        {
+            key: "Fearless English for Kids",
+            id: "fearless_kids_1on1",
+            displayName: "Fearless English for Kids — One on One",
+            fixedPlans: [
+                { days: 90,  label: "3 Months",  months: 3,  value: "3m"  },
+                { days: 180, label: "6 Months",  months: 6,  value: "6m"  },
+                { days: 270, label: "9 Months",  months: 9,  value: "9m"  },
+                { days: 360, label: "12 Months", months: 12, value: "12m" }
+            ]
+        }
     ],
     group: [
         { key: "Power Speak for Adults", id: "power_speak_adults_group", displayName: "Power Speak for Adults — Group Class" },
@@ -726,8 +938,9 @@ function adminLogout() { if (confirm('Logout?')) auth.signOut(); }
 function switchTab(tab) {
     document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.add('hidden'); });
     document.getElementById('content-' + tab).classList.remove('hidden');
-    ['dashboard','offer','coupons','grant','pending','all','students','agreements','logs'].forEach(function(t) {
-        document.getElementById('tab-' + t).className = (t === tab) ? 'tab-btn active' : 'tab-btn inactive';
+    ['dashboard','offer','coupons','grant','pending','all','students','agreements','logs','tools'].forEach(function(t) {
+        var el = document.getElementById('tab-' + t);
+        if (el) el.className = (t === tab) ? 'tab-btn active' : 'tab-btn inactive';
     });
     if (tab === 'logs') loadLogs();
     if (tab === 'coupons') {
@@ -737,6 +950,7 @@ function switchTab(tab) {
     if (tab === 'grant') loadGrantManager();
     if (tab === 'dashboard') loadDashboardStats();
     if (tab === 'agreements') renderAgreements();
+    if (tab === 'tools') refreshToolCounts();
 }
 
 function loadAll() {
@@ -748,6 +962,7 @@ function loadAll() {
     loadStudents();
     loadLogs();
     initCouponSubCategoryDropdown();
+    refreshToolCounts();
 }
 
 /* ============ DASHBOARD STATS ============ */
@@ -835,34 +1050,67 @@ function loadDashboardStats() {
 /* ============ OFFER ============ */
 var currentOffer = null;
 
-function formatDateTimeLocal(date) {
-    var pad = function(n) { return String(n).padStart(2, '0'); };
-    return date.getFullYear() + '-' + pad(date.getMonth()+1) + '-' + pad(date.getDate()) + 'T' + pad(date.getHours()) + ':' + pad(date.getMinutes());
-}
+var DEFAULT_COURSE_META = {
+    '3m':  { classes: 30,  duration: '60 mins', platform: 'Google Meet',
+             facilities: 'Live 1-on-1 class with expert teacher\nClass recording provided\nPDF notes & materials\nWhatsApp support' },
+    '6m':  { classes: 60,  duration: '60 mins', platform: 'Google Meet',
+             facilities: 'Live 1-on-1 class with expert teacher\nClass recording provided\nPDF notes & materials\nWhatsApp support\nMonthly progress report' },
+    '9m':  { classes: 90,  duration: '60 mins', platform: 'Google Meet',
+             facilities: 'Live 1-on-1 class with expert teacher\nClass recording provided\nPDF notes & materials\nWhatsApp support\nMonthly progress report\nMock tests & feedback' },
+    '12m': { classes: 120, duration: '60 mins', platform: 'Google Meet',
+             facilities: 'Live 1-on-1 class with expert teacher\nClass recording provided\nPDF notes & materials\nWhatsApp support\nMonthly progress report\nMock tests & feedback\nCertificate on completion' }
+};
 
 function loadOffer() {
     db.collection('config').doc('offer').onSnapshot(function(doc) {
         var d = doc.exists ? doc.data() : {};
+
         if (!d.oneOnOnePricing) {
             d.oneOnOnePricing = {
-                regularPrice: (d.planPricing && d.planPricing.singleRegular) || 500,
-                discountedPrice: 350,
-                specialOfferPrice: (d.planPricing && d.planPricing.singleSpecial) || 250
+                admissionRegular: 2500,
+                admissionDiscounted: 2000,
+                admissionSpecial: 1500,
+                courses: {
+                    '3m':  { regular: 15000, discounted: 13500, special: 12000, classes: 30,  duration: '60 mins', platform: 'Google Meet', facilities: DEFAULT_COURSE_META['3m'].facilities },
+                    '6m':  { regular: 28000, discounted: 25000, special: 22000, classes: 60,  duration: '60 mins', platform: 'Google Meet', facilities: DEFAULT_COURSE_META['6m'].facilities },
+                    '9m':  { regular: 40000, discounted: 36000, special: 32000, classes: 90,  duration: '60 mins', platform: 'Google Meet', facilities: DEFAULT_COURSE_META['9m'].facilities },
+                    '12m': { regular: 52000, discounted: 46000, special: 40000, classes: 120, duration: '60 mins', platform: 'Google Meet', facilities: DEFAULT_COURSE_META['12m'].facilities }
+                }
             };
         }
+        if (d.oneOnOnePricing && !d.oneOnOnePricing.courses) {
+            d.oneOnOnePricing.courses = {
+                '3m':  { regular: 15000, discounted: 13500, special: 12000, classes: 30,  duration: '60 mins', platform: 'Google Meet', facilities: DEFAULT_COURSE_META['3m'].facilities },
+                '6m':  { regular: 28000, discounted: 25000, special: 22000, classes: 60,  duration: '60 mins', platform: 'Google Meet', facilities: DEFAULT_COURSE_META['6m'].facilities },
+                '9m':  { regular: 40000, discounted: 36000, special: 32000, classes: 90,  duration: '60 mins', platform: 'Google Meet', facilities: DEFAULT_COURSE_META['9m'].facilities },
+                '12m': { regular: 52000, discounted: 46000, special: 40000, classes: 120, duration: '60 mins', platform: 'Google Meet', facilities: DEFAULT_COURSE_META['12m'].facilities }
+            };
+        }
+
         if (!d.groupPricing) {
             d.groupPricing = {
-                regularAdmission: (d.planPricing && d.planPricing.groupAdmission) || 2500,
+                regularAdmission: 2500,
                 discountedAdmission: 2000,
-                specialAdmission: 1500,
-                regularPerClass: 200,
-                discountedPerClass: 180,
-                specialPerClass: 170
+                specialAdmission: 1500
             };
         }
         if (!d.categories) d.categories = { oneOnOne: {}, group: {} };
         if (!d.categories.oneOnOne) d.categories.oneOnOne = {};
         if (!d.categories.group) d.categories.group = {};
+
+        /* Auto-migrate old group plans (per-class → lumpsum) */
+        if (d.categories && d.categories.group) {
+            Object.keys(d.categories.group).forEach(function(subKey) {
+                var sub = d.categories.group[subKey];
+                if (sub && sub.plans) {
+                    sub.plans.forEach(function(p) {
+                        if (!p.regularTotal && p.regularRate && p.days) p.regularTotal = p.days * (Number(p.regularRate) || 0);
+                        if (!p.discountedTotal && p.discountedRate && p.days) p.discountedTotal = p.days * (Number(p.discountedRate) || 0);
+                        if (!p.specialTotal && p.specialRate && p.days) p.specialTotal = p.days * (Number(p.specialRate) || 0);
+                    });
+                }
+            });
+        }
 
         currentOffer = d;
         window.currentOffer = d;
@@ -870,15 +1118,27 @@ function loadOffer() {
         document.getElementById('offerActive').checked = d.active !== false;
         document.getElementById('offerTitle').value = d.title || '';
         document.getElementById('offerDescription').value = d.description || '';
-        document.getElementById('cfg1on1Regular').value = d.oneOnOnePricing.regularPrice || 500;
-        document.getElementById('cfg1on1Discounted').value = d.oneOnOnePricing.discountedPrice || 350;
-        document.getElementById('cfg1on1Special').value = d.oneOnOnePricing.specialOfferPrice || 250;
+
+        document.getElementById('cfg1on1AdmissionRegular').value = d.oneOnOnePricing.admissionRegular || 2500;
+        document.getElementById('cfg1on1AdmissionDiscounted').value = d.oneOnOnePricing.admissionDiscounted || 2000;
+        document.getElementById('cfg1on1AdmissionSpecial').value = d.oneOnOnePricing.admissionSpecial || 1500;
+
+        var courses = d.oneOnOnePricing.courses || {};
+        [3, 6, 9, 12].forEach(function(m) {
+            var key = m + 'm';
+            var c = courses[key] || {};
+            document.getElementById('cfg1on1_' + m + 'm_regular').value = c.regular || 0;
+            document.getElementById('cfg1on1_' + m + 'm_disc').value = c.discounted || 0;
+            document.getElementById('cfg1on1_' + m + 'm_special').value = c.special || 0;
+            document.getElementById('cfg1on1_' + m + 'm_classes').value = c.classes || DEFAULT_COURSE_META[key].classes;
+            document.getElementById('cfg1on1_' + m + 'm_duration').value = c.duration || DEFAULT_COURSE_META[key].duration;
+            document.getElementById('cfg1on1_' + m + 'm_platform').value = c.platform || DEFAULT_COURSE_META[key].platform;
+            document.getElementById('cfg1on1_' + m + 'm_facilities').value = c.facilities || DEFAULT_COURSE_META[key].facilities;
+        });
+
         document.getElementById('cfgGroupAdmissionRegular').value = d.groupPricing.regularAdmission || 2500;
         document.getElementById('cfgGroupAdmissionDiscounted').value = d.groupPricing.discountedAdmission || 2000;
         document.getElementById('cfgGroupAdmissionSpecial').value = d.groupPricing.specialAdmission || 1500;
-        document.getElementById('cfgGroupRateRegular').value = d.groupPricing.regularPerClass || 200;
-        document.getElementById('cfgGroupRateDiscounted').value = d.groupPricing.discountedPerClass || 180;
-        document.getElementById('cfgGroupRateSpecial').value = d.groupPricing.specialPerClass || 170;
 
         if (d.endDateTime) document.getElementById('offerEndDateTime').value = d.endDateTime;
         else document.getElementById('offerEndDateTime').value = formatDateTimeLocal(new Date(Date.now() + 30 * 60 * 1000));
@@ -907,26 +1167,56 @@ function buildSubCategoryBlock(cat, key, subData) {
     var block = document.createElement('div');
     block.className = 'bg-white border-2 border-slate-200 rounded-lg p-3';
     var safeKey = key.replace(/[^a-zA-Z0-9]/g, '_');
+    var isOneOnOne = (cat === 'oneOnOne');
+    var addBtn = isOneOnOne
+        ? '<span class="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-1 rounded-lg">📅 3 / 6 / 9 / 12 Months (Fixed)</span>'
+        : '<button type="button" onclick="addPlanToSub(\'' + cat + '\', \'' + key.replace(/'/g, "\\'") + '\')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg">➕ Add Plan</button>';
     block.innerHTML =
         '<div class="flex justify-between items-center mb-2 flex-wrap gap-2">' +
             '<div class="flex items-center gap-2">' +
                 '<span class="text-lg">' + (cat === 'oneOnOne' ? '👑' : '👥') + '</span>' +
                 '<p class="font-black text-slate-800 text-xs">' + (subData.displayName || key) + '</p>' +
             '</div>' +
-            '<button type="button" onclick="addPlanToSub(\'' + cat + '\', \'' + key.replace(/'/g, "\\'") + '\')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg">➕ Add Plan</button>' +
+            addBtn +
         '</div>' +
         '<div class="plans-list space-y-2" id="plans_' + cat + '_' + safeKey + '"></div>';
     setTimeout(function() {
         var list = document.getElementById('plans_' + cat + '_' + safeKey);
         if (!list) return;
         list.innerHTML = '';
-        (subData.plans || []).forEach(function(p, idx) {
-            list.appendChild(buildPlanRow(cat, key, idx, p));
-        });
+        if (isOneOnOne) {
+            var fp = FIXED_SUBCATEGORIES.oneOnOne.filter(function(x){return x.key === key;})[0];
+            if (fp && fp.fixedPlans) {
+                var preview = fp.fixedPlans.map(function(p) {
+                    var m = p.months;
+                    var reg = document.getElementById('cfg1on1_' + m + 'm_regular');
+                    var spec = document.getElementById('cfg1on1_' + m + 'm_special');
+                    var cls = document.getElementById('cfg1on1_' + m + 'm_classes');
+                    var dur = document.getElementById('cfg1on1_' + m + 'm_duration');
+                    var plat = document.getElementById('cfg1on1_' + m + 'm_platform');
+                    var regV = reg ? reg.value : '—';
+                    var specV = spec ? spec.value : '—';
+                    var clsV = cls ? cls.value : '—';
+                    var durV = dur ? dur.value : '—';
+                    var platV = plat ? plat.value : '—';
+                    return '<div class="bg-slate-50 border border-slate-200 rounded-lg p-2 text-[10px]">' +
+                        '<strong class="text-blue-800">' + p.label + '</strong> · ' +
+                        'R: ₹' + regV + ' · S: ₹' + specV +
+                        '<br><span class="text-slate-500">📚 ' + clsV + ' classes · ⏱️ ' + durV + ' · 💻 ' + platV + '</span>' +
+                        '</div>';
+                }).join('');
+                list.innerHTML = preview;
+            }
+        } else {
+            (subData.plans || []).forEach(function(p, idx) {
+                list.appendChild(buildPlanRow(cat, key, idx, p));
+            });
+        }
     }, 0);
     return block;
 }
 
+/* GROUP: Lumpsum amount inputs */
 function buildPlanRow(cat, subKey, idx, plan) {
     var div = document.createElement('div');
     div.className = 'plan-row';
@@ -935,13 +1225,13 @@ function buildPlanRow(cat, subKey, idx, plan) {
     div.id = rowId;
     div.innerHTML =
         '<div class="grid grid-cols-12 gap-2 items-end">' +
-            '<div class="col-span-6 sm:col-span-2"><label class="plan-row-label">Classes</label><input type="number" class="plan-row-input plan-days" value="' + (plan.days || 8) + '" min="1" oninput="recalcPlanRow(\'' + rowId + '\')"></div>' +
-            '<div class="col-span-6 sm:col-span-2"><label class="plan-row-label">Regular ₹ / class</label><input type="number" class="plan-row-input plan-regular-rate" value="' + (plan.regularRate || plan.perClassRate || 250) + '" min="1" oninput="recalcPlanRow(\'' + rowId + '\')"></div>' +
-            '<div class="col-span-6 sm:col-span-2"><label class="plan-row-label">Discounted ₹ / class</label><input type="number" class="plan-row-input plan-disc-rate" value="' + (plan.discountedRate || plan.perClassRate || 200) + '" min="1" oninput="recalcPlanRow(\'' + rowId + '\')"></div>' +
-            '<div class="col-span-6 sm:col-span-2"><label class="plan-row-label">Special ₹ / class</label><input type="number" class="plan-row-input plan-special-rate" value="' + (plan.specialRate || plan.perClassRate || 150) + '" min="1" oninput="recalcPlanRow(\'' + rowId + '\')"></div>' +
-            '<div class="col-span-10 sm:col-span-3 flex items-end"><div class="w-full"><label class="plan-row-label">Totals (R/D/S)</label><div class="plan-row-input plan-totals" style="background:#f1f5f9;color:#475569;text-align:center;font-size:11px;">—</div></div></div>' +
-            '<div class="col-span-2 sm:col-span-1"><button type="button" onclick="removePlanRow(\'' + rowId + '\')" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg text-xs">🗑️</button></div>' +
-        '</div>';
+            '<div class="col-span-4 sm:col-span-2"><label class="plan-row-label">Classes</label><input type="number" class="plan-row-input plan-days" value="' + (plan.days || 8) + '" min="1" oninput="recalcPlanRow(\'' + rowId + '\')"></div>' +
+            '<div class="col-span-4 sm:col-span-3"><label class="plan-row-label">Regular ₹ (Total)</label><input type="number" class="plan-row-input plan-regular-rate" value="' + (plan.regularTotal || plan.regularRate || 1600) + '" min="0" oninput="recalcPlanRow(\'' + rowId + '\')"></div>' +
+            '<div class="col-span-4 sm:col-span-3"><label class="plan-row-label">Discounted ₹</label><input type="number" class="plan-row-input plan-disc-rate" value="' + (plan.discountedTotal || plan.discountedRate || 1440) + '" min="0" oninput="recalcPlanRow(\'' + rowId + '\')"></div>' +
+            '<div class="col-span-6 sm:col-span-3"><label class="plan-row-label">Special ₹</label><input type="number" class="plan-row-input plan-special-rate" value="' + (plan.specialTotal || plan.specialRate || 1360) + '" min="0" oninput="recalcPlanRow(\'' + rowId + '\')"></div>' +
+            '<div class="col-span-6 sm:col-span-1"><button type="button" onclick="removePlanRow(\'' + rowId + '\')" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg text-xs">🗑️</button></div>' +
+        '</div>' +
+        '<div class="plan-row-input plan-totals mt-2" style="background:#f1f5f9;color:#475569;text-align:center;font-size:10px;">Enter lumpsum amounts above</div>';
     setTimeout(function() { recalcPlanRow(rowId); }, 0);
     return div;
 }
@@ -950,20 +1240,22 @@ function recalcPlanRow(rowId) {
     var row = document.getElementById(rowId);
     if (!row) return;
     var days = Number(row.querySelector('.plan-days').value) || 0;
-    var regularRate = Number(row.querySelector('.plan-regular-rate').value) || 0;
-    var discRate = Number(row.querySelector('.plan-disc-rate').value) || 0;
-    var specialRate = Number(row.querySelector('.plan-special-rate').value) || 0;
-    var regTotal = days * regularRate;
-    var discTotal = days * discRate;
-    var specialTotal = days * specialRate;
-    row.querySelector('.plan-totals').textContent = money(regTotal) + ' / ' + money(discTotal) + ' / ' + money(specialTotal);
+    var regTotal = Number(row.querySelector('.plan-regular-rate').value) || 0;
+    var discTotal = Number(row.querySelector('.plan-disc-rate').value) || 0;
+    var specialTotal = Number(row.querySelector('.plan-special-rate').value) || 0;
+    if (days > 0) {
+        var perClassInfo = '~₹' + Math.round(specialTotal / days) + '/class';
+        row.querySelector('.plan-totals').textContent = '💡 ' + days + ' classes · Total: ' + money(specialTotal) + ' (Regular: ' + money(regTotal) + ' · Disc: ' + money(discTotal) + ' · Special: ' + money(specialTotal) + ') · ' + perClassInfo;
+    } else {
+        row.querySelector('.plan-totals').textContent = 'Enter classes count';
+    }
 }
 
 function addPlanToSub(cat, subKey) {
     var safeKey = subKey.replace(/[^a-zA-Z0-9]/g, '_');
     var list = document.getElementById('plans_' + cat + '_' + safeKey);
     if (!list) return;
-    var newPlan = { days: 8, regularRate: 500, discountedRate: 350, specialRate: 250 };
+    var newPlan = { days: 8, regularTotal: 1600, discountedTotal: 1440, specialTotal: 1360 };
     list.appendChild(buildPlanRow(cat, subKey, list.children.length, newPlan));
 }
 
@@ -980,25 +1272,57 @@ function collectPlansFromForm() {
             var list = document.getElementById('plans_' + cat + '_' + safeKey);
             if (!list) return;
             var plans = [];
-            list.querySelectorAll('.plan-row').forEach(function(row) {
-                var days = Number(row.querySelector('.plan-days').value) || 0;
-                var regularRate = Number(row.querySelector('.plan-regular-rate').value) || 0;
-                var discRate = Number(row.querySelector('.plan-disc-rate').value) || 0;
-                var specialRate = Number(row.querySelector('.plan-special-rate').value) || 0;
-                if (days > 0) {
+
+            if (cat === 'oneOnOne' && sub.fixedPlans) {
+                sub.fixedPlans.forEach(function(fp) {
+                    var m = fp.months;
+                    var regular = Number(document.getElementById('cfg1on1_' + m + 'm_regular').value) || 0;
+                    var disc    = Number(document.getElementById('cfg1on1_' + m + 'm_disc').value) || 0;
+                    var special = Number(document.getElementById('cfg1on1_' + m + 'm_special').value) || 0;
+                    var classes = Number(document.getElementById('cfg1on1_' + m + 'm_classes').value) || 0;
+                    var duration = document.getElementById('cfg1on1_' + m + 'm_duration').value.trim();
+                    var platform = document.getElementById('cfg1on1_' + m + 'm_platform').value.trim();
+                    var facilitiesRaw = document.getElementById('cfg1on1_' + m + 'm_facilities').value;
+                    var facilities = facilitiesRaw.split('\n').map(function(x){return x.trim();}).filter(function(x){return x.length>0;});
                     plans.push({
-                        days: days,
-                        regularRate: regularRate,
-                        discountedRate: discRate,
-                        specialRate: specialRate,
-                        perClassRate: specialRate,
-                        regularTotal: days * regularRate,
-                        discountedTotal: days * discRate,
-                        specialTotal: days * specialRate,
-                        offerPrice: days * specialRate
+                        days: fp.days,
+                        label: fp.label,
+                        months: m,
+                        value: fp.value,
+                        regularRate: regular,
+                        discountedRate: disc,
+                        specialRate: special,
+                        regularTotal: regular,
+                        discountedTotal: disc,
+                        specialTotal: special,
+                        offerPrice: special,
+                        classes: classes,
+                        duration: duration,
+                        platform: platform,
+                        facilities: facilities
                     });
-                }
-            });
+                });
+            } else {
+                list.querySelectorAll('.plan-row').forEach(function(row) {
+                    var days = Number(row.querySelector('.plan-days').value) || 0;
+                    var regTotal = Number(row.querySelector('.plan-regular-rate').value) || 0;
+                    var discTotal = Number(row.querySelector('.plan-disc-rate').value) || 0;
+                    var specialTotal = Number(row.querySelector('.plan-special-rate').value) || 0;
+                    if (days > 0) {
+                        plans.push({
+                            days: days,
+                            regularRate: regTotal,
+                            discountedRate: discTotal,
+                            specialRate: specialTotal,
+                            perClassRate: days > 0 ? Math.round(specialTotal / days) : specialTotal,
+                            regularTotal: regTotal,
+                            discountedTotal: discTotal,
+                            specialTotal: specialTotal,
+                            offerPrice: specialTotal
+                        });
+                    }
+                });
+            }
             plans.sort(function(a, b) { return a.days - b.days; });
             result[cat][sub.key] = { subCategoryId: sub.id, displayName: sub.displayName, plans: plans };
         });
@@ -1011,8 +1335,28 @@ function applyQuickSet() {
     var val = sel.value;
     if (!val) return;
     var now = Date.now();
-    var map = { '30m': 30*60*1000, '1h': 60*60*1000, '6h': 6*60*60*1000, '12h': 12*60*60*1000, '1d': 24*60*60*1000, '3d': 3*24*60*60*1000, '7d': 7*24*60*60*1000, '30d': 30*24*60*60*1000 };
-    if (map[val]) document.getElementById('offerEndDateTime').value = formatDateTimeLocal(new Date(now + map[val]));
+    var map = {
+        '30m': 30 * 60 * 1000,
+        '1h':  60 * 60 * 1000,
+        '6h':  6 * 60 * 60 * 1000,
+        '12h': 12 * 60 * 60 * 1000,
+        '1d':  24 * 60 * 60 * 1000,
+        '3d':  3 * 24 * 60 * 60 * 1000,
+        '7d':  7 * 24 * 60 * 60 * 1000,
+        '30d': 30 * 24 * 60 * 60 * 1000
+    };
+    if (map[val]) {
+        var newDate = new Date(now + map[val]);
+        var input = document.getElementById('offerEndDateTime');
+        input.value = formatDateTimeLocal(newDate);
+        input.style.transition = 'box-shadow 0.3s, border-color 0.3s';
+        input.style.boxShadow = '0 0 0 4px rgba(34,197,94,0.4)';
+        input.style.borderColor = '#16a34a';
+        setTimeout(function() {
+            input.style.boxShadow = '';
+            input.style.borderColor = '';
+        }, 1200);
+    }
     sel.value = '';
 }
 
@@ -1060,22 +1404,52 @@ function saveOffer() {
         title: document.getElementById('offerTitle').value,
         description: document.getElementById('offerDescription').value,
         oneOnOnePricing: {
-            regularPrice: Number(document.getElementById('cfg1on1Regular').value) || 500,
-            discountedPrice: Number(document.getElementById('cfg1on1Discounted').value) || 350,
-            specialOfferPrice: Number(document.getElementById('cfg1on1Special').value) || 250
+            admissionRegular: Number(document.getElementById('cfg1on1AdmissionRegular').value) || 2500,
+            admissionDiscounted: Number(document.getElementById('cfg1on1AdmissionDiscounted').value) || 2000,
+            admissionSpecial: Number(document.getElementById('cfg1on1AdmissionSpecial').value) || 1500,
+            courses: {
+                '3m':  {
+                    regular:    Number(document.getElementById('cfg1on1_3m_regular').value) || 15000,
+                    discounted: Number(document.getElementById('cfg1on1_3m_disc').value) || 13500,
+                    special:    Number(document.getElementById('cfg1on1_3m_special').value) || 12000,
+                    classes:    Number(document.getElementById('cfg1on1_3m_classes').value) || 30,
+                    duration:   document.getElementById('cfg1on1_3m_duration').value.trim() || '60 mins',
+                    platform:   document.getElementById('cfg1on1_3m_platform').value.trim() || 'Google Meet',
+                    facilities: document.getElementById('cfg1on1_3m_facilities').value
+                },
+                '6m':  {
+                    regular:    Number(document.getElementById('cfg1on1_6m_regular').value) || 28000,
+                    discounted: Number(document.getElementById('cfg1on1_6m_disc').value) || 25000,
+                    special:    Number(document.getElementById('cfg1on1_6m_special').value) || 22000,
+                    classes:    Number(document.getElementById('cfg1on1_6m_classes').value) || 60,
+                    duration:   document.getElementById('cfg1on1_6m_duration').value.trim() || '60 mins',
+                    platform:   document.getElementById('cfg1on1_6m_platform').value.trim() || 'Google Meet',
+                    facilities: document.getElementById('cfg1on1_6m_facilities').value
+                },
+                '9m':  {
+                    regular:    Number(document.getElementById('cfg1on1_9m_regular').value) || 40000,
+                    discounted: Number(document.getElementById('cfg1on1_9m_disc').value) || 36000,
+                    special:    Number(document.getElementById('cfg1on1_9m_special').value) || 32000,
+                    classes:    Number(document.getElementById('cfg1on1_9m_classes').value) || 90,
+                    duration:   document.getElementById('cfg1on1_9m_duration').value.trim() || '60 mins',
+                    platform:   document.getElementById('cfg1on1_9m_platform').value.trim() || 'Google Meet',
+                    facilities: document.getElementById('cfg1on1_9m_facilities').value
+                },
+                '12m': {
+                    regular:    Number(document.getElementById('cfg1on1_12m_regular').value) || 52000,
+                    discounted: Number(document.getElementById('cfg1on1_12m_disc').value) || 46000,
+                    special:    Number(document.getElementById('cfg1on1_12m_special').value) || 40000,
+                    classes:    Number(document.getElementById('cfg1on1_12m_classes').value) || 120,
+                    duration:   document.getElementById('cfg1on1_12m_duration').value.trim() || '60 mins',
+                    platform:   document.getElementById('cfg1on1_12m_platform').value.trim() || 'Google Meet',
+                    facilities: document.getElementById('cfg1on1_12m_facilities').value
+                }
+            }
         },
         groupPricing: {
             regularAdmission: Number(document.getElementById('cfgGroupAdmissionRegular').value) || 2500,
             discountedAdmission: Number(document.getElementById('cfgGroupAdmissionDiscounted').value) || 2000,
-            specialAdmission: Number(document.getElementById('cfgGroupAdmissionSpecial').value) || 1500,
-            regularPerClass: Number(document.getElementById('cfgGroupRateRegular').value) || 200,
-            discountedPerClass: Number(document.getElementById('cfgGroupRateDiscounted').value) || 180,
-            specialPerClass: Number(document.getElementById('cfgGroupRateSpecial').value) || 170
-        },
-        planPricing: {
-            singleRegular: Number(document.getElementById('cfg1on1Regular').value) || 500,
-            singleSpecial: Number(document.getElementById('cfg1on1Special').value) || 250,
-            groupAdmission: Number(document.getElementById('cfgGroupAdmissionRegular').value) || 2500
+            specialAdmission: Number(document.getElementById('cfgGroupAdmissionSpecial').value) || 1500
         },
         categories: categories,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -1124,16 +1498,41 @@ function renderCouponPlansCheckboxes() {
     var offer = currentOffer || {};
     var subData = offer.categories && offer.categories[cat] && offer.categories[cat][found.key];
     var plans = (subData && subData.plans) || [];
+
+    if (cat === 'oneOnOne' && found.fixedPlans) {
+        plans = found.fixedPlans.map(function(fp) {
+            return { days: fp.days, months: fp.months, label: fp.label, value: fp.value };
+        });
+    }
+
     if (plans.length === 0) {
-        container.innerHTML = '<p class="text-[11px] text-slate-500 italic col-span-4">No plans configured.</p>';
+        container.innerHTML = '<p class="text-[11px] text-slate-500 italic col-span-4">No courses configured.</p>';
         return;
     }
+
     var currentlyChecked = [];
-    container.querySelectorAll('.plan-check:checked').forEach(function(c) { currentlyChecked.push(c.value); });
+    container.querySelectorAll('.plan-check:checked').forEach(function(c) {
+        currentlyChecked.push(c.value);
+    });
+    currentlyChecked = currentlyChecked.map(migrateCouponPlanValue);
+
     container.innerHTML = plans.map(function(p) {
-        var value = p.days + 'd';
+        var value, label, badgeHtml = '';
+        if (cat === 'oneOnOne') {
+            var months = p.months || Math.round((p.days || 0) / 30);
+            value = p.value || (months + 'm');
+            label = p.label || (months + ' Months');
+            var badgeClass = getMonthBadgeClass(months);
+            badgeHtml = ' <span class="month-highlight ' + badgeClass + '">' + months + 'M</span>';
+        } else {
+            value = p.days + 'd';
+            label = p.label || (p.days + ' Days');
+        }
         var checked = currentlyChecked.indexOf(value) !== -1 ? 'checked' : '';
-        return '<label class="text-[11px] font-bold flex items-center gap-1"><input type="checkbox" class="plan-check" value="' + value + '" ' + checked + '> ' + p.days + ' Days</label>';
+        return '<label class="text-[11px] font-bold flex items-center gap-1 bg-white border-2 border-slate-200 rounded-lg px-2.5 py-2 cursor-pointer hover:border-blue-400 transition">' +
+            '<input type="checkbox" class="plan-check" value="' + value + '" ' + checked + '> ' +
+            '<span>' + label + '</span>' + badgeHtml +
+            '</label>';
     }).join('');
 }
 
@@ -1141,7 +1540,11 @@ function loadCoupons() {
     db.collection('coupons').onSnapshot(function(snap) {
         allCoupons = [];
         snap.forEach(function(doc) {
-            allCoupons.push(Object.assign({ id: doc.id }, doc.data()));
+            var c = Object.assign({ id: doc.id }, doc.data());
+            if (c.allowedPlans && c.allowedPlans.length > 0) {
+                c.allowedPlans = c.allowedPlans.map(migrateCouponPlanValue);
+            }
+            allCoupons.push(c);
         });
         updateCouponStats();
         renderCouponsList();
@@ -1223,7 +1626,22 @@ function renderCouponsList() {
 
         var catLabel = c.category === 'oneOnOne' ? '👑 1-on-1' : '👥 Group';
         var subLabel = c.subCategoryDisplay || '';
-        var planLabel = c.allowedPlans ? ' (' + c.allowedPlans.join('/') + ')' : '';
+
+        var planLabel = '';
+        if (c.allowedPlans && c.allowedPlans.length > 0) {
+            var planBadges = c.allowedPlans.map(function(p) {
+                var v = String(p).trim().toLowerCase();
+                if (v.indexOf('m') !== -1) {
+                    var months = parseInt(v, 10);
+                    if (!isNaN(months)) {
+                        var badgeClass = getMonthBadgeClass(months);
+                        return '<span class="month-highlight ' + badgeClass + '">' + months + ' Months</span>';
+                    }
+                }
+                return '<span class="text-[10px] font-bold text-slate-600">' + planValueToLabel(p) + '</span>';
+            });
+            planLabel = ' ' + planBadges.join(' ');
+        }
 
         var grantsCount = 0;
         allStudents.forEach(function(s) {
@@ -1246,8 +1664,13 @@ function renderCouponsList() {
                             '<button onclick="copyCouponCode(\'' + c.code + '\')" class="text-blue-600 hover:text-blue-800 text-[11px] px-1.5 py-0.5 rounded hover:bg-blue-50 font-bold">📋</button>' +
                             statusBadge +
                         '</div>' +
-                        '<p class="text-[10px] text-slate-500 truncate mt-0.5">' + catLabel + ' · ' + subLabel + planLabel + '</p>' +
-                        '<p class="text-[10px] text-slate-600 mt-0.5">' + (c.type === 'flat' ? '₹' + c.value + ' off' : c.value + '% off') + ' · <span class="font-bold text-purple-700">🎫 ' + grantsCount + ' grant' + (grantsCount !== 1 ? 's' : '') + '</span></p>' +
+                        '<p class="text-[10px] text-slate-500 truncate mt-0.5">' + catLabel + ' · ' + subLabel + '</p>' +
+                        '<div class="text-[10px] text-slate-600 mt-1 flex items-center flex-wrap gap-1">' +
+                            '<span>' + (c.type === 'flat' ? '₹' + c.value + ' off' : c.value + '% off') + '</span>' +
+                            '<span class="text-slate-400">·</span>' +
+                            '<span class="font-bold text-purple-700">🎫 ' + grantsCount + ' grant' + (grantsCount !== 1 ? 's' : '') + '</span>' +
+                            (planLabel ? '<span class="text-slate-400">·</span><span class="font-bold text-slate-600">Plans:</span>' + planLabel : '') +
+                        '</div>' +
                         (hasValidity ? '<p class="text-[10px] ' + (expired ? 'text-red-700 font-bold' : 'text-slate-600') + ' mt-1">📅 ' + formatCouponDate(c.validFrom) + ' → ' + formatCouponDate(c.validUntil) + '</p>' : '<p class="text-[10px] text-slate-600 mt-1">♾️ No expiry</p>') +
                     '</div>' +
                 '</div>' +
@@ -1304,7 +1727,7 @@ function editCoupon(id) {
         document.getElementById('newCouponSubCategory').value = c.subCategory || '';
         renderCouponPlansCheckboxes();
         setTimeout(function() {
-            var allowed = c.allowedPlans || [];
+            var allowed = (c.allowedPlans || []).map(migrateCouponPlanValue);
             document.querySelectorAll('.plan-check').forEach(function(chk) {
                 chk.checked = allowed.indexOf(chk.value) !== -1;
             });
@@ -1489,7 +1912,7 @@ function renderGrantView() {
     });
 }
 
-/* ============ PENDING ============ */
+/* ============ PENDING (with re-uploaded highlight) ============ */
 function loadPending() {
     db.collection('purchases').where('status', '==', 'pending').onSnapshot(function(snap) {
         var list = document.getElementById('pendingList');
@@ -1502,27 +1925,49 @@ function loadPending() {
         }
         badge.textContent = '(' + snap.size + ')';
         badge.className = 'bg-red-500 text-white text-[9px] rounded-full px-1.5 py-0.5 ml-1 inline-block';
-        snap.forEach(function(doc) {
-            var p = doc.data();
+
+        var items = [];
+        snap.forEach(function(doc) { items.push({ id: doc.id, data: doc.data() }); });
+
+        /* Sort: re-uploaded first */
+        items.sort(function(a, b) {
+            var ra = (a.data.reuploadCount || 0);
+            var rb = (b.data.reuploadCount || 0);
+            if (ra !== rb) return rb - ra;
+            var ta = a.data.createdAt ? a.data.createdAt.toDate().getTime() : 0;
+            var tb = b.data.createdAt ? b.data.createdAt.toDate().getTime() : 0;
+            return tb - ta;
+        });
+
+        items.forEach(function(item) {
+            var p = item.data;
+            var docId = item.id;
+            var isReuploaded = !!(p.reuploadCount && p.reuploadCount > 0);
             var div = document.createElement('div');
-            div.className = 'bg-yellow-50 border-2 border-yellow-300 rounded-xl p-3.5';
+            div.className = isReuploaded
+                ? 'bg-orange-50 border-2 border-orange-400 rounded-xl p-3.5 shadow-md'
+                : 'bg-yellow-50 border-2 border-yellow-300 rounded-xl p-3.5';
             div.innerHTML =
                 '<div class="flex justify-between items-start flex-wrap gap-2 mb-3">' +
                     '<div class="min-w-0">' +
-                        '<p class="font-black text-base text-blue-900 truncate">' + p.studentName + '</p>' +
+                        '<p class="font-black text-base text-blue-900 truncate">' + (p.studentName || '—') + '</p>' +
                         (p.orderId ? '<p class="mt-1.5"><span class="order-id-badge-lg">🆔 ' + p.orderId + '</span></p>' : '') +
-                        '<p class="text-[11px] text-slate-600 truncate mt-1.5">📱 ' + p.studentMobile + '</p>' +
+                        '<p class="text-[11px] text-slate-600 truncate mt-1.5">📱 ' + (p.studentMobile || '—') + '</p>' +
                     '</div>' +
-                    '<span class="bg-yellow-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">⏳ PENDING</span>' +
+                    (isReuploaded
+                        ? '<span class="bg-orange-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full animate-pulse">🔄 RE-UPLOADED #' + p.reuploadCount + '</span>'
+                        : '<span class="bg-yellow-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">⏳ PENDING</span>') +
                 '</div>' +
+                (isReuploaded ? '<div class="bg-white border-2 border-orange-300 rounded-lg p-2.5 mb-3"><p class="text-[11px] font-black text-orange-800">🔄 Student Re-uploaded Screenshot (Attempt #' + (p.reuploadCount + 1) + ')</p>' + (p.previousRejectionReason ? '<p class="text-[10px] text-orange-700 font-semibold mt-1">📌 Previous rejection: <strong>' + p.previousRejectionReason + '</strong></p>' : '') + (p.reuploadedAt ? '<p class="text-[10px] text-orange-700 font-semibold mt-0.5">🕒 Re-uploaded at: ' + formatDT(p.reuploadedAt) + '</p>' : '') + '</div>' : '') +
                 '<div class="bg-white rounded-lg p-3 mb-3">' +
-                    '<p class="text-sm font-bold text-slate-800">📘 ' + p.planName + '</p>' +
+                    '<p class="text-sm font-bold text-slate-800">📘 ' + (p.planName || '—') + '</p>' +
                     '<p class="text-[11px] text-slate-500 mt-1">Amount: <strong class="text-orange-600">' + money(p.finalAmount) + '</strong>' + (p.couponCode ? ' · Coupon: <strong>' + p.couponCode + '</strong>' : '') + '</p>' +
+                    '<p class="text-[10px] text-slate-500 mt-1">Method: <strong>' + (p.paymentMethod || '—') + '</strong> · Submitted: ' + formatDT(p.createdAt) + '</p>' +
                 '</div>' +
-                (p.screenshot ? '<div class="mb-3"><img src="' + p.screenshot + '" class="screenshot-img mx-auto" onclick="window.open(this.src)"></div>' : '') +
+                (p.screenshot ? '<div class="mb-3"><p class="text-[10px] font-black text-slate-600 uppercase mb-1">📸 Screenshot</p><img src="' + p.screenshot + '" class="screenshot-img mx-auto" onclick="window.open(this.src)"></div>' : '<p class="text-[11px] text-red-600 text-center font-bold mb-3">⚠️ No screenshot uploaded</p>') +
                 '<div class="flex gap-2">' +
-                    '<button onclick="approvePurchase(\'' + doc.id + '\')" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 rounded-lg text-xs">✅ Approve</button>' +
-                    '<button onclick="rejectPurchase(\'' + doc.id + '\')" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2.5 rounded-lg text-xs">❌ Reject</button>' +
+                    '<button onclick="approvePurchase(\'' + docId + '\')" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg text-sm shadow-md">✅ Approve</button>' +
+                    '<button onclick="rejectPurchase(\'' + docId + '\')" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-lg text-sm shadow-md">❌ Reject</button>' +
                 '</div>';
             list.appendChild(div);
         });
@@ -1530,15 +1975,28 @@ function loadPending() {
 }
 
 function approvePurchase(id) {
-    if (!confirm('Approve?')) return;
-    var receiptNo = 'ES-' + Date.now().toString().slice(-8);
-    db.collection('purchases').doc(id).update({ status: 'approved', receiptNo: receiptNo, verifiedAt: firebase.firestore.FieldValue.serverTimestamp() })
-      .then(function() { alert('✅ Approved! Receipt: ' + receiptNo); });
+    if (!confirm('✅ Approve this payment?\n\nThe student will be notified.')) return;
+    var receiptNo = 'PCS-' + Date.now().toString().slice(-8);
+    db.collection('purchases').doc(id).update({
+        status: 'approved',
+        receiptNo: receiptNo,
+        verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function() {
+        alert('✅ Approved!\nPCS No.: ' + receiptNo);
+    }).catch(function(err) { alert('❌ Error: ' + err.message); });
 }
+
 function rejectPurchase(id) {
-    var reason = prompt('Reason:') || '';
-    db.collection('purchases').doc(id).update({ status: 'rejected', rejectionReason: reason, verifiedAt: firebase.firestore.FieldValue.serverTimestamp() })
-      .then(function() { alert('❌ Rejected.'); });
+    var reason = prompt('❌ Why reject?\n(Student will see this reason and can re-upload.)', 'Screenshot not clear. Please re-upload.');
+    if (reason === null) return;
+    if (!reason.trim()) reason = 'Payment could not be verified. Please re-upload.';
+    db.collection('purchases').doc(id).update({
+        status: 'rejected',
+        rejectionReason: reason.trim(),
+        verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function() {
+        alert('❌ Rejected.\n\nStudent will get "Re-upload Screenshot" option.');
+    }).catch(function(err) { alert('❌ Error: ' + err.message); });
 }
 
 /* ============ ALL PURCHASES ============ */
@@ -1559,6 +2017,7 @@ function loadAllPurchases() {
                         '<div class="flex items-center gap-2 mb-1.5 flex-wrap">' +
                             '<p class="font-bold text-slate-800 text-xs truncate">' + p.studentName + '</p>' +
                             (p.orderId ? '<span class="order-id-badge">🆔 ' + p.orderId + '</span>' : '') +
+                            (p.reuploadCount ? '<span class="bg-orange-100 text-orange-700 border border-orange-300 text-[9px] font-bold px-2 py-0.5 rounded-full">🔄 ×' + p.reuploadCount + '</span>' : '') +
                         '</div>' +
                         '<p class="text-[10px] text-slate-600">' + p.planName + '</p>' +
                         '<p class="text-[10px] text-slate-600">' + money(p.finalAmount) + (p.couponCode ? ' · ' + p.couponCode : '') + '</p>' +
@@ -1680,6 +2139,7 @@ function renderStudents(students) {
         html += '<div class="mt-1.5 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-0.5">';
         html += '<p class="text-[11px] text-slate-600 truncate">📱 ' + (s.mobile || '—') + '</p>';
         html += '<p class="text-[11px] text-slate-600 truncate">📚 ' + (s.courseEnrolled || '—') + '</p>';
+        if (s.dateOfBirth) html += '<p class="text-[10px] text-slate-500 truncate">🎂 ' + s.dateOfBirth + (s.age ? ' (Age: ' + s.age + ')' : '') + '</p>';
         if (s.batchName) html += '<p class="text-[10px] text-slate-500 truncate">🎓 ' + s.batchName + '</p>';
         html += '<p class="text-[10px] text-slate-500">🔐 Logins: <strong class="text-green-700">' + (s.loginCount || 0) + '</strong></p>';
         html += '</div>';
@@ -1733,6 +2193,8 @@ function viewStudentProfile(id) {
     html += '<div><span class="text-slate-500 font-semibold">Course:</span> <strong>' + (s.courseEnrolled || '—') + '</strong></div>';
     html += '<div><span class="text-slate-500 font-semibold">Batch:</span> <strong>' + (s.batchName || '—') + '</strong></div>';
     html += '<div><span class="text-slate-500 font-semibold">Status:</span> <strong>' + (s.blocked ? '🚫 Blocked' : '🟢 Active') + '</strong></div>';
+    if (s.dateOfBirth) html += '<div><span class="text-slate-500 font-semibold">Date of Birth:</span> <strong>' + s.dateOfBirth + '</strong></div>';
+    if (s.age) html += '<div><span class="text-slate-500 font-semibold">Age:</span> <strong>' + s.age + ' years</strong></div>';
     if (s.referral) html += '<div class="col-span-2"><span class="text-slate-500 font-semibold">Referral:</span> <strong>' + s.referral + '</strong></div>';
     if (s.tags && s.tags.length) html += '<div class="col-span-2"><span class="text-slate-500 font-semibold">Tags:</span> ' + s.tags.map(function(t) { return '<span class="bg-slate-100 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-slate-300">' + t + '</span>'; }).join(' ') + '</div>';
     html += '</div></div>';
@@ -1788,7 +2250,7 @@ function viewStudentProfile(id) {
             var icons = { pending: '⏳', approved: '✅', rejected: '❌' };
             ph += '<div class="bg-white rounded-lg p-2 border border-slate-200 flex justify-between items-center gap-2">';
             ph += '<div class="min-w-0 flex-1"><p class="text-[11px] font-bold text-slate-800 truncate">' + icons[p.status] + ' ' + (p.planName || '—') + '</p>';
-            ph += '<p class="text-[10px] text-slate-500">' + (p.orderId || '—') + ' · ' + formatDT(p.createdAt) + '</p></div>';
+            ph += '<p class="text-[10px] text-slate-500">' + (p.orderId || '—') + ' · ' + formatDT(p.createdAt) + (p.reuploadCount ? ' · 🔄×' + p.reuploadCount : '') + '</p></div>';
             ph += '<p class="text-sm font-black text-orange-600">' + money(p.finalAmount) + '</p>';
             ph += '</div>';
         });
@@ -2058,8 +2520,8 @@ function renderAgreements() {
         if (a.consentGiven && !b.consentGiven) return -1;
         if (!a.consentGiven && b.consentGiven) return 1;
         var da = a.consentDate ? new Date(a.consentDate).getTime() : 0;
-        var db = b.consentDate ? new Date(b.consentDate).getTime() : 0;
-        return db - da;
+        var db2 = b.consentDate ? new Date(b.consentDate).getTime() : 0;
+        return db2 - da;
     });
 
     var givenCount = allStudents.filter(function(s) { return s.consentGiven === true; }).length;
@@ -2177,7 +2639,201 @@ function loadLogs() {
     });
 }
 
-function closeReceiptModal() { document.getElementById('receiptModal').classList.add('hidden'); }
+/* ============ SYSTEM TOOLS ============ */
+function refreshToolCounts() {
+    var counts = { students: 'toolCountStudents', purchases: 'toolCountPurchases', coupons: 'toolCountCoupons', logs: 'toolCountLogs', config: 'toolCountConfig' };
+    Object.keys(counts).forEach(function(col) {
+        db.collection(col).get().then(function(snap) {
+            var el = document.getElementById(counts[col]);
+            if (el) el.textContent = snap.size;
+        }).catch(function() {
+            var el = document.getElementById(counts[col]);
+            if (el) el.textContent = '—';
+        });
+    });
+}
+
+async function backupAllData() {
+    var btn = document.getElementById('backupBtn');
+    var msg = document.getElementById('backupMsg');
+    msg.classList.add('hidden');
+    btn.disabled = true;
+    btn.textContent = '⏳ Collecting data...';
+
+    try {
+        var backup = {
+            version: 1,
+            exportedAt: new Date().toISOString(),
+            projectId: firebaseConfig.projectId,
+            collections: {}
+        };
+
+        for (var i = 0; i < ALL_COLLECTIONS.length; i++) {
+            var col = ALL_COLLECTIONS[i];
+            var snap = await db.collection(col).get();
+            backup.collections[col] = [];
+            snap.forEach(function(doc) {
+                backup.collections[col].push({
+                    id: doc.id,
+                    data: doc.data()
+                });
+            });
+        }
+
+        var json = JSON.stringify(backup, null, 2);
+        var blob = new Blob([json], { type: 'application/json' });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        var stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+        link.href = url;
+        link.download = 'EnglishSpur_Backup_' + stamp + '.json';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(function() { URL.revokeObjectURL(url); }, 1500);
+
+        var totalDocs = 0;
+        ALL_COLLECTIONS.forEach(function(col) { totalDocs += backup.collections[col].length; });
+
+        msg.textContent = '✅ Backup downloaded! ' + totalDocs + ' documents across ' + ALL_COLLECTIONS.length + ' collections.';
+        msg.classList.remove('hidden');
+        toast('✅ Backup downloaded');
+    } catch (err) {
+        alert('❌ Backup failed: ' + err.message);
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '📥 Download Backup (JSON)';
+    }
+}
+
+async function restoreFromBackup() {
+    var fileInput = document.getElementById('restoreFile');
+    var msg = document.getElementById('restoreMsg');
+    var btn = document.getElementById('restoreBtn');
+    msg.classList.add('hidden');
+
+    if (!fileInput.files || fileInput.files.length === 0) {
+        alert('⚠️ Please select a backup JSON file first.');
+        return;
+    }
+
+    var file = fileInput.files[0];
+    if (!file.name.endsWith('.json')) {
+        alert('⚠️ Please select a .json backup file.');
+        return;
+    }
+
+    var confirmRestore = confirm('⚠️ Restore will ADD/OVERWRITE documents in Firestore.\n\nExisting data with same IDs will be overwritten.\n\nContinue?');
+    if (!confirmRestore) return;
+
+    btn.disabled = true;
+    btn.textContent = '⏳ Restoring...';
+
+    try {
+        var text = await file.text();
+        var backup = JSON.parse(text);
+
+        if (!backup.collections) {
+            throw new Error('Invalid backup file format — missing collections.');
+        }
+
+        var totalRestored = 0;
+        var collections = Object.keys(backup.collections);
+
+        for (var i = 0; i < collections.length; i++) {
+            var col = collections[i];
+            var docs = backup.collections[col] || [];
+
+            for (var j = 0; j < docs.length; j++) {
+                var doc = docs[j];
+                if (!doc.id || !doc.data) continue;
+                await db.collection(col).doc(doc.id).set(doc.data, { merge: true });
+                totalRestored++;
+            }
+        }
+
+        msg.textContent = '✅ Restored ' + totalRestored + ' documents across ' + collections.length + ' collections.';
+        msg.classList.remove('hidden');
+        toast('✅ Restore complete');
+        fileInput.value = '';
+        refreshToolCounts();
+    } catch (err) {
+        alert('❌ Restore failed: ' + err.message);
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '📤 Restore From File';
+    }
+}
+
+function checkResetConfirm() {
+    var c1 = document.getElementById('resetConfirm1').checked;
+    var c2 = document.getElementById('resetConfirm2').checked;
+    document.getElementById('resetBtn').disabled = !(c1 && c2);
+}
+
+document.addEventListener('change', function(e) {
+    if (e.target && (e.target.id === 'resetConfirm1' || e.target.id === 'resetConfirm2')) {
+        checkResetConfirm();
+    }
+});
+
+async function resetAllData() {
+    var c1 = document.getElementById('resetConfirm1').checked;
+    var c2 = document.getElementById('resetConfirm2').checked;
+    if (!c1 || !c2) {
+        alert('⚠️ Please check both confirmation boxes first.');
+        return;
+    }
+
+    var finalConfirm = prompt('⚠️ FINAL WARNING ⚠️\n\nThis will PERMANENTLY DELETE all data from:\n- students\n- purchases\n- coupons\n- logs\n- config\n\nType "RESET" to confirm:');
+    if (finalConfirm !== 'RESET') {
+        alert('❌ Reset cancelled.');
+        return;
+    }
+
+    var btn = document.getElementById('resetBtn');
+    var msg = document.getElementById('resetMsg');
+    msg.classList.add('hidden');
+    btn.disabled = true;
+    btn.textContent = '⏳ Deleting everything...';
+
+    try {
+        var totalDeleted = 0;
+
+        for (var i = 0; i < ALL_COLLECTIONS.length; i++) {
+            var col = ALL_COLLECTIONS[i];
+            var snap = await db.collection(col).get();
+
+            if (snap.size === 0) continue;
+
+            var docs = snap.docs;
+            var chunkSize = 400;
+            for (var j = 0; j < docs.length; j += chunkSize) {
+                var batch = db.batch();
+                var chunk = docs.slice(j, j + chunkSize);
+                chunk.forEach(function(doc) {
+                    batch.delete(doc.ref);
+                    totalDeleted++;
+                });
+                await batch.commit();
+            }
+        }
+
+        msg.textContent = '✅ Reset complete! ' + totalDeleted + ' documents deleted from ' + ALL_COLLECTIONS.length + ' collections.';
+        msg.classList.remove('hidden');
+        toast('🔴 Reset complete');
+
+        document.getElementById('resetConfirm1').checked = false;
+        document.getElementById('resetConfirm2').checked = false;
+        refreshToolCounts();
+    } catch (err) {
+        alert('❌ Reset failed: ' + err.message);
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '🔴 Reset All Data';
+        checkResetConfirm();
+    }
+}
 
 /* ============ TOAST ============ */
 function toast(msg, type) {
