@@ -15,19 +15,15 @@
     body { font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif; background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%); margin: 0; padding: 10px; min-height: 100vh; color: #1e293b; -webkit-font-smoothing: antialiased; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes scaleIn { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
     @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     @keyframes badgePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-    @keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
     .fade-in { animation: fadeIn 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
     .fade-in-up { animation: fadeInUp 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
-    .scale-in { animation: scaleIn 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
     .badge-pulse { animation: badgePulse 1.5s ease-in-out infinite; }
-    .float-y { animation: floatY 3s ease-in-out infinite; }
     @keyframes modalPop { from { opacity: 0; transform: scale(0.94) translateY(16px); } to { opacity: 1; transform: scale(1) translateY(0); } }
     .modal-pop { animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
     input:focus, select:focus, textarea:focus { outline: none; border-color: #1d4ed8 !important; box-shadow: 0 0 0 4px rgba(29,78,216,0.12); }
-    .tab-active { background: linear-gradient(135deg, #1d4ed8, #1e40af) !important; color: #ffffff !important; box-shadow: 0 6px 18px rgba(29,78,216,0.35), inset 0 1px 0 rgba(255,255,255,0.15); transform: translateY(-1px); }
+    .tab-active { background: linear-gradient(135deg, #1d4ed8, #1e40af) !important; color: #ffffff !important; box-shadow: 0 6px 18px rgba(29,78,216,0.35); transform: translateY(-1px); }
     .tab-inactive { background-color: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
     .tab-inactive:hover { background-color: #e2e8f0; }
     .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 99999; padding: 14px 26px; border-radius: 14px; font-size: 13px; font-weight: 700; box-shadow: 0 12px 32px rgba(0,0,0,0.28); animation: slideDown 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 90vw; text-align: center; backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15); }
@@ -35,7 +31,7 @@
     .toast.error { background: linear-gradient(135deg, #dc2626, #b91c1c); color: #fff; }
     .toast.info { background: linear-gradient(135deg, #1d4ed8, #1e40af); color: #fff; }
     @keyframes slideDown { from { opacity: 0; transform: translate(-50%, -24px); } to { opacity: 1; transform: translate(-50%, 0); } }
-    .checklist-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 14px; cursor: pointer; transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1); }
+    .checklist-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 14px; cursor: pointer; transition: all 0.22s; }
     .checklist-item:hover { border-color: #93c5fd; background: #eff6ff; transform: translateY(-1px); }
     .checklist-item.checked { border-color: #16a34a; background: linear-gradient(135deg, #f0fdf4, #dcfce7); box-shadow: 0 4px 12px rgba(22,163,74,0.15); }
     .checklist-item input[type="radio"] { margin-top: 2px; width: 20px; height: 20px; accent-color: #1d4ed8; flex-shrink: 0; }
@@ -49,14 +45,13 @@
     .brand-logo-sm { width: 42px; height: 42px; object-fit: contain; }
     .qr-img { width: 100%; max-width: 340px; height: auto; aspect-ratio: 1 / 1; object-fit: contain; border-radius: 16px; background: #fff; padding: 10px; border: 2px solid #e2e8f0; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
     @media (min-width: 640px) { .qr-img { max-width: 380px; } }
-    @media (max-width: 360px) { .qr-img { max-width: 260px; } }
     .screenshot-img { max-width: 100%; max-height: 380px; border-radius: 12px; border: 2px solid #cbd5e1; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
     .order-id-badge { font-family: 'Courier New', monospace; letter-spacing: 1px; background: #dbeafe; color: #1e40af; border: 2px solid #93c5fd; padding: 3px 10px; border-radius: 8px; font-weight: 900; display: inline-block; font-size: 12px; }
     #refreshBtn.spinning { animation: spin 0.8s linear infinite; }
     .coupon-badge { font-family: 'Courier New', monospace; letter-spacing: 1px; background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; border: 2px dashed #f59e0b; padding: 4px 10px; border-radius: 8px; font-weight: 800; font-size: 12px; }
     .special-badge { display: inline-block; background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; font-size: 9px; font-weight: 900; padding: 3px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 3px 10px rgba(234,88,12,0.35); }
     .offer-for-you-dark { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #fff; border-radius: 14px; padding: 16px; box-shadow: 0 10px 24px rgba(245,158,11,0.4); }
-    .plan-row { background: #fff; border: 2px solid #e2e8f0; border-radius: 16px; padding: 16px; transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1); cursor: pointer; position: relative; overflow: hidden; }
+    .plan-row { background: #fff; border: 2px solid #e2e8f0; border-radius: 16px; padding: 16px; transition: all 0.25s; cursor: pointer; position: relative; overflow: hidden; }
     .plan-row:hover { transform: translateY(-2px); }
     .plan-icon-badge { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 21px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
     .theme-adult-1on1 { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #3b82f6 !important; }
@@ -90,14 +85,6 @@
     .savings-meter .sm-pct { font-size: 22px; font-weight: 900; color: #ea580c; line-height: 1; }
     .savings-meter .sm-label { font-size: 10px; font-weight: 800; color: #92400e; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px; }
     .length-tip { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-left: 3px solid #10b981; padding: 8px 12px; border-radius: 8px; font-size: 10px; font-weight: 700; color: #065f46; margin-top: 8px; }
-    .tag-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 800; padding: 3px 9px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.3px; }
-    .tag-vip { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #fff; box-shadow: 0 3px 10px rgba(245,158,11,0.4); }
-    .tag-referral { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; }
-    .tag-default { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
-    .tag-kids { background: linear-gradient(135deg, #ec4899, #db2777); color: #fff; }
-    .tag-adult { background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff; }
-    .tag-demo { background: linear-gradient(135deg, #a855f7, #9333ea); color: #fff; }
-    .tag-old { background: #f3f4f6; color: #6b7280; border: 1px solid #d1d5db; }
     .course-meta-box { background: linear-gradient(135deg, #f8fafc, #f1f5f9); border: 1px solid #e2e8f0; border-radius: 12px; padding: 12px; margin: 10px 0; }
     .course-meta-item { text-align: center; }
     .course-meta-item .label { font-size: 9px; color: #64748b; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; }
@@ -110,17 +97,18 @@
     .grand-total-box .gt-amount { font-size: 24px; font-weight: 900; margin-top: 3px; }
     .grand-total-box .gt-note { font-size: 9px; opacity: 0.9; margin-top: 3px; font-weight: 600; }
     .tier-badge { display: inline-block; font-size: 9px; font-weight: 900; padding: 3px 9px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; margin-left: 6px; vertical-align: middle; }
-    .tier-basic { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; box-shadow: 0 3px 10px rgba(29,78,216,0.3); }
-    .tier-intermediate { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; box-shadow: 0 3px 10px rgba(124,58,237,0.3); }
-    .tier-advanced { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; box-shadow: 0 3px 10px rgba(234,88,12,0.3); }
-    .tier-master { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; box-shadow: 0 3px 10px rgba(220,38,38,0.3); }
-    .pro-card { background: #fff; border-radius: 20px; box-shadow: 0 4px 24px rgba(15,23,42,0.06), 0 1px 3px rgba(15,23,42,0.04); border: 1px solid rgba(226,232,240,0.8); }
+    .tier-basic { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; }
+    .tier-intermediate { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; }
+    .tier-advanced { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; }
+    .tier-master { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; }
+    .pro-card { background: #fff; border-radius: 20px; box-shadow: 0 4px 24px rgba(15,23,42,0.06); border: 1px solid rgba(226,232,240,0.8); }
     .pro-header { background: linear-gradient(135deg, #1e3a8a, #1e40af, #1d4ed8); position: relative; overflow: hidden; }
     .pro-header::after { content: ''; position: absolute; top: -50%; right: -20%; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%); }
     .pro-header-green { background: linear-gradient(135deg, #15803d, #166534, #14532d); position: relative; overflow: hidden; }
     .pro-header-green::after { content: ''; position: absolute; top: -50%; right: -20%; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%); }
     .glass-btn { background: rgba(255,255,255,0.15); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.25); transition: all 0.2s; }
     .glass-btn:hover { background: rgba(255,255,255,0.25); }
+    .id-display { font-family: 'Courier New', monospace; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; border: 2px solid #3b82f6; padding: 8px 14px; border-radius: 12px; display: inline-block; font-size: 16px; }
     @media (max-width: 640px) {
         body { padding: 8px; }
         .brand-logo { width: 52px; height: 52px; }
@@ -171,7 +159,7 @@
 <div id="screenNewStudent" class="max-w-lg mx-auto hidden fade-in-up">
     <div class="pro-card overflow-hidden">
         <div class="pro-header p-4 flex items-center gap-3">
-            <button type="button" onclick="showScreen('welcome')" aria-label="Go back" class="text-white text-2xl font-bold leading-none glass-btn w-9 h-9 rounded-full flex items-center justify-center">←</button>
+            <button type="button" onclick="showScreen('welcome')" aria-label="Back" class="text-white text-2xl font-bold leading-none glass-btn w-9 h-9 rounded-full flex items-center justify-center">←</button>
             <div>
                 <h2 class="text-base font-black text-white">New Student Registration</h2>
                 <p class="text-blue-100 text-[10px] font-medium">Fill your details to continue</p>
@@ -183,36 +171,12 @@
                 <input type="text" id="regName" placeholder="Your full name" maxlength="50" class="w-full border-2 border-slate-200 rounded-xl p-3.5 bg-slate-50 font-semibold text-sm uppercase focus:bg-white transition" oninput="this.value = this.value.toUpperCase()">
             </div>
             <div>
-                <label for="regMobile" class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5 tracking-wide">WhatsApp Number <span class="text-red-500">*</span></label>
-                <div class="flex gap-2 items-stretch">
-                    <select id="regCountryCode" aria-label="Country code" class="border-2 border-slate-200 rounded-xl py-3.5 px-2 bg-slate-50 font-semibold text-xs sm:text-sm flex-shrink-0 w-[90px] sm:w-[110px] focus:bg-white transition">
-                        <option value="+91" selected>🇮🇳 +91</option>
-                        <option value="+880">🇧🇩 +880</option>
-                        <option value="+1">🇺🇸 +1</option>
-                        <option value="+44">🇬🇧 +44</option>
-                        <option value="+971">🇦🇪 +971</option>
-                        <option value="+966">🇸🇦 +966</option>
-                        <option value="+65">🇸🇬 +65</option>
-                        <option value="+60">🇲🇾 +60</option>
-                        <option value="+61">🇦🇺 +61</option>
-                        <option value="+92">🇵🇰 +92</option>
-                        <option value="+94">🇱🇰 +94</option>
-                        <option value="+977">🇳🇵 +977</option>
-                    </select>
-                    <input type="tel" id="regMobile" placeholder="9876543210" maxlength="10" class="flex-1 min-w-0 border-2 border-slate-200 rounded-xl p-3.5 bg-slate-50 font-semibold text-sm focus:bg-white transition" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10); updateRegMobileCounter();">
-                </div>
-                <div class="flex justify-between items-center mt-1 pl-1">
-                    <p id="regMobileError" class="text-red-600 text-[10px] hidden font-bold">⚠️ Exactly 10 digits required</p>
-                    <span id="regMobileCounter" class="text-[9px] text-slate-400 font-bold ml-auto">0/10</span>
-                </div>
-            </div>
-            <div>
                 <label for="dobDay" class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Date of Birth <span class="text-red-500">*</span></label>
                 <div class="flex gap-2">
-                    <select id="dobDay" aria-label="Date of birth - Day" class="flex-1 border-2 border-slate-200 rounded-xl p-3.5 bg-slate-50 font-semibold text-sm text-center focus:bg-white transition">
+                    <select id="dobDay" aria-label="Day" class="flex-1 border-2 border-slate-200 rounded-xl p-3.5 bg-slate-50 font-semibold text-sm text-center focus:bg-white transition">
                         <option value="">DD</option>
                     </select>
-                    <select id="dobMonth" aria-label="Date of birth - Month" class="flex-1 border-2 border-slate-200 rounded-xl p-3.5 bg-slate-50 font-semibold text-sm text-center focus:bg-white transition">
+                    <select id="dobMonth" aria-label="Month" class="flex-1 border-2 border-slate-200 rounded-xl p-3.5 bg-slate-50 font-semibold text-sm text-center focus:bg-white transition">
                         <option value="">MM</option>
                         <option value="01">Jan</option>
                         <option value="02">Feb</option>
@@ -227,7 +191,7 @@
                         <option value="11">Nov</option>
                         <option value="12">Dec</option>
                     </select>
-                    <select id="dobYear" aria-label="Date of birth - Year" class="flex-1 border-2 border-slate-200 rounded-xl p-3.5 bg-slate-50 font-semibold text-sm text-center focus:bg-white transition">
+                    <select id="dobYear" aria-label="Year" class="flex-1 border-2 border-slate-200 rounded-xl p-3.5 bg-slate-50 font-semibold text-sm text-center focus:bg-white transition">
                         <option value="">YYYY</option>
                     </select>
                 </div>
@@ -235,11 +199,11 @@
                 <p id="regDobError" class="text-red-600 text-[10px] hidden font-bold mt-1">⚠️ Please select a valid date of birth</p>
             </div>
             <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 p-3 rounded-r-xl">
-                <p class="text-[10px] text-blue-900 font-semibold leading-relaxed">ℹ️ You will receive your Student Code from the office after registration. Your plan recommendations will be based on your age.</p>
+                <p class="text-[10px] text-blue-900 font-semibold leading-relaxed">ℹ️ আপনার Unique ID অটোমেটিক তৈরি হবে। আপনার Student Code পরবর্তীতে অফিস থেকে দেওয়া হবে।</p>
             </div>
             <p id="regError" class="text-red-600 text-xs font-semibold hidden p-2.5 bg-red-50 rounded-lg"></p>
             <button type="button" onclick="registerNewStudent()" class="w-full bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white font-black p-4 rounded-2xl text-xs uppercase tracking-widest transition-all shadow-lg hover:shadow-xl">
-                🚀 Continue → Choose Plan
+                🚀 Register & Get Unique ID
             </button>
         </div>
     </div>
@@ -249,7 +213,7 @@
 <div id="screenOldStudent" class="max-w-lg mx-auto hidden fade-in-up">
     <div class="pro-card overflow-hidden">
         <div class="pro-header-green p-4 flex items-center gap-3">
-            <button type="button" onclick="showScreen('welcome')" aria-label="Go back" class="text-white text-2xl font-bold leading-none glass-btn w-9 h-9 rounded-full flex items-center justify-center">←</button>
+            <button type="button" onclick="showScreen('welcome')" aria-label="Back" class="text-white text-2xl font-bold leading-none glass-btn w-9 h-9 rounded-full flex items-center justify-center">←</button>
             <div>
                 <h2 class="text-base font-black text-white">Existing Student Login</h2>
                 <p class="text-green-100 text-[10px] font-medium">Login using your Student Code</p>
@@ -258,7 +222,7 @@
         <div class="p-5 space-y-3">
             <div>
                 <label for="loginCode" class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Student Code <span class="text-red-500">*</span></label>
-                <input type="text" id="loginCode" placeholder="e.g. ES2026-2710" class="w-full border-2 border-slate-200 rounded-xl p-4 bg-slate-50 font-bold text-base uppercase tracking-widest text-center focus:bg-white transition" onkeydown="if(event.key==='Enter')existingStudentLogin()" autocomplete="off">
+                <input type="text" id="loginCode" placeholder="e.g. ES2026-0001" class="w-full border-2 border-slate-200 rounded-xl p-4 bg-slate-50 font-bold text-base uppercase tracking-widest text-center focus:bg-white transition" onkeydown="if(event.key==='Enter')existingStudentLogin()" autocomplete="off">
                 <p class="text-[10px] text-slate-500 mt-2 text-center">🔖 Code is provided by the office. If you don't have one, call <strong>+91 9875340842</strong>.</p>
             </div>
             <p id="loginError" class="text-red-600 text-xs font-semibold hidden p-2.5 bg-red-50 rounded-lg"></p>
@@ -296,7 +260,7 @@
             <div id="studentAvatar" class="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-black text-xl flex-shrink-0 shadow-lg">?</div>
             <div class="min-w-0 flex-1">
                 <p id="welcomeName" class="font-black text-blue-900 text-sm uppercase truncate tracking-tight">Student</p>
-                <p id="welcomeMeta" class="text-[10px] text-slate-500 truncate mt-0.5"></p>
+                <div id="welcomeMeta" class="text-[10px] text-slate-500 mt-0.5 space-y-0.5"></div>
                 <div id="studentBadges" class="flex flex-wrap gap-1 mt-1.5"></div>
             </div>
         </div>
@@ -309,12 +273,8 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
             <div id="welcomeJoinedWrap" class="hidden bg-white rounded-xl p-3 border border-indigo-200">
-                <p id="welcomeJoinedLabel" class="text-[10px] text-slate-500 font-bold uppercase tracking-wide">📅 Student Since</p>
+                <p id="welcomeJoinedLabel" class="text-[10px] text-slate-500 font-bold uppercase tracking-wide">📅 Registered On</p>
                 <p class="font-black text-indigo-800 mt-0.5" id="welcomeJoined"></p>
-            </div>
-            <div id="welcomeReferralWrap" class="hidden bg-white rounded-xl p-3 border border-indigo-200">
-                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wide">👥 Referred Via</p>
-                <p class="font-black text-indigo-800 mt-0.5" id="welcomeReferral"></p>
             </div>
         </div>
     </div>
@@ -322,7 +282,6 @@
     <div id="viewCurrentPlan">
         <div class="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 rounded-3xl shadow-2xl p-6 mb-4 text-white relative overflow-hidden">
             <div class="absolute top-0 right-0 w-48 h-48 rounded-full bg-white/10 -mr-16 -mt-16"></div>
-            <div class="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-white/5 -ml-12 -mb-12"></div>
             <div class="relative z-10">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center text-3xl flex-shrink-0 shadow-lg">🎯</div>
@@ -359,7 +318,7 @@
             <p class="text-3xl mb-2">💬</p>
             <p class="text-sm text-slate-700 font-bold mb-1">Have a question about plans?</p>
             <p class="text-[11px] text-slate-500 font-medium mb-3">Our team is here to help you!</p>
-            <button type="button" onclick="contactViaWhatsApp()" class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-black text-xs px-6 py-3 rounded-full shadow-lg transition-all hover:shadow-xl">💬 WhatsApp: 9875340842</button>
+            <button type="button" onclick="contactViaWhatsApp()" class="inline-flex items-center gap-2 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-black text-xs px-6 py-3 rounded-full shadow-lg transition-all">💬 WhatsApp: 9875340842</button>
         </div>
     </div>
 
@@ -433,7 +392,7 @@
                         <div class="checklist-content"><p class="text-sm font-black text-green-900">✅ I have completed the payment</p><p class="text-[12px] text-green-800 font-medium mt-0.5">আমি পেমেন্ট সম্পন্ন করেছি</p></div>
                     </label>
                 </div>
-                <button type="button" id="stage1NextBtn" onclick="payStageGo(2)" disabled class="w-full bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white font-black py-4 rounded-2xl text-sm sm:text-base shadow-lg uppercase tracking-wide mb-2 disabled:opacity-40 disabled:cursor-not-allowed transition-all">Next / পরবর্তী →</button>
+                <button type="button" id="stage1NextBtn" onclick="payStageGo(2)" disabled class="w-full bg-gradient-to-r from-blue-700 to-blue-800 text-white font-black py-4 rounded-2xl text-sm uppercase tracking-wide mb-2 disabled:opacity-40 disabled:cursor-not-allowed transition-all">Next / পরবর্তী →</button>
                 <button type="button" onclick="showView('explorePlans')" class="w-full bg-slate-100 text-slate-700 font-bold p-3 rounded-xl text-xs hover:bg-slate-200 transition">← Back to Plans</button>
             </div>
 
@@ -451,7 +410,7 @@
                 </div>
                 <div class="flex gap-2">
                     <button type="button" onclick="payStageGo(1)" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-4 rounded-2xl text-sm transition">← Back</button>
-                    <button type="button" id="stage2NextBtn" onclick="payStageGo(3)" disabled class="flex-1 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white font-black py-4 rounded-2xl text-base shadow-lg uppercase tracking-wide disabled:opacity-40 disabled:cursor-not-allowed transition-all">Next →</button>
+                    <button type="button" id="stage2NextBtn" onclick="payStageGo(3)" disabled class="flex-1 bg-gradient-to-r from-blue-700 to-blue-800 text-white font-black py-4 rounded-2xl text-base shadow-lg uppercase tracking-wide disabled:opacity-40 disabled:cursor-not-allowed transition-all">Next →</button>
                 </div>
             </div>
 
@@ -460,7 +419,7 @@
                 <div class="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-4 mb-4">
                     <label for="screenshotInput" class="text-sm font-black text-green-900 uppercase mb-2 tracking-wide block cursor-pointer">📸 Select Your Screenshot *</label>
                     <input type="file" id="screenshotInput" accept="image/*" class="w-full text-xs file:mr-2 file:py-3 file:px-5 file:rounded-xl file:border-0 file:bg-gradient-to-r file:from-green-600 file:to-emerald-700 file:text-white file:font-bold file:text-xs file:cursor-pointer">
-                    <div id="previewBox" class="mt-3 hidden"><p class="text-[11px] text-green-800 font-black mb-2">✅ Screenshot Preview:</p><img id="previewImg" class="screenshot-img mx-auto" alt="Screenshot preview"><button type="button" onclick="clearScreenshot()" class="mt-2 w-full bg-red-100 hover:bg-red-200 text-red-700 font-bold py-2.5 rounded-xl text-[11px] transition">🗑️ Remove & Re-upload</button></div>
+                    <div id="previewBox" class="mt-3 hidden"><p class="text-[11px] text-green-800 font-black mb-2">✅ Screenshot Preview:</p><img id="previewImg" class="screenshot-img mx-auto" alt="Preview"><button type="button" onclick="clearScreenshot()" class="mt-2 w-full bg-red-100 hover:bg-red-200 text-red-700 font-bold py-2.5 rounded-xl text-[11px] transition">🗑️ Remove & Re-upload</button></div>
                     <p id="screenshotWarning" class="text-[11px] text-red-600 font-bold mt-2 hidden">⚠️ Upload a screenshot before proceeding</p>
                 </div>
                 <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-2xl p-4 mb-4">
@@ -471,7 +430,7 @@
                 </div>
                 <div class="flex gap-2">
                     <button type="button" onclick="payStageGo(2)" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-4 rounded-2xl text-sm transition">← Back</button>
-                    <button type="button" id="stage3NextBtn" onclick="payStageGo(4)" disabled class="flex-1 bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white font-black py-4 rounded-2xl text-base shadow-lg uppercase tracking-wide disabled:opacity-40 disabled:cursor-not-allowed transition-all">Next →</button>
+                    <button type="button" id="stage3NextBtn" onclick="payStageGo(4)" disabled class="flex-1 bg-gradient-to-r from-blue-700 to-blue-800 text-white font-black py-4 rounded-2xl text-base shadow-lg uppercase tracking-wide disabled:opacity-40 disabled:cursor-not-allowed transition-all">Next →</button>
                 </div>
             </div>
 
@@ -491,7 +450,7 @@
                 </div>
                 <div class="flex gap-2 mb-2">
                     <button type="button" onclick="payStageGo(3)" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-4 rounded-2xl text-sm transition">← Back</button>
-                    <button type="button" id="paySubmitBtn" onclick="submitPurchase()" class="flex-1 bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-black py-4 rounded-2xl text-base shadow-lg uppercase tracking-wide transition-all">✅ Submit</button>
+                    <button type="button" id="paySubmitBtn" onclick="submitPurchase()" class="flex-1 bg-gradient-to-r from-green-600 to-emerald-700 text-white font-black py-4 rounded-2xl text-base shadow-lg uppercase tracking-wide transition-all">✅ Submit</button>
                 </div>
             </div>
 
@@ -514,11 +473,11 @@
                 <div class="bg-gradient-to-br from-amber-50 to-yellow-50 border-2 border-amber-400 rounded-2xl p-5 mb-4">
                     <div class="bg-white rounded-xl p-4 border border-amber-300">
                         <p class="text-[13px] text-slate-700 font-medium leading-relaxed">Please check <strong class="text-amber-700">📋 Order / Payment History</strong> to confirm approval.</p>
-                        <button type="button" onclick="showView('history')" class="mt-3 w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-black text-[12px] py-3 rounded-xl shadow uppercase tracking-wide transition-all">📋 Go to Order History</button>
+                        <button type="button" onclick="showView('history')" class="mt-3 w-full bg-gradient-to-r from-amber-600 to-orange-600 text-white font-black text-[12px] py-3 rounded-xl shadow uppercase tracking-wide transition-all">📋 Go to Order History</button>
                     </div>
                 </div>
-                <button type="button" onclick="backToDashboard()" class="w-full bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white font-bold px-5 py-3.5 rounded-2xl text-sm mb-2 transition-all">🏠 Back to Dashboard</button>
-                <button type="button" onclick="studentLogout()" class="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold px-5 py-3.5 rounded-2xl text-sm transition-all">🚪 Logout</button>
+                <button type="button" onclick="backToDashboard()" class="w-full bg-gradient-to-r from-blue-700 to-blue-800 text-white font-bold px-5 py-3.5 rounded-2xl text-sm mb-2 transition-all">🏠 Back to Dashboard</button>
+                <button type="button" onclick="studentLogout()" class="w-full bg-gradient-to-r from-red-500 to-red-600 text-white font-bold px-5 py-3.5 rounded-2xl text-sm transition-all">🚪 Logout</button>
             </div>
         </div>
     </div>
@@ -569,7 +528,7 @@
                     <div id="checkoutAvailableCoupons" class="space-y-2 mb-3"></div>
                     <details class="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-xl">
                         <summary class="text-[10px] font-bold text-amber-900 cursor-pointer select-none p-3">✏️ Have a coupon code? Enter manually</summary>
-                        <div class="p-3 pt-0"><div class="flex gap-2"><input type="text" id="checkoutCouponInput" placeholder="COUPON CODE" class="flex-1 border-2 border-slate-200 rounded-xl p-3 text-xs font-bold uppercase" onkeydown="if(event.key==='Enter'){event.preventDefault();applyCheckoutManualCoupon();}"><button type="button" onclick="applyCheckoutManualCoupon()" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white font-bold text-[11px] px-4 rounded-xl whitespace-nowrap transition-all">Apply</button></div></div>
+                        <div class="p-3 pt-0"><div class="flex gap-2"><input type="text" id="checkoutCouponInput" placeholder="COUPON CODE" class="flex-1 border-2 border-slate-200 rounded-xl p-3 text-xs font-bold uppercase" onkeydown="if(event.key==='Enter'){event.preventDefault();applyCheckoutManualCoupon();}"><button type="button" onclick="applyCheckoutManualCoupon()" class="bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white font-bold text-[11px] px-4 rounded-xl whitespace-nowrap transition-all">Apply</button></div></div>
                     </details>
                     <div id="checkoutAppliedCoupons" class="space-y-1.5 mt-2"></div>
                 </div>
@@ -588,7 +547,7 @@
             </div>
             <div class="p-4 border-t-2 border-slate-100 bg-slate-50 flex flex-col sm:flex-row gap-2">
                 <button type="button" onclick="closePlanCheckoutModal()" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-2xl text-xs uppercase tracking-wide transition">← Choose Different Plan</button>
-                <button type="button" onclick="confirmCheckoutAndPay()" class="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-black py-3.5 rounded-2xl text-xs uppercase tracking-wide transition-all shadow-lg">💳 Proceed to Payment →</button>
+                <button type="button" onclick="confirmCheckoutAndPay()" class="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-black py-3.5 rounded-2xl text-xs uppercase tracking-wide transition-all shadow-lg">💳 Proceed to Payment →</button>
             </div>
         </div>
     </div>
@@ -630,7 +589,7 @@
                 </label>
             </div>
             <div class="p-4 border-t-2 border-slate-100 bg-slate-50">
-                <button type="button" id="agreeConsentBtn" onclick="submitConsent()" disabled class="w-full bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-black py-4 rounded-2xl text-sm uppercase tracking-widest transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed">
+                <button type="button" id="agreeConsentBtn" onclick="submitConsent()" disabled class="w-full bg-gradient-to-r from-green-600 to-emerald-700 text-white font-black py-4 rounded-2xl text-sm uppercase tracking-widest transition-all shadow-lg disabled:opacity-40 disabled:cursor-not-allowed">
                     ✅ I Agree & Continue
                 </button>
             </div>
@@ -675,7 +634,7 @@
                 <input type="file" id="reuploadScreenshotInput" accept="image/*" class="w-full text-xs file:mr-2 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:bg-gradient-to-r file:from-green-600 file:to-emerald-700 file:text-white file:font-bold file:text-xs file:cursor-pointer">
                 <div id="reuploadPreviewBox" class="mt-2 hidden">
                     <p class="text-[10px] text-green-800 font-black mb-1.5">✅ New Screenshot Preview:</p>
-                    <img id="reuploadPreviewImg" class="screenshot-img mx-auto" alt="Reupload preview">
+                    <img id="reuploadPreviewImg" class="screenshot-img mx-auto" alt="Preview">
                 </div>
             </div>
             <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 p-3.5 rounded-r-xl mb-4">
@@ -683,7 +642,7 @@
             </div>
             <div class="flex gap-2">
                 <button type="button" onclick="closeReuploadModal()" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-2xl text-sm transition">Cancel</button>
-                <button type="button" id="reuploadSubmitBtn" onclick="submitReupload()" class="flex-1 bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-black py-3.5 rounded-2xl text-sm shadow-lg uppercase tracking-wide transition-all">🔄 Send via WhatsApp</button>
+                <button type="button" id="reuploadSubmitBtn" onclick="submitReupload()" class="flex-1 bg-gradient-to-r from-red-600 to-rose-600 text-white font-black py-3.5 rounded-2xl text-sm shadow-lg uppercase tracking-wide transition-all">🔄 Send via WhatsApp</button>
             </div>
         </div>
     </div>
@@ -758,12 +717,16 @@ function cleanPlanName(name) {
     return String(name).replace(/\s+/g, ' ').trim();
 }
 
+function generateUniqueId() {
+    return 'ES_' + Date.now() + Math.floor(Math.random() * 1000);
+}
+
 function formatFullTimestamp(ts) {
     if (!ts) return '—';
     try {
         var d = ts.toDate ? ts.toDate() : new Date(ts);
         if (isNaN(d.getTime())) return '—';
-        return d.toLocaleString('en-IN', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+        return d.toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
     } catch (e) { return '—'; }
 }
 
@@ -800,16 +763,6 @@ function isCouponGrantedToStudent(code) {
 }
 function allowMultipleCoupons() { return currentStudent && currentStudent.allowMultipleCoupons === true; }
 
-function updateRegMobileCounter() {
-    var input = document.getElementById('regMobile');
-    var counter = document.getElementById('regMobileCounter');
-    if (counter && input) {
-        var len = input.value.length;
-        counter.textContent = len + '/10';
-        counter.className = len === 10 ? 'text-[9px] text-green-600 font-bold' : 'text-[9px] text-slate-400 font-bold';
-    }
-}
-
 function showToast(message, type) {
     var existing = document.querySelector('.toast');
     if (existing) existing.remove();
@@ -833,10 +786,6 @@ function saveSelectedPlan() {
 }
 function loadStudentFromStorage() { try { var d = localStorage.getItem(STORAGE_KEY); return d ? JSON.parse(d) : null; } catch (e) { return null; } }
 function saveStudentToStorage(s) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch (e) {} }
-
-function generateStudentIdFromMobile(countryCode, mobileNumber) {
-    return 'ES_' + (countryCode + mobileNumber).replace(/\D/g, '');
-}
 
 /* ============ DOB HELPERS ============ */
 function setupDobDropdowns() {
@@ -880,12 +829,6 @@ function calculateAge(dobDate) {
     var m = today.getMonth() - dobDate.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < dobDate.getDate())) age--;
     return age;
-}
-
-function getCourseByAge(age) {
-    if (age === null || age === undefined) return '';
-    if (age >= 18) return 'Power Speak for Adults';
-    return 'Fearless English for Kids';
 }
 
 /* ============ 1-ON-1 COURSE LABEL HELPERS ============ */
@@ -947,7 +890,7 @@ function showScreen(name) {
 }
 
 function showView(v) {
-    ['viewCurrentPlan', 'viewExplorePlans', 'view-checkout', 'view-payment', 'view-history'].forEach(function(id) {
+    ['viewCurrentPlan', 'viewExplorePlans', 'view-payment', 'view-history'].forEach(function(id) {
         var el = document.getElementById(id);
         if (el) el.classList.add('hidden');
     });
@@ -1001,9 +944,7 @@ function switchTab(tab) {
 function toggleConsentButton() {
     var chk = document.getElementById('consentCheckbox');
     var btn = document.getElementById('agreeConsentBtn');
-    if (chk && btn) {
-        btn.disabled = !chk.checked;
-    }
+    if (chk && btn) btn.disabled = !chk.checked;
 }
 
 function checkAndShowConsent() {
@@ -1028,13 +969,7 @@ function submitConsent() {
         consentGiven: true,
         consentDate: new Date().toISOString(),
         consentVersion: '1.0',
-        consentDetails: {
-            recording: true,
-            socialMedia: true,
-            noObjection: true,
-            rules: true,
-            privacy: true
-        },
+        consentDetails: { recording: true, socialMedia: true, noObjection: true, rules: true, privacy: true },
         consentUserAgent: navigator.userAgent.substring(0, 200),
         consentTimestamp: firebase.firestore.FieldValue.serverTimestamp()
     };
@@ -1087,7 +1022,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 var parsed = JSON.parse(savedPlan);
                 if (parsed && parsed.planId && parsed.plan) selectedPlan = parsed;
             }
-        } catch (e) { console.error('Plan restore error:', e); }
+        } catch (e) {}
         appliedCoupons = [];
         try { localStorage.removeItem(COUPON_KEY); } catch (e) {}
         checkBlockedAndEnter();
@@ -1120,7 +1055,7 @@ async function checkBlockedAndEnter() {
 
 function enterDashboard() {
     if (isLoggingOut) return;
-    isExistingStudent = !!(currentStudent.studentCode || currentStudent.studentId);
+    isExistingStudent = !!(currentStudent.studentCode);
     showAllCourses = false;
     updateStudentInfo();
     startStudentListener();
@@ -1130,18 +1065,24 @@ function enterDashboard() {
     updateCourseFilterBanner();
     showScreen('dashboard');
     showCurrentPlanView();
-
     setTimeout(function() { checkAndShowConsent(); }, 500);
 }
 
 function updateStudentInfo() {
     document.getElementById('welcomeName').textContent = currentStudent.name || 'Student';
     document.getElementById('studentAvatar').textContent = (currentStudent.name || '?').charAt(0).toUpperCase();
-    var metaParts = [];
-    var displayId = currentStudent.uniqueId || currentStudent.studentCode || currentStudent.studentId || currentStudent.id;
-    metaParts.push('🆔 ' + displayId);
-    if (currentStudent.mobile) metaParts.push('📱 ' + currentStudent.mobile);
-    document.getElementById('welcomeMeta').textContent = metaParts.join(' · ');
+    
+    var metaHtml = '';
+    if (currentStudent.uniqueId) {
+        metaHtml += '<div class="flex items-center gap-1.5"><span class="text-slate-400 font-semibold">🆔 Unique ID:</span><span class="font-mono font-black text-blue-700 text-[11px]">' + currentStudent.uniqueId + '</span></div>';
+    }
+    if (currentStudent.studentCode) {
+        metaHtml += '<div class="flex items-center gap-1.5"><span class="text-slate-400 font-semibold">🏷️ Student Code:</span><span class="font-mono font-black text-green-700 text-[11px]">' + currentStudent.studentCode + '</span></div>';
+    } else {
+        metaHtml += '<div class="text-[10px] text-amber-700 font-semibold bg-amber-50 px-2 py-0.5 rounded-lg inline-block">⏳ Student Code pending — Admin will assign</div>';
+    }
+    
+    document.getElementById('welcomeMeta').innerHTML = metaHtml;
     updateStudentBadges();
     renderWelcomeBackPanel();
 }
@@ -1151,54 +1092,29 @@ function updateStudentBadges() {
     if (!badges) return;
     badges.innerHTML = '';
 
-    var code = currentStudent.studentCode || currentStudent.studentId;
-    if (code) badges.innerHTML += '<span class="bg-indigo-100 text-indigo-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🏷️ ' + code + '</span>';
-
     if (currentStudent.courseEnrolled) {
-        var courseText = currentStudent.courseEnrolled;
-        var courseClass = courseText.toLowerCase().indexOf('kid') !== -1
-            ? 'bg-pink-100 text-pink-800'
-            : 'bg-sky-100 text-sky-800';
-        badges.innerHTML += '<span class="' + courseClass + ' text-[9px] font-bold px-2 py-0.5 rounded-full">📚 ' + courseText + '</span>';
+        var courseClass = currentStudent.courseEnrolled.toLowerCase().indexOf('kid') !== -1 ? 'bg-pink-100 text-pink-800' : 'bg-sky-100 text-sky-800';
+        badges.innerHTML += '<span class="' + courseClass + ' text-[9px] font-bold px-2 py-0.5 rounded-full">📚 ' + currentStudent.courseEnrolled + '</span>';
     }
 
     if (currentStudent.age) badges.innerHTML += '<span class="bg-amber-100 text-amber-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🎂 ' + currentStudent.age + ' yrs</span>';
 
-    if (currentStudent.batchName) {
-        badges.innerHTML += '<span class="bg-teal-100 text-teal-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🎓 ' + currentStudent.batchName + '</span>';
-    }
+    if (currentStudent.batchName) badges.innerHTML += '<span class="bg-teal-100 text-teal-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🎓 ' + currentStudent.batchName + '</span>';
 
     if (currentStudent.couponAccess) badges.innerHTML += '<span class="bg-purple-100 text-purple-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ Coupon</span>';
     if (currentStudent.allowMultipleCoupons) badges.innerHTML += '<span class="bg-fuchsia-100 text-fuchsia-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ Multi</span>';
 
-    if (currentStudent.tags && currentStudent.tags.length > 0) {
-        currentStudent.tags.forEach(function(tag) {
-            var tagLower = String(tag).toLowerCase().trim();
-            var cls = 'tag-default';
-            if (tagLower === 'vip') cls = 'tag-vip';
-            else if (tagLower === 'referral') cls = 'tag-referral';
-            else if (tagLower === 'kids') cls = 'tag-kids';
-            else if (tagLower === 'adult') cls = 'tag-adult';
-            else if (tagLower === 'demo') cls = 'tag-demo';
-            else if (tagLower === 'old') cls = 'tag-old';
-            badges.innerHTML += '<span class="tag-badge ' + cls + '">🏷️ ' + tag + '</span>';
-        });
-    }
-
     badges.innerHTML += '<span class="bg-green-100 text-green-800 text-[9px] font-bold px-2 py-0.5 rounded-full">✅ Active</span>';
 }
 
-/* Smart welcome panel — "Registered On" vs "Student Since" */
 function renderWelcomeBackPanel() {
     var panel = document.getElementById('welcomeBackPanel');
     if (!panel) return;
 
-    var hasReferral = !!currentStudent.referral;
-    var hasTags = currentStudent.tags && currentStudent.tags.length > 0;
     var hasApprovedPlan = !!(currentPlanData && currentPlanData.status === 'approved');
     var hasRegistration = !!currentStudent.joinedDate || !!currentStudent.createdAt;
 
-    if (!hasApprovedPlan && !hasReferral && !hasTags && !hasRegistration) {
+    if (!hasApprovedPlan && !hasRegistration) {
         panel.classList.add('hidden');
         return;
     }
@@ -1207,11 +1123,7 @@ function renderWelcomeBackPanel() {
 
     var name = currentStudent.name || 'Student';
     var titleEl = document.getElementById('welcomeBackTitle');
-    if (hasApprovedPlan) {
-        titleEl.textContent = 'Welcome back, ' + name + '!';
-    } else {
-        titleEl.textContent = 'Hello, ' + name + '!';
-    }
+    titleEl.textContent = hasApprovedPlan ? 'Welcome back, ' + name + '!' : 'Hello, ' + name + '!';
 
     var joinedLabelEl = document.getElementById('welcomeJoinedLabel');
     var joinedWrap = document.getElementById('welcomeJoinedWrap');
@@ -1222,72 +1134,42 @@ function renderWelcomeBackPanel() {
         var approvedDate = null;
         try {
             if (currentPlanData.verifiedAt) {
-                approvedDate = currentPlanData.verifiedAt.toDate
-                    ? currentPlanData.verifiedAt.toDate()
-                    : new Date(currentPlanData.verifiedAt);
+                approvedDate = currentPlanData.verifiedAt.toDate ? currentPlanData.verifiedAt.toDate() : new Date(currentPlanData.verifiedAt);
             } else if (currentPlanData.createdAt) {
-                approvedDate = currentPlanData.createdAt.toDate
-                    ? currentPlanData.createdAt.toDate()
-                    : new Date(currentPlanData.createdAt);
+                approvedDate = currentPlanData.createdAt.toDate ? currentPlanData.createdAt.toDate() : new Date(currentPlanData.createdAt);
             }
-        } catch (e) { approvedDate = null; }
-
+        } catch (e) {}
         if (approvedDate && !isNaN(approvedDate.getTime())) {
-            joinedValueEl.textContent = approvedDate.toLocaleDateString('en-IN', {
-                day: '2-digit', month: 'long', year: 'numeric'
-            });
+            joinedValueEl.textContent = approvedDate.toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' });
         } else {
             joinedValueEl.textContent = '—';
         }
-        if (joinedWrap) joinedWrap.classList.remove('hidden');
+        joinedWrap.classList.remove('hidden');
     } else if (hasRegistration) {
         if (joinedLabelEl) joinedLabelEl.textContent = '🆕 Registered On';
         var regDate = currentStudent.joinedDate;
         if (!regDate && currentStudent.createdAt) {
             try {
-                var cd = currentStudent.createdAt.toDate
-                    ? currentStudent.createdAt.toDate()
-                    : new Date(currentStudent.createdAt);
-                if (!isNaN(cd.getTime())) {
-                    regDate = cd.toISOString().slice(0, 10);
-                }
+                var cd = currentStudent.createdAt.toDate ? currentStudent.createdAt.toDate() : new Date(currentStudent.createdAt);
+                if (!isNaN(cd.getTime())) regDate = cd.toISOString().slice(0, 10);
             } catch (e) {}
         }
         joinedValueEl.textContent = regDate ? formatDateFromString(regDate) : '—';
-        if (joinedWrap) joinedWrap.classList.remove('hidden');
+        joinedWrap.classList.remove('hidden');
     } else {
-        if (joinedWrap) joinedWrap.classList.add('hidden');
-    }
-
-    var refWrap = document.getElementById('welcomeReferralWrap');
-    if (hasReferral) {
-        refWrap.classList.remove('hidden');
-        document.getElementById('welcomeReferral').textContent = currentStudent.referral;
-    } else {
-        refWrap.classList.add('hidden');
+        joinedWrap.classList.add('hidden');
     }
 }
 
-/* ============ REGISTER ============ */
+/* ============ REGISTER (NO MOBILE) ============ */
 async function registerNewStudent() {
     var name = document.getElementById('regName').value.trim().toUpperCase();
-    var countryCode = document.getElementById('regCountryCode').value;
-    var mobileNumber = document.getElementById('regMobile').value.trim();
     var errEl = document.getElementById('regError');
-    var mobileErrEl = document.getElementById('regMobileError');
     var dobErrEl = document.getElementById('regDobError');
     errEl.classList.add('hidden');
-    mobileErrEl.classList.add('hidden');
     dobErrEl.classList.add('hidden');
 
     if (!name || name.length < 2) { errEl.textContent = '❌ Please enter your full name.'; errEl.classList.remove('hidden'); return; }
-    if (mobileNumber.length !== 10) {
-        mobileErrEl.textContent = '⚠️ Exactly 10 digits required (' + mobileNumber.length + ')';
-        mobileErrEl.classList.remove('hidden');
-        errEl.textContent = '❌ WhatsApp number must be exactly 10 digits.';
-        errEl.classList.remove('hidden');
-        return;
-    }
 
     var dob = getSelectedDob();
     if (!dob) {
@@ -1300,42 +1182,54 @@ async function registerNewStudent() {
 
     var age = calculateAge(dob.date);
     if (age === null || age < 0 || age > 100) {
-        dobErrEl.textContent = '⚠️ Please check the Date of Birth you entered';
+        dobErrEl.textContent = '⚠️ Please check the Date of Birth';
         dobErrEl.classList.remove('hidden');
         errEl.textContent = '❌ Invalid Date of Birth.';
         errEl.classList.remove('hidden');
         return;
     }
 
-    var autoCourse = getCourseByAge(age);
+    var uniqueId = generateUniqueId();
+    var dobString = dob.day + '-' + dob.month + '-' + dob.year;
 
-    var fullMobile = countryCode + ' ' + mobileNumber;
-    var uniqueId = generateStudentIdFromMobile(countryCode, mobileNumber);
-
+    /* Check for duplicate name+dob */
     try {
-        var dup = await db.collection('students').where('mobile', '==', fullMobile).get();
+        var dup = await db.collection('students')
+            .where('name', '==', name)
+            .where('dateOfBirth', '==', dobString)
+            .get();
         if (!dup.empty) {
-            errEl.innerHTML = '❌ This number is already registered. <a href="#" onclick="showScreen(\'oldStudent\'); return false;" class="underline font-bold">Login instead</a>';
+            errEl.innerHTML = '❌ এই নাম এবং Date of Birth দিয়ে আগেই registration করা হয়েছে। <a href="#" onclick="showScreen(\'oldStudent\'); return false;" class="underline font-bold">Login করুন</a>';
             errEl.classList.remove('hidden');
             return;
         }
+    } catch (e) { /* Skip dup check if query fails */ }
 
-        var dobString = dob.day + '-' + dob.month + '-' + dob.year;
-
+    try {
         var student = {
-            name: name, countryCode: countryCode, mobileNumber: mobileNumber, mobile: fullMobile, uniqueId: uniqueId,
-            studentId: '', studentCode: '', trackId: 'TRK-' + mobileNumber,
-            courseEnrolled: autoCourse,
+            name: name,
             dateOfBirth: dobString,
             dobDay: dob.day,
             dobMonth: dob.month,
             dobYear: dob.year,
             age: age,
-            categoriesEnabled: ['oneOnOne', 'group'],
+            uniqueId: uniqueId,
+            studentCode: '',
+            isExisting: false,
+            courseEnrolled: '',
             batchName: '',
-            tags: [], referral: '', notes: '', joinedDate: new Date().toISOString().slice(0, 10), isVip: false,
-            blocked: false, couponAccess: false, allowMultipleCoupons: false, grantedCoupons: [],
-            loginCount: 1, logoutCount: 0, firstVisit: true,
+            tags: [],
+            referral: '',
+            notes: '',
+            joinedDate: new Date().toISOString().slice(0, 10),
+            isVip: false,
+            blocked: false,
+            couponAccess: false,
+            allowMultipleCoupons: false,
+            grantedCoupons: [],
+            loginCount: 1,
+            logoutCount: 0,
+            firstVisit: true,
             consentGiven: false,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -1346,8 +1240,21 @@ async function registerNewStudent() {
         isExistingStudent = false;
         saveStudentToStorage(currentStudent);
         logActivity('first_visit');
-        showToast('✅ Registered! ' + (age >= 18 ? 'Adult' : 'Kids') + ' course auto-selected.', 'success');
-        enterDashboard();
+
+        showToast('✅ Registration complete!', 'success');
+
+        /* Show Unique ID to student */
+        setTimeout(function() {
+            alert(
+                '✅ REGISTRATION SUCCESSFUL!\n\n' +
+                '🆔 YOUR UNIQUE ID:\n' + uniqueId + '\n\n' +
+                '📌 IMPORTANT: Save this Unique ID!\n\n' +
+                '👉 Admin will contact you soon to provide your Student Code.\n\n' +
+                '👉 You can now browse plans and purchase.'
+            );
+            enterDashboard();
+        }, 300);
+
     } catch (err) {
         errEl.textContent = '❌ ' + err.message;
         errEl.classList.remove('hidden');
@@ -1363,11 +1270,8 @@ async function existingStudentLogin() {
 
     try {
         var snap = await db.collection('students').where('studentCode', '==', code).limit(1).get();
-        if (snap.empty) snap = await db.collection('students').where('studentId', '==', code).limit(1).get();
-        if (snap.empty) snap = await db.collection('students').where('uniqueId', '==', code).limit(1).get();
-
         if (snap.empty) {
-            errEl.innerHTML = '❌ Student Code not found.<br><span class="text-[10px]">Example: <strong>ES2026-2710</strong></span>';
+            errEl.innerHTML = '❌ Student Code not found.<br><span class="text-[10px]">Example: <strong>ES2026-0001</strong></span>';
             errEl.classList.remove('hidden');
             return;
         }
@@ -1422,7 +1326,7 @@ async function studentLogout() {
             try {
                 await db.collection('logs').add({
                     studentId: studentToLog.id, studentName: studentToLog.name,
-                    studentMobile: studentToLog.mobile, uniqueId: studentToLog.uniqueId || '',
+                    uniqueId: studentToLog.uniqueId || '',
                     type: 'logout', timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                     userAgent: navigator.userAgent.substring(0, 200)
                 });
@@ -1465,9 +1369,7 @@ function startStudentListener() {
         updateCourseFilterBanner();
         renderDynamicPlans();
 
-        if (data.consentGiven !== true) {
-            checkAndShowConsent();
-        }
+        if (data.consentGiven !== true) checkAndShowConsent();
 
         var modal = document.getElementById('planCheckoutModal');
         if (modal && !modal.classList.contains('hidden')) {
@@ -1550,10 +1452,7 @@ function updateHistoryBadge(count) {
 async function loadCurrentPlan() {
     if (!currentStudent || !currentStudent.id) return;
     try {
-        var snap = await db.collection('purchases')
-            .where('studentId', '==', currentStudent.id)
-            .limit(50)
-            .get();
+        var snap = await db.collection('purchases').where('studentId', '==', currentStudent.id).limit(50).get();
         if (snap.empty) {
             currentPlanData = null;
             purchasedPlansCount = 0;
@@ -1596,9 +1495,7 @@ function loadOfferConfig() {
         coupons = {};
         snap.forEach(function(d) {
             var c = d.data();
-            if (c.active !== false && c.code) {
-                coupons[c.code.toUpperCase().trim()] = Object.assign({}, c, { _id: d.id });
-            }
+            if (c.active !== false && c.code) coupons[c.code.toUpperCase().trim()] = Object.assign({}, c, { _id: d.id });
         });
         var modal = document.getElementById('planCheckoutModal');
         if (modal && !modal.classList.contains('hidden')) {
@@ -1609,11 +1506,7 @@ function loadOfferConfig() {
     });
 
     db.collection('config').doc('offer').onSnapshot(function(offerDoc) {
-        if (!offerDoc.exists) {
-            offerConfig = null;
-            renderDynamicPlans();
-            return;
-        }
+        if (!offerDoc.exists) { offerConfig = null; renderDynamicPlans(); return; }
         var data = offerDoc.data() || {};
         offerConfig = data;
         window.currentOffer = data;
@@ -1621,16 +1514,13 @@ function loadOfferConfig() {
         var oop = data.oneOnOnePricing || {};
         var gp = data.groupPricing || {};
 
-        var oneOnOneCourses = oop.courses || {};
-        var oneOnOneAdmission = {
-            regular: Number(oop.admissionRegular) || 0,
-            discounted: Number(oop.admissionDiscounted) || 0,
-            special: Number(oop.admissionSpecial) || 0
-        };
-
         pricing = {
-            oneOnOneAdmission: oneOnOneAdmission,
-            oneOnOneCourses: oneOnOneCourses,
+            oneOnOneAdmission: {
+                regular: Number(oop.admissionRegular) || 0,
+                discounted: Number(oop.admissionDiscounted) || 0,
+                special: Number(oop.admissionSpecial) || 0
+            },
+            oneOnOneCourses: oop.courses || {},
             groupAdmissionRegular: Number(gp.regularAdmission) || 2500,
             groupAdmissionDiscounted: Number(gp.discountedAdmission) || 2000,
             groupAdmissionSpecial: Number(gp.specialAdmission) || 1500
@@ -1642,10 +1532,7 @@ function loadOfferConfig() {
         };
 
         updateOfferDeadline();
-        if (offerDeadline > Date.now() && offerExpiredHandled) {
-            offerExpiredHandled = false;
-        }
-
+        if (offerDeadline > Date.now() && offerExpiredHandled) offerExpiredHandled = false;
         renderDynamicPlans();
         tickTimer();
 
@@ -1737,17 +1624,13 @@ function filterPlansByCourse(cat, subKey, subData) {
 function renderDynamicPlans() {
     var container = document.getElementById('plansContainer');
     if (!container) return;
-
     updateCourseFilterBanner();
 
     var hasOneOnOne = dynamicCategories.oneOnOne && Object.keys(dynamicCategories.oneOnOne).length > 0;
     var hasGroup = dynamicCategories.group && Object.keys(dynamicCategories.group).length > 0;
 
     if (!hasOneOnOne && !hasGroup) {
-        container.innerHTML = '<div class="pro-card p-6 text-center border-2 border-slate-200">' +
-            '<p class="text-3xl mb-2">⏳</p>' +
-            '<p class="text-slate-600 font-bold text-sm">Plans are being updated.</p>' +
-            '<button type="button" onclick="contactViaWhatsApp()" class="mt-4 bg-[#25D366] text-white font-black text-xs px-5 py-2.5 rounded-full shadow">💬 Contact Admin</button></div>';
+        container.innerHTML = '<div class="pro-card p-6 text-center border-2 border-slate-200"><p class="text-3xl mb-2">⏳</p><p class="text-slate-600 font-bold text-sm">Plans are being updated.</p><button type="button" onclick="contactViaWhatsApp()" class="mt-4 bg-[#25D366] text-white font-black text-xs px-5 py-2.5 rounded-full shadow">💬 Contact Admin</button></div>';
         return;
     }
 
@@ -1773,11 +1656,7 @@ function renderDynamicPlans() {
         });
     }
 
-    container.innerHTML = html || ('<div class="pro-card p-6 text-center">' +
-        '<p class="text-3xl mb-2">📭</p>' +
-        '<p class="text-slate-600 font-bold text-sm">No plans in this category.</p>' +
-        (getStudentCourse() && !showAllCourses ? '<button type="button" onclick="toggleShowAllCourses()" class="mt-3 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-black text-xs px-5 py-2.5 rounded-full shadow">🌟 Show All Courses</button>' : '') +
-        '</div>');
+    container.innerHTML = html || '<div class="pro-card p-6 text-center"><p class="text-3xl mb-2">📭</p><p class="text-slate-600 font-bold text-sm">No plans in this category.</p>' + (getStudentCourse() && !showAllCourses ? '<button type="button" onclick="toggleShowAllCourses()" class="mt-3 bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-black text-xs px-5 py-2.5 rounded-full shadow">🌟 Show All Courses</button>' : '') + '</div>';
 }
 
 function renderSubCategoryBlock(cat, subKey, subData) {
@@ -1792,26 +1671,16 @@ function renderSubCategoryBlock(cat, subKey, subData) {
     else { headerClass = 'section-header-kids-group'; icon = '🧸'; subTitle = 'Group Class for Kids'; }
 
     if (plans.length === 0) {
-        return '<div class="rounded-2xl overflow-hidden shadow-lg mb-3 border-2 border-slate-200">' +
-            '<div class="' + headerClass + ' text-white py-3.5 px-4"><div class="flex items-center justify-center gap-2">' +
-            '<span class="text-2xl">' + icon + '</span><div class="text-center">' +
-            '<p class="font-black text-[12px] sm:text-sm uppercase tracking-wider leading-tight">' + (subData.displayName || subKey) + '</p>' +
-            '<p class="text-[9px] opacity-90 font-medium">' + subTitle + '</p></div></div></div>' +
-            '<div class="p-4 text-center text-slate-500 text-xs bg-white">No plans available.</div></div>';
+        return '<div class="rounded-2xl overflow-hidden shadow-lg mb-3 border-2 border-slate-200"><div class="' + headerClass + ' text-white py-3.5 px-4"><div class="flex items-center justify-center gap-2"><span class="text-2xl">' + icon + '</span><div class="text-center"><p class="font-black text-[12px] sm:text-sm uppercase tracking-wider leading-tight">' + (subData.displayName || subKey) + '</p><p class="text-[9px] opacity-90 font-medium">' + subTitle + '</p></div></div></div><div class="p-4 text-center text-slate-500 text-xs bg-white">No plans available.</div></div>';
     }
 
     var html = '<div class="rounded-2xl overflow-hidden shadow-xl mb-3 border-2 border-slate-200">';
-    html += '<div class="' + headerClass + ' text-white py-3.5 px-4"><div class="flex items-center justify-center gap-2">';
-    html += '<span class="text-2xl">' + icon + '</span>';
+    html += '<div class="' + headerClass + ' text-white py-3.5 px-4"><div class="flex items-center justify-center gap-2"><span class="text-2xl">' + icon + '</span>';
     html += '<div class="text-center"><p class="font-black text-[12px] sm:text-sm uppercase tracking-wider leading-tight">' + (subData.displayName || subKey) + '</p>';
     html += '<p class="text-[9px] opacity-90 font-medium">' + subTitle + '</p></div></div></div>';
 
-    if (cat === 'group' && !isExistingStudent) {
-        html += '<div class="bg-gradient-to-r from-blue-100 to-indigo-100 px-3 py-2 border-b border-blue-200"><p class="text-[10px] font-black text-blue-900 uppercase tracking-wide">🆕 New Students — Admission Fee + Course Fee</p></div>';
-    }
-    if (cat === 'group' && isExistingStudent) {
-        html += '<div class="bg-gradient-to-r from-green-100 to-emerald-100 px-3 py-2 border-b border-green-200"><p class="text-[10px] font-black text-green-900 uppercase tracking-wide">♻️ Renewal — No Admission Fee</p></div>';
-    }
+    if (cat === 'group' && !isExistingStudent) html += '<div class="bg-gradient-to-r from-blue-100 to-indigo-100 px-3 py-2 border-b border-blue-200"><p class="text-[10px] font-black text-blue-900 uppercase tracking-wide">🆕 New Students — Admission Fee + Course Fee</p></div>';
+    if (cat === 'group' && isExistingStudent) html += '<div class="bg-gradient-to-r from-green-100 to-emerald-100 px-3 py-2 border-b border-green-200"><p class="text-[10px] font-black text-green-900 uppercase tracking-wide">♻️ Renewal — No Admission Fee</p></div>';
 
     html += '<div class="p-3 space-y-3 bg-white">';
     plans.forEach(function(p, idx) { html += renderPlanRow(cat, subKey, subData, p, idx); });
@@ -1825,8 +1694,7 @@ function renderPlanRow(cat, subKey, subData, plan, idx) {
     var active = isOfferActive();
     var keyLower = (subKey || '').toLowerCase();
     var isKids = keyLower.indexOf('kid') !== -1;
-    var themeClass = '';
-    var icon = '';
+    var themeClass = '', icon = '';
     if (cat === 'oneOnOne' && !isKids) { themeClass = 'theme-adult-1on1'; icon = '👑'; }
     else if (cat === 'oneOnOne' && isKids) { themeClass = 'theme-kids-1on1'; icon = '👶'; }
     else if (cat === 'group' && !isKids) { themeClass = 'theme-adult-group'; icon = '👥'; }
@@ -1834,21 +1702,17 @@ function renderPlanRow(cat, subKey, subData, plan, idx) {
 
     var html = '';
 
-    /* ===== 1-ON-1 COMPLETE COURSE ===== */
     if (cat === 'oneOnOne') {
         var months = Math.round(days / 30);
         var courseKey = months + 'm';
         var courseMeta = (pricing.oneOnOneCourses && pricing.oneOnOneCourses[courseKey]) || {};
-
         var regularFee = Number(courseMeta.regular) || 0;
         var discountedFee = Number(courseMeta.discounted) || 0;
         var specialFee = Number(courseMeta.special) || 0;
-
         var classes = Number(courseMeta.classes) || 0;
         var duration = courseMeta.duration || '—';
         var platform = courseMeta.platform || '—';
-        var facilitiesRaw = courseMeta.facilities || '';
-        var facilities = facilitiesRaw.split('\n').map(function(x) { return x.trim(); }).filter(function(x) { return x.length > 0; });
+        var facilities = (courseMeta.facilities || '').split('\n').map(function(x) { return x.trim(); }).filter(function(x) { return x.length > 0; });
 
         var finalFee, courseLabel;
         if (active) { finalFee = specialFee; courseLabel = '🌟 SPECIAL OFFER'; }
@@ -1871,65 +1735,37 @@ function renderPlanRow(cat, subKey, subData, plan, idx) {
         var safeSubId = (subData.subCategoryId || '').replace(/'/g, "\\'");
 
         html += '<div class="plan-row ' + themeClass + '" data-plan-id="' + planId + '" onclick="selectPlanRow(\'' + cat + '\', \'' + safeKey + '\', \'' + safeSubId + '\', \'' + safeDisplay + '\', ' + idx + ')" style="position: relative;">';
-        html += '<div class="flex items-start gap-3">';
-        html += '<div class="plan-icon-badge">' + icon + '</div>';
-        html += '<div class="flex-1 min-w-0">';
-
-        html += '<div class="flex justify-between items-start gap-2 flex-wrap mb-2">';
-        html += '<div class="min-w-0 flex-1">';
+        html += '<div class="flex items-start gap-3"><div class="plan-icon-badge">' + icon + '</div><div class="flex-1 min-w-0">';
+        html += '<div class="flex justify-between items-start gap-2 flex-wrap mb-2"><div class="min-w-0 flex-1">';
         html += '<p class="font-black plan-days-text text-base">' + courseMonthLabel + '<span class="tier-badge ' + tierClass + '">' + courseTier + '</span></p>';
         html += '<p class="text-[10px] text-slate-600 font-medium">Complete Package · One-Time Payment</p>';
         if (active) html += '<span class="special-badge mt-1.5 inline-block">' + courseLabel + '</span>';
-        html += '</div>';
-        html += '<div class="text-right flex-shrink-0">';
-        if (active && regularFee > finalFee) {
-            html += '<div class="text-[10px] text-slate-400 line-through">' + money(regularFee) + '</div>';
-        }
-        html += '<div class="text-xl font-black plan-price-main mt-0.5">' + money(finalFee) + '</div>';
-        html += '</div></div>';
-
+        html += '</div><div class="text-right flex-shrink-0">';
+        if (active && regularFee > finalFee) html += '<div class="text-[10px] text-slate-400 line-through">' + money(regularFee) + '</div>';
+        html += '<div class="text-xl font-black plan-price-main mt-0.5">' + money(finalFee) + '</div></div></div>';
         html += '<div class="course-meta-box grid grid-cols-3 gap-2">';
         html += '<div class="course-meta-item"><div class="label">Classes</div><div class="value">📚 ' + classes + '</div></div>';
         html += '<div class="course-meta-item"><div class="label">Duration</div><div class="value">⏱️ ' + formatDuration(duration) + '</div></div>';
-        html += '<div class="course-meta-item"><div class="label">Platform</div><div class="value">💻 ' + platform + '</div></div>';
-        html += '</div>';
-
+        html += '<div class="course-meta-item"><div class="label">Platform</div><div class="value">💻 ' + platform + '</div></div></div>';
         if (facilities.length > 0) {
-            html += '<div class="mt-2">';
-            html += '<p class="text-[10px] font-black text-slate-600 uppercase mb-1.5 tracking-wide">✨ Facilities</p>';
+            html += '<div class="mt-2"><p class="text-[10px] font-black text-slate-600 uppercase mb-1.5 tracking-wide">✨ Facilities</p>';
             facilities.forEach(function(f) { html += '<div class="facility-item">' + f + '</div>'; });
             html += '</div>';
         }
-
-        if (admissionFee > 0) {
-            html += '<div class="admission-note">➕ Admission Fee: ' + money(admissionFee) + ' (one time)</div>';
-        }
-
-        if (admissionFee > 0) {
-            html += '<div class="grand-total-box">';
-            html += '<div class="gt-label">💰 Total (1st Payment)</div>';
-            html += '<div class="gt-amount">' + money(grandTotal) + '</div>';
-            html += '<div class="gt-note">Admission + Complete Course</div>';
-            html += '</div>';
-        }
-
-        if (totalSave > 0) {
-            html += '<div class="savings-meter"><div class="sm-pct">' + totalSavePercent + '% OFF</div><div class="sm-label">🎉 Save ' + money(totalSave) + '</div></div>';
-        }
-
+        if (admissionFee > 0) html += '<div class="admission-note">➕ Admission Fee: ' + money(admissionFee) + ' (one time)</div>';
+        if (admissionFee > 0) html += '<div class="grand-total-box"><div class="gt-label">💰 Total (1st Payment)</div><div class="gt-amount">' + money(grandTotal) + '</div><div class="gt-note">Admission + Complete Course</div></div>';
+        if (totalSave > 0) html += '<div class="savings-meter"><div class="sm-pct">' + totalSavePercent + '% OFF</div><div class="sm-label">🎉 Save ' + money(totalSave) + '</div></div>';
         html += '</div></div></div>';
         return html;
     }
 
-    /* ===== GROUP CLASS — Lumpsum totals ===== */
+    /* GROUP */
     var regularTotal = Number(plan.regularTotal) || Number(plan.regularRate) || 0;
     var discountedTotal = Number(plan.discountedTotal) || Number(plan.discountedRate) || regularTotal;
     var specialTotal = Number(plan.specialTotal) || Number(plan.specialRate) || discountedTotal;
 
     var groupAdmission = 0;
-    if (!isExistingStudent) {
-        groupAdmission = active ? pricing.groupAdmissionSpecial : (pricing.groupAdmissionDiscounted || pricing.groupAdmissionRegular);
-    }
+    if (!isExistingStudent) groupAdmission = active ? pricing.groupAdmissionSpecial : (pricing.groupAdmissionDiscounted || pricing.groupAdmissionRegular);
 
     var finalPrice, priceLabel;
     if (active) { finalPrice = specialTotal; priceLabel = '🌟 SPECIAL'; }
@@ -1937,7 +1773,6 @@ function renderPlanRow(cat, subKey, subData, plan, idx) {
 
     var grandTotalG = finalPrice + groupAdmission;
     var perClassInfo = days > 0 ? '~₹' + Math.round(finalPrice / days) + '/class' : '';
-
     var totalSaveG = regularTotal - finalPrice;
     var totalSavePercentG = regularTotal > 0 ? Math.round((totalSaveG / regularTotal) * 100) : 0;
 
@@ -1962,8 +1797,7 @@ function renderPlanRow(cat, subKey, subData, plan, idx) {
     priceHTML += '<div class="text-[10px] text-slate-400 line-through">Regular: ' + money(regularTotal) + '</div>';
     if (active) priceHTML += '<div class="text-[10px] text-slate-400 line-through">Discounted: ' + money(discountedTotal) + '</div>';
     else priceHTML += '<div class="text-[10px] text-slate-600 font-bold">Discounted: ' + money(discountedTotal) + '</div>';
-    priceHTML += '<div class="text-lg font-black plan-price-main mt-1">' + money(finalPrice) + '</div>';
-    priceHTML += '</div>';
+    priceHTML += '<div class="text-lg font-black plan-price-main mt-1">' + money(finalPrice) + '</div></div>';
 
     var planIdG = cat + '_' + (subData.subCategoryId || subKey) + '_' + idx;
     var safeKeyG = subKey.replace(/'/g, "\\'");
@@ -1972,27 +1806,15 @@ function renderPlanRow(cat, subKey, subData, plan, idx) {
 
     html += '<div class="plan-row ' + themeClass + '" data-plan-id="' + planIdG + '" onclick="selectPlanRow(\'' + cat + '\', \'' + safeKeyG + '\', \'' + safeSubIdG + '\', \'' + safeDisplayG + '\', ' + idx + ')" style="position: relative;">';
     if (planBadges) html += '<div style="position:absolute; top:8px; right:8px; display:flex; flex-direction:column; gap:3px; align-items:flex-end; z-index:2;">' + planBadges + '</div>';
-    html += '<div class="flex items-start gap-3">';
-    html += '<div class="plan-icon-badge">' + icon + '</div>';
+    html += '<div class="flex items-start gap-3"><div class="plan-icon-badge">' + icon + '</div>';
     html += '<div class="flex-1 min-w-0 flex justify-between items-start gap-2 flex-wrap">';
-    html += '<div class="min-w-0 flex-1">';
-    html += '<p class="font-black plan-days-text text-sm">' + days + ' Classes</p>';
+    html += '<div class="min-w-0 flex-1"><p class="font-black plan-days-text text-sm">' + days + ' Classes</p>';
     html += '<p class="text-[10px] text-slate-600 font-medium">Group · ' + perClassInfo + '</p>';
     if (active) html += '<span class="special-badge mt-1.5 inline-block">' + priceLabel + '</span>';
     html += '</div><div class="flex-shrink-0">' + priceHTML + '</div></div></div>';
 
-    if (!isExistingStudent && groupAdmission > 0) {
-        html += '<div class="admission-note">➕ Admission Fee: ' + money(groupAdmission) + ' (one time, new student)</div>';
-    }
-
-    if (!isExistingStudent && groupAdmission > 0) {
-        html += '<div class="grand-total-box">';
-        html += '<div class="gt-label">💰 Total (1st Payment)</div>';
-        html += '<div class="gt-amount">' + money(grandTotalG) + '</div>';
-        html += '<div class="gt-note">Admission + ' + days + ' Classes</div>';
-        html += '</div>';
-    }
-
+    if (!isExistingStudent && groupAdmission > 0) html += '<div class="admission-note">➕ Admission Fee: ' + money(groupAdmission) + ' (one time, new student)</div>';
+    if (!isExistingStudent && groupAdmission > 0) html += '<div class="grand-total-box"><div class="gt-label">💰 Total (1st Payment)</div><div class="gt-amount">' + money(grandTotalG) + '</div><div class="gt-note">Admission + ' + days + ' Classes</div></div>';
     html += savingsMeter + lengthTip + '</div>';
     return html;
 }
@@ -2031,12 +1853,8 @@ function selectPlanRow(cat, subKey, subCategoryId, subCategoryDisplay, planIndex
         };
     } else {
         var groupAdm = 0;
-        if (!isExistingStudent) {
-            groupAdm = active ? pricing.groupAdmissionSpecial : (pricing.groupAdmissionDiscounted || pricing.groupAdmissionRegular);
-        }
-        extra = {
-            groupAdmissionFee: groupAdm
-        };
+        if (!isExistingStudent) groupAdm = active ? pricing.groupAdmissionSpecial : (pricing.groupAdmissionDiscounted || pricing.groupAdmissionRegular);
+        extra = { groupAdmissionFee: groupAdm };
     }
 
     selectedPlan = Object.assign({
@@ -2116,8 +1934,7 @@ function renderCheckoutPlanCard(colorFrom, colorTo) {
         html += '<div class="grid grid-cols-3 gap-2 text-center">';
         html += '<div><p class="text-[9px] text-slate-500 font-bold uppercase">Classes</p><p class="text-xs font-black text-blue-800">📚 ' + (selectedPlan.classes || 0) + '</p></div>';
         html += '<div class="border-l border-r border-slate-200"><p class="text-[9px] text-slate-500 font-bold uppercase">Duration</p><p class="text-xs font-black text-blue-800">⏱️ ' + formatDuration(selectedPlan.duration) + '</p></div>';
-        html += '<div><p class="text-[9px] text-slate-500 font-bold uppercase">Platform</p><p class="text-[10px] font-black text-blue-800">💻 ' + (selectedPlan.platform || '—') + '</p></div>';
-        html += '</div></div>';
+        html += '<div><p class="text-[9px] text-slate-500 font-bold uppercase">Platform</p><p class="text-[10px] font-black text-blue-800">💻 ' + (selectedPlan.platform || '—') + '</p></div></div></div>';
         if (selectedPlan.facilities && selectedPlan.facilities.length > 0) {
             html += '<div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-3 mb-3"><p class="text-[10px] font-black text-blue-900 uppercase mb-1.5 tracking-wide">✨ Facilities</p>';
             selectedPlan.facilities.forEach(function(f) { html += '<div class="facility-item">' + f + '</div>'; });
@@ -2139,9 +1956,7 @@ function renderCheckoutPlanCard(colorFrom, colorTo) {
         }
         html += '<div class="flex justify-between items-center text-xs pt-1.5 border-t-2 border-slate-300"><span class="font-black text-slate-700">Subtotal</span><span class="font-black text-slate-800">' + money(p.subtotal) + '</span></div>';
     } else {
-        if (p.admissionFee > 0) {
-            html += '<div class="flex justify-between items-center text-xs"><span class="text-slate-500 font-semibold">➕ Admission Fee (New Student)</span><span class="font-bold text-slate-800">' + money(p.admissionFee) + '</span></div>';
-        }
+        if (p.admissionFee > 0) html += '<div class="flex justify-between items-center text-xs"><span class="text-slate-500 font-semibold">➕ Admission Fee (New Student)</span><span class="font-bold text-slate-800">' + money(p.admissionFee) + '</span></div>';
         html += '<div class="flex justify-between items-center text-xs"><span class="text-slate-500 font-semibold">📚 ' + days + ' Classes (Regular)</span><span class="text-slate-400 line-through font-bold">' + money(p.regularTotal) + '</span></div>';
         if (p.active) {
             html += '<div class="flex justify-between items-center text-xs"><span class="text-sky-600 font-semibold">💰 Discounted</span><span class="text-sky-500 line-through font-bold">' + money(p.discountedTotal) + '</span></div>';
@@ -2149,29 +1964,22 @@ function renderCheckoutPlanCard(colorFrom, colorTo) {
         } else {
             html += '<div class="flex justify-between items-center text-xs"><span class="text-sky-700 font-bold">💰 Discounted Price</span><span class="text-sky-700 font-black">' + money(p.discountedTotal) + '</span></div>';
         }
-        if (p.admissionFee > 0) {
-            html += '<div class="flex justify-between items-center text-xs pt-1.5 border-t-2 border-slate-300"><span class="font-black text-slate-700">Subtotal</span><span class="font-black text-slate-800">' + money(p.subtotal) + '</span></div>';
-        }
+        if (p.admissionFee > 0) html += '<div class="flex justify-between items-center text-xs pt-1.5 border-t-2 border-slate-300"><span class="font-black text-slate-700">Subtotal</span><span class="font-black text-slate-800">' + money(p.subtotal) + '</span></div>';
     }
 
     html += '</div>';
-
     card.innerHTML = html;
     card.style.background = 'linear-gradient(135deg, ' + colorFrom + '11, ' + colorTo + '11)';
     card.style.borderColor = colorFrom;
 }
 
-/* ============ COUPON SECTION ============ */
+/* ============ COUPONS ============ */
 function renderCheckoutCoupons() {
     var section = document.getElementById('checkoutCouponSection');
     if (!section) return;
     if (!selectedPlan) { section.classList.add('hidden'); return; }
-
     var grantedCount = getGrantedCouponIds().length;
-    if (!hasCouponAccess() || grantedCount === 0) {
-        section.classList.add('hidden');
-        return;
-    }
+    if (!hasCouponAccess() || grantedCount === 0) { section.classList.add('hidden'); return; }
     section.classList.remove('hidden');
 
     var maxAllowed = allowMultipleCoupons() ? Math.min(MAX_COUPONS, grantedCount) : 1;
@@ -2203,13 +2011,7 @@ function renderCheckoutCoupons() {
             : isExpired ? 'bg-slate-100 border-slate-300 opacity-60'
             : !catMatches ? 'bg-red-50 border-red-200 opacity-70'
             : 'bg-white border-purple-300 hover:border-purple-500 hover:shadow-md cursor-pointer';
-        html += '<div class="border-2 rounded-xl p-3 transition ' + cls + '"' + (!isDisabled ? ' onclick="applyCheckoutCoupon(\'' + code + '\')"' : '') + '>' +
-            '<div class="flex justify-between items-center gap-2 mb-1 flex-wrap">' +
-            '<div class="flex items-center gap-2 min-w-0 flex-wrap"><span class="coupon-badge">🎟️ ' + code + '</span><span class="text-[10px] font-black text-orange-600">' + discLabel + '</span></div>' +
-            '<span class="text-[9px] font-black whitespace-nowrap ' + (isApplied ? 'text-green-700' : isExpired ? 'text-red-600' : 'text-purple-700') + '">' + statusText + '</span>' +
-            '</div>' +
-            '<p class="text-[10px] text-slate-600 font-medium leading-snug"><strong class="text-purple-800">For:</strong> ' + catLabel + ' · ' + ((g.allowedPlans && g.allowedPlans.length > 0) ? g.allowedPlans.join('/') : 'All Plans') + '</p>' +
-            '</div>';
+        html += '<div class="border-2 rounded-xl p-3 transition ' + cls + '"' + (!isDisabled ? ' onclick="applyCheckoutCoupon(\'' + code + '\')"' : '') + '><div class="flex justify-between items-center gap-2 mb-1 flex-wrap"><div class="flex items-center gap-2 min-w-0 flex-wrap"><span class="coupon-badge">🎟️ ' + code + '</span><span class="text-[10px] font-black text-orange-600">' + discLabel + '</span></div><span class="text-[9px] font-black whitespace-nowrap ' + (isApplied ? 'text-green-700' : isExpired ? 'text-red-600' : 'text-purple-700') + '">' + statusText + '</span></div><p class="text-[10px] text-slate-600 font-medium leading-snug"><strong class="text-purple-800">For:</strong> ' + catLabel + ' · ' + ((g.allowedPlans && g.allowedPlans.length > 0) ? g.allowedPlans.join('/') : 'All Plans') + '</p></div>';
     });
     wrap.innerHTML = html;
 
@@ -2217,10 +2019,7 @@ function renderCheckoutCoupons() {
     if (appliedCoupons.length > 0) {
         var ah = '';
         appliedCoupons.forEach(function(c, i) {
-            ah += '<div class="bg-gradient-to-r from-green-100 to-emerald-100 border border-green-300 rounded-xl p-2.5 flex justify-between items-center text-[11px] font-bold text-green-800">' +
-                '<span>✅ ' + c.code + ' ' + (c.type === 'flat' ? '(−₹' + c.value + ')' : '(−' + c.value + '%)') + '</span>' +
-                '<button type="button" onclick="removeCheckoutCoupon(' + i + ')" class="text-red-600 underline">Remove</button>' +
-                '</div>';
+            ah += '<div class="bg-gradient-to-r from-green-100 to-emerald-100 border border-green-300 rounded-xl p-2.5 flex justify-between items-center text-[11px] font-bold text-green-800"><span>✅ ' + c.code + ' ' + (c.type === 'flat' ? '(−₹' + c.value + ')' : '(−' + c.value + '%)') + '</span><button type="button" onclick="removeCheckoutCoupon(' + i + ')" class="text-red-600 underline">Remove</button></div>';
         });
         appliedWrap.innerHTML = ah;
     } else {
@@ -2231,14 +2030,12 @@ function renderCheckoutCoupons() {
 async function applyCheckoutCoupon(code) {
     var granted = (currentStudent && currentStudent.grantedCoupons) ? currentStudent.grantedCoupons : [];
     var match = null;
-    for (var i = 0; i < granted.length; i++) {
-        if ((granted[i].code || '').toUpperCase() === code.toUpperCase()) { match = granted[i]; break; }
-    }
-    if (!match) { showToast('❌ Coupon not granted to you', 'error'); return; }
+    for (var i = 0; i < granted.length; i++) if ((granted[i].code || '').toUpperCase() === code.toUpperCase()) { match = granted[i]; break; }
+    if (!match) { showToast('❌ Coupon not granted', 'error'); return; }
     if (match.expiresAt && new Date(match.expiresAt).getTime() < Date.now()) { showToast('❌ Coupon expired', 'error'); return; }
     if (appliedCoupons.some(function(c) { return c.code === code; })) { showToast('⚠️ Already applied', 'info'); return; }
     var maxAllowed = allowMultipleCoupons() ? Math.min(MAX_COUPONS, granted.length) : 1;
-    if (appliedCoupons.length >= maxAllowed) { showToast('⚠️ Max ' + maxAllowed + ' coupon' + (maxAllowed > 1 ? 's' : '') + ' allowed', 'error'); return; }
+    if (appliedCoupons.length >= maxAllowed) { showToast('⚠️ Max ' + maxAllowed + ' allowed', 'error'); return; }
     var c = coupons[code];
     if (!c) {
         try {
@@ -2247,14 +2044,14 @@ async function applyCheckoutCoupon(code) {
                 var fresh = snap.docs[0].data();
                 if (fresh.active !== false) { c = Object.assign({}, fresh, { _id: snap.docs[0].id }); coupons[code] = c; }
             }
-        } catch (err) { console.error(err); }
+        } catch (err) {}
     }
     if (!c) { showToast('❌ Coupon not found', 'error'); return; }
     var couponCat = c.category || c.appliesTo;
-    if (couponCat && couponCat !== selectedPlan.category) { showToast('❌ Only for ' + (couponCat === 'oneOnOne' ? '1-on-1' : 'Group') + ' plans', 'error'); return; }
+    if (couponCat && couponCat !== selectedPlan.category) { showToast('❌ Wrong category', 'error'); return; }
     if (c.allowedPlans && c.allowedPlans.length > 0) {
         var planKey = selectedPlan.plan.days + 'd';
-        if (c.allowedPlans.indexOf(planKey) === -1) { showToast('❌ Not valid for ' + selectedPlan.plan.days + '-day plan', 'error'); return; }
+        if (c.allowedPlans.indexOf(planKey) === -1) { showToast('❌ Not valid for this plan', 'error'); return; }
     }
     appliedCoupons.push(Object.assign({}, c, { appliesTo: c.category || c.appliesTo }));
     saveSelectedPlan();
@@ -2267,8 +2064,8 @@ async function applyCheckoutCoupon(code) {
 function applyCheckoutManualCoupon() {
     var input = document.getElementById('checkoutCouponInput');
     var code = (input && input.value ? input.value : '').trim().toUpperCase();
-    if (!code) { showToast('⚠️ Enter a coupon code', 'error'); return; }
-    if (!isCouponGrantedToStudent(code)) { showToast('❌ Not granted to you', 'error'); return; }
+    if (!code) { showToast('⚠️ Enter code', 'error'); return; }
+    if (!isCouponGrantedToStudent(code)) { showToast('❌ Not granted', 'error'); return; }
     applyCheckoutCoupon(code);
     if (input) input.value = '';
 }
@@ -2293,18 +2090,12 @@ function renderCheckoutSavings() {
     var totalBefore = p.regularTotal + (p.admissionFee || 0);
     var pct = totalBefore > 0 ? Math.round((p.totalSave / totalBefore) * 100) : 0;
     box.classList.remove('hidden');
-    box.innerHTML = '<div class="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 text-white rounded-2xl p-4 text-center shadow-lg">' +
-        '<p class="text-[10px] font-black uppercase tracking-widest opacity-95 mb-1">🎉 You Are Saving</p>' +
-        '<p class="text-3xl font-black">' + money(p.totalSave) + '</p>' +
-        '<p class="text-xs font-bold opacity-95 mt-1">(' + pct + '% OFF)</p></div>';
+    box.innerHTML = '<div class="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 text-white rounded-2xl p-4 text-center shadow-lg"><p class="text-[10px] font-black uppercase tracking-widest opacity-95 mb-1">🎉 You Are Saving</p><p class="text-3xl font-black">' + money(p.totalSave) + '</p><p class="text-xs font-bold opacity-95 mt-1">(' + pct + '% OFF)</p></div>';
     var offerBox = document.getElementById('checkoutOfferForYou');
     if (p.couponDisc > 0) {
         offerBox.classList.remove('hidden');
         var couponCodes = p.usedCoupons.map(function(u) { return u.code; }).join(', ');
-        offerBox.innerHTML = '<div class="offer-for-you-dark"><div class="flex items-start gap-3"><div class="text-3xl flex-shrink-0">🎁</div><div class="flex-1">' +
-            '<p class="text-[10px] font-black uppercase tracking-widest opacity-95">🎁 OFFER FOR YOU</p>' +
-            '<p class="text-xs font-bold mt-1">Coupon <strong>' + couponCodes + '</strong> applied!</p>' +
-            '<p class="text-2xl font-black mt-1">Extra ' + money(p.couponDisc) + ' off</p></div></div></div>';
+        offerBox.innerHTML = '<div class="offer-for-you-dark"><div class="flex items-start gap-3"><div class="text-3xl flex-shrink-0">🎁</div><div class="flex-1"><p class="text-[10px] font-black uppercase tracking-widest opacity-95">🎁 OFFER FOR YOU</p><p class="text-xs font-bold mt-1">Coupon <strong>' + couponCodes + '</strong> applied!</p><p class="text-2xl font-black mt-1">Extra ' + money(p.couponDisc) + ' off</p></div></div></div>';
     } else {
         offerBox.classList.add('hidden');
     }
@@ -2323,21 +2114,13 @@ function renderCheckoutSummary() {
         rows += '<div class="flex justify-between items-center"><span class="text-slate-600 font-semibold">➕ Admission Fee</span><span class="font-bold text-slate-800">' + money(p.admissionFee) + '</span></div>';
         rows += '<div class="flex justify-between items-center"><span class="text-slate-600 font-semibold">📘 Course Fee</span><span class="font-bold text-slate-800">' + money(p.coursePrice) + '</span></div>';
         rows += '<div class="flex justify-between items-center pt-2 border-t border-dashed border-slate-300"><span class="text-slate-700 font-bold text-sm">Subtotal</span><span class="font-black text-slate-800">' + money(p.subtotal) + '</span></div>';
-        if (p.couponDisc > 0) {
-            rows += '<div class="flex justify-between items-center text-purple-700 font-bold"><span>🎟️ Coupon Discount</span><span>− ' + money(p.couponDisc) + '</span></div>';
-        }
+        if (p.couponDisc > 0) rows += '<div class="flex justify-between items-center text-purple-700 font-bold"><span>🎟️ Coupon Discount</span><span>− ' + money(p.couponDisc) + '</span></div>';
         rows += '<div class="flex justify-between items-center pt-3 mt-1 border-t-2 border-slate-300"><span class="text-slate-800 font-black text-sm">Total Payable</span><span class="text-2xl font-black text-orange-600">' + money(p.final) + '</span></div>';
     } else {
-        if (p.admissionFee > 0) {
-            rows += '<div class="flex justify-between items-center"><span class="text-slate-600 font-semibold">➕ Admission Fee (New Student)</span><span class="font-bold text-slate-800">' + money(p.admissionFee) + '</span></div>';
-        }
+        if (p.admissionFee > 0) rows += '<div class="flex justify-between items-center"><span class="text-slate-600 font-semibold">➕ Admission Fee (New Student)</span><span class="font-bold text-slate-800">' + money(p.admissionFee) + '</span></div>';
         rows += '<div class="flex justify-between items-center"><span class="text-slate-600 font-semibold">📘 Package Fee</span><span class="font-black text-slate-800">' + money(p.planPrice) + '</span></div>';
-        if (p.admissionFee > 0) {
-            rows += '<div class="flex justify-between items-center pt-2 border-t border-dashed border-slate-300"><span class="text-slate-700 font-bold text-sm">Subtotal</span><span class="font-black text-slate-800">' + money(p.subtotal) + '</span></div>';
-        }
-        if (p.couponDisc > 0) {
-            rows += '<div class="flex justify-between items-center text-purple-700 font-bold"><span>🎟️ Coupon Discount</span><span>− ' + money(p.couponDisc) + '</span></div>';
-        }
+        if (p.admissionFee > 0) rows += '<div class="flex justify-between items-center pt-2 border-t border-dashed border-slate-300"><span class="text-slate-700 font-bold text-sm">Subtotal</span><span class="font-black text-slate-800">' + money(p.subtotal) + '</span></div>';
+        if (p.couponDisc > 0) rows += '<div class="flex justify-between items-center text-purple-700 font-bold"><span>🎟️ Coupon Discount</span><span>− ' + money(p.couponDisc) + '</span></div>';
         rows += '<div class="flex justify-between items-center pt-3 mt-1 border-t-2 border-slate-300"><span class="text-slate-800 font-black text-sm">Total Payable</span><span class="text-2xl font-black text-orange-600">' + money(p.final) + '</span></div>';
     }
     summary.innerHTML = rows;
@@ -2369,12 +2152,8 @@ function calculateSelectedPlanPricing() {
         regularTotal = regularRate;
         discountedTotal = discountedRate;
         specialTotal = specialRate;
-
-        if (active) {
-            admissionFee = Number(selectedPlan.admissionFeeSpecial) || 0;
-        } else {
-            admissionFee = Number(selectedPlan.admissionFeeDiscounted) || Number(selectedPlan.admissionFeeRegular) || 0;
-        }
+        if (active) admissionFee = Number(selectedPlan.admissionFeeSpecial) || 0;
+        else admissionFee = Number(selectedPlan.admissionFeeDiscounted) || Number(selectedPlan.admissionFeeRegular) || 0;
     } else {
         regularTotal = Number(plan.regularTotal) || Number(plan.regularRate) || 0;
         discountedTotal = Number(plan.discountedTotal) || Number(plan.discountedRate) || regularTotal;
@@ -2382,14 +2161,10 @@ function calculateSelectedPlanPricing() {
         regularRate = days > 0 ? Math.round(regularTotal / days) : regularTotal;
         discountedRate = days > 0 ? Math.round(discountedTotal / days) : discountedTotal;
         specialRate = days > 0 ? Math.round(specialTotal / days) : specialTotal;
-
         admissionFee = Number(selectedPlan.groupAdmissionFee) || 0;
     }
 
-    var coursePrice;
-    if (active) coursePrice = specialTotal;
-    else coursePrice = discountedTotal;
-
+    var coursePrice = active ? specialTotal : discountedTotal;
     var subtotal = admissionFee + coursePrice;
     var builtInSave = regularTotal - coursePrice;
 
@@ -2412,24 +2187,12 @@ function calculateSelectedPlanPricing() {
     var totalSave = builtInSave + couponDisc;
 
     return {
-        planPrice: coursePrice,
-        coursePrice: coursePrice,
-        admissionFee: admissionFee,
-        subtotal: subtotal,
-        currentRate: active ? specialRate : discountedRate,
-        regularTotal: regularTotal,
-        discountedTotal: discountedTotal,
-        specialTotal: specialTotal,
-        couponDisc: couponDisc,
-        usedCoupons: usedCoupons,
-        final: final,
-        totalSave: totalSave,
-        active: active,
-        days: days,
-        regularRate: regularRate,
-        discountedRate: discountedRate,
-        specialRate: specialRate,
-        builtInSave: builtInSave
+        planPrice: coursePrice, coursePrice: coursePrice, admissionFee: admissionFee,
+        subtotal: subtotal, currentRate: active ? specialRate : discountedRate,
+        regularTotal: regularTotal, discountedTotal: discountedTotal, specialTotal: specialTotal,
+        couponDisc: couponDisc, usedCoupons: usedCoupons, final: final, totalSave: totalSave,
+        active: active, days: days, regularRate: regularRate, discountedRate: discountedRate,
+        specialRate: specialRate, builtInSave: builtInSave
     };
 }
 
@@ -2437,7 +2200,10 @@ function calculateSelectedPlanPricing() {
 function contactViaWhatsApp() {
     var cleanPlan = selectedPlan ? cleanPlanName(selectedPlan.subCategoryDisplay + ' - ' + selectedPlan.plan.days + ' Classes') : '';
     var planLine = cleanPlan ? '\n*Interested Plan:*\n*' + cleanPlan + '*\n' : '';
-    var msg = '💬 CONTACT REQUEST - English Spur\n\n*Student Details:*\n• Name: *' + currentStudent.name + '*\n• WhatsApp: *' + currentStudent.mobile + '*\n• Unique ID: ' + (currentStudent.uniqueId || currentStudent.id) + '\n' + planLine + '\nPlease help me with the course details.\n\nThank you!';
+    var studentName = currentStudent ? (currentStudent.name || 'Student') : 'Guest';
+    var uid = currentStudent ? (currentStudent.uniqueId || '') : '';
+    var scode = currentStudent ? (currentStudent.studentCode || '') : '';
+    var msg = '💬 CONTACT REQUEST - English Spur\n\n*Student Details:*\n• Name: *' + studentName + '*\n• Unique ID: *' + uid + '*\n' + (scode ? '• Student Code: *' + scode + '*\n' : '') + planLine + '\nPlease help me with the course details.\n\nThank you!';
     window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(msg), '_blank');
 }
 
@@ -2477,7 +2243,7 @@ function proceedToPayment() {
     document.getElementById('stage2NextBtn').disabled = true;
     document.getElementById('stage3NextBtn').disabled = true;
     document.getElementById('payStep4Name').textContent = currentStudent.name || '—';
-    document.getElementById('payStep4Uid').textContent = currentStudent.uniqueId || currentStudent.id || '—';
+    document.getElementById('payStep4Uid').textContent = currentStudent.uniqueId || '—';
     document.getElementById('payStep4Plan').textContent = planDisplayName;
     document.getElementById('payStep4Method').textContent = '—';
     document.getElementById('payStep4Screenshot').textContent = '—';
@@ -2533,11 +2299,7 @@ function renderPayStage() {
     }
 }
 
-function payStageGo(n) {
-    currentPayStep = n;
-    renderPayStage();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+function payStageGo(n) { currentPayStep = n; renderPayStage(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
 function togglePayDone() {
     payDoneChecked = !payDoneChecked;
@@ -2563,11 +2325,7 @@ function selectPayMethod(method, idx) {
 }
 
 function toggleScreenshotCheck() {
-    if (!screenshotBase64) {
-        alert('⚠️ Please upload your payment screenshot first.');
-        document.getElementById('screenshotAttachRadio').checked = false;
-        return;
-    }
+    if (!screenshotBase64) { alert('⚠️ Please upload screenshot first.'); document.getElementById('screenshotAttachRadio').checked = false; return; }
     screenshotCheckChecked = !screenshotCheckChecked;
     var item = document.getElementById('screenshotAttachChecklist');
     var radio = document.getElementById('screenshotAttachRadio');
@@ -2603,10 +2361,10 @@ function fallbackCopyUpi() {
     document.body.removeChild(ta);
 }
 
-/* ============ SUBMIT PURCHASE ============ */
+/* ============ SUBMIT PURCHASE (NO MOBILE) ============ */
 async function submitPurchase() {
     if (!screenshotBase64) { alert('⚠️ Please upload payment screenshot!'); return; }
-    if (!selectedPlan) { alert('⚠️ Plan missing. Please reselect.'); return; }
+    if (!selectedPlan) { alert('⚠️ Plan missing.'); return; }
     var p = calculateSelectedPlanPricing();
     var planDisplayName = getPlanDisplayName();
     var cleanPlan = cleanPlanName(planDisplayName);
@@ -2627,10 +2385,8 @@ async function submitPurchase() {
         orderId: orderId,
         studentId: currentStudent.id,
         studentName: currentStudent.name,
-        studentMobile: currentStudent.mobile,
-        uniqueId: currentStudent.uniqueId || currentStudent.id,
-        studentCode: currentStudent.studentCode || currentStudent.studentId || '',
-        studentIdCode: currentStudent.studentId || '',
+        studentUniqueId: currentStudent.uniqueId || '',
+        studentCode: currentStudent.studentCode || '',
         courseEnrolled: currentStudent.courseEnrolled || '',
         batchName: currentStudent.batchName || '',
         planName: planDisplayName,
@@ -2670,16 +2426,16 @@ async function submitPurchase() {
         try {
             var link = document.createElement('a');
             link.href = screenshotBase64;
-            link.download = orderId + '_' + (currentStudent.uniqueId || currentStudent.id) + '.jpg';
+            link.download = orderId + '_' + (currentStudent.uniqueId || 'student') + '.jpg';
             link.click();
-        } catch (e) { console.error('Screenshot download failed:', e); }
+        } catch (e) {}
         var breakdown = '';
         if (p.admissionFee > 0) breakdown += '• Admission Fee: ' + money(p.admissionFee) + '\n';
         breakdown += '• Course/Package Fee: ' + money(p.coursePrice) + '\n';
         breakdown += '• Subtotal: ' + money(p.subtotal) + '\n';
         p.usedCoupons.forEach(function(uc) { breakdown += '• Coupon ' + uc.code + ': −' + money(uc.disc) + '\n'; });
         breakdown += '• Net Amount Received: ' + money(p.final);
-        var msg = '✅ *PAYMENT COMPLETED — English Spur*\n\n*🆔 ORDER ID: ' + orderId + '*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order.\n\n--- STUDENT DETAILS ---\n• Name: *' + currentStudent.name + '*\n• Mobile: *' + currentStudent.mobile + '*\n• Unique ID: ' + (currentStudent.uniqueId || currentStudent.id) + '\n\n--- PLAN ENROLLED ---\n*' + cleanPlan + '*\n\n--- FEE BREAKDOWN ---\n' + breakdown + '\n-------------------------\n*💵 Net Amount Received: ' + money(p.final) + '*\n\n--- PAYMENT INFO ---\n• Method: ' + payMethod + '\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\nKindly verify and send me the receipt.\n\nThank you 🙏';
+        var msg = '✅ *PAYMENT COMPLETED — English Spur*\n\n*🆔 ORDER ID: ' + orderId + '*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order.\n\n--- STUDENT DETAILS ---\n• Name: *' + currentStudent.name + '*\n• Unique ID: *' + (currentStudent.uniqueId || '—') + '*\n' + (currentStudent.studentCode ? '• Student Code: *' + currentStudent.studentCode + '*\n' : '') + '\n--- PLAN ENROLLED ---\n*' + cleanPlan + '*\n\n--- FEE BREAKDOWN ---\n' + breakdown + '\n-------------------------\n*💵 Net Amount Received: ' + money(p.final) + '*\n\n--- PAYMENT INFO ---\n• Method: ' + payMethod + '\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\nKindly verify and send me the receipt.\n\nThank you 🙏';
         window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(msg), '_blank');
         document.getElementById('stage5OrderId').textContent = orderId;
         selectedPlan = null;
@@ -2728,7 +2484,7 @@ async function refreshDashboard() {
             if (fresh.blocked === true) { alert('🚫 Your account has been blocked.'); studentLogout(); return; }
             currentStudent = Object.assign({ id: studentDoc.id }, fresh);
             saveStudentToStorage(currentStudent);
-            isExistingStudent = !!(currentStudent.studentCode || currentStudent.studentId);
+            isExistingStudent = !!(currentStudent.studentCode);
             updateStudentInfo();
         }
         await loadCurrentPlan();
@@ -2777,15 +2533,10 @@ function loadHistory() {
             var inner = '';
             inner += '<div class="flex justify-between items-start gap-2 flex-wrap mb-2">';
             inner += '<div class="flex-1 min-w-0"><p class="font-black text-xs sm:text-sm text-slate-800 truncate">' + (p.planName || '—') + '</p></div>';
-            inner += '<span class="text-white text-[10px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap ' + (badges[p.status] || '') + '">' + (icons[p.status] || '') + ' ' + (statusText[p.status] || '') + '</span>';
-            inner += '</div>';
-            if (p.reuploadCount) {
-                inner += '<div class="bg-orange-100 border border-orange-300 rounded-xl p-2 mb-2"><p class="text-[10px] font-black text-orange-800">🔄 Re-uploaded ×' + p.reuploadCount + '</p></div>';
-            }
+            inner += '<span class="text-white text-[10px] font-bold px-2.5 py-1 rounded-full whitespace-nowrap ' + (badges[p.status] || '') + '">' + (icons[p.status] || '') + ' ' + (statusText[p.status] || '') + '</span></div>';
+            if (p.reuploadCount) inner += '<div class="bg-orange-100 border border-orange-300 rounded-xl p-2 mb-2"><p class="text-[10px] font-black text-orange-800">🔄 Re-uploaded ×' + p.reuploadCount + '</p></div>';
             inner += '<div class="bg-white rounded-xl p-3 mb-2 space-y-1.5">';
-            inner += '<div class="flex justify-between items-center text-[11px] gap-2 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl px-3 py-2 mb-1">';
-            inner += '<span class="text-blue-700 font-black text-[10px] uppercase tracking-wide">🆔 Order ID</span>';
-            inner += '<strong class="text-blue-800 text-right font-mono font-black text-[15px] tracking-widest">' + (p.orderId || '—') + '</strong></div>';
+            inner += '<div class="flex justify-between items-center text-[11px] gap-2 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl px-3 py-2 mb-1"><span class="text-blue-700 font-black text-[10px] uppercase tracking-wide">🆔 Order ID</span><strong class="text-blue-800 text-right font-mono font-black text-[15px] tracking-widest">' + (p.orderId || '—') + '</strong></div>';
             inner += '<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">📅 Date:</span><strong class="text-slate-700 text-right">' + formatFullTimestamp(p.createdAt) + '</strong></div>';
             if (p.admissionFee > 0) inner += '<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">➕ Admission:</span><strong class="text-slate-700 text-right">' + money(p.admissionFee) + '</strong></div>';
             if (p.courseFee > 0) inner += '<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">📘 Course Fee:</span><strong class="text-slate-700 text-right">' + money(p.courseFee) + '</strong></div>';
@@ -2795,8 +2546,8 @@ function loadHistory() {
             if (p.receiptNo) inner += '<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">📄 PCS No:</span><strong class="text-green-700 text-right">' + p.receiptNo + '</strong></div>';
             if (p.status === 'rejected' && p.rejectionReason) inner += '<div class="bg-red-50 border border-red-200 rounded-lg p-2 mt-1"><p class="text-[10px] text-red-700 font-bold">⚠️ Rejection Reason:</p><p class="text-[11px] text-red-800 font-semibold mt-0.5">' + p.rejectionReason + '</p></div>';
             inner += '</div>';
-            if (p.status === 'approved') inner += '<button type="button" onclick="viewReceipt(\'' + p.id + '\')" class="w-full bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white font-bold py-2.5 rounded-xl text-[11px] mb-2 flex items-center justify-center gap-2 transition-all">📄 View Receipt & Download</button>';
-            if (p.status === 'rejected') inner += '<button type="button" onclick="openReuploadModal(\'' + p.id + '\'); return false;" class="w-full bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white font-black py-3 rounded-xl text-[12px] mb-2 shadow-md transition-all">🔄 Re-upload Screenshot</button>';
+            if (p.status === 'approved') inner += '<button type="button" onclick="viewReceipt(\'' + p.id + '\')" class="w-full bg-gradient-to-r from-blue-700 to-blue-800 text-white font-bold py-2.5 rounded-xl text-[11px] mb-2 flex items-center justify-center gap-2 transition-all">📄 View Receipt & Download</button>';
+            if (p.status === 'rejected') inner += '<button type="button" onclick="openReuploadModal(\'' + p.id + '\'); return false;" class="w-full bg-gradient-to-r from-red-600 to-rose-600 text-white font-black py-3 rounded-xl text-[12px] mb-2 shadow-md transition-all">🔄 Re-upload Screenshot</button>';
             div.innerHTML = inner;
             list.appendChild(div);
         });
@@ -2815,12 +2566,12 @@ async function viewReceipt(id) {
         var html = buildReceipt(p);
         var safeName = String(p.orderId || p.receiptNo || Date.now()).replace(/[^a-zA-Z0-9_-]/g, '_');
         var pngName = 'EnglishSpur_Receipt_' + safeName + '.png';
-        showToast('📥 Generating receipt image...', 'info');
+        showToast('📥 Generating receipt...', 'info');
         try {
             await downloadReceiptAsPNG(html, pngName);
-            showToast('✅ Receipt saved to your device!', 'success');
+            showToast('✅ Receipt saved!', 'success');
         } catch (err) {
-            console.error('PNG download failed:', err);
+            console.error(err);
             var htmlName = 'EnglishSpur_Receipt_' + safeName + '.html';
             downloadReceiptFile(html, htmlName);
             showToast('✅ Receipt downloaded (HTML)', 'success');
@@ -2847,7 +2598,7 @@ function downloadReceiptAsPNG(htmlContent, fileName) {
                 var targetWidth = 800;
                 html2canvas(targetBody, { backgroundColor: '#f4f7f6', scale: 2, useCORS: true, logging: false, width: targetWidth, windowWidth: targetWidth }).then(function(canvas) {
                     canvas.toBlob(function(blob) {
-                        if (!blob) { reject(new Error('Failed to create PNG blob')); cleanupIframe(iframe); return; }
+                        if (!blob) { reject(new Error('Failed')); cleanupIframe(iframe); return; }
                         var url = URL.createObjectURL(blob);
                         var link = document.createElement('a');
                         link.href = url;
@@ -2862,16 +2613,8 @@ function downloadReceiptAsPNG(htmlContent, fileName) {
                         }, 1500);
                         resolve(true);
                     }, 'image/png', 0.95);
-                }).catch(function(err) {
-                    console.error('html2canvas error:', err);
-                    cleanupIframe(iframe);
-                    reject(err);
-                });
-            } catch (err) {
-                console.error('PNG generation error:', err);
-                cleanupIframe(iframe);
-                reject(err);
-            }
+                }).catch(function(err) { cleanupIframe(iframe); reject(err); });
+            } catch (err) { cleanupIframe(iframe); reject(err); }
         }, 1000);
     });
 }
@@ -2894,9 +2637,7 @@ function downloadReceiptFile(htmlContent, fileName) {
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
         }, 1500);
-    } catch (err) {
-        console.error('Download failed:', err);
-    }
+    } catch (err) {}
 }
 
 function showReceiptInIframe(html) {
@@ -2907,11 +2648,7 @@ function showReceiptInIframe(html) {
     overlay.style.cssText = 'position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #f4f7f6; z-index: 999999; display: flex; flex-direction: column; overflow: hidden;';
     var topBar = document.createElement('div');
     topBar.style.cssText = 'background: linear-gradient(135deg, #16a34a, #15803d); color: white; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.15); flex-shrink: 0;';
-    topBar.innerHTML = '<div style="display: flex; align-items: center; gap: 10px;">' +
-        '<span style="font-size: 22px;">✅</span>' +
-        '<div><p style="font-size: 14px; font-weight: 900; margin: 0;">PAYMENT CONFIRMED</p>' +
-        '<p style="font-size: 11px; margin: 2px 0 0; opacity: 0.9;">English Spur · Downloaded ✅</p></div></div>' +
-        '<button type="button" onclick="closeReceiptOverlay()" style="background: rgba(255,255,255,0.25); border: none; color: white; font-size: 22px; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center;">&times;</button>';
+    topBar.innerHTML = '<div style="display: flex; align-items: center; gap: 10px;"><span style="font-size: 22px;">✅</span><div><p style="font-size: 14px; font-weight: 900; margin: 0;">PAYMENT CONFIRMED</p><p style="font-size: 11px; margin: 2px 0 0; opacity: 0.9;">English Spur · Downloaded ✅</p></div></div><button type="button" onclick="closeReceiptOverlay()" style="background: rgba(255,255,255,0.25); border: none; color: white; font-size: 22px; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-weight: bold;">&times;</button>';
     var iframe = document.createElement('iframe');
     iframe.id = 'receiptIframe';
     iframe.style.cssText = 'flex: 1; width: 100%; border: none; background: #f4f7f6;';
@@ -2927,27 +2664,21 @@ function showReceiptInIframe(html) {
 
 function closeReceiptOverlay() {
     var overlay = document.getElementById('receiptOverlay');
-    if (overlay) {
-        overlay.remove();
-        document.body.style.overflow = '';
-    }
+    if (overlay) { overlay.remove(); document.body.style.overflow = ''; }
 }
 
 /* ============ BUILD RECEIPT ============ */
 function buildReceipt(p) {
     var date = p.verifiedAt ? formatDateOnly(p.verifiedAt) : new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
-    var html = '';
-    html += '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">';
-    html += '<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">';
+    var html = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">';
     html += '<title>Payment Confirmation — ' + (p.orderId || '') + '</title>';
     html += '<style>';
-    html += '* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }';
-    html += 'html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Poppins", sans-serif; background: #f4f7f6; color: #1e293b; -webkit-text-size-adjust: 100%; min-height: 100vh; }';
-    html += '.page { max-width: 640px; width: 100%; margin: 0 auto; padding: 16px; min-height: 100vh; display: flex; flex-direction: column; }';
-    html += '.card { background: #fff; border: 2px solid #16a34a; border-radius: 20px; padding: 28px 22px; box-shadow: 0 12px 40px rgba(0,0,0,0.08); flex: 1; display: flex; flex-direction: column; }';
+    html += '* { box-sizing: border-box; }';
+    html += 'html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Poppins", sans-serif; background: #f4f7f6; color: #1e293b; }';
+    html += '.page { max-width: 640px; width: 100%; margin: 0 auto; padding: 16px; }';
+    html += '.card { background: #fff; border: 2px solid #16a34a; border-radius: 20px; padding: 28px 22px; box-shadow: 0 12px 40px rgba(0,0,0,0.08); }';
     html += '.icon-wrap { text-align: center; margin-bottom: 16px; }';
     html += '.icon-circle { width: 96px; height: 96px; border-radius: 50%; background: #16a34a; display: flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 0 0 10px rgba(22,163,74,0.15), 0 12px 30px rgba(22,163,74,0.4); }';
-    html += '.icon-circle svg { display: block; }';
     html += '.title-main { text-align: center; margin: 8px 0 4px; }';
     html += '.title-main h1 { font-size: 26px; font-weight: 900; color: #15803d; margin: 0; letter-spacing: 1px; text-transform: uppercase; }';
     html += '.title-main p { font-size: 14px; color: #16a34a; margin: 6px 0 0; font-weight: 700; }';
@@ -2960,17 +2691,14 @@ function buildReceipt(p) {
     html += '.meta { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 18px; flex-wrap: wrap; gap: 8px; background: #f8fafc; padding: 10px 12px; border-radius: 8px; }';
     html += '.meta > div { font-weight: 700; color: #475569; }';
     html += '.section-title { font-size: 13px; font-weight: 900; color: #1d4ed8; text-transform: uppercase; letter-spacing: 1px; margin: 18px 0 8px 0; padding-bottom: 6px; border-bottom: 2px solid #e2e8f0; }';
-    html += '.details { margin-top: 4px; }';
     html += '.row { display: flex; justify-content: space-between; padding: 10px 0; font-size: 14px; border-bottom: 1px dashed #e2e8f0; gap: 14px; }';
     html += '.row:last-child { border-bottom: none; }';
     html += '.row .lbl { color: #64748b; font-weight: 600; flex-shrink: 0; }';
     html += '.row .val { color: #1e293b; font-weight: 800; text-align: right; word-break: break-word; }';
     html += '.row.subtotal { border-top: 1px dashed #cbd5e1; padding-top: 12px; margin-top: 4px; }';
-    html += '.row.subtotal .lbl { color: #1e293b; font-weight: 900; }';
-    html += '.row.subtotal .val { color: #1e293b; font-weight: 900; }';
+    html += '.row.subtotal .lbl, .row.subtotal .val { color: #1e293b; font-weight: 900; }';
     html += '.row.discount { background: #f0fdf4; padding: 10px 12px; border-radius: 8px; border: none; margin-top: 6px; }';
-    html += '.row.discount .lbl { color: #15803d; font-weight: 800; }';
-    html += '.row.discount .val { color: #15803d; font-weight: 900; }';
+    html += '.row.discount .lbl, .row.discount .val { color: #15803d; font-weight: 900; }';
     html += '.row.amount { background: #16a34a; padding: 14px 16px; border-radius: 12px; border: none; margin-top: 14px; box-shadow: 0 6px 20px rgba(22,163,74,0.35); }';
     html += '.row.amount .lbl { color: #fff; font-weight: 900; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }';
     html += '.row.amount .val { color: #fff; font-weight: 900; font-size: 24px; }';
@@ -2980,7 +2708,7 @@ function buildReceipt(p) {
     html += '.coupon-box .coupon-item:last-child { border-bottom: none; }';
     html += '.coupon-box .coupon-code { font-family: "Courier New", monospace; font-weight: 900; color: #15803d; }';
     html += '.coupon-box .coupon-disc { font-weight: 900; color: #16a34a; }';
-    html += '.coupon-box .coupon-total { display: flex; justify-content: space-between; padding-top: 8px; margin-top: 6px; border-top: 2px solid #16a34a; font-size: 14px; font-weight: 900; color: #15803d; text-transform: uppercase; letter-spacing: 0.5px; }';
+    html += '.coupon-box .coupon-total { display: flex; justify-content: space-between; padding-top: 8px; margin-top: 6px; border-top: 2px solid #16a34a; font-size: 14px; font-weight: 900; color: #15803d; text-transform: uppercase; }';
     html += '.note { background: #fef3c7; border: 2px dashed #f59e0b; border-radius: 14px; padding: 16px 18px; margin-top: 22px; }';
     html += '.note .note-title { font-size: 13px; font-weight: 900; color: #92400e; margin: 0 0 8px 0; text-transform: uppercase; letter-spacing: 1px; }';
     html += '.note .note-text { font-size: 14px; font-weight: 700; color: #78350f; margin: 0; line-height: 1.6; }';
@@ -2991,99 +2719,39 @@ function buildReceipt(p) {
     html += '.brand-foot .org { font-size: 12px; color: #64748b; margin-top: 4px; font-weight: 600; }';
     html += '</style></head><body>';
     html += '<div class="page"><div class="card">';
-
-    html += '<div class="icon-wrap">';
-    html += '<div class="icon-circle">';
-    html += '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">';
-    html += '<polyline points="4 12.5 10 18.5 20 6"></polyline>';
-    html += '</svg>';
-    html += '</div>';
-    html += '</div>';
-
-    html += '<div class="title-main">';
-    html += '<h1>Payment Confirmed</h1>';
-    html += '<p>পেমেন্ট নিশ্চিত হয়েছে</p>';
-    html += '</div>';
-
-    html += '<div class="order-box">';
-    html += '<div class="lbl">🆔 Order ID</div>';
-    html += '<div class="val">' + (p.orderId || '—') + '</div>';
-    html += '</div>';
-
-    html += '<div class="pcs-box">';
-    html += '<div class="lbl">📄 PCS No.</div>';
-    html += '<div class="val">' + (p.receiptNo || '—') + '</div>';
-    html += '</div>';
-
-    html += '<div class="meta">';
-    html += '<div><strong>Date:</strong> ' + date + '</div>';
-    html += '</div>';
-
-    html += '<div class="section-title">👤 Student Details</div>';
-    html += '<div class="details">';
+    html += '<div class="icon-wrap"><div class="icon-circle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="56" height="56" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12.5 10 18.5 20 6"></polyline></svg></div></div>';
+    html += '<div class="title-main"><h1>Payment Confirmed</h1><p>পেমেন্ট নিশ্চিত হয়েছে</p></div>';
+    html += '<div class="order-box"><div class="lbl">🆔 Order ID</div><div class="val">' + (p.orderId || '—') + '</div></div>';
+    html += '<div class="pcs-box"><div class="lbl">📄 PCS No.</div><div class="val">' + (p.receiptNo || '—') + '</div></div>';
+    html += '<div class="meta"><div><strong>Date:</strong> ' + date + '</div></div>';
+    html += '<div class="section-title">👤 Student Details</div><div>';
     html += '<div class="row"><span class="lbl">Name</span><span class="val">' + (p.studentName || '—') + '</span></div>';
-    html += '<div class="row"><span class="lbl">Mobile</span><span class="val">' + (p.studentMobile || '—') + '</span></div>';
+    if (p.studentUniqueId) html += '<div class="row"><span class="lbl">Unique ID</span><span class="val">' + p.studentUniqueId + '</span></div>';
     if (p.studentCode) html += '<div class="row"><span class="lbl">Student Code</span><span class="val">' + p.studentCode + '</span></div>';
     if (p.courseEnrolled) html += '<div class="row"><span class="lbl">Course Enrolled</span><span class="val">' + p.courseEnrolled + '</span></div>';
     html += '</div>';
-
-    html += '<div class="section-title">📘 Plan Enrolled</div>';
-    html += '<div class="details">';
-    html += '<div class="row"><span class="lbl">Plan</span><span class="val">' + (p.planName || '—') + '</span></div>';
-    html += '</div>';
-
-    html += '<div class="section-title">💰 Fee Breakdown</div>';
-    html += '<div class="details">';
-    if (p.admissionFee > 0) {
-        html += '<div class="row"><span class="lbl">➕ Admission Fee</span><span class="val">' + money(p.admissionFee) + '</span></div>';
-    }
-    if (p.courseFee > 0) {
-        html += '<div class="row"><span class="lbl">📘 Course Fee</span><span class="val">' + money(p.courseFee) + '</span></div>';
-    }
+    html += '<div class="section-title">📘 Plan Enrolled</div><div><div class="row"><span class="lbl">Plan</span><span class="val">' + (p.planName || '—') + '</span></div></div>';
+    html += '<div class="section-title">💰 Fee Breakdown</div><div>';
+    if (p.admissionFee > 0) html += '<div class="row"><span class="lbl">➕ Admission Fee</span><span class="val">' + money(p.admissionFee) + '</span></div>';
+    if (p.courseFee > 0) html += '<div class="row"><span class="lbl">📘 Course Fee</span><span class="val">' + money(p.courseFee) + '</span></div>';
     html += '<div class="row subtotal"><span class="lbl">Subtotal</span><span class="val">' + money(p.subtotal || ((p.admissionFee || 0) + (p.courseFee || 0))) + '</span></div>';
-    if (p.totalDiscount && p.totalDiscount > 0) {
-        html += '<div class="row discount"><span class="lbl">🎟️ Coupon Discount</span><span class="val">− ' + money(p.totalDiscount) + '</span></div>';
-    }
-    html += '<div class="row amount"><span class="lbl">Net Amount Received</span><span class="val">' + money(p.finalAmount || 0) + '</span></div>';
-    html += '</div>';
-
+    if (p.totalDiscount && p.totalDiscount > 0) html += '<div class="row discount"><span class="lbl">🎟️ Coupon Discount</span><span class="val">− ' + money(p.totalDiscount) + '</span></div>';
+    html += '<div class="row amount"><span class="lbl">Net Amount Received</span><span class="val">' + money(p.finalAmount || 0) + '</span></div></div>';
     if (p.paymentMethod) {
-        html += '<div class="section-title">💳 Payment Method</div>';
-        html += '<div class="details">';
+        html += '<div class="section-title">💳 Payment Method</div><div>';
         html += '<div class="row"><span class="lbl">Method</span><span class="val">' + p.paymentMethod + '</span></div>';
-        html += '<div class="row"><span class="lbl">Status</span><span class="val" style="color:#16a34a;font-weight:900;">✅ Verified & Approved</span></div>';
-        html += '</div>';
+        html += '<div class="row"><span class="lbl">Status</span><span class="val" style="color:#16a34a;font-weight:900;">✅ Verified & Approved</span></div></div>';
     }
-
     if (p.appliedCoupons && p.appliedCoupons.length > 0) {
-        html += '<div class="coupon-box">';
-        html += '<p class="coupon-title">🎟️ Coupon' + (p.appliedCoupons.length > 1 ? 's' : '') + ' Applied</p>';
+        html += '<div class="coupon-box"><p class="coupon-title">🎟️ Coupon' + (p.appliedCoupons.length > 1 ? 's' : '') + ' Applied</p>';
         p.appliedCoupons.forEach(function(c) {
-            html += '<div class="coupon-item">';
-            html += '<span class="coupon-code">🎟️ ' + (c.code || '—') + '</span>';
-            html += '<span class="coupon-disc">− ' + money(c.discount || 0) + '</span>';
-            html += '</div>';
+            html += '<div class="coupon-item"><span class="coupon-code">🎟️ ' + (c.code || '—') + '</span><span class="coupon-disc">− ' + money(c.discount || 0) + '</span></div>';
         });
-        if (p.totalDiscount && p.totalDiscount > 0) {
-            html += '<div class="coupon-total">';
-            html += '<span>Total Savings</span>';
-            html += '<span>− ' + money(p.totalDiscount) + '</span>';
-            html += '</div>';
-        }
+        if (p.totalDiscount && p.totalDiscount > 0) html += '<div class="coupon-total"><span>Total Savings</span><span>− ' + money(p.totalDiscount) + '</span></div>';
         html += '</div>';
     }
-
-    html += '<div class="note">';
-    html += '<p class="note-title">📱 Important Note</p>';
-    html += '<p class="note-text">Your digital money receipt will be sent to you on your WhatsApp shortly.</p>';
-    html += '<p class="note-text-bn">আপনার ডিজিটাল মানি রিসিট শীঘ্রই আপনার WhatsApp-এ পাঠানো হবে।</p>';
-    html += '</div>';
-
-    html += '<div class="brand-foot">';
-    html += '<div class="brand">ENGLISH <span>SPUR</span></div>';
-    html += '<div class="org">English Spur English Training Academy</div>';
-    html += '</div>';
-
+    html += '<div class="note"><p class="note-title">📱 Important Note</p><p class="note-text">Your digital money receipt will be sent to you on your WhatsApp shortly.</p><p class="note-text-bn">আপনার ডিজিটাল মানি রিসিট শীঘ্রই আপনার WhatsApp-এ পাঠানো হবে।</p></div>';
+    html += '<div class="brand-foot"><div class="brand">ENGLISH <span>SPUR</span></div><div class="org">English Spur English Training Academy</div></div>';
     html += '</div></div></body></html>';
     return html;
 }
@@ -3150,8 +2818,8 @@ document.addEventListener('change', function(e) {
 
 async function submitReupload() {
     if (!reuploadOrderId) { alert('⚠️ Order ID missing.'); return; }
-    if (!reuploadScreenshotBase64) { alert('⚠️ Please upload the new screenshot.'); return; }
-    if (!reuploadMethodSelected) { alert('⚠️ Please select your UPI app.'); return; }
+    if (!reuploadScreenshotBase64) { alert('⚠️ Upload the new screenshot.'); return; }
+    if (!reuploadMethodSelected) { alert('⚠️ Select your UPI app.'); return; }
     var btn = document.getElementById('reuploadSubmitBtn');
     btn.disabled = true; btn.textContent = '⏳ Preparing...';
     try {
@@ -3173,12 +2841,12 @@ async function submitReupload() {
         try {
             var link = document.createElement('a');
             link.href = reuploadScreenshotBase64;
-            link.download = 'Reupload_' + orderId + '_' + (currentStudent.uniqueId || currentStudent.id) + '_' + Date.now() + '.jpg';
+            link.download = 'Reupload_' + orderId + '_' + (currentStudent.uniqueId || 'student') + '_' + Date.now() + '.jpg';
             document.body.appendChild(link); link.click(); document.body.removeChild(link);
-        } catch (e) { console.error(e); }
+        } catch (e) {}
 
         var cleanPlan = cleanPlanName(p.planName);
-        var msg = '🔄 *PAYMENT SCREENSHOT RE-SUBMISSION — English Spur*\n\n*🆔 ORDER ID: ' + orderId + '*\n\nMy previous screenshot was rejected. I have re-uploaded a new correct screenshot. Kindly re-verify.\n\n--- STUDENT DETAILS ---\n• Name: *' + p.studentName + '*\n• Mobile: *' + p.studentMobile + '*\n\n--- ORDER DETAILS ---\n• Plan: *' + cleanPlan + '*\n• Amount: *' + money(p.finalAmount) + '*\n• UPI App: ' + reuploadMethodSelected + '\n\n--- REJECTION REASON ---\n' + (p.rejectionReason || '(not specified)') + '\n\n📸 *New Screenshot:* Auto-downloaded — attaching it.\n\nThank you 🙏';
+        var msg = '🔄 *PAYMENT SCREENSHOT RE-SUBMISSION — English Spur*\n\n*🆔 ORDER ID: ' + orderId + '*\n\nI have re-uploaded a new correct screenshot. Kindly re-verify.\n\n--- STUDENT DETAILS ---\n• Name: *' + p.studentName + '*\n• Unique ID: *' + (p.studentUniqueId || '—') + '*\n' + (p.studentCode ? '• Student Code: *' + p.studentCode + '*\n' : '') + '\n--- ORDER DETAILS ---\n• Plan: *' + cleanPlan + '*\n• Amount: *' + money(p.finalAmount) + '*\n• UPI App: ' + reuploadMethodSelected + '\n\n--- REJECTION REASON ---\n' + (p.rejectionReason || '(not specified)') + '\n\n📸 *New Screenshot:* Auto-downloaded — attaching it.\n\nThank you 🙏';
         window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(msg), '_blank');
 
         closeReuploadModal();
@@ -3250,8 +2918,8 @@ async function logActivity(type, extra) {
         await db.collection('logs').add(Object.assign({
             studentId: currentStudent.id,
             studentName: currentStudent.name || '',
-            studentMobile: currentStudent.mobile || '',
             uniqueId: currentStudent.uniqueId || '',
+            studentCode: currentStudent.studentCode || '',
             type: type,
             timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             userAgent: navigator.userAgent.substring(0, 200)
@@ -3265,7 +2933,6 @@ window.addEventListener('beforeunload', function() {
             db.collection('logs').add({
                 studentId: currentStudent.id,
                 studentName: currentStudent.name || '',
-                studentMobile: currentStudent.mobile || '',
                 type: 'page_close',
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 userAgent: navigator.userAgent

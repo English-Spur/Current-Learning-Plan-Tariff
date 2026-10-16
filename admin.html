@@ -36,28 +36,153 @@
     .badge-slate { background: #64748b; color: #fff; }
     .order-id-badge { font-family: 'Courier New', monospace; letter-spacing: 1px; background: #dbeafe; color: #1e40af; border: 2px solid #93c5fd; padding: 3px 10px; border-radius: 8px; font-weight: 900; display: inline-block; font-size: 12px; }
     .order-id-badge-lg { font-family: 'Courier New', monospace; letter-spacing: 2px; background: #dbeafe; color: #1e40af; border: 2px solid #3b82f6; padding: 5px 14px; border-radius: 10px; font-weight: 900; display: inline-block; font-size: 15px; }
+    .unique-id-badge { font-family: 'Courier New', monospace; letter-spacing: 1px; background: #fce7f3; color: #be185d; border: 2px solid #f9a8d4; padding: 3px 10px; border-radius: 8px; font-weight: 900; display: inline-block; font-size: 11px; }
     .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 9999; display: none; align-items: flex-start; justify-content: center; padding: 16px; overflow-y: auto; }
     .modal-overlay.show { display: flex; }
     .plan-row { background: #fff; border: 2px solid #e2e8f0; border-radius: 10px; padding: 10px; }
     .plan-row-label { font-size: 10px; font-weight: 700; color: #475569; text-transform: uppercase; display: block; margin-bottom: 4px; }
     .plan-row-input { width: 100%; border: 2px solid #e2e8f0; border-radius: 8px; padding: 8px; background: #f8fafc; font-weight: 700; font-size: 13px; }
-    .price-box { background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 2px solid #93c5fd; border-radius: 12px; padding: 12px; }
-    .price-box.special { background: linear-gradient(135deg, #fef3c7, #fde68a); border-color: #f59e0b; }
     .stat-card { background: linear-gradient(135deg, #ffffff, #f8fafc); border: 2px solid #e2e8f0; border-radius: 12px; padding: 12px; text-align: center; }
     .stat-card .stat-value { font-size: 24px; font-weight: 900; line-height: 1; }
     .stat-card .stat-label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
-    .course-block { background: #fff; border: 2px solid #93c5fd; border-radius: 12px; padding: 14px; }
-    .course-block-title { font-size: 13px; font-weight: 900; color: #1e40af; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-    .month-highlight { display: inline-block; font-size: 10px; font-weight: 900; padding: 3px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; margin-left: 6px; }
+    
+    /* ✅ NEW: Big Section Headers */
+    .section-hero {
+        border-radius: 16px;
+        padding: 16px 18px;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .section-hero-1on1 {
+        background: linear-gradient(135deg, #1e40af, #1d4ed8, #3b82f6);
+        color: white;
+    }
+    .section-hero-group {
+        background: linear-gradient(135deg, #047857, #059669, #10b981);
+        color: white;
+    }
+    .section-hero-icon {
+        font-size: 32px;
+        display: inline-block;
+    }
+    .section-hero-title {
+        font-size: 20px;
+        font-weight: 900;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+    .section-hero-subtitle {
+        font-size: 11px;
+        font-weight: 600;
+        opacity: 0.9;
+    }
+    
+    /* Section Containers */
+    .section-container-1on1 {
+        background: linear-gradient(180deg, #eff6ff, #dbeafe);
+        border: 3px solid #3b82f6;
+        border-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 4px 20px rgba(59,130,246,0.15);
+    }
+    .section-container-group {
+        background: linear-gradient(180deg, #f0fdf4, #dcfce7);
+        border: 3px solid #10b981;
+        border-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 4px 20px rgba(16,185,129,0.15);
+    }
+    
+    /* Sub-blocks inside sections */
+    .sub-block-1on1 {
+        background: #fff;
+        border: 2px solid #93c5fd;
+        border-radius: 12px;
+        padding: 14px;
+        margin-bottom: 14px;
+    }
+    .sub-block-group {
+        background: #fff;
+        border: 2px solid #86efac;
+        border-radius: 12px;
+        padding: 14px;
+        margin-bottom: 14px;
+    }
+    
+    .sub-block-title {
+        font-size: 13px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 2px dashed #cbd5e1;
+    }
+    .sub-block-title-1on1 { color: #1e40af; }
+    .sub-block-title-group { color: #047857; }
+    
+    .course-block {
+        background: #fff;
+        border: 2px solid #bfdbfe;
+        border-radius: 12px;
+        padding: 14px;
+        margin-bottom: 12px;
+    }
+    .course-block-title {
+        font-size: 13px;
+        font-weight: 900;
+        color: #1e40af;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .month-highlight {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 900;
+        padding: 3px 10px;
+        border-radius: 999px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-left: 6px;
+    }
     .month-basic { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; }
     .month-intermediate { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; }
     .month-advanced { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; }
     .month-master { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; }
+    
+    /* Divider between sections */
+    .big-divider {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 30px 0;
+        position: relative;
+    }
+    .big-divider::before, .big-divider::after {
+        content: '';
+        flex: 1;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
+    }
+    .big-divider span {
+        padding: 0 20px;
+        font-size: 11px;
+        font-weight: 900;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    
     @media print { .noprint { display: none !important; } }
     @media (max-width: 640px) {
         body { padding: 6px; }
         .tab-btn { padding: 7px 10px; font-size: 11px; }
         .order-id-badge-lg { font-size: 13px; padding: 4px 10px; }
+        .section-hero-title { font-size: 16px; }
+        .section-hero-icon { font-size: 24px; }
     }
 </style>
 </head>
@@ -144,11 +269,12 @@
             </div>
         </div>
 
-        <!-- ============ OFFER TAB ============ -->
+        <!-- ============ OFFER TAB (RESTRUCTURED) ============ -->
         <div id="content-offer" class="tab-content hidden fade-in">
-            <div class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 rounded-xl p-4 sm:p-5">
+            <!-- Offer Basic Settings -->
+            <div class="bg-gradient-to-br from-slate-50 to-white border-2 border-slate-200 rounded-xl p-4 sm:p-5 mb-6">
                 <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
-                    <h2 class="text-base sm:text-lg font-black text-blue-900">🎯 Offer & Pricing Control</h2>
+                    <h2 class="text-base sm:text-lg font-black text-slate-900">🎯 Offer & Pricing Control</h2>
                     <span id="offerStatusBadge" class="text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-slate-200 text-slate-700">Loading...</span>
                 </div>
 
@@ -181,7 +307,7 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">Offer Title</label>
                         <input type="text" id="offerTitle" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
@@ -191,174 +317,207 @@
                         <input type="text" id="offerDescription" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
                     </div>
                 </div>
+            </div>
 
-                <div class="price-box mb-4">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-2xl">👑</span>
+            <!-- ============================================ -->
+            <!-- 🎯 SECTION 1: ONE ON ONE (FULLY SEPARATED)   -->
+            <!-- ============================================ -->
+            <div class="section-hero section-hero-1on1">
+                <div class="flex items-center gap-3">
+                    <span class="section-hero-icon">👑</span>
+                    <div>
+                        <p class="section-hero-title">One on One Section</p>
+                        <p class="section-hero-subtitle">Admission Fee + Complete Course Packages (3 / 6 / 9 / 12 Months)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-container-1on1 mb-8">
+                <!-- Admission Fee Block -->
+                <div class="sub-block-1on1">
+                    <p class="sub-block-title sub-block-title-1on1">🎓 Admission Fee (One Time) — 1-on-1 Only</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div>
-                            <p class="font-black text-blue-900 text-sm uppercase">1-on-1 Complete Course (One-Time Payment)</p>
-                            <p class="text-[10px] text-blue-700">Admission Fee + Full Course Fee + Class Details</p>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹</label>
+                            <input type="number" id="cfg1on1AdmissionRegular" value="2500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹</label>
+                            <input type="number" id="cfg1on1AdmissionDiscounted" value="2000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special ₹</label>
+                            <input type="number" id="cfg1on1AdmissionSpecial" value="1500" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm">
                         </div>
                     </div>
-                    <p class="text-[11px] font-black text-blue-900 uppercase mb-2">🎓 Admission Fee (One Time)</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1AdmissionRegular" value="2500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
-                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1AdmissionDiscounted" value="2000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
-                        <div><label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special ₹</label><input type="number" id="cfg1on1AdmissionSpecial" value="1500" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm"></div>
-                    </div>
+                </div>
 
-                    <p class="text-[11px] font-black text-blue-900 uppercase mb-2">📅 Complete Course Packages</p>
-                    <div class="space-y-3">
-                        <div class="course-block">
-                            <div class="course-block-title">🔵 3 Months Course <span class="month-highlight month-basic">Basic</span></div>
-                            <div class="grid grid-cols-3 gap-2 mb-3">
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1_3m_regular" value="15000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1_3m_disc" value="13500" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                                <div><label class="text-[9px] font-bold text-amber-700 uppercase">Special ₹</label><input type="number" id="cfg1on1_3m_special" value="12000" class="w-full border-2 border-amber-400 rounded-lg p-2 bg-amber-50 font-bold text-xs"></div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2 mb-2">
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_3m_classes" value="30" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_3m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                            </div>
-                            <div class="mb-2">
-                                <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
-                                <input type="text" id="cfg1on1_3m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
-                            </div>
-                            <div>
-                                <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
-                                <textarea id="cfg1on1_3m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
+                <!-- Course Packages Block -->
+                <div class="sub-block-1on1">
+                    <p class="sub-block-title sub-block-title-1on1">📅 Complete Course Packages — 1-on-1 Only</p>
+
+                    <div class="course-block">
+                        <div class="course-block-title">🔵 3 Months Course <span class="month-highlight month-basic">Basic</span></div>
+                        <div class="grid grid-cols-3 gap-2 mb-3">
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1_3m_regular" value="15000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1_3m_disc" value="13500" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            <div><label class="text-[9px] font-bold text-amber-700 uppercase">Special ₹</label><input type="number" id="cfg1on1_3m_special" value="12000" class="w-full border-2 border-amber-400 rounded-lg p-2 bg-amber-50 font-bold text-xs"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 mb-2">
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_3m_classes" value="30" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_3m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
+                            <input type="text" id="cfg1on1_3m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
+                            <textarea id="cfg1on1_3m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
 Class recording provided
 PDF notes & materials
 WhatsApp support</textarea>
-                            </div>
                         </div>
+                    </div>
 
-                        <div class="course-block">
-                            <div class="course-block-title">🟣 6 Months Course <span class="month-highlight month-intermediate">Intermediate</span></div>
-                            <div class="grid grid-cols-3 gap-2 mb-3">
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1_6m_regular" value="28000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1_6m_disc" value="25000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                                <div><label class="text-[9px] font-bold text-amber-700 uppercase">Special ₹</label><input type="number" id="cfg1on1_6m_special" value="22000" class="w-full border-2 border-amber-400 rounded-lg p-2 bg-amber-50 font-bold text-xs"></div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2 mb-2">
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_6m_classes" value="60" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_6m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                            </div>
-                            <div class="mb-2">
-                                <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
-                                <input type="text" id="cfg1on1_6m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
-                            </div>
-                            <div>
-                                <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
-                                <textarea id="cfg1on1_6m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
+                    <div class="course-block">
+                        <div class="course-block-title">🟣 6 Months Course <span class="month-highlight month-intermediate">Intermediate</span></div>
+                        <div class="grid grid-cols-3 gap-2 mb-3">
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1_6m_regular" value="28000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1_6m_disc" value="25000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            <div><label class="text-[9px] font-bold text-amber-700 uppercase">Special ₹</label><input type="number" id="cfg1on1_6m_special" value="22000" class="w-full border-2 border-amber-400 rounded-lg p-2 bg-amber-50 font-bold text-xs"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 mb-2">
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_6m_classes" value="60" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_6m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
+                            <input type="text" id="cfg1on1_6m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
+                            <textarea id="cfg1on1_6m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
 Class recording provided
 PDF notes & materials
 WhatsApp support
 Monthly progress report</textarea>
-                            </div>
                         </div>
+                    </div>
 
-                        <div class="course-block">
-                            <div class="course-block-title">🟠 9 Months Course <span class="month-highlight month-advanced">Advanced</span></div>
-                            <div class="grid grid-cols-3 gap-2 mb-3">
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1_9m_regular" value="40000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1_9m_disc" value="36000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                                <div><label class="text-[9px] font-bold text-amber-700 uppercase">Special ₹</label><input type="number" id="cfg1on1_9m_special" value="32000" class="w-full border-2 border-amber-400 rounded-lg p-2 bg-amber-50 font-bold text-xs"></div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2 mb-2">
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_9m_classes" value="90" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_9m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                            </div>
-                            <div class="mb-2">
-                                <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
-                                <input type="text" id="cfg1on1_9m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
-                            </div>
-                            <div>
-                                <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
-                                <textarea id="cfg1on1_9m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
+                    <div class="course-block">
+                        <div class="course-block-title">🟠 9 Months Course <span class="month-highlight month-advanced">Advanced</span></div>
+                        <div class="grid grid-cols-3 gap-2 mb-3">
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1_9m_regular" value="40000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1_9m_disc" value="36000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            <div><label class="text-[9px] font-bold text-amber-700 uppercase">Special ₹</label><input type="number" id="cfg1on1_9m_special" value="32000" class="w-full border-2 border-amber-400 rounded-lg p-2 bg-amber-50 font-bold text-xs"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 mb-2">
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_9m_classes" value="90" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_9m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
+                            <input type="text" id="cfg1on1_9m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
+                            <textarea id="cfg1on1_9m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
 Class recording provided
 PDF notes & materials
 WhatsApp support
 Monthly progress report
 Mock tests & feedback</textarea>
-                            </div>
                         </div>
+                    </div>
 
-                        <div class="course-block">
-                            <div class="course-block-title">🟢 12 Months Course <span class="month-highlight month-master">Master</span></div>
-                            <div class="grid grid-cols-3 gap-2 mb-3">
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1_12m_regular" value="52000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1_12m_disc" value="46000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                                <div><label class="text-[9px] font-bold text-amber-700 uppercase">Special ₹</label><input type="number" id="cfg1on1_12m_special" value="40000" class="w-full border-2 border-amber-400 rounded-lg p-2 bg-amber-50 font-bold text-xs"></div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2 mb-2">
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_12m_classes" value="120" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                                <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_12m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                            </div>
-                            <div class="mb-2">
-                                <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
-                                <input type="text" id="cfg1on1_12m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
-                            </div>
-                            <div>
-                                <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
-                                <textarea id="cfg1on1_12m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
+                    <div class="course-block">
+                        <div class="course-block-title">🟢 12 Months Course <span class="month-highlight month-master">Master</span></div>
+                        <div class="grid grid-cols-3 gap-2 mb-3">
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1_12m_regular" value="52000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1_12m_disc" value="46000" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            <div><label class="text-[9px] font-bold text-amber-700 uppercase">Special ₹</label><input type="number" id="cfg1on1_12m_special" value="40000" class="w-full border-2 border-amber-400 rounded-lg p-2 bg-amber-50 font-bold text-xs"></div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 mb-2">
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_12m_classes" value="120" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                            <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_12m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
+                            <input type="text" id="cfg1on1_12m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
+                            <textarea id="cfg1on1_12m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
 Class recording provided
 PDF notes & materials
 WhatsApp support
 Monthly progress report
 Mock tests & feedback
 Certificate on completion</textarea>
-                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="price-box special mb-4">
-                    <div class="flex items-center gap-2 mb-3">
-                        <span class="text-2xl">👥</span>
-                        <div>
-                            <p class="font-black text-amber-900 text-sm uppercase">Group Class Pricing</p>
-                            <p class="text-[10px] text-amber-700">Admission Fee + Lumpsum Amount per Plan</p>
-                        </div>
-                    </div>
-                    <p class="text-[11px] font-black text-amber-900 uppercase mb-2">🎓 Admission Fee (New Students)</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-3">
-                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfgGroupAdmissionRegular" value="2500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
-                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfgGroupAdmissionDiscounted" value="2000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
-                        <div><label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special Offer ₹</label><input type="number" id="cfgGroupAdmissionSpecial" value="1500" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm"></div>
-                    </div>
-                    <div class="bg-white border-2 border-dashed border-amber-400 rounded-lg p-3">
-                        <p class="text-[11px] font-bold text-amber-900">ℹ️ Per-class rate আর নেই</p>
-                        <p class="text-[10px] text-slate-600 mt-1">এখন প্রতিটি plan এর জন্য সরাসরি lumpsum amount (Regular / Discounted / Special) নিচের "Group Class Plans" section এ বসাবেন।</p>
-                    </div>
+                <!-- 1-on-1 Categories (Sub-Categories Display) -->
+                <div class="sub-block-1on1">
+                    <p class="sub-block-title sub-block-title-1on1">👑 1-on-1 Courses (Adults & Kids)</p>
+                    <div id="oneOnOneCategories" class="space-y-3"></div>
                 </div>
-
-                <div class="space-y-4 mb-4">
-                    <div class="bg-gradient-to-br from-blue-100 to-white border-2 border-blue-400 rounded-xl p-4">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-2xl">👑</span>
-                            <div>
-                                <p class="font-black text-blue-900 text-sm uppercase">One on One</p>
-                                <p class="text-[10px] text-blue-700">Complete course packages (3/6/9/12 Months)</p>
-                            </div>
-                        </div>
-                        <div id="oneOnOneCategories" class="space-y-3"></div>
-                    </div>
-                    <div class="bg-gradient-to-br from-emerald-100 to-white border-2 border-emerald-400 rounded-xl p-4">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-2xl">👥</span>
-                            <div>
-                                <p class="font-black text-emerald-900 text-sm uppercase">Group Class</p>
-                                <p class="text-[10px] text-emerald-700">Group learning plans (lumpsum amounts)</p>
-                            </div>
-                        </div>
-                        <div id="groupCategories" class="space-y-3"></div>
-                    </div>
-                </div>
-
-                <button onclick="saveOffer()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold p-3.5 rounded-xl text-sm">💾 Save All Settings</button>
-                <p id="offerSaveMsg" class="text-green-700 text-sm text-center mt-3 hidden font-bold p-2 bg-green-50 rounded-lg">✅ Saved!</p>
             </div>
+
+            <!-- DIVIDER -->
+            <div class="big-divider">
+                <span>🔷 1-ON-1 ENDS HERE · GROUP STARTS HERE 🔷</span>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- 🎯 SECTION 2: GROUP CLASS (FULLY SEPARATED)  -->
+            <!-- ============================================ -->
+            <div class="section-hero section-hero-group">
+                <div class="flex items-center gap-3">
+                    <span class="section-hero-icon">👥</span>
+                    <div>
+                        <p class="section-hero-title">Group Class Section</p>
+                        <p class="section-hero-subtitle">Admission Fee + Lumpsum Amount Per Plan</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-container-group mb-6">
+                <!-- Group Admission Fee Block -->
+                <div class="sub-block-group">
+                    <p class="sub-block-title sub-block-title-group">🎓 Admission Fee (New Students) — Group Only</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹</label>
+                            <input type="number" id="cfgGroupAdmissionRegular" value="2500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹</label>
+                            <input type="number" id="cfgGroupAdmissionDiscounted" value="2000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special Offer ₹</label>
+                            <input type="number" id="cfgGroupAdmissionSpecial" value="1500" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm">
+                        </div>
+                    </div>
+                    <div class="bg-white border-2 border-dashed border-emerald-400 rounded-lg p-3 mt-3">
+                        <p class="text-[11px] font-bold text-emerald-900">ℹ️ Per-class rate নেই</p>
+                        <p class="text-[10px] text-slate-600 mt-1">প্রতিটি plan এর জন্য সরাসরি lumpsum amount (Regular / Discounted / Special) নিচের "Group Class Plans" section এ বসাবেন।</p>
+                    </div>
+                </div>
+
+                <!-- Group Plans Block -->
+                <div class="sub-block-group">
+                    <p class="sub-block-title sub-block-title-group">📚 Group Class Plans — Lumpsum Amounts</p>
+                    <div id="groupCategories" class="space-y-3"></div>
+                </div>
+            </div>
+
+            <!-- SAVE BUTTON -->
+            <button onclick="saveOffer()" class="w-full bg-gradient-to-r from-blue-700 to-emerald-600 hover:from-blue-800 hover:to-emerald-700 text-white font-black p-4 rounded-2xl text-base shadow-lg uppercase tracking-wider transition-all">💾 Save All Settings</button>
+            <p id="offerSaveMsg" class="text-green-700 text-sm text-center mt-3 hidden font-bold p-2 bg-green-50 rounded-lg">✅ Saved!</p>
         </div>
 
         <!-- ============ COUPONS TAB ============ -->
@@ -454,7 +613,7 @@ Certificate on completion</textarea>
             <div class="bg-white border-2 border-slate-200 rounded-xl p-3 mb-3">
                 <p class="text-[10px] font-black text-slate-600 uppercase mb-2">🔍 Filter Students</p>
                 <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2">
-                    <input type="text" id="studentSearch" oninput="filterStudents()" placeholder="🔍 Name / mobile / ID" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold">
+                    <input type="text" id="studentSearch" oninput="filterStudents()" placeholder="🔍 Name / Student Code / Unique ID" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold">
                     <select id="studentFilterCourse" onchange="filterStudents()" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white">
                         <option value="">All Courses</option>
                         <option value="Power Speak for Adults">Power Speak for Adults</option>
@@ -485,7 +644,7 @@ Certificate on completion</textarea>
             <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                 <h2 class="text-base sm:text-lg font-black text-blue-900">📋 Student Agreement Records</h2>
                 <div class="flex gap-2 items-center flex-wrap">
-                    <input type="text" id="agreementSearch" oninput="renderAgreements()" placeholder="🔍 Search name/mobile..." class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold">
+                    <input type="text" id="agreementSearch" oninput="renderAgreements()" placeholder="🔍 Search name..." class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold">
                     <select id="agreementFilter" onchange="renderAgreements()" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white">
                         <option value="">All Students</option>
                         <option value="given">✅ Consent Given</option>
@@ -559,7 +718,7 @@ Certificate on completion</textarea>
                     <input type="file" id="restoreFile" accept=".json" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-xs mb-3">
                     <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-lg mb-3">
                         <p class="text-[10px] font-black text-amber-900 uppercase mb-1">⚠️ Warning</p>
-                        <p class="text-[11px] text-amber-800 font-semibold">Restore existing data <b>overwrite</b> korbe jodi same ID thake. Age backup niye rakhen.</p>
+                        <p class="text-[11px] text-amber-800 font-semibold">Restore existing data <b>overwrite</b> korbe jodi same ID thake.</p>
                     </div>
                     <button onclick="restoreFromBackup()" id="restoreBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-3 rounded-xl text-sm uppercase tracking-wider transition shadow-md">
                         📤 Restore From File
@@ -572,14 +731,9 @@ Certificate on completion</textarea>
                         <span class="text-3xl">🔴</span>
                         <div class="flex-1">
                             <p class="font-black text-red-900 text-sm uppercase">Reset Everything</p>
-                            <p class="text-[11px] text-slate-600 mt-1">Sob Firestore data <b>permanently delete</b> hobe — students, purchases, coupons, logs, config. Eta <b>undo hoy na</b>.</p>
+                            <p class="text-[11px] text-slate-600 mt-1">Sob Firestore data <b>permanently delete</b> hobe.</p>
                         </div>
                     </div>
-                    <div class="bg-red-50 border-l-4 border-red-600 p-3 rounded-r-lg mb-3">
-                        <p class="text-[10px] font-black text-red-900 uppercase mb-1">⛔ Danger Zone</p>
-                        <p class="text-[11px] text-red-800 font-semibold">Test data clean korte use korun. Live korar age reset korun jate fresh entry neoya jay.</p>
-                    </div>
-
                     <label class="flex items-center gap-2 mb-3 cursor-pointer bg-slate-50 border-2 border-slate-200 rounded-lg p-3">
                         <input type="checkbox" id="resetConfirm1" class="w-4 h-4 accent-red-600">
                         <span class="text-[11px] font-bold text-slate-700">I understand this will permanently delete all data</span>
@@ -588,7 +742,6 @@ Certificate on completion</textarea>
                         <input type="checkbox" id="resetConfirm2" class="w-4 h-4 accent-red-600">
                         <span class="text-[11px] font-bold text-slate-700">I have taken a backup of important data</span>
                     </label>
-
                     <button onclick="resetAllData()" id="resetBtn" disabled class="w-full bg-red-600 hover:bg-red-700 text-white font-black py-3 rounded-xl text-sm uppercase tracking-wider transition shadow-md disabled:opacity-40 disabled:cursor-not-allowed">
                         🔴 Reset All Data
                     </button>
@@ -616,7 +769,6 @@ Certificate on completion</textarea>
                     <span class="text-xl">✏️</span>
                     <div>
                         <p class="font-black text-amber-900 text-sm">Editing: <span id="editModeCouponCode" class="font-mono"></span></p>
-                        <p class="text-[10px] text-amber-700 font-semibold">Modify fields below</p>
                     </div>
                 </div>
                 <button onclick="cancelEditCoupon()" class="bg-red-500 hover:bg-red-600 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg">✕ Cancel Edit</button>
@@ -703,19 +855,23 @@ Certificate on completion</textarea>
                 <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Full Name *</label>
                 <input type="text" id="newStudentName" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
             </div>
-            <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">WhatsApp Number *</label>
-                <input type="tel" id="newStudentMobile" placeholder="+91 9876543210" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
-            </div>
             <div class="grid grid-cols-2 gap-3">
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Student ID *</label>
-                    <input type="text" id="newStudentId" placeholder="ES2026-XXXX" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm uppercase">
+                    <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Student Code *</label>
+                    <input type="text" id="newStudentId" placeholder="ES2026-0001" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm uppercase">
                 </div>
                 <div>
                     <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Joined Date</label>
                     <input type="date" id="newStudentJoined" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
                 </div>
+            </div>
+            <div>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Date of Birth (DD-MM-YYYY)</label>
+                <input type="text" id="newStudentDob" placeholder="15-08-2000" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm" maxlength="10">
+            </div>
+            <div>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Unique ID (auto-fill if empty)</label>
+                <input type="text" id="newStudentUniqueId" placeholder="Auto-generate" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-mono font-semibold text-xs">
             </div>
             <div>
                 <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Course Enrolled *</label>
@@ -726,7 +882,7 @@ Certificate on completion</textarea>
                 </select>
             </div>
             <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Batch Name</label>
+                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Batch Name (Group only)</label>
                 <input type="text" id="newStudentBatch" placeholder="e.g. Batch A 2026" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
             </div>
             <div>
@@ -868,6 +1024,9 @@ function migrateCouponPlanValue(value) {
     var v = String(value).trim().toLowerCase();
     var mapping = { '90d': '3m', '180d': '6m', '270d': '9m', '360d': '12m' };
     return mapping[v] || value;
+}
+function generateUniqueId() {
+    return 'ES_' + Date.now() + Math.floor(Math.random() * 1000);
 }
 
 /* ============ CONSTANTS ============ */
@@ -1067,9 +1226,7 @@ function loadOffer() {
 
         if (!d.oneOnOnePricing) {
             d.oneOnOnePricing = {
-                admissionRegular: 2500,
-                admissionDiscounted: 2000,
-                admissionSpecial: 1500,
+                admissionRegular: 2500, admissionDiscounted: 2000, admissionSpecial: 1500,
                 courses: {
                     '3m':  { regular: 15000, discounted: 13500, special: 12000, classes: 30,  duration: '60 mins', platform: 'Google Meet', facilities: DEFAULT_COURSE_META['3m'].facilities },
                     '6m':  { regular: 28000, discounted: 25000, special: 22000, classes: 60,  duration: '60 mins', platform: 'Google Meet', facilities: DEFAULT_COURSE_META['6m'].facilities },
@@ -1089,16 +1246,13 @@ function loadOffer() {
 
         if (!d.groupPricing) {
             d.groupPricing = {
-                regularAdmission: 2500,
-                discountedAdmission: 2000,
-                specialAdmission: 1500
+                regularAdmission: 2500, discountedAdmission: 2000, specialAdmission: 1500
             };
         }
         if (!d.categories) d.categories = { oneOnOne: {}, group: {} };
         if (!d.categories.oneOnOne) d.categories.oneOnOne = {};
         if (!d.categories.group) d.categories.group = {};
 
-        /* Auto-migrate old group plans (per-class → lumpsum) */
         if (d.categories && d.categories.group) {
             Object.keys(d.categories.group).forEach(function(subKey) {
                 var sub = d.categories.group[subKey];
@@ -1165,12 +1319,12 @@ function renderCategories(categories) {
 
 function buildSubCategoryBlock(cat, key, subData) {
     var block = document.createElement('div');
-    block.className = 'bg-white border-2 border-slate-200 rounded-lg p-3';
+    block.className = (cat === 'oneOnOne') ? 'bg-white border-2 border-blue-200 rounded-lg p-3' : 'bg-white border-2 border-emerald-200 rounded-lg p-3';
     var safeKey = key.replace(/[^a-zA-Z0-9]/g, '_');
     var isOneOnOne = (cat === 'oneOnOne');
     var addBtn = isOneOnOne
         ? '<span class="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-1 rounded-lg">📅 3 / 6 / 9 / 12 Months (Fixed)</span>'
-        : '<button type="button" onclick="addPlanToSub(\'' + cat + '\', \'' + key.replace(/'/g, "\\'") + '\')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg">➕ Add Plan</button>';
+        : '<button type="button" onclick="addPlanToSub(\'' + cat + '\', \'' + key.replace(/'/g, "\\'") + '\')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg">➕ Add Plan</button>';
     block.innerHTML =
         '<div class="flex justify-between items-center mb-2 flex-wrap gap-2">' +
             '<div class="flex items-center gap-2">' +
@@ -1194,15 +1348,9 @@ function buildSubCategoryBlock(cat, key, subData) {
                     var cls = document.getElementById('cfg1on1_' + m + 'm_classes');
                     var dur = document.getElementById('cfg1on1_' + m + 'm_duration');
                     var plat = document.getElementById('cfg1on1_' + m + 'm_platform');
-                    var regV = reg ? reg.value : '—';
-                    var specV = spec ? spec.value : '—';
-                    var clsV = cls ? cls.value : '—';
-                    var durV = dur ? dur.value : '—';
-                    var platV = plat ? plat.value : '—';
-                    return '<div class="bg-slate-50 border border-slate-200 rounded-lg p-2 text-[10px]">' +
-                        '<strong class="text-blue-800">' + p.label + '</strong> · ' +
-                        'R: ₹' + regV + ' · S: ₹' + specV +
-                        '<br><span class="text-slate-500">📚 ' + clsV + ' classes · ⏱️ ' + durV + ' · 💻 ' + platV + '</span>' +
+                    return '<div class="bg-blue-50 border border-blue-200 rounded-lg p-2 text-[10px]">' +
+                        '<strong class="text-blue-800">' + p.label + '</strong> · R: ₹' + (reg ? reg.value : '—') + ' · S: ₹' + (spec ? spec.value : '—') +
+                        '<br><span class="text-slate-500">📚 ' + (cls ? cls.value : '—') + ' classes · ⏱️ ' + (dur ? dur.value : '—') + ' · 💻 ' + (plat ? plat.value : '—') + '</span>' +
                         '</div>';
                 }).join('');
                 list.innerHTML = preview;
@@ -1216,7 +1364,6 @@ function buildSubCategoryBlock(cat, key, subData) {
     return block;
 }
 
-/* GROUP: Lumpsum amount inputs */
 function buildPlanRow(cat, subKey, idx, plan) {
     var div = document.createElement('div');
     div.className = 'plan-row';
@@ -1245,7 +1392,7 @@ function recalcPlanRow(rowId) {
     var specialTotal = Number(row.querySelector('.plan-special-rate').value) || 0;
     if (days > 0) {
         var perClassInfo = '~₹' + Math.round(specialTotal / days) + '/class';
-        row.querySelector('.plan-totals').textContent = '💡 ' + days + ' classes · Total: ' + money(specialTotal) + ' (Regular: ' + money(regTotal) + ' · Disc: ' + money(discTotal) + ' · Special: ' + money(specialTotal) + ') · ' + perClassInfo;
+        row.querySelector('.plan-totals').textContent = '💡 ' + days + ' classes · Total: ' + money(specialTotal) + ' · ' + perClassInfo;
     } else {
         row.querySelector('.plan-totals').textContent = 'Enter classes count';
     }
@@ -1282,24 +1429,13 @@ function collectPlansFromForm() {
                     var classes = Number(document.getElementById('cfg1on1_' + m + 'm_classes').value) || 0;
                     var duration = document.getElementById('cfg1on1_' + m + 'm_duration').value.trim();
                     var platform = document.getElementById('cfg1on1_' + m + 'm_platform').value.trim();
-                    var facilitiesRaw = document.getElementById('cfg1on1_' + m + 'm_facilities').value;
-                    var facilities = facilitiesRaw.split('\n').map(function(x){return x.trim();}).filter(function(x){return x.length>0;});
+                    var facilities = document.getElementById('cfg1on1_' + m + 'm_facilities').value.split('\n').map(function(x){return x.trim();}).filter(function(x){return x.length>0;});
                     plans.push({
-                        days: fp.days,
-                        label: fp.label,
-                        months: m,
-                        value: fp.value,
-                        regularRate: regular,
-                        discountedRate: disc,
-                        specialRate: special,
-                        regularTotal: regular,
-                        discountedTotal: disc,
-                        specialTotal: special,
-                        offerPrice: special,
-                        classes: classes,
-                        duration: duration,
-                        platform: platform,
-                        facilities: facilities
+                        days: fp.days, label: fp.label, months: m, value: fp.value,
+                        regularRate: regular, discountedRate: disc, specialRate: special,
+                        regularTotal: regular, discountedTotal: disc, specialTotal: special,
+                        offerPrice: special, classes: classes, duration: duration,
+                        platform: platform, facilities: facilities
                     });
                 });
             } else {
@@ -1310,14 +1446,9 @@ function collectPlansFromForm() {
                     var specialTotal = Number(row.querySelector('.plan-special-rate').value) || 0;
                     if (days > 0) {
                         plans.push({
-                            days: days,
-                            regularRate: regTotal,
-                            discountedRate: discTotal,
-                            specialRate: specialTotal,
+                            days: days, regularRate: regTotal, discountedRate: discTotal, specialRate: specialTotal,
                             perClassRate: days > 0 ? Math.round(specialTotal / days) : specialTotal,
-                            regularTotal: regTotal,
-                            discountedTotal: discTotal,
-                            specialTotal: specialTotal,
+                            regularTotal: regTotal, discountedTotal: discTotal, specialTotal: specialTotal,
                             offerPrice: specialTotal
                         });
                     }
@@ -1336,14 +1467,8 @@ function applyQuickSet() {
     if (!val) return;
     var now = Date.now();
     var map = {
-        '30m': 30 * 60 * 1000,
-        '1h':  60 * 60 * 1000,
-        '6h':  6 * 60 * 60 * 1000,
-        '12h': 12 * 60 * 60 * 1000,
-        '1d':  24 * 60 * 60 * 1000,
-        '3d':  3 * 24 * 60 * 60 * 1000,
-        '7d':  7 * 24 * 60 * 60 * 1000,
-        '30d': 30 * 24 * 60 * 60 * 1000
+        '30m': 30 * 60 * 1000, '1h': 60 * 60 * 1000, '6h': 6 * 60 * 60 * 1000, '12h': 12 * 60 * 60 * 1000,
+        '1d': 24 * 60 * 60 * 1000, '3d': 3 * 24 * 60 * 60 * 1000, '7d': 7 * 24 * 60 * 60 * 1000, '30d': 30 * 24 * 60 * 60 * 1000
     };
     if (map[val]) {
         var newDate = new Date(now + map[val]);
@@ -1352,10 +1477,7 @@ function applyQuickSet() {
         input.style.transition = 'box-shadow 0.3s, border-color 0.3s';
         input.style.boxShadow = '0 0 0 4px rgba(34,197,94,0.4)';
         input.style.borderColor = '#16a34a';
-        setTimeout(function() {
-            input.style.boxShadow = '';
-            input.style.borderColor = '';
-        }, 1200);
+        setTimeout(function() { input.style.boxShadow = ''; input.style.borderColor = ''; }, 1200);
     }
     sel.value = '';
 }
@@ -1365,12 +1487,12 @@ function updateStatusBadge(d) {
     if (!badge) return;
     if (!d.active) {
         badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-slate-200 text-slate-700';
-        badge.textContent = '⚪ OFF — Student panel এ দেখাবে না';
+        badge.textContent = '⚪ OFF';
         return;
     }
     if (!d.endDateTime) {
         badge.className = 'text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-amber-200 text-amber-800';
-        badge.textContent = '⏸️ No end date set';
+        badge.textContent = '⏸️ No end date';
         return;
     }
     var endMs = new Date(d.endDateTime).getTime();
@@ -1408,42 +1530,10 @@ function saveOffer() {
             admissionDiscounted: Number(document.getElementById('cfg1on1AdmissionDiscounted').value) || 2000,
             admissionSpecial: Number(document.getElementById('cfg1on1AdmissionSpecial').value) || 1500,
             courses: {
-                '3m':  {
-                    regular:    Number(document.getElementById('cfg1on1_3m_regular').value) || 15000,
-                    discounted: Number(document.getElementById('cfg1on1_3m_disc').value) || 13500,
-                    special:    Number(document.getElementById('cfg1on1_3m_special').value) || 12000,
-                    classes:    Number(document.getElementById('cfg1on1_3m_classes').value) || 30,
-                    duration:   document.getElementById('cfg1on1_3m_duration').value.trim() || '60 mins',
-                    platform:   document.getElementById('cfg1on1_3m_platform').value.trim() || 'Google Meet',
-                    facilities: document.getElementById('cfg1on1_3m_facilities').value
-                },
-                '6m':  {
-                    regular:    Number(document.getElementById('cfg1on1_6m_regular').value) || 28000,
-                    discounted: Number(document.getElementById('cfg1on1_6m_disc').value) || 25000,
-                    special:    Number(document.getElementById('cfg1on1_6m_special').value) || 22000,
-                    classes:    Number(document.getElementById('cfg1on1_6m_classes').value) || 60,
-                    duration:   document.getElementById('cfg1on1_6m_duration').value.trim() || '60 mins',
-                    platform:   document.getElementById('cfg1on1_6m_platform').value.trim() || 'Google Meet',
-                    facilities: document.getElementById('cfg1on1_6m_facilities').value
-                },
-                '9m':  {
-                    regular:    Number(document.getElementById('cfg1on1_9m_regular').value) || 40000,
-                    discounted: Number(document.getElementById('cfg1on1_9m_disc').value) || 36000,
-                    special:    Number(document.getElementById('cfg1on1_9m_special').value) || 32000,
-                    classes:    Number(document.getElementById('cfg1on1_9m_classes').value) || 90,
-                    duration:   document.getElementById('cfg1on1_9m_duration').value.trim() || '60 mins',
-                    platform:   document.getElementById('cfg1on1_9m_platform').value.trim() || 'Google Meet',
-                    facilities: document.getElementById('cfg1on1_9m_facilities').value
-                },
-                '12m': {
-                    regular:    Number(document.getElementById('cfg1on1_12m_regular').value) || 52000,
-                    discounted: Number(document.getElementById('cfg1on1_12m_disc').value) || 46000,
-                    special:    Number(document.getElementById('cfg1on1_12m_special').value) || 40000,
-                    classes:    Number(document.getElementById('cfg1on1_12m_classes').value) || 120,
-                    duration:   document.getElementById('cfg1on1_12m_duration').value.trim() || '60 mins',
-                    platform:   document.getElementById('cfg1on1_12m_platform').value.trim() || 'Google Meet',
-                    facilities: document.getElementById('cfg1on1_12m_facilities').value
-                }
+                '3m':  { regular: Number(document.getElementById('cfg1on1_3m_regular').value) || 15000, discounted: Number(document.getElementById('cfg1on1_3m_disc').value) || 13500, special: Number(document.getElementById('cfg1on1_3m_special').value) || 12000, classes: Number(document.getElementById('cfg1on1_3m_classes').value) || 30, duration: document.getElementById('cfg1on1_3m_duration').value.trim() || '60 mins', platform: document.getElementById('cfg1on1_3m_platform').value.trim() || 'Google Meet', facilities: document.getElementById('cfg1on1_3m_facilities').value },
+                '6m':  { regular: Number(document.getElementById('cfg1on1_6m_regular').value) || 28000, discounted: Number(document.getElementById('cfg1on1_6m_disc').value) || 25000, special: Number(document.getElementById('cfg1on1_6m_special').value) || 22000, classes: Number(document.getElementById('cfg1on1_6m_classes').value) || 60, duration: document.getElementById('cfg1on1_6m_duration').value.trim() || '60 mins', platform: document.getElementById('cfg1on1_6m_platform').value.trim() || 'Google Meet', facilities: document.getElementById('cfg1on1_6m_facilities').value },
+                '9m':  { regular: Number(document.getElementById('cfg1on1_9m_regular').value) || 40000, discounted: Number(document.getElementById('cfg1on1_9m_disc').value) || 36000, special: Number(document.getElementById('cfg1on1_9m_special').value) || 32000, classes: Number(document.getElementById('cfg1on1_9m_classes').value) || 90, duration: document.getElementById('cfg1on1_9m_duration').value.trim() || '60 mins', platform: document.getElementById('cfg1on1_9m_platform').value.trim() || 'Google Meet', facilities: document.getElementById('cfg1on1_9m_facilities').value },
+                '12m': { regular: Number(document.getElementById('cfg1on1_12m_regular').value) || 52000, discounted: Number(document.getElementById('cfg1on1_12m_disc').value) || 46000, special: Number(document.getElementById('cfg1on1_12m_special').value) || 40000, classes: Number(document.getElementById('cfg1on1_12m_classes').value) || 120, duration: document.getElementById('cfg1on1_12m_duration').value.trim() || '60 mins', platform: document.getElementById('cfg1on1_12m_platform').value.trim() || 'Google Meet', facilities: document.getElementById('cfg1on1_12m_facilities').value }
             }
         },
         groupPricing: {
@@ -1529,10 +1619,7 @@ function renderCouponPlansCheckboxes() {
             label = p.label || (p.days + ' Days');
         }
         var checked = currentlyChecked.indexOf(value) !== -1 ? 'checked' : '';
-        return '<label class="text-[11px] font-bold flex items-center gap-1 bg-white border-2 border-slate-200 rounded-lg px-2.5 py-2 cursor-pointer hover:border-blue-400 transition">' +
-            '<input type="checkbox" class="plan-check" value="' + value + '" ' + checked + '> ' +
-            '<span>' + label + '</span>' + badgeHtml +
-            '</label>';
+        return '<label class="text-[11px] font-bold flex items-center gap-1 bg-white border-2 border-slate-200 rounded-lg px-2.5 py-2 cursor-pointer hover:border-blue-400 transition"><input type="checkbox" class="plan-check" value="' + value + '" ' + checked + '><span>' + label + '</span>' + badgeHtml + '</label>';
     }).join('');
 }
 
@@ -1601,9 +1688,7 @@ function renderCouponsList() {
         return true;
     });
 
-    filtered.sort(function(a, b) {
-        return (a.code || '').localeCompare(b.code || '');
-    });
+    filtered.sort(function(a, b) { return (a.code || '').localeCompare(b.code || ''); });
 
     document.getElementById('couponFilterCount').textContent = 'Showing ' + filtered.length + ' of ' + allCoupons.length;
 
@@ -1633,10 +1718,7 @@ function renderCouponsList() {
                 var v = String(p).trim().toLowerCase();
                 if (v.indexOf('m') !== -1) {
                     var months = parseInt(v, 10);
-                    if (!isNaN(months)) {
-                        var badgeClass = getMonthBadgeClass(months);
-                        return '<span class="month-highlight ' + badgeClass + '">' + months + ' Months</span>';
-                    }
+                    if (!isNaN(months)) return '<span class="month-highlight ' + getMonthBadgeClass(months) + '">' + months + ' Months</span>';
                 }
                 return '<span class="text-[10px] font-bold text-slate-600">' + planValueToLabel(p) + '</span>';
             });
@@ -1646,9 +1728,7 @@ function renderCouponsList() {
         var grantsCount = 0;
         allStudents.forEach(function(s) {
             if (s.grantedCoupons) {
-                s.grantedCoupons.forEach(function(g) {
-                    if (g.id === c.id) grantsCount++;
-                });
+                s.grantedCoupons.forEach(function(g) { if (g.id === c.id) grantsCount++; });
             }
         });
 
@@ -1659,18 +1739,9 @@ function renderCouponsList() {
                 '<div class="flex items-start gap-3 min-w-0 flex-1">' +
                     '<div class="w-10 h-10 ' + (expired ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700') + ' rounded-lg flex items-center justify-center font-black text-xs flex-shrink-0">' + (c.type === 'flat' ? '₹' : '%') + '</div>' +
                     '<div class="min-w-0 flex-1">' +
-                        '<div class="flex items-center flex-wrap gap-1">' +
-                            '<p class="font-black text-amber-700 text-sm font-mono">' + c.code + '</p>' +
-                            '<button onclick="copyCouponCode(\'' + c.code + '\')" class="text-blue-600 hover:text-blue-800 text-[11px] px-1.5 py-0.5 rounded hover:bg-blue-50 font-bold">📋</button>' +
-                            statusBadge +
-                        '</div>' +
+                        '<div class="flex items-center flex-wrap gap-1"><p class="font-black text-amber-700 text-sm font-mono">' + c.code + '</p><button onclick="copyCouponCode(\'' + c.code + '\')" class="text-blue-600 hover:text-blue-800 text-[11px] px-1.5 py-0.5 rounded hover:bg-blue-50 font-bold">📋</button>' + statusBadge + '</div>' +
                         '<p class="text-[10px] text-slate-500 truncate mt-0.5">' + catLabel + ' · ' + subLabel + '</p>' +
-                        '<div class="text-[10px] text-slate-600 mt-1 flex items-center flex-wrap gap-1">' +
-                            '<span>' + (c.type === 'flat' ? '₹' + c.value + ' off' : c.value + '% off') + '</span>' +
-                            '<span class="text-slate-400">·</span>' +
-                            '<span class="font-bold text-purple-700">🎫 ' + grantsCount + ' grant' + (grantsCount !== 1 ? 's' : '') + '</span>' +
-                            (planLabel ? '<span class="text-slate-400">·</span><span class="font-bold text-slate-600">Plans:</span>' + planLabel : '') +
-                        '</div>' +
+                        '<div class="text-[10px] text-slate-600 mt-1 flex items-center flex-wrap gap-1"><span>' + (c.type === 'flat' ? '₹' + c.value + ' off' : c.value + '% off') + '</span><span class="text-slate-400">·</span><span class="font-bold text-purple-700">🎫 ' + grantsCount + ' grant' + (grantsCount !== 1 ? 's' : '') + '</span>' + (planLabel ? '<span class="text-slate-400">·</span><span class="font-bold text-slate-600">Plans:</span>' + planLabel : '') + '</div>' +
                         (hasValidity ? '<p class="text-[10px] ' + (expired ? 'text-red-700 font-bold' : 'text-slate-600') + ' mt-1">📅 ' + formatCouponDate(c.validFrom) + ' → ' + formatCouponDate(c.validUntil) + '</p>' : '<p class="text-[10px] text-slate-600 mt-1">♾️ No expiry</p>') +
                     '</div>' +
                 '</div>' +
@@ -1696,7 +1767,7 @@ function fallbackCopyCode(code) {
     ta.value = code;
     ta.style.position = 'fixed'; ta.style.opacity = '0';
     document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); toast('📋 Copied: ' + code); } catch (e) { alert('❌ Copy failed: ' + code); }
+    try { document.execCommand('copy'); toast('📋 Copied: ' + code); } catch (e) { alert('❌ Copy failed'); }
     document.body.removeChild(ta);
 }
 
@@ -1773,7 +1844,7 @@ async function saveCoupon() {
     var validFrom = document.getElementById('newCouponValidFrom').value;
     var validUntil = document.getElementById('newCouponValidUntil').value;
 
-    if (!code || !value) { alert('⚠️ Please fill code and value.'); return; }
+    if (!code || !value) { alert('⚠️ Fill code and value.'); return; }
     if (value <= 0) { alert('⚠️ Value must be > 0.'); return; }
     if (validityEnabled) {
         if (!validFrom || !validUntil) { alert('⚠️ Set both validity dates.'); return; }
@@ -1790,7 +1861,7 @@ async function saveCoupon() {
         var dup = await db.collection('coupons').where('code', '==', code).get();
         var conflict = null;
         dup.forEach(function(d) { if (d.id !== editingCouponId) conflict = d.id; });
-        if (conflict) { alert('❌ This code already exists!'); return; }
+        if (conflict) { alert('❌ Code already exists!'); return; }
 
         if (editingCouponId) {
             data.updatedAt = firebase.firestore.FieldValue.serverTimestamp();
@@ -1840,7 +1911,7 @@ async function duplicateCoupon(id) {
         if (c.validUntil) newCoupon.validUntil = c.validUntil;
         if (c.allowedPlans) newCoupon.allowedPlans = c.allowedPlans;
         await db.collection('coupons').add(newCoupon);
-        toast('📋 Duplicated as: ' + cleanCode);
+        toast('📋 Duplicated: ' + cleanCode);
     } catch (err) { alert('Error: ' + err.message); }
 }
 
@@ -1859,9 +1930,7 @@ function populateGrantCouponDropdown() {
     if (currentVal && allCoupons.some(function(c) { return c.id === currentVal; })) sel.value = currentVal;
 }
 
-function loadGrantManager() {
-    populateGrantCouponDropdown();
-}
+function loadGrantManager() { populateGrantCouponDropdown(); }
 
 function renderGrantView() {
     var couponId = document.getElementById('grantCouponSelect').value;
@@ -1905,14 +1974,14 @@ function renderGrantView() {
         div.innerHTML =
             '<div class="min-w-0 flex-1">' +
                 '<p class="font-black text-slate-800 text-sm truncate">' + (s.name || '—') + '</p>' +
-                '<p class="text-[10px] text-slate-500">📱 ' + (s.mobile || '—') + ' · 🏷️ ' + (s.studentCode || s.studentId || '—') + '</p>' +
+                '<p class="text-[10px] text-slate-500">🏷️ ' + (s.studentCode || '—') + ' · 🆔 ' + (s.uniqueId || '—') + '</p>' +
             '</div>' +
             '<button onclick="toggleGrantedCoupon(\'' + s.id + '\', \'' + couponId + '\', true)" class="bg-red-500 hover:bg-red-600 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg">❌ Revoke</button>';
         listEl.appendChild(div);
     });
 }
 
-/* ============ PENDING (with re-uploaded highlight) ============ */
+/* ============ PENDING ============ */
 function loadPending() {
     db.collection('purchases').where('status', '==', 'pending').onSnapshot(function(snap) {
         var list = document.getElementById('pendingList');
@@ -1928,11 +1997,8 @@ function loadPending() {
 
         var items = [];
         snap.forEach(function(doc) { items.push({ id: doc.id, data: doc.data() }); });
-
-        /* Sort: re-uploaded first */
         items.sort(function(a, b) {
-            var ra = (a.data.reuploadCount || 0);
-            var rb = (b.data.reuploadCount || 0);
+            var ra = (a.data.reuploadCount || 0), rb = (b.data.reuploadCount || 0);
             if (ra !== rb) return rb - ra;
             var ta = a.data.createdAt ? a.data.createdAt.toDate().getTime() : 0;
             var tb = b.data.createdAt ? b.data.createdAt.toDate().getTime() : 0;
@@ -1944,27 +2010,24 @@ function loadPending() {
             var docId = item.id;
             var isReuploaded = !!(p.reuploadCount && p.reuploadCount > 0);
             var div = document.createElement('div');
-            div.className = isReuploaded
-                ? 'bg-orange-50 border-2 border-orange-400 rounded-xl p-3.5 shadow-md'
-                : 'bg-yellow-50 border-2 border-yellow-300 rounded-xl p-3.5';
+            div.className = isReuploaded ? 'bg-orange-50 border-2 border-orange-400 rounded-xl p-3.5 shadow-md' : 'bg-yellow-50 border-2 border-yellow-300 rounded-xl p-3.5';
             div.innerHTML =
                 '<div class="flex justify-between items-start flex-wrap gap-2 mb-3">' +
                     '<div class="min-w-0">' +
                         '<p class="font-black text-base text-blue-900 truncate">' + (p.studentName || '—') + '</p>' +
                         (p.orderId ? '<p class="mt-1.5"><span class="order-id-badge-lg">🆔 ' + p.orderId + '</span></p>' : '') +
-                        '<p class="text-[11px] text-slate-600 truncate mt-1.5">📱 ' + (p.studentMobile || '—') + '</p>' +
+                        (p.studentUniqueId ? '<p class="mt-1"><span class="unique-id-badge">🆔 ' + p.studentUniqueId + '</span></p>' : '') +
+                        (p.studentCode ? '<p class="mt-1"><span class="badge-blue text-[10px] font-bold px-2 py-0.5 rounded-full">🏷️ ' + p.studentCode + '</span></p>' : '') +
                     '</div>' +
-                    (isReuploaded
-                        ? '<span class="bg-orange-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full animate-pulse">🔄 RE-UPLOADED #' + p.reuploadCount + '</span>'
-                        : '<span class="bg-yellow-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">⏳ PENDING</span>') +
+                    (isReuploaded ? '<span class="bg-orange-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full animate-pulse">🔄 RE-UPLOADED #' + p.reuploadCount + '</span>' : '<span class="bg-yellow-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">⏳ PENDING</span>') +
                 '</div>' +
-                (isReuploaded ? '<div class="bg-white border-2 border-orange-300 rounded-lg p-2.5 mb-3"><p class="text-[11px] font-black text-orange-800">🔄 Student Re-uploaded Screenshot (Attempt #' + (p.reuploadCount + 1) + ')</p>' + (p.previousRejectionReason ? '<p class="text-[10px] text-orange-700 font-semibold mt-1">📌 Previous rejection: <strong>' + p.previousRejectionReason + '</strong></p>' : '') + (p.reuploadedAt ? '<p class="text-[10px] text-orange-700 font-semibold mt-0.5">🕒 Re-uploaded at: ' + formatDT(p.reuploadedAt) + '</p>' : '') + '</div>' : '') +
+                (isReuploaded ? '<div class="bg-white border-2 border-orange-300 rounded-lg p-2.5 mb-3"><p class="text-[11px] font-black text-orange-800">🔄 Re-uploaded (Attempt #' + (p.reuploadCount + 1) + ')</p>' + (p.previousRejectionReason ? '<p class="text-[10px] text-orange-700 font-semibold mt-1">📌 Previous: <strong>' + p.previousRejectionReason + '</strong></p>' : '') + '</div>' : '') +
                 '<div class="bg-white rounded-lg p-3 mb-3">' +
                     '<p class="text-sm font-bold text-slate-800">📘 ' + (p.planName || '—') + '</p>' +
                     '<p class="text-[11px] text-slate-500 mt-1">Amount: <strong class="text-orange-600">' + money(p.finalAmount) + '</strong>' + (p.couponCode ? ' · Coupon: <strong>' + p.couponCode + '</strong>' : '') + '</p>' +
                     '<p class="text-[10px] text-slate-500 mt-1">Method: <strong>' + (p.paymentMethod || '—') + '</strong> · Submitted: ' + formatDT(p.createdAt) + '</p>' +
                 '</div>' +
-                (p.screenshot ? '<div class="mb-3"><p class="text-[10px] font-black text-slate-600 uppercase mb-1">📸 Screenshot</p><img src="' + p.screenshot + '" class="screenshot-img mx-auto" onclick="window.open(this.src)"></div>' : '<p class="text-[11px] text-red-600 text-center font-bold mb-3">⚠️ No screenshot uploaded</p>') +
+                (p.screenshot ? '<div class="mb-3"><p class="text-[10px] font-black text-slate-600 uppercase mb-1">📸 Screenshot</p><img src="' + p.screenshot + '" class="screenshot-img mx-auto" onclick="window.open(this.src)"></div>' : '<p class="text-[11px] text-red-600 text-center font-bold mb-3">⚠️ No screenshot</p>') +
                 '<div class="flex gap-2">' +
                     '<button onclick="approvePurchase(\'' + docId + '\')" class="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg text-sm shadow-md">✅ Approve</button>' +
                     '<button onclick="rejectPurchase(\'' + docId + '\')" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-lg text-sm shadow-md">❌ Reject</button>' +
@@ -1975,28 +2038,22 @@ function loadPending() {
 }
 
 function approvePurchase(id) {
-    if (!confirm('✅ Approve this payment?\n\nThe student will be notified.')) return;
+    if (!confirm('✅ Approve this payment?')) return;
     var receiptNo = 'PCS-' + Date.now().toString().slice(-8);
     db.collection('purchases').doc(id).update({
-        status: 'approved',
-        receiptNo: receiptNo,
+        status: 'approved', receiptNo: receiptNo,
         verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(function() {
-        alert('✅ Approved!\nPCS No.: ' + receiptNo);
-    }).catch(function(err) { alert('❌ Error: ' + err.message); });
+    }).then(function() { alert('✅ Approved!\nPCS No.: ' + receiptNo); }).catch(function(err) { alert('❌ Error: ' + err.message); });
 }
 
 function rejectPurchase(id) {
-    var reason = prompt('❌ Why reject?\n(Student will see this reason and can re-upload.)', 'Screenshot not clear. Please re-upload.');
+    var reason = prompt('❌ Why reject?', 'Screenshot not clear. Please re-upload.');
     if (reason === null) return;
-    if (!reason.trim()) reason = 'Payment could not be verified. Please re-upload.';
+    if (!reason.trim()) reason = 'Payment could not be verified.';
     db.collection('purchases').doc(id).update({
-        status: 'rejected',
-        rejectionReason: reason.trim(),
+        status: 'rejected', rejectionReason: reason.trim(),
         verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(function() {
-        alert('❌ Rejected.\n\nStudent will get "Re-upload Screenshot" option.');
-    }).catch(function(err) { alert('❌ Error: ' + err.message); });
+    }).then(function() { alert('❌ Rejected.'); }).catch(function(err) { alert('❌ Error: ' + err.message); });
 }
 
 /* ============ ALL PURCHASES ============ */
@@ -2017,6 +2074,7 @@ function loadAllPurchases() {
                         '<div class="flex items-center gap-2 mb-1.5 flex-wrap">' +
                             '<p class="font-bold text-slate-800 text-xs truncate">' + p.studentName + '</p>' +
                             (p.orderId ? '<span class="order-id-badge">🆔 ' + p.orderId + '</span>' : '') +
+                            (p.studentUniqueId ? '<span class="unique-id-badge">' + p.studentUniqueId + '</span>' : '') +
                             (p.reuploadCount ? '<span class="bg-orange-100 text-orange-700 border border-orange-300 text-[9px] font-bold px-2 py-0.5 rounded-full">🔄 ×' + p.reuploadCount + '</span>' : '') +
                         '</div>' +
                         '<p class="text-[10px] text-slate-600">' + p.planName + '</p>' +
@@ -2059,9 +2117,7 @@ function updateStudentBatchDropdown() {
     if (!sel) return;
     var currentVal = sel.value;
     var batches = {};
-    allStudents.forEach(function(s) {
-        if (s.batchName) batches[s.batchName] = true;
-    });
+    allStudents.forEach(function(s) { if (s.batchName) batches[s.batchName] = true; });
     sel.innerHTML = '<option value="">All Batches</option>';
     Object.keys(batches).sort().forEach(function(b) {
         var opt = document.createElement('option');
@@ -2089,10 +2145,10 @@ function filterStudents() {
     var filtered = allStudents.filter(function(s) {
         if (q) {
             var name = (s.name || '').toLowerCase();
-            var mobile = (s.mobile || '').toLowerCase();
             var sid = (s.studentId || '').toLowerCase();
             var scode = (s.studentCode || '').toLowerCase();
-            if (name.indexOf(q) === -1 && mobile.indexOf(q) === -1 && sid.indexOf(q) === -1 && scode.indexOf(q) === -1) return false;
+            var uid = (s.uniqueId || '').toLowerCase();
+            if (name.indexOf(q) === -1 && sid.indexOf(q) === -1 && scode.indexOf(q) === -1 && uid.indexOf(q) === -1) return false;
         }
         if (courseFilter && s.courseEnrolled !== courseFilter) return false;
         if (batchFilter && s.batchName !== batchFilter) return false;
@@ -2133,11 +2189,11 @@ function renderStudents(students) {
         else html += '<span class="badge-green text-[9px] font-bold px-2 py-0.5 rounded-full">ACTIVE</span>';
         if (hasCoupon) html += '<span class="badge-purple text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ COUPON</span>';
         if (multiCoupon) html += '<span class="badge-fuchsia text-[9px] font-bold px-2 py-0.5 rounded-full">🎟️ MULTI</span>';
-        if (s.studentId) html += '<span class="badge-blue text-[9px] font-bold px-2 py-0.5 rounded-full">🔑 ' + s.studentId + '</span>';
+        if (s.studentCode) html += '<span class="badge-blue text-[9px] font-bold px-2 py-0.5 rounded-full">🏷️ ' + s.studentCode + '</span>';
         if (s.isVip) html += '<span class="badge-orange text-[9px] font-bold px-2 py-0.5 rounded-full">⭐ VIP</span>';
         html += '</div>';
         html += '<div class="mt-1.5 grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-0.5">';
-        html += '<p class="text-[11px] text-slate-600 truncate">📱 ' + (s.mobile || '—') + '</p>';
+        if (s.uniqueId) html += '<p class="text-[11px] text-pink-700 truncate font-mono">🆔 ' + s.uniqueId + '</p>';
         html += '<p class="text-[11px] text-slate-600 truncate">📚 ' + (s.courseEnrolled || '—') + '</p>';
         if (s.dateOfBirth) html += '<p class="text-[10px] text-slate-500 truncate">🎂 ' + s.dateOfBirth + (s.age ? ' (Age: ' + s.age + ')' : '') + '</p>';
         if (s.batchName) html += '<p class="text-[10px] text-slate-500 truncate">🎓 ' + s.batchName + '</p>';
@@ -2175,25 +2231,25 @@ function renderStudents(students) {
     });
 }
 
-/* ============ STUDENT PROFILE MODAL ============ */
+/* ============ STUDENT PROFILE ============ */
 function viewStudentProfile(id) {
     var s = null;
     allStudents.forEach(function(x) { if (x.id === id) s = x; });
     if (!s) return;
 
-    document.getElementById('profileStudentName').textContent = (s.name || '—') + ' · ' + (s.studentId || s.studentCode || '—');
+    document.getElementById('profileStudentName').textContent = (s.name || '—') + ' · ' + (s.studentCode || s.uniqueId || '—');
 
     var html = '';
     html += '<div class="bg-gradient-to-r from-blue-50 to-white rounded-xl p-4 border-2 border-blue-200">';
     html += '<p class="text-xs font-black text-blue-900 uppercase mb-2">📋 Basic Info</p>';
     html += '<div class="grid grid-cols-2 gap-2 text-xs">';
     html += '<div><span class="text-slate-500 font-semibold">Name:</span> <strong>' + (s.name || '—') + '</strong></div>';
-    html += '<div><span class="text-slate-500 font-semibold">Mobile:</span> <strong>' + (s.mobile || '—') + '</strong></div>';
-    html += '<div><span class="text-slate-500 font-semibold">Student Code:</span> <strong>' + (s.studentCode || s.studentId || '—') + '</strong></div>';
+    if (s.uniqueId) html += '<div class="col-span-2"><span class="text-slate-500 font-semibold">Unique ID:</span> <strong class="font-mono text-pink-700">' + s.uniqueId + '</strong></div>';
+    if (s.studentCode) html += '<div class="col-span-2"><span class="text-slate-500 font-semibold">Student Code:</span> <strong class="font-mono text-blue-700">' + s.studentCode + '</strong></div>';
     html += '<div><span class="text-slate-500 font-semibold">Course:</span> <strong>' + (s.courseEnrolled || '—') + '</strong></div>';
     html += '<div><span class="text-slate-500 font-semibold">Batch:</span> <strong>' + (s.batchName || '—') + '</strong></div>';
     html += '<div><span class="text-slate-500 font-semibold">Status:</span> <strong>' + (s.blocked ? '🚫 Blocked' : '🟢 Active') + '</strong></div>';
-    if (s.dateOfBirth) html += '<div><span class="text-slate-500 font-semibold">Date of Birth:</span> <strong>' + s.dateOfBirth + '</strong></div>';
+    if (s.dateOfBirth) html += '<div><span class="text-slate-500 font-semibold">DOB:</span> <strong>' + s.dateOfBirth + '</strong></div>';
     if (s.age) html += '<div><span class="text-slate-500 font-semibold">Age:</span> <strong>' + s.age + ' years</strong></div>';
     if (s.referral) html += '<div class="col-span-2"><span class="text-slate-500 font-semibold">Referral:</span> <strong>' + s.referral + '</strong></div>';
     if (s.tags && s.tags.length) html += '<div class="col-span-2"><span class="text-slate-500 font-semibold">Tags:</span> ' + s.tags.map(function(t) { return '<span class="bg-slate-100 text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-full border border-slate-300">' + t + '</span>'; }).join(' ') + '</div>';
@@ -2206,7 +2262,6 @@ function viewStudentProfile(id) {
         html += '<div class="grid grid-cols-2 gap-2 text-xs">';
         html += '<div><span class="text-slate-500 font-semibold">Date:</span> <strong>' + (s.consentDate ? new Date(s.consentDate).toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }) : '—') + '</strong></div>';
         html += '<div><span class="text-slate-500 font-semibold">Version:</span> <strong>' + (s.consentVersion || '1.0') + '</strong></div>';
-        html += '<div class="col-span-2 text-[10px] text-slate-600">✅ Recording Consent · ✅ Social Media · ✅ No Future Objection · ✅ Rules · ✅ Privacy</div>';
         html += '</div>';
     } else {
         html += '<p class="text-xs text-red-700 font-bold">❌ Not given yet</p>';
@@ -2268,7 +2323,7 @@ var editingStudentId = null;
 function openAddStudentModal() {
     editingStudentId = null;
     document.getElementById('studentModalTitle').textContent = '➕ Add Student';
-    ['newStudentName','newStudentMobile','newStudentId','newStudentBatch','newStudentTags','newStudentReferral','newStudentNotes','newStudentJoined'].forEach(function(id) {
+    ['newStudentName','newStudentId','newStudentBatch','newStudentTags','newStudentReferral','newStudentNotes','newStudentJoined','newStudentDob','newStudentUniqueId'].forEach(function(id) {
         document.getElementById(id).value = '';
     });
     document.getElementById('newStudentCourse').value = '';
@@ -2283,8 +2338,9 @@ function openEditStudentModal(id) {
     editingStudentId = id;
     document.getElementById('studentModalTitle').textContent = '✏️ Edit Student';
     document.getElementById('newStudentName').value = s.name || '';
-    document.getElementById('newStudentMobile').value = s.mobile || '';
-    document.getElementById('newStudentId').value = s.studentId || s.studentCode || '';
+    document.getElementById('newStudentId').value = s.studentCode || s.studentId || '';
+    document.getElementById('newStudentDob').value = s.dateOfBirth || '';
+    document.getElementById('newStudentUniqueId').value = s.uniqueId || '';
     document.getElementById('newStudentCourse').value = s.courseEnrolled || '';
     document.getElementById('newStudentBatch').value = s.batchName || '';
     document.getElementById('newStudentTags').value = (s.tags || []).join(', ');
@@ -2302,8 +2358,9 @@ function closeStudentModal() {
 
 async function saveStudent() {
     var name = document.getElementById('newStudentName').value.trim();
-    var mobile = document.getElementById('newStudentMobile').value.trim();
-    var studentId = document.getElementById('newStudentId').value.trim().toUpperCase();
+    var studentCode = document.getElementById('newStudentId').value.trim().toUpperCase();
+    var dobStr = document.getElementById('newStudentDob').value.trim();
+    var uniqueIdInput = document.getElementById('newStudentUniqueId').value.trim();
     var courseEnrolled = document.getElementById('newStudentCourse').value;
     var batchName = document.getElementById('newStudentBatch').value.trim();
     var tagsRaw = document.getElementById('newStudentTags').value.trim();
@@ -2313,8 +2370,8 @@ async function saveStudent() {
     var errEl = document.getElementById('studentModalError');
     errEl.classList.add('hidden');
 
-    if (!name || !mobile || !studentId || !courseEnrolled) {
-        errEl.textContent = '❌ Name, Mobile, ID & Course required.';
+    if (!name || !studentCode || !courseEnrolled) {
+        errEl.textContent = '❌ Name, Student Code & Course required.';
         errEl.classList.remove('hidden');
         return;
     }
@@ -2322,37 +2379,59 @@ async function saveStudent() {
     var tags = tagsRaw ? tagsRaw.split(',').map(function(t) { return t.trim(); }).filter(function(t) { return t.length > 0; }) : [];
     var isVip = tags.some(function(t) { return t.toLowerCase() === 'vip'; });
 
+    var age = 0;
+    if (dobStr) {
+        var parts = dobStr.split('-');
+        if (parts.length === 3) {
+            var dd = parseInt(parts[0], 10), mm = parseInt(parts[1], 10), yy = parseInt(parts[2], 10);
+            if (!isNaN(dd) && !isNaN(mm) && !isNaN(yy)) {
+                var dobDate = new Date(yy, mm - 1, dd);
+                var today = new Date();
+                age = today.getFullYear() - dobDate.getFullYear();
+                var mDiff = today.getMonth() - dobDate.getMonth();
+                if (mDiff < 0 || (mDiff === 0 && today.getDate() < dobDate.getDate())) age--;
+            }
+        }
+    }
+
     try {
         if (editingStudentId) {
-            var dup = await db.collection('students').where('studentId', '==', studentId).get();
+            var dup = await db.collection('students').where('studentCode', '==', studentCode).get();
             var conflict = null;
             dup.forEach(function(d) { if (d.id !== editingStudentId) conflict = d.id; });
-            if (conflict) { errEl.textContent = '❌ Student ID already used!'; errEl.classList.remove('hidden'); return; }
-            await db.collection('students').doc(editingStudentId).update({
-                name: name, mobile: mobile, studentId: studentId, courseEnrolled: courseEnrolled, batchName: batchName,
-                studentCode: studentId, tags: tags, referral: referral, notes: notes, joinedDate: joinedDate, isVip: isVip,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-            alert('✅ Student updated!');
-        } else {
-            var dupId = await db.collection('students').where('studentId', '==', studentId).get();
-            if (!dupId.empty) { errEl.textContent = '❌ Student ID already exists!'; errEl.classList.remove('hidden'); return; }
-            var dupMobile = await db.collection('students').where('mobile', '==', mobile).get();
-            if (!dupMobile.empty) { errEl.textContent = '❌ Mobile already exists!'; errEl.classList.remove('hidden'); return; }
+            if (conflict) { errEl.textContent = '❌ Student Code already used!'; errEl.classList.remove('hidden'); return; }
 
-            await db.collection('students').add({
-                name: name, mobile: mobile, uniqueId: mobile, studentId: studentId, studentCode: studentId,
-                trackId: 'TRK-' + mobile.replace(/\D/g, '').slice(-10),
+            var updateData = {
+                name: name, studentCode: studentCode, studentId: studentCode,
                 courseEnrolled: courseEnrolled, batchName: batchName,
                 tags: tags, referral: referral, notes: notes, joinedDate: joinedDate, isVip: isVip,
-                isExisting: true, blocked: false, couponAccess: false,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            if (dobStr) updateData.dateOfBirth = dobStr;
+            if (age) updateData.age = age;
+            if (uniqueIdInput) updateData.uniqueId = uniqueIdInput;
+
+            await db.collection('students').doc(editingStudentId).update(updateData);
+            alert('✅ Student updated!');
+        } else {
+            var dupId = await db.collection('students').where('studentCode', '==', studentCode).get();
+            if (!dupId.empty) { errEl.textContent = '❌ Student Code already exists!'; errEl.classList.remove('hidden'); return; }
+
+            var uniqueId = uniqueIdInput || generateUniqueId();
+
+            await db.collection('students').add({
+                name: name, studentCode: studentCode, studentId: studentCode,
+                uniqueId: uniqueId,
+                dateOfBirth: dobStr || '', age: age || 0,
+                isExisting: true, courseEnrolled: courseEnrolled, batchName: batchName,
+                tags: tags, referral: referral, notes: notes, joinedDate: joinedDate, isVip: isVip,
+                blocked: false, couponAccess: false,
                 allowMultipleCoupons: false, grantedCoupons: [],
-                loginCount: 0, logoutCount: 0,
-                consentGiven: false,
+                loginCount: 0, logoutCount: 0, consentGiven: false,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 addedBy: ADMIN_EMAIL
             });
-            alert('✅ Student added! ID: ' + studentId);
+            alert('✅ Student added!\n\n🏷️ Student Code: ' + studentCode + '\n🆔 Unique ID: ' + uniqueId);
         }
         closeStudentModal();
     } catch (err) {
@@ -2506,10 +2585,10 @@ function renderAgreements() {
     var filtered = allStudents.filter(function(s) {
         if (search) {
             var name = (s.name || '').toLowerCase();
-            var mobile = (s.mobile || '').toLowerCase();
             var sid = (s.studentId || '').toLowerCase();
             var scode = (s.studentCode || '').toLowerCase();
-            if (name.indexOf(search) === -1 && mobile.indexOf(search) === -1 && sid.indexOf(search) === -1 && scode.indexOf(search) === -1) return false;
+            var uid = (s.uniqueId || '').toLowerCase();
+            if (name.indexOf(search) === -1 && sid.indexOf(search) === -1 && scode.indexOf(search) === -1 && uid.indexOf(search) === -1) return false;
         }
         if (filter === 'given' && s.consentGiven !== true) return false;
         if (filter === 'not-given' && s.consentGiven === true) return false;
@@ -2544,11 +2623,9 @@ function renderAgreements() {
         html += '<div class="min-w-0 flex-1">';
         html += '<div class="flex items-center gap-2 flex-wrap">';
         html += '<p class="font-black text-slate-800 text-sm">' + (s.name || '—') + '</p>';
-        html += isGiven
-            ? '<span class="bg-green-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">✅ AGREED</span>'
-            : '<span class="bg-red-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">❌ NOT AGREED</span>';
+        html += isGiven ? '<span class="bg-green-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">✅ AGREED</span>' : '<span class="bg-red-600 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">❌ NOT AGREED</span>';
         html += '</div>';
-        html += '<p class="text-[11px] text-slate-600 mt-1">📱 ' + (s.mobile || '—') + ' · 🆔 ' + (s.studentId || s.studentCode || '—') + '</p>';
+        html += '<p class="text-[11px] text-slate-600 mt-1">🆔 ' + (s.uniqueId || '—') + ' · 🏷️ ' + (s.studentCode || '—') + '</p>';
         html += '<p class="text-[11px] text-slate-600">📚 ' + (s.courseEnrolled || '—') + '</p>';
         html += '</div>';
         html += '<button onclick="viewStudentProfile(\'' + s.id + '\')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg">👁️ Profile</button>';
@@ -2560,17 +2637,11 @@ function renderAgreements() {
             html += '<div class="grid grid-cols-2 gap-2 text-[10px]">';
             html += '<div><span class="text-slate-500">Date:</span> <strong>' + formatConsentDate(s.consentDate) + '</strong></div>';
             html += '<div><span class="text-slate-500">Version:</span> <strong>' + (s.consentVersion || '1.0') + '</strong></div>';
-            html += '<div class="col-span-2"><span class="text-slate-500">Recording Consent:</span> <strong class="text-green-700">✅ Yes</strong></div>';
-            html += '<div class="col-span-2"><span class="text-slate-500">Social Media Consent:</span> <strong class="text-green-700">✅ Yes</strong></div>';
-            html += '<div class="col-span-2"><span class="text-slate-500">No Future Objection:</span> <strong class="text-green-700">✅ Yes</strong></div>';
-            html += '<div class="col-span-2"><span class="text-slate-500">Rules Accepted:</span> <strong class="text-green-700">✅ Yes</strong></div>';
-            html += '<div class="col-span-2"><span class="text-slate-500">Privacy Accepted:</span> <strong class="text-green-700">✅ Yes</strong></div>';
-            html += '</div>';
-            html += '</div>';
+            html += '<div class="col-span-2"><span class="text-slate-500">All Consents:</span> <strong class="text-green-700">✅ Accepted</strong></div>';
+            html += '</div></div>';
         } else {
             html += '<div class="bg-white rounded-lg p-3 border border-red-200 text-center">';
-            html += '<p class="text-[11px] text-red-700 font-bold">⚠️ This student has not given consent yet.</p>';
-            html += '<p class="text-[10px] text-slate-500 mt-1">They will be prompted on next login.</p>';
+            html += '<p class="text-[11px] text-red-700 font-bold">⚠️ Consent not given yet.</p>';
             html += '</div>';
         }
 
@@ -2584,31 +2655,17 @@ function formatConsentDate(isoStr) {
     try {
         var d = new Date(isoStr);
         if (isNaN(d.getTime())) return '—';
-        return d.toLocaleString('en-IN', {
-            weekday: 'short', day: '2-digit', month: 'short', year: 'numeric',
-            hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
-        });
+        return d.toLocaleString('en-IN', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true });
     } catch (e) { return '—'; }
 }
 
 function exportAgreements() {
     var givenStudents = allStudents.filter(function(s) { return s.consentGiven === true; });
-    if (givenStudents.length === 0) {
-        alert('⚠️ No agreement records to export.');
-        return;
-    }
-
-    var csv = 'Name,Mobile,Student ID,Course,Consent Date,Version,Recording,Social Media,No Objection,Rules,Privacy\n';
+    if (givenStudents.length === 0) { alert('⚠️ No records.'); return; }
+    var csv = 'Name,Student Code,Unique ID,Course,Consent Date,Version\n';
     givenStudents.forEach(function(s) {
-        csv += '"' + (s.name || '') + '",';
-        csv += '"' + (s.mobile || '') + '",';
-        csv += '"' + (s.studentId || s.studentCode || '') + '",';
-        csv += '"' + (s.courseEnrolled || '') + '",';
-        csv += '"' + (s.consentDate || '') + '",';
-        csv += '"' + (s.consentVersion || '1.0') + '",';
-        csv += '"Yes","Yes","Yes","Yes","Yes"\n';
+        csv += '"' + (s.name || '') + '","' + (s.studentCode || '') + '","' + (s.uniqueId || '') + '","' + (s.courseEnrolled || '') + '","' + (s.consentDate || '') + '","' + (s.consentVersion || '1.0') + '"\n';
     });
-
     var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     var url = URL.createObjectURL(blob);
     var link = document.createElement('a');
@@ -2632,7 +2689,7 @@ function loadLogs() {
             div.className = 'bg-white border-2 border-slate-200 rounded-xl p-3';
             div.innerHTML =
                 '<p class="font-bold text-slate-800 text-xs">' + (icons[log.type] || '•') + ' ' + (log.studentName || 'Unknown') + ' <span class="text-[10px] font-normal text-slate-500">' + (log.type || '').toUpperCase() + '</span></p>' +
-                '<p class="text-[10px] text-slate-500">📱 ' + (log.studentMobile || '—') + '</p>' +
+                (log.uniqueId ? '<p class="text-[10px] text-pink-600 font-mono">🆔 ' + log.uniqueId + '</p>' : '') +
                 '<p class="text-[10px] text-slate-400">📅 ' + formatDT(log.timestamp) + '</p>';
             list.appendChild(div);
         });
@@ -2659,27 +2716,14 @@ async function backupAllData() {
     msg.classList.add('hidden');
     btn.disabled = true;
     btn.textContent = '⏳ Collecting data...';
-
     try {
-        var backup = {
-            version: 1,
-            exportedAt: new Date().toISOString(),
-            projectId: firebaseConfig.projectId,
-            collections: {}
-        };
-
+        var backup = { version: 1, exportedAt: new Date().toISOString(), projectId: firebaseConfig.projectId, collections: {} };
         for (var i = 0; i < ALL_COLLECTIONS.length; i++) {
             var col = ALL_COLLECTIONS[i];
             var snap = await db.collection(col).get();
             backup.collections[col] = [];
-            snap.forEach(function(doc) {
-                backup.collections[col].push({
-                    id: doc.id,
-                    data: doc.data()
-                });
-            });
+            snap.forEach(function(doc) { backup.collections[col].push({ id: doc.id, data: doc.data() }); });
         }
-
         var json = JSON.stringify(backup, null, 2);
         var blob = new Blob([json], { type: 'application/json' });
         var url = URL.createObjectURL(blob);
@@ -2687,23 +2731,15 @@ async function backupAllData() {
         var stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
         link.href = url;
         link.download = 'EnglishSpur_Backup_' + stamp + '.json';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        document.body.appendChild(link); link.click(); document.body.removeChild(link);
         setTimeout(function() { URL.revokeObjectURL(url); }, 1500);
-
         var totalDocs = 0;
         ALL_COLLECTIONS.forEach(function(col) { totalDocs += backup.collections[col].length; });
-
-        msg.textContent = '✅ Backup downloaded! ' + totalDocs + ' documents across ' + ALL_COLLECTIONS.length + ' collections.';
+        msg.textContent = '✅ Backup downloaded! ' + totalDocs + ' documents.';
         msg.classList.remove('hidden');
         toast('✅ Backup downloaded');
-    } catch (err) {
-        alert('❌ Backup failed: ' + err.message);
-    } finally {
-        btn.disabled = false;
-        btn.textContent = '📥 Download Backup (JSON)';
-    }
+    } catch (err) { alert('❌ Backup failed: ' + err.message); }
+    finally { btn.disabled = false; btn.textContent = '📥 Download Backup (JSON)'; }
 }
 
 async function restoreFromBackup() {
@@ -2711,39 +2747,20 @@ async function restoreFromBackup() {
     var msg = document.getElementById('restoreMsg');
     var btn = document.getElementById('restoreBtn');
     msg.classList.add('hidden');
-
-    if (!fileInput.files || fileInput.files.length === 0) {
-        alert('⚠️ Please select a backup JSON file first.');
-        return;
-    }
-
+    if (!fileInput.files || fileInput.files.length === 0) { alert('⚠️ Select a JSON file first.'); return; }
     var file = fileInput.files[0];
-    if (!file.name.endsWith('.json')) {
-        alert('⚠️ Please select a .json backup file.');
-        return;
-    }
-
-    var confirmRestore = confirm('⚠️ Restore will ADD/OVERWRITE documents in Firestore.\n\nExisting data with same IDs will be overwritten.\n\nContinue?');
-    if (!confirmRestore) return;
-
-    btn.disabled = true;
-    btn.textContent = '⏳ Restoring...';
-
+    if (!file.name.endsWith('.json')) { alert('⚠️ Select a .json file.'); return; }
+    if (!confirm('⚠️ Restore will ADD/OVERWRITE documents.\n\nContinue?')) return;
+    btn.disabled = true; btn.textContent = '⏳ Restoring...';
     try {
         var text = await file.text();
         var backup = JSON.parse(text);
-
-        if (!backup.collections) {
-            throw new Error('Invalid backup file format — missing collections.');
-        }
-
+        if (!backup.collections) throw new Error('Invalid backup format.');
         var totalRestored = 0;
         var collections = Object.keys(backup.collections);
-
         for (var i = 0; i < collections.length; i++) {
             var col = collections[i];
             var docs = backup.collections[col] || [];
-
             for (var j = 0; j < docs.length; j++) {
                 var doc = docs[j];
                 if (!doc.id || !doc.data) continue;
@@ -2751,18 +2768,13 @@ async function restoreFromBackup() {
                 totalRestored++;
             }
         }
-
-        msg.textContent = '✅ Restored ' + totalRestored + ' documents across ' + collections.length + ' collections.';
+        msg.textContent = '✅ Restored ' + totalRestored + ' documents.';
         msg.classList.remove('hidden');
         toast('✅ Restore complete');
         fileInput.value = '';
         refreshToolCounts();
-    } catch (err) {
-        alert('❌ Restore failed: ' + err.message);
-    } finally {
-        btn.disabled = false;
-        btn.textContent = '📤 Restore From File';
-    }
+    } catch (err) { alert('❌ Restore failed: ' + err.message); }
+    finally { btn.disabled = false; btn.textContent = '📤 Restore From File'; }
 }
 
 function checkResetConfirm() {
@@ -2770,69 +2782,43 @@ function checkResetConfirm() {
     var c2 = document.getElementById('resetConfirm2').checked;
     document.getElementById('resetBtn').disabled = !(c1 && c2);
 }
-
 document.addEventListener('change', function(e) {
-    if (e.target && (e.target.id === 'resetConfirm1' || e.target.id === 'resetConfirm2')) {
-        checkResetConfirm();
-    }
+    if (e.target && (e.target.id === 'resetConfirm1' || e.target.id === 'resetConfirm2')) checkResetConfirm();
 });
 
 async function resetAllData() {
     var c1 = document.getElementById('resetConfirm1').checked;
     var c2 = document.getElementById('resetConfirm2').checked;
-    if (!c1 || !c2) {
-        alert('⚠️ Please check both confirmation boxes first.');
-        return;
-    }
-
-    var finalConfirm = prompt('⚠️ FINAL WARNING ⚠️\n\nThis will PERMANENTLY DELETE all data from:\n- students\n- purchases\n- coupons\n- logs\n- config\n\nType "RESET" to confirm:');
-    if (finalConfirm !== 'RESET') {
-        alert('❌ Reset cancelled.');
-        return;
-    }
-
+    if (!c1 || !c2) { alert('⚠️ Check both boxes.'); return; }
+    var finalConfirm = prompt('⚠️ Type "RESET" to confirm:');
+    if (finalConfirm !== 'RESET') { alert('❌ Cancelled.'); return; }
     var btn = document.getElementById('resetBtn');
     var msg = document.getElementById('resetMsg');
     msg.classList.add('hidden');
-    btn.disabled = true;
-    btn.textContent = '⏳ Deleting everything...';
-
+    btn.disabled = true; btn.textContent = '⏳ Deleting...';
     try {
         var totalDeleted = 0;
-
         for (var i = 0; i < ALL_COLLECTIONS.length; i++) {
             var col = ALL_COLLECTIONS[i];
             var snap = await db.collection(col).get();
-
             if (snap.size === 0) continue;
-
             var docs = snap.docs;
             var chunkSize = 400;
             for (var j = 0; j < docs.length; j += chunkSize) {
                 var batch = db.batch();
                 var chunk = docs.slice(j, j + chunkSize);
-                chunk.forEach(function(doc) {
-                    batch.delete(doc.ref);
-                    totalDeleted++;
-                });
+                chunk.forEach(function(doc) { batch.delete(doc.ref); totalDeleted++; });
                 await batch.commit();
             }
         }
-
-        msg.textContent = '✅ Reset complete! ' + totalDeleted + ' documents deleted from ' + ALL_COLLECTIONS.length + ' collections.';
+        msg.textContent = '✅ Reset complete! ' + totalDeleted + ' documents deleted.';
         msg.classList.remove('hidden');
         toast('🔴 Reset complete');
-
         document.getElementById('resetConfirm1').checked = false;
         document.getElementById('resetConfirm2').checked = false;
         refreshToolCounts();
-    } catch (err) {
-        alert('❌ Reset failed: ' + err.message);
-    } finally {
-        btn.disabled = false;
-        btn.textContent = '🔴 Reset All Data';
-        checkResetConfirm();
-    }
+    } catch (err) { alert('❌ Reset failed: ' + err.message); }
+    finally { btn.disabled = false; btn.textContent = '🔴 Reset All Data'; checkResetConfirm(); }
 }
 
 /* ============ TOAST ============ */
