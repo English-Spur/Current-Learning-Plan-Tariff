@@ -147,6 +147,10 @@
                 <span class="flex items-center gap-2"><span class="text-lg">👤</span> Existing Student — Login & Renew</span>
                 <span class="transition-transform group-hover:translate-x-1">→</span>
             </button>
+            <button type="button" onclick="showScreen('trackStatus')" class="w-full group bg-gradient-to-r from-purple-600 to-fuchsia-700 hover:from-purple-700 hover:to-fuchsia-800 text-white font-bold p-4 rounded-2xl transition-all duration-200 shadow-lg hover:shadow-xl text-sm flex items-center justify-between">
+                <span class="flex items-center gap-2"><span class="text-lg">🎯</span> Track Payment Status — Order ID / Unique ID</span>
+                <span class="transition-transform group-hover:translate-x-1">→</span>
+            </button>
             <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 p-4 rounded-r-xl mt-3">
                 <p class="text-[11px] font-bold text-blue-900 flex items-center gap-1.5">📞 Need help?</p>
                 <p class="text-[11px] text-slate-600 mt-1">Call/WhatsApp: <strong class="text-blue-800">+91 9875340842</strong></p>
@@ -228,6 +232,36 @@
             <p id="loginError" class="text-red-600 text-xs font-semibold hidden p-2.5 bg-red-50 rounded-lg"></p>
             <button type="button" onclick="existingStudentLogin()" class="w-full bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-black p-4 rounded-2xl text-xs uppercase tracking-widest transition-all shadow-lg hover:shadow-xl">
                 🔓 Login
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- TRACK PAYMENT STATUS SCREEN -->
+<div id="screenTrackStatus" class="max-w-lg mx-auto hidden fade-in-up">
+    <div class="pro-card overflow-hidden">
+        <div class="bg-gradient-to-r from-purple-700 to-fuchsia-800 p-4 flex items-center gap-3">
+            <button type="button" onclick="showScreen('welcome')" aria-label="Back" class="text-white text-2xl font-bold leading-none glass-btn w-9 h-9 rounded-full flex items-center justify-center">←</button>
+            <div>
+                <h2 class="text-base font-black text-white">Track Payment Status</h2>
+                <p class="text-purple-100 text-[10px] font-medium">Check your payment / order status</p>
+            </div>
+        </div>
+        <div class="p-5 space-y-4">
+            <div class="bg-gradient-to-r from-purple-50 to-fuchsia-50 border-l-4 border-purple-500 p-3 rounded-r-xl">
+                <p class="text-[10px] text-purple-900 font-semibold leading-relaxed">ℹ️ পেমেন্ট করার পর আপনি যে <b>Order ID</b> এবং <b>Unique ID</b> পেয়েছিলেন, তা দিয়ে আপনার স্ট্যাটাস চেক করুন।</p>
+            </div>
+            <div>
+                <label for="trackOrderId" class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Order ID <span class="text-red-500">*</span></label>
+                <input type="text" id="trackOrderId" placeholder="e.g. ES-12345678-123" class="w-full border-2 border-slate-200 rounded-xl p-3.5 bg-slate-50 font-bold text-sm text-center uppercase focus:bg-white transition">
+            </div>
+            <div>
+                <label for="trackUniqueId" class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Unique ID <span class="text-red-500">*</span></label>
+                <input type="text" id="trackUniqueId" placeholder="e.g. ES_171234567890" class="w-full border-2 border-slate-200 rounded-xl p-3.5 bg-slate-50 font-bold text-sm text-center uppercase focus:bg-white transition">
+            </div>
+            <p id="trackError" class="text-red-600 text-xs font-semibold hidden p-2.5 bg-red-50 rounded-lg"></p>
+            <button type="button" onclick="trackPaymentStatus()" class="w-full bg-gradient-to-r from-purple-600 to-fuchsia-700 hover:from-purple-700 hover:to-fuchsia-800 text-white font-black p-4 rounded-2xl text-xs uppercase tracking-widest transition-all shadow-lg hover:shadow-xl">
+                🔍 Check Status
             </button>
         </div>
     </div>
@@ -441,7 +475,7 @@
                     <div class="flex justify-between text-xs gap-2"><span class="text-slate-600 flex-shrink-0 font-semibold">🆔 Unique ID</span><strong class="text-slate-800 text-right break-all" id="payStep4Uid">—</strong></div>
                     <div class="flex justify-between text-xs gap-2"><span class="text-slate-600 flex-shrink-0 font-semibold">📘 Plan</span><strong class="text-slate-800 text-right max-w-[60%]" id="payStep4Plan">—</strong></div>
                     <div class="flex justify-between text-xs gap-2"><span class="text-slate-600 flex-shrink-0 font-semibold">📱 UPI App</span><strong class="text-slate-800 text-right" id="payStep4Method">—</strong></div>
-                    <div class="border-t border-dashed border-slate-300 pt-2.5 flex justify-between text-sm"><span class="font-black text-slate-700">Net Amount Paid</span><strong class="text-orange-600 text-base" id="payStep4Amount">₹0</strong></div>
+                    <div class="border-t border-dashed border-slate-300 pt-2.5 flex justify-between text-sm"><span class="font-black text-slate-700">Net Amount Received</span><strong class="text-orange-600 text-base" id="payStep4Amount">₹0</strong></div>
                     <div class="flex justify-between text-xs gap-2"><span class="text-slate-600 flex-shrink-0 font-semibold">📸 Screenshot</span><strong class="text-green-700" id="payStep4Screenshot">✅ Uploaded</strong></div>
                 </div>
                 <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-600 p-4 rounded-r-xl mb-4">
@@ -648,6 +682,31 @@
     </div>
 </div>
 
+<!-- TRACK RESULT MODAL -->
+<div id="trackResultModal" class="fixed inset-0 z-[99999] hidden overflow-y-auto" style="background: rgba(15,23,42,0.9); backdrop-filter: blur(8px);">
+    <div class="min-h-screen flex items-start sm:items-center justify-center p-3 sm:p-5">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg my-auto overflow-hidden modal-pop">
+            <div class="bg-gradient-to-r from-purple-700 to-fuchsia-800 p-4 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 rounded-xl bg-white/20 backdrop-blur flex items-center justify-center text-2xl">📦</div>
+                    <div>
+                        <p class="text-white font-black text-sm uppercase tracking-wide">Payment Status</p>
+                        <p class="text-purple-100 text-[10px] font-medium">Your order details</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeTrackResult()" class="text-white/80 hover:text-white text-2xl font-bold leading-none glass-btn w-9 h-9 rounded-full flex items-center justify-center transition">&times;</button>
+            </div>
+            <div id="trackResultBody" class="p-5 max-h-[60vh] overflow-y-auto"></div>
+            <div class="p-4 border-t-2 border-slate-100 bg-slate-50 flex flex-col sm:flex-row gap-2">
+                <button type="button" onclick="downloadTrackStatus()" id="downloadTrackBtn" class="w-full bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-black py-3.5 rounded-2xl text-xs uppercase tracking-wide transition-all shadow-md flex items-center justify-center gap-2">
+                    <span>📥</span> Download Status (PNG)
+                </button>
+                <button type="button" onclick="closeTrackResult()" class="w-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-black py-3.5 rounded-2xl text-xs uppercase tracking-wide transition">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
 /* ============ FIREBASE ============ */
 var firebaseConfig = {
@@ -702,6 +761,7 @@ var isLoggingOut = false;
 var studentListenerActive = false;
 var purchasedPlansCount = 0;
 var consentSubmitting = false;
+var lastTrackedPurchase = null;
 
 var reuploadOrderId = null;
 var reuploadOrderRef = null;
@@ -876,7 +936,7 @@ function getPlanDisplayName() {
 
 /* ============ SCREEN NAVIGATION ============ */
 function showScreen(name) {
-    ['Welcome', 'NewStudent', 'OldStudent', 'Dashboard'].forEach(function(s) {
+    ['Welcome', 'NewStudent', 'OldStudent', 'Dashboard', 'TrackStatus'].forEach(function(s) {
         var el = document.getElementById('screen' + s);
         if (el) el.classList.add('hidden');
     });
@@ -1296,6 +1356,236 @@ async function existingStudentLogin() {
         errEl.textContent = '❌ ' + err.message;
         errEl.classList.remove('hidden');
     }
+}
+
+/* ============ TRACK PAYMENT STATUS ============ */
+async function trackPaymentStatus() {
+    var orderId = document.getElementById('trackOrderId').value.trim().toUpperCase();
+    var uniqueId = document.getElementById('trackUniqueId').value.trim().toUpperCase();
+    var errEl = document.getElementById('trackError');
+    errEl.classList.add('hidden');
+
+    if (!orderId || !uniqueId) {
+        errEl.textContent = '❌ Please enter both Order ID and Unique ID.';
+        errEl.classList.remove('hidden');
+        return;
+    }
+
+    try {
+        var snap = await db.collection('purchases')
+            .where('orderId', '==', orderId)
+            .where('studentUniqueId', '==', uniqueId)
+            .limit(1)
+            .get();
+
+        if (snap.empty) {
+            errEl.textContent = '❌ No record found with these credentials. Please check again.';
+            errEl.classList.remove('hidden');
+            return;
+        }
+
+        var p = snap.docs[0].data();
+        showTrackResult(p);
+
+    } catch (err) {
+        errEl.textContent = '❌ Error: ' + err.message;
+        errEl.classList.remove('hidden');
+    }
+}
+
+function showTrackResult(p) {
+    lastTrackedPurchase = p;
+    var body = document.getElementById('trackResultBody');
+    var colors = { pending: 'from-yellow-50 to-amber-50 border-yellow-400 text-yellow-800', approved: 'from-green-50 to-emerald-50 border-green-400 text-green-800', rejected: 'from-red-50 to-rose-50 border-red-400 text-red-800' };
+    var icons = { pending: '⏳', approved: '✅', rejected: '❌' };
+    var labels = { pending: 'PENDING (Under Review)', approved: 'APPROVED', rejected: 'REJECTED' };
+    
+    var inner = '';
+    
+    inner += '<div class="bg-gradient-to-r ' + (colors[p.status] || 'from-slate-50 to-slate-100 border-slate-300 text-slate-800') + ' border-2 rounded-2xl p-4 mb-4 text-center">';
+    inner += '<div class="text-4xl mb-1">' + (icons[p.status] || '📦') + '</div>';
+    inner += '<p class="font-black text-lg">' + (labels[p.status] || p.status.toUpperCase()) + '</p>';
+    if (p.status === 'pending') inner += '<p class="text-[11px] font-medium mt-1">Your payment is being verified by admin.</p>';
+    if (p.status === 'rejected' && p.rejectionReason) inner += '<p class="text-[11px] font-bold mt-1 bg-white/50 rounded p-2">Reason: ' + p.rejectionReason + '</p>';
+    inner += '</div>';
+
+    inner += '<div class="bg-gradient-to-br from-slate-50 to-blue-50/50 rounded-2xl border-2 border-slate-200 p-4 space-y-2.5 mb-4">';
+    inner += '<div class="flex justify-between text-xs gap-2"><span class="text-slate-500 font-semibold">🆔 Order ID</span><strong class="text-blue-700 text-right font-mono text-sm">' + (p.orderId || '—') + '</strong></div>';
+    inner += '<div class="flex justify-between text-xs gap-2"><span class="text-slate-500 font-semibold">👤 Student Name</span><strong class="text-slate-800 text-right">' + (p.studentName || '—') + '</strong></div>';
+    inner += '<div class="flex justify-between text-xs gap-2"><span class="text-slate-500 font-semibold">🆔 Unique ID</span><strong class="text-slate-800 text-right font-mono">' + (p.studentUniqueId || '—') + '</strong></div>';
+    inner += '<div class="flex justify-between text-xs gap-2"><span class="text-slate-500 font-semibold">📘 Plan</span><strong class="text-slate-800 text-right max-w-[60%]">' + (p.planName || '—') + '</strong></div>';
+    inner += '<div class="flex justify-between text-xs gap-2"><span class="text-slate-500 font-semibold">💰 Amount</span><strong class="text-orange-600 text-base">' + money(p.finalAmount) + '</strong></div>';
+    inner += '<div class="flex justify-between text-xs gap-2"><span class="text-slate-500 font-semibold">📱 Payment Method</span><strong class="text-slate-800 text-right">' + (p.paymentMethod || '—') + '</strong></div>';
+    inner += '<div class="flex justify-between text-xs gap-2"><span class="text-slate-500 font-semibold">📅 Date</span><strong class="text-slate-800 text-right">' + formatFullTimestamp(p.createdAt) + '</strong></div>';
+    if (p.receiptNo) inner += '<div class="flex justify-between text-xs gap-2"><span class="text-slate-500 font-semibold">📄 PCS No.</span><strong class="text-green-700 text-right font-mono">' + p.receiptNo + '</strong></div>';
+    inner += '</div>';
+
+    if (p.status === 'pending') {
+        inner += '<div class="bg-blue-50 border-l-4 border-blue-500 p-3 rounded-r-xl">';
+        inner += '<p class="text-[11px] text-blue-900 font-medium">💡 Admin will verify and approve your payment soon. You will receive a WhatsApp notification once it is approved.</p>';
+        inner += '</div>';
+    }
+
+    if (p.status === 'rejected') {
+        inner += '<div class="bg-red-50 border-l-4 border-red-500 p-3 rounded-r-xl">';
+        inner += '<p class="text-[11px] text-red-900 font-medium">💡 Your payment was rejected. Please login with your Student Code to re-upload a valid screenshot.</p>';
+        inner += '</div>';
+    }
+
+    body.innerHTML = inner;
+    document.getElementById('trackResultModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeTrackResult() {
+    document.getElementById('trackResultModal').classList.add('hidden');
+    document.body.style.overflow = '';
+}
+
+/* ============ DOWNLOAD TRACK STATUS ============ */
+function downloadTrackStatus() {
+    if (!lastTrackedPurchase) { showToast('⚠️ No data found to download', 'error'); return; }
+    
+    var p = lastTrackedPurchase;
+    var btn = document.getElementById('downloadTrackBtn');
+    var originalHTML = btn.innerHTML;
+    
+    btn.disabled = true;
+    btn.innerHTML = '<span class="animate-spin inline-block">⏳</span> Downloading...';
+    
+    var statusColors = { pending: '#f59e0b', approved: '#16a34a', rejected: '#dc2626' };
+    var statusText = { pending: 'PENDING (Under Review)', approved: 'APPROVED', rejected: 'REJECTED' };
+    var statusIcons = { pending: '⏳', approved: '✅', rejected: '❌' };
+    var statusColor = statusColors[p.status] || '#64748b';
+    var statusLabel = statusText[p.status] || p.status.toUpperCase();
+    var statusIcon = statusIcons[p.status] || '📦';
+    
+    var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><style>';
+    html += '* { box-sizing: border-box; margin: 0; padding: 0; }';
+    html += 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #ffffff; color: #1e293b; padding: 24px; width: 600px; }';
+    html += '.card { border: 3px solid #e2e8f0; border-radius: 24px; padding: 28px; background: #fff; }';
+    html += '.status-banner { background: ' + statusColor + '15; border: 2px solid ' + statusColor + '; border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 24px; }';
+    html += '.status-icon { font-size: 48px; margin-bottom: 6px; }';
+    html += '.status-text { font-size: 22px; font-weight: 900; color: ' + statusColor + '; text-transform: uppercase; letter-spacing: 1px; }';
+    html += '.status-sub { font-size: 13px; color: #64748b; margin-top: 4px; font-weight: 600; }';
+    html += '.section-title { font-size: 12px; font-weight: 900; color: #64748b; text-transform: uppercase; letter-spacing: 1.5px; margin: 20px 0 10px; padding-bottom: 6px; border-bottom: 2px dashed #e2e8f0; }';
+    html += '.row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9; font-size: 14px; gap: 16px; }';
+    html += '.row:last-child { border-bottom: none; }';
+    html += '.row .lbl { color: #64748b; font-weight: 600; flex-shrink: 0; }';
+    html += '.row .val { color: #1e293b; font-weight: 800; text-align: right; word-break: break-word; }';
+    html += '.order-id { font-family: "Courier New", monospace; font-size: 20px; font-weight: 900; color: #1d4ed8; letter-spacing: 2px; }';
+    html += '.amount { font-size: 24px; font-weight: 900; color: #ea580c; }';
+    html += '.footer { text-align: center; margin-top: 24px; padding-top: 16px; border-top: 2px dashed #cbd5e1; }';
+    html += '.footer .brand { font-size: 18px; font-weight: 900; color: #1d4ed8; letter-spacing: 1px; }';
+    html += '.footer .brand span { color: #ea580c; }';
+    html += '.footer .sub { font-size: 11px; color: #94a3b8; margin-top: 4px; font-weight: 600; }';
+    html += '.footer .date { font-size: 10px; color: #94a3b8; margin-top: 8px; }';
+    html += '</style></head><body>';
+    html += '<div class="card">';
+    
+    html += '<div class="status-banner">';
+    html += '<div class="status-icon">' + statusIcon + '</div>';
+    html += '<div class="status-text">' + statusLabel + '</div>';
+    if (p.status === 'pending') html += '<div class="status-sub">Your payment is being verified by admin.</div>';
+    if (p.status === 'approved') html += '<div class="status-sub">Your payment has been verified & approved.</div>';
+    if (p.status === 'rejected') html += '<div class="status-sub">Your payment was rejected. Please contact admin.</div>';
+    html += '</div>';
+    
+    html += '<div style="text-align:center; background:#eff6ff; border:2px solid #3b82f6; border-radius:16px; padding:16px; margin-bottom:16px;">';
+    html += '<div style="font-size:11px; font-weight:900; color:#1d4ed8; text-transform:uppercase; letter-spacing:1.5px;">🆔 ORDER ID</div>';
+    html += '<div class="order-id" style="margin-top:6px;">' + (p.orderId || '—') + '</div>';
+    html += '</div>';
+    
+    html += '<div class="section-title">👤 Student Details</div>';
+    html += '<div class="row"><span class="lbl">Name</span><span class="val">' + (p.studentName || '—') + '</span></div>';
+    html += '<div class="row"><span class="lbl">Unique ID</span><span class="val">' + (p.studentUniqueId || '—') + '</span></div>';
+    
+    html += '<div class="section-title">📘 Plan Details</div>';
+    html += '<div class="row"><span class="lbl">Plan</span><span class="val">' + (p.planName || '—') + '</span></div>';
+    if (p.planDays) html += '<div class="row"><span class="lbl">Duration</span><span class="val">' + p.planDays + ' Classes</span></div>';
+    
+    html += '<div class="section-title">💰 Payment Details</div>';
+    if (p.admissionFee > 0) html += '<div class="row"><span class="lbl">Admission Fee</span><span class="val">' + money(p.admissionFee) + '</span></div>';
+    if (p.courseFee > 0) html += '<div class="row"><span class="lbl">Course Fee</span><span class="val">' + money(p.courseFee) + '</span></div>';
+    if (p.totalDiscount > 0) html += '<div class="row"><span class="lbl">Coupon Discount</span><span class="val" style="color:#16a34a;">− ' + money(p.totalDiscount) + '</span></div>';
+    html += '<div class="row"><span class="lbl">Net Amount</span><span class="val amount">' + money(p.finalAmount) + '</span></div>';
+    html += '<div class="row"><span class="lbl">Payment Method</span><span class="val">' + (p.paymentMethod || '—') + '</span></div>';
+    html += '<div class="row"><span class="lbl">Date</span><span class="val">' + formatFullTimestamp(p.createdAt) + '</span></div>';
+    if (p.receiptNo) html += '<div class="row"><span class="lbl">PCS No.</span><span class="val" style="color:#16a34a; font-family:Courier New,monospace;">' + p.receiptNo + '</span></div>';
+    if (p.status === 'rejected' && p.rejectionReason) {
+        html += '<div style="background:#fef2f2; border:2px solid #fca5a5; border-radius:12px; padding:12px; margin-top:10px;">';
+        html += '<div style="font-size:11px; font-weight:900; color:#991b1b; text-transform:uppercase; letter-spacing:1px; margin-bottom:4px;">⚠️ Rejection Reason</div>';
+        html += '<div style="font-size:13px; color:#7f1d1d; font-weight:600;">' + p.rejectionReason + '</div>';
+        html += '</div>';
+    }
+    
+    html += '<div class="footer">';
+    html += '<div class="brand">ENGLISH <span>SPUR</span></div>';
+    html += '<div class="sub">English Spur English Training Academy</div>';
+    html += '<div class="date">Generated on: ' + new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) + '</div>';
+    html += '</div>';
+    
+    html += '</div></body></html>';
+    
+    var iframe = document.createElement('iframe');
+    iframe.style.cssText = 'position: fixed; left: -9999px; top: 0; width: 600px; height: 1000px; border: none; background: #ffffff;';
+    document.body.appendChild(iframe);
+    var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    iframeDoc.open();
+    iframeDoc.write(html);
+    iframeDoc.close();
+    
+    setTimeout(function() {
+        try {
+            var targetBody = iframeDoc.body;
+            html2canvas(targetBody, {
+                backgroundColor: '#ffffff',
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                width: 600,
+                windowWidth: 600
+            }).then(function(canvas) {
+                canvas.toBlob(function(blob) {
+                    if (!blob) {
+                        showToast('❌ Download failed', 'error');
+                        btn.disabled = false;
+                        btn.innerHTML = originalHTML;
+                        cleanupIframe(iframe);
+                        return;
+                    }
+                    var url = URL.createObjectURL(blob);
+                    var link = document.createElement('a');
+                    var safeOrderId = String(p.orderId || 'Status').replace(/[^a-zA-Z0-9_-]/g, '_');
+                    link.download = 'EnglishSpur_Status_' + safeOrderId + '.png';
+                    link.href = url;
+                    link.style.display = 'none';
+                    document.body.appendChild(link);
+                    link.click();
+                    setTimeout(function() {
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                        cleanupIframe(iframe);
+                    }, 1500);
+                    showToast('✅ Status downloaded as PNG!', 'success');
+                    btn.disabled = false;
+                    btn.innerHTML = originalHTML;
+                }, 'image/png', 0.95);
+            }).catch(function(err) {
+                console.error(err);
+                showToast('❌ Download failed', 'error');
+                btn.disabled = false;
+                btn.innerHTML = originalHTML;
+                cleanupIframe(iframe);
+            });
+        } catch (err) {
+            console.error(err);
+            showToast('❌ Download failed', 'error');
+            btn.disabled = false;
+            btn.innerHTML = originalHTML;
+            cleanupIframe(iframe);
+        }
+    }, 800);
 }
 
 /* ============ LOGOUT ============ */
@@ -2434,8 +2724,8 @@ async function submitPurchase() {
         breakdown += '• Course/Package Fee: ' + money(p.coursePrice) + '\n';
         breakdown += '• Subtotal: ' + money(p.subtotal) + '\n';
         p.usedCoupons.forEach(function(uc) { breakdown += '• Coupon ' + uc.code + ': −' + money(uc.disc) + '\n'; });
-        breakdown += '• Net Amount Paid: ' + money(p.final);
-        var msg = '✅ *PAYMENT COMPLETED — English Spur*\n\n*🆔 ORDER ID: ' + orderId + '*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order.\n\n--- STUDENT DETAILS ---\n• Name: *' + currentStudent.name + '*\n• Unique ID: *' + (currentStudent.uniqueId || '—') + '*\n' + (currentStudent.studentCode ? '• Student Code: *' + currentStudent.studentCode + '*\n' : '') + '\n--- PLAN ENROLLED ---\n*' + cleanPlan + '*\n\n--- FEE BREAKDOWN ---\n' + breakdown + '\n-------------------------\n*💵 Net Amount Paid: ' + money(p.final) + '*\n\n--- PAYMENT INFO ---\n• Method: ' + payMethod + '\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\nKindly verify and send me the receipt.\n\nThank you 🙏';
+        breakdown += '• Net Amount Received: ' + money(p.final);
+        var msg = '✅ *PAYMENT COMPLETED — English Spur*\n\n*🆔 ORDER ID: ' + orderId + '*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order.\n\n--- STUDENT DETAILS ---\n• Name: *' + currentStudent.name + '*\n• Unique ID: *' + (currentStudent.uniqueId || '—') + '*\n' + (currentStudent.studentCode ? '• Student Code: *' + currentStudent.studentCode + '*\n' : '') + '\n--- PLAN ENROLLED ---\n*' + cleanPlan + '*\n\n--- FEE BREAKDOWN ---\n' + breakdown + '\n-------------------------\n*💵 Net Amount Received: ' + money(p.final) + '*\n\n--- PAYMENT INFO ---\n• Method: ' + payMethod + '\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\nKindly verify and send me the receipt.\n\nThank you 🙏';
         window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(msg), '_blank');
         document.getElementById('stage5OrderId').textContent = orderId;
         selectedPlan = null;

@@ -2078,6 +2078,7 @@ function loadAllPurchases() {
                             '<p class="font-bold text-slate-800 text-xs truncate">' + p.studentName + '</p>' +
                             (p.orderId ? '<span class="order-id-badge">🆔 ' + p.orderId + '</span>' : '') +
                             (p.studentUniqueId ? '<span class="unique-id-badge">' + p.studentUniqueId + '</span>' : '') +
+                            (p.receiptNo ? '<span class="bg-yellow-100 text-yellow-800 border border-yellow-300 text-[9px] font-bold px-2 py-0.5 rounded-full">📄 ' + p.receiptNo + '</span>' : '') +
                             (p.reuploadCount ? '<span class="bg-orange-100 text-orange-700 border border-orange-300 text-[9px] font-bold px-2 py-0.5 rounded-full">🔄 ×' + p.reuploadCount + '</span>' : '') +
                         '</div>' +
                         '<p class="text-[10px] text-slate-600">' + p.planName + '</p>' +
@@ -2308,7 +2309,7 @@ function viewStudentProfile(id) {
             var icons = { pending: '⏳', approved: '✅', rejected: '❌' };
             ph += '<div class="bg-white rounded-lg p-2 border border-slate-200 flex justify-between items-center gap-2">';
             ph += '<div class="min-w-0 flex-1"><p class="text-[11px] font-bold text-slate-800 truncate">' + icons[p.status] + ' ' + (p.planName || '—') + '</p>';
-            ph += '<p class="text-[10px] text-slate-500">' + (p.orderId || '—') + ' · ' + formatDT(p.createdAt) + (p.reuploadCount ? ' · 🔄×' + p.reuploadCount : '') + '</p></div>';
+            ph += '<p class="text-[10px] text-slate-500">' + (p.orderId || '—') + (p.receiptNo ? ' · 📄 ' + p.receiptNo : '') + ' · ' + formatDT(p.createdAt) + (p.reuploadCount ? ' · 🔄×' + p.reuploadCount : '') + '</p></div>';
             ph += '<p class="text-sm font-black text-orange-600">' + money(p.finalAmount) + '</p>';
             ph += '</div>';
         });
