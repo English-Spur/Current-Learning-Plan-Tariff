@@ -213,25 +213,46 @@
     </div>
 </div>
 
-<!-- EXISTING STUDENT LOGIN -->
+<!-- EXISTING STUDENT LOGIN / NEW STUDENT RESUME -->
 <div id="screenOldStudent" class="max-w-lg mx-auto hidden fade-in-up">
     <div class="pro-card overflow-hidden">
         <div class="pro-header-green p-4 flex items-center gap-3">
             <button type="button" onclick="showScreen('welcome')" aria-label="Back" class="text-white text-2xl font-bold leading-none glass-btn w-9 h-9 rounded-full flex items-center justify-center">←</button>
             <div>
-                <h2 class="text-base font-black text-white">Existing Student Login</h2>
-                <p class="text-green-100 text-[10px] font-medium">Login using your Student Code</p>
+                <h2 class="text-base font-black text-white">Student Login</h2>
+                <p class="text-green-100 text-[10px] font-medium">Existing or New Student Login</p>
             </div>
         </div>
-        <div class="p-5 space-y-3">
-            <div>
+        
+        <div class="p-5 space-y-4">
+            <!-- Tabs for Login Type -->
+            <div class="flex bg-slate-100 p-1 rounded-xl">
+                <button type="button" onclick="switchLoginTab('code')" id="loginTabCode" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white shadow-sm text-blue-700 transition-all">🏷️ Student Code</button>
+                <button type="button" onclick="switchLoginTab('unique')" id="loginTabUnique" class="flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all">🆔 Unique ID</button>
+            </div>
+
+            <!-- Student Code Input -->
+            <div id="loginMethodCode">
                 <label for="loginCode" class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Student Code <span class="text-red-500">*</span></label>
                 <input type="text" id="loginCode" placeholder="e.g. ES2026-0001" class="w-full border-2 border-slate-200 rounded-xl p-4 bg-slate-50 font-bold text-base uppercase tracking-widest text-center focus:bg-white transition" onkeydown="if(event.key==='Enter')existingStudentLogin()" autocomplete="off">
-                <p class="text-[10px] text-slate-500 mt-2 text-center">🔖 Code is provided by the office. If you don't have one, call <strong>+91 9875340842</strong>.</p>
+                <p class="text-[10px] text-slate-500 mt-2 text-center">🔖 Code is provided by the office after successful payment.</p>
             </div>
+
+            <!-- Unique ID Input -->
+            <div id="loginMethodUnique" class="hidden">
+                <label for="loginUniqueId" class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Unique ID <span class="text-red-500">*</span></label>
+                <input type="text" id="loginUniqueId" placeholder="e.g. ES_171234567890" class="w-full border-2 border-slate-200 rounded-xl p-4 bg-slate-50 font-bold text-sm uppercase tracking-widest text-center focus:bg-white transition" onkeydown="if(event.key==='Enter')uniqueIdLogin()" autocomplete="off">
+                <p class="text-[10px] text-slate-500 mt-2 text-center">🆔 For new students who registered but haven't paid yet.</p>
+            </div>
+
             <p id="loginError" class="text-red-600 text-xs font-semibold hidden p-2.5 bg-red-50 rounded-lg"></p>
-            <button type="button" onclick="existingStudentLogin()" class="w-full bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-black p-4 rounded-2xl text-xs uppercase tracking-widest transition-all shadow-lg hover:shadow-xl">
-                🔓 Login
+            
+            <!-- Login Buttons -->
+            <button type="button" onclick="existingStudentLogin()" id="btnLoginCode" class="w-full bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-black p-4 rounded-2xl text-xs uppercase tracking-widest transition-all shadow-lg hover:shadow-xl">
+                🔓 Login with Code
+            </button>
+            <button type="button" onclick="uniqueIdLogin()" id="btnLoginUnique" class="hidden w-full bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white font-black p-4 rounded-2xl text-xs uppercase tracking-widest transition-all shadow-lg hover:shadow-xl">
+                🔓 Login with Unique ID
             </button>
         </div>
     </div>
@@ -279,6 +300,7 @@
             </div>
         </div>
         <div class="flex items-center gap-1.5 flex-shrink-0">
+            <button type="button" onclick="showView('slots')" id="bookSlotBtn" class="hidden bg-gradient-to-br from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white font-bold text-[10px] sm:text-xs px-2.5 py-2 rounded-xl transition-all" title="Book Class Slot">🗓️ Slots</button>
             <button type="button" id="refreshBtn" onclick="refreshDashboard()" aria-label="Refresh" class="bg-gradient-to-br from-green-100 to-emerald-100 hover:from-green-200 hover:to-emerald-200 text-green-700 text-lg font-bold w-10 h-10 rounded-xl transition-all" title="Refresh">🔄</button>
             <button type="button" onclick="showView('history')" class="relative bg-gradient-to-br from-blue-50 to-indigo-50 hover:from-blue-100 hover:to-indigo-100 text-blue-700 font-bold text-[10px] sm:text-xs px-3 py-2 rounded-xl text-left leading-tight transition-all">
                 📋 History
@@ -357,9 +379,15 @@
     </div>
 
     <div id="viewExplorePlans" class="hidden">
-        <div class="pro-card p-3 mb-3 flex items-center gap-2">
-            <button type="button" onclick="showCurrentPlanView()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-3 py-2 rounded-xl text-xs transition">← Back</button>
-            <p class="text-[11px] font-black text-slate-700 uppercase tracking-wide">🔍 All Available Plans</p>
+        <!-- Header with Slots Button -->
+        <div class="pro-card p-3 mb-3 flex justify-between items-center flex-wrap gap-2">
+            <div class="flex items-center gap-2">
+                <button type="button" onclick="showCurrentPlanView()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-3 py-2 rounded-xl text-xs transition">← Back</button>
+                <p class="text-[11px] font-black text-slate-700 uppercase tracking-wide">🔍 ALL AVAILABLE PLANS</p>
+            </div>
+            <button type="button" onclick="showView('slots')" class="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white font-black text-[11px] px-4 py-2 rounded-xl shadow-md transition-all flex items-center gap-1">
+                🗓️ SELECT SLOTS
+            </button>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
@@ -536,6 +564,31 @@
             </div>
             <div id="historyList" class="space-y-3"></div>
             <button type="button" onclick="backToDashboard()" class="w-full bg-slate-200 text-slate-700 font-bold p-3 rounded-xl text-xs sm:text-sm mt-3 hover:bg-slate-300 transition">← Back to Dashboard</button>
+        </div>
+    </div>
+
+    <!-- CLASS SLOT BOOKING VIEW (Separate Section) -->
+    <div id="view-slots" class="hidden">
+        <div class="pro-card p-4 sm:p-5">
+            <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+                <div>
+                    <h2 class="text-base sm:text-lg font-black text-cyan-900 tracking-tight">🗓️ Select Your Class Slots</h2>
+                    <p class="text-[11px] text-slate-500 font-medium">সর্বোচ্চ ২টি স্লট সিলেক্ট করুন (সপ্তাহে ২ দিন)</p>
+                </div>
+                <button type="button" onclick="showExplorePlans()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-3.5 py-2 rounded-xl text-xs transition">← Back to Plans</button>
+            </div>
+            <div class="bg-gradient-to-r from-cyan-50 to-blue-50 border-2 border-cyan-300 rounded-2xl p-3.5 mb-4">
+                <p class="text-[11px] font-bold text-cyan-900">ℹ️ আপনি সর্বোচ্চ ২টি স্লট সিলেক্ট করতে পারবেন। সিলেক্ট করার পর প্ল্যান কিনলে, অ্যাডমিন Approve করলে স্লট বুক হয়ে যাবে।</p>
+            </div>
+            
+            <div id="selectedSlotsBanner" class="hidden bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-400 rounded-2xl p-4 mb-4">
+                <p class="text-[11px] font-black text-green-900 uppercase tracking-wide mb-2">✅ Your Selected Slots (Max 2)</p>
+                <div id="selectedSlotsList" class="space-y-2"></div>
+            </div>
+
+            <div id="availableSlotsList" class="space-y-3"></div>
+            
+            <button type="button" onclick="showExplorePlans()" class="w-full bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-black py-4 rounded-2xl text-sm uppercase tracking-widest mt-4 shadow-lg transition-all">✅ Proceed to Buy Plan</button>
         </div>
     </div>
 
@@ -768,6 +821,13 @@ var reuploadOrderRef = null;
 var reuploadScreenshotBase64 = null;
 var reuploadMethodSelected = '';
 
+/* Slots state */
+var slotsUnsubscribe = null;
+var availableSlotsCache = [];
+var myBookedSlots = [];
+var bookingInProgress = false;
+var selectedSlotsForBooking = []; // Array to hold up to 2 selected slots
+
 /* ============ HELPERS ============ */
 function money(n) { return '₹' + Number(n || 0).toLocaleString('en-IN'); }
 function pad2(n) { return String(n).padStart(2, '0'); }
@@ -806,6 +866,19 @@ function formatDateFromString(str) {
         if (isNaN(d.getTime())) return str;
         return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
     } catch (e) { return str; }
+}
+
+// AM/PM Helpers
+function formatTimeAMPM(timeStr) {
+    if (!timeStr) return '—';
+    var parts = timeStr.split(':');
+    if (parts.length < 2) return timeStr;
+    var hours = parseInt(parts[0], 10);
+    var minutes = parts[1];
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    return (hours < 10 ? '0' + hours : hours) + ':' + minutes + ' ' + ampm;
 }
 
 function hasCouponAccess() { return currentStudent && currentStudent.couponAccess === true; }
@@ -950,13 +1023,14 @@ function showScreen(name) {
 }
 
 function showView(v) {
-    ['viewCurrentPlan', 'viewExplorePlans', 'view-payment', 'view-history'].forEach(function(id) {
+    ['viewCurrentPlan', 'viewExplorePlans', 'view-payment', 'view-history', 'view-slots'].forEach(function(id) {
         var el = document.getElementById(id);
         if (el) el.classList.add('hidden');
     });
     var target = null;
     if (v === 'currentPlan') target = document.getElementById('viewCurrentPlan');
     else if (v === 'explorePlans') target = document.getElementById('viewExplorePlans');
+    else if (v === 'slots') target = document.getElementById('view-slots');
     else target = document.getElementById('view-' + v);
     if (target) {
         target.classList.remove('hidden');
@@ -966,6 +1040,9 @@ function showView(v) {
     if (v === 'explorePlans') {
         renderDynamicPlans();
         updateCourseFilterBanner();
+    }
+    if (v === 'slots') {
+        loadAvailableSlots();
     }
     if (v === 'currentPlan') {
         var hBadge = document.getElementById('historyBadge');
@@ -1120,6 +1197,7 @@ function enterDashboard() {
     updateStudentInfo();
     startStudentListener();
     startOrdersListener();
+    startSlotsListener();
     loadCurrentPlan();
     renderDynamicPlans();
     updateCourseFilterBanner();
@@ -1145,6 +1223,7 @@ function updateStudentInfo() {
     document.getElementById('welcomeMeta').innerHTML = metaHtml;
     updateStudentBadges();
     renderWelcomeBackPanel();
+    updateBookSlotButtonVisibility();
 }
 
 function updateStudentBadges() {
@@ -1252,7 +1331,6 @@ async function registerNewStudent() {
     var uniqueId = generateUniqueId();
     var dobString = dob.day + '-' + dob.month + '-' + dob.year;
 
-    /* Check for duplicate name+dob */
     try {
         var dup = await db.collection('students')
             .where('name', '==', name)
@@ -1263,7 +1341,7 @@ async function registerNewStudent() {
             errEl.classList.remove('hidden');
             return;
         }
-    } catch (e) { /* Skip dup check if query fails */ }
+    } catch (e) { }
 
     try {
         var student = {
@@ -1303,7 +1381,6 @@ async function registerNewStudent() {
 
         showToast('✅ Registration complete!', 'success');
 
-        /* Show Unique ID to student */
         setTimeout(function() {
             alert(
                 '✅ REGISTRATION SUCCESSFUL!\n\n' +
@@ -1328,7 +1405,7 @@ async function existingStudentLogin() {
     errEl.classList.add('hidden');
     if (!code) { errEl.textContent = '❌ Please enter your Student Code.'; errEl.classList.remove('hidden'); return; }
 
-    try {
+try {
         var snap = await db.collection('students').where('studentCode', '==', code).limit(1).get();
         if (snap.empty) {
             errEl.innerHTML = '❌ Student Code not found.<br><span class="text-[10px]">Example: <strong>ES2026-0001</strong></span>';
@@ -1358,6 +1435,79 @@ async function existingStudentLogin() {
     }
 }
 
+// 🎯 নতুন ট্যাব সুইচার
+function switchLoginTab(type) {
+    var tabCode = document.getElementById('loginTabCode');
+    var tabUnique = document.getElementById('loginTabUnique');
+    var methodCode = document.getElementById('loginMethodCode');
+    var methodUnique = document.getElementById('loginMethodUnique');
+    var btnCode = document.getElementById('btnLoginCode');
+    var btnUnique = document.getElementById('btnLoginUnique');
+    var errEl = document.getElementById('loginError');
+    if (errEl) errEl.classList.add('hidden');
+
+    if (type === 'code') {
+        tabCode.className = 'flex-1 py-2 text-xs font-bold rounded-lg bg-white shadow-sm text-blue-700 transition-all';
+        tabUnique.className = 'flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all';
+        methodCode.classList.remove('hidden');
+        methodUnique.classList.add('hidden');
+        btnCode.classList.remove('hidden');
+        btnUnique.classList.add('hidden');
+    } else {
+        tabUnique.className = 'flex-1 py-2 text-xs font-bold rounded-lg bg-white shadow-sm text-blue-700 transition-all';
+        tabCode.className = 'flex-1 py-2 text-xs font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all';
+        methodCode.classList.add('hidden');
+        methodUnique.classList.remove('hidden');
+        btnCode.classList.add('hidden');
+        btnUnique.classList.remove('hidden');
+    }
+}
+
+// 🎯 Unique ID দিয়ে লগইন
+async function uniqueIdLogin() {
+    var uid = document.getElementById('loginUniqueId').value.trim().toUpperCase();
+    var errEl = document.getElementById('loginError');
+    errEl.classList.add('hidden');
+    
+    if (!uid) { 
+        errEl.textContent = '❌ Please enter your Unique ID.'; 
+        errEl.classList.remove('hidden'); 
+        return; 
+    }
+
+    try {
+        var snap = await db.collection('students').where('uniqueId', '==', uid).limit(1).get();
+        if (snap.empty) {
+            errEl.innerHTML = '❌ Unique ID not found.<br><span class="text-[10px]">Please check your Unique ID again.</span>';
+            errEl.classList.remove('hidden');
+            return;
+        }
+        var doc = snap.docs[0];
+        var s = doc.data();
+        
+        if (s.blocked === true) {
+            errEl.textContent = '🚫 Your account is blocked. Please contact the office.';
+            errEl.classList.remove('hidden');
+            return;
+        }
+        
+        currentStudent = Object.assign({ id: doc.id }, s);
+        isExistingStudent = !!(currentStudent.studentCode); 
+        
+        await db.collection('students').doc(doc.id).update({
+            loginCount: (s.loginCount || 0) + 1,
+            lastLoginAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        
+        saveStudentToStorage(currentStudent);
+        logActivity('login_via_unique_id');
+        showToast('✅ Welcome back, ' + (s.name || 'Student') + '!', 'success');
+        enterDashboard();
+    } catch (err) {
+        errEl.textContent = '❌ ' + err.message;
+        errEl.classList.remove('hidden');
+    }
+}
 /* ============ TRACK PAYMENT STATUS ============ */
 async function trackPaymentStatus() {
     var orderId = document.getElementById('trackOrderId').value.trim().toUpperCase();
@@ -1604,6 +1754,7 @@ async function studentLogout() {
     if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
     if (ordersUnsubscribe) { ordersUnsubscribe(); ordersUnsubscribe = null; }
     if (studentUnsubscribe) { studentUnsubscribe(); studentUnsubscribe = null; }
+    if (slotsUnsubscribe) { slotsUnsubscribe(); slotsUnsubscribe = null; }
 
     try {
         localStorage.removeItem(STORAGE_KEY);
@@ -1638,7 +1789,18 @@ function startStudentListener() {
     studentListenerActive = true;
 
     studentUnsubscribe = db.collection('students').doc(currentStudent.id).onSnapshot(function(doc) {
-        if (isLoggingOut || !doc.exists) return;
+            if (!doc.exists) {
+        alert('⛔ আপনার অ্যাকাউন্টটি অ্যাডমিন কর্তৃক ডিলিট করা হয়েছে। আপনাকে লগআউট করা হচ্ছে।');
+        try {
+            localStorage.setItem(LOGOUT_FLAG, '1');
+            localStorage.removeItem(STORAGE_KEY);
+            localStorage.removeItem(PLAN_KEY);
+            localStorage.removeItem(COUPON_KEY);
+        } catch (e) {}
+        window.location.reload();
+        return;
+    }
+    if (isLoggingOut) return;
         var data = doc.data();
         var wasBlocked = currentStudent.blocked === true;
         currentStudent = Object.assign({}, currentStudent, data);
@@ -1748,6 +1910,7 @@ async function loadCurrentPlan() {
             purchasedPlansCount = 0;
             updateHistoryBadge(0);
             updateActionBadge(0);
+            updateBookSlotButtonVisibility();
             setTimeout(function() { renderWelcomeBackPanel(); }, 100);
             return;
         }
@@ -1768,6 +1931,7 @@ async function loadCurrentPlan() {
         } else {
             currentPlanData = null;
         }
+        updateBookSlotButtonVisibility();
         setTimeout(function() { renderWelcomeBackPanel(); }, 100);
     } catch (err) {
         console.error('Load plan error:', err);
@@ -1775,6 +1939,7 @@ async function loadCurrentPlan() {
         purchasedPlansCount = 0;
         updateHistoryBadge(0);
         updateActionBadge(0);
+        updateBookSlotButtonVisibility();
         setTimeout(function() { renderWelcomeBackPanel(); }, 100);
     }
 }
@@ -1910,7 +2075,7 @@ function filterPlansByCourse(cat, subKey, subData) {
     return true;
 }
 
-/* ============ DYNAMIC PLANS RENDERING ============ */
+/* ============ SLOT PAIRING LOGIC REMOVED, NOW RENDERING SLOT PAGE ============ */
 function renderDynamicPlans() {
     var container = document.getElementById('plansContainer');
     if (!container) return;
@@ -2139,7 +2304,8 @@ function selectPlanRow(cat, subKey, subCategoryId, subCategoryDisplay, planIndex
             courseDiscounted: Number(courseMeta.discounted) || 0,
             courseSpecial: Number(courseMeta.special) || 0,
             groupAdmissionFee: 0,
-            months: months
+            months: months,
+            selectedSlots: selectedSlotsForBooking
         };
     } else {
         var groupAdm = 0;
@@ -2228,6 +2394,18 @@ function renderCheckoutPlanCard(colorFrom, colorTo) {
         if (selectedPlan.facilities && selectedPlan.facilities.length > 0) {
             html += '<div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-3 mb-3"><p class="text-[10px] font-black text-blue-900 uppercase mb-1.5 tracking-wide">✨ Facilities</p>';
             selectedPlan.facilities.forEach(function(f) { html += '<div class="facility-item">' + f + '</div>'; });
+            html += '</div>';
+        }
+        
+        // Show selected slots
+        if (selectedPlan.selectedSlots && selectedPlan.selectedSlots.length > 0) {
+            html += '<div class="bg-cyan-50 border-2 border-cyan-200 rounded-xl p-3 mb-3"><p class="text-[10px] font-black text-cyan-800 uppercase mb-1.5 tracking-wide">🗓️ Selected Class Timings</p>';
+            selectedPlan.selectedSlots.forEach(function(sId) {
+                var slot = availableSlotsCache.find(function(s) { return s.id === sId; });
+                if (slot) {
+                    html += '<div class="flex justify-between text-xs font-bold text-cyan-900 mb-1"><span>📅 ' + slot.dayOfWeek + '</span><span>⏰ ' + formatTimeAMPM(slot.startTime) + ' - ' + formatTimeAMPM(slot.endTime) + '</span></div>';
+                }
+            });
             html += '</div>';
         }
     }
@@ -2339,9 +2517,16 @@ async function applyCheckoutCoupon(code) {
     if (!c) { showToast('❌ Coupon not found', 'error'); return; }
     var couponCat = c.category || c.appliesTo;
     if (couponCat && couponCat !== selectedPlan.category) { showToast('❌ Wrong category', 'error'); return; }
-    if (c.allowedPlans && c.allowedPlans.length > 0) {
-        var planKey = selectedPlan.plan.days + 'd';
-        if (c.allowedPlans.indexOf(planKey) === -1) { showToast('❌ Not valid for this plan', 'error'); return; }
+       if (c.allowedPlans && c.allowedPlans.length > 0) {
+        var months = Math.round(selectedPlan.plan.days / 30); 
+        var planKeyD = selectedPlan.plan.days + 'd'; 
+        var planKeyM = months + 'm'; 
+        
+        // যদি কুপনে 90d বা 3m কোনোটাই না থাকে, তবেই এরর দেবে
+        if (c.allowedPlans.indexOf(planKeyD) === -1 && c.allowedPlans.indexOf(planKeyM) === -1) { 
+            showToast('❌ Not valid for this plan', 'error'); 
+            return; 
+        }
     }
     appliedCoupons.push(Object.assign({}, c, { appliesTo: c.category || c.appliesTo }));
     saveSelectedPlan();
@@ -2691,6 +2876,10 @@ async function submitPurchase() {
         platform: isOneOnOne ? (selectedPlan.platform || '') : '',
         facilities: isOneOnOne ? (selectedPlan.facilities || []) : [],
         months: months,
+        selectedSlots: isOneOnOne ? (selectedPlan.selectedSlots || []).map(function(slotId) {
+            var s = availableSlotsCache.find(function(x) { return x.id === slotId; });
+            return s ? { id: s.id, dayOfWeek: s.dayOfWeek, startTime: s.startTime, endTime: s.endTime } : { id: slotId };
+        }) : [],
         perClassRate: selectedPlan.plan.specialRate || selectedPlan.plan.perClassRate || null,
         regularTotal: p.regularTotal,
         isNewStudent: selectedPlan.isNewStudent || false,
@@ -2725,10 +2914,11 @@ async function submitPurchase() {
         breakdown += '• Subtotal: ' + money(p.subtotal) + '\n';
         p.usedCoupons.forEach(function(uc) { breakdown += '• Coupon ' + uc.code + ': −' + money(uc.disc) + '\n'; });
         breakdown += '• Net Amount Received: ' + money(p.final);
-        var msg = '✅ *PAYMENT COMPLETED — English Spur*\n\n*🆔 ORDER ID: ' + orderId + '*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order.\n\n--- STUDENT DETAILS ---\n• Name: *' + currentStudent.name + '*\n• Unique ID: *' + (currentStudent.uniqueId || '—') + '*\n' + (currentStudent.studentCode ? '• Student Code: *' + currentStudent.studentCode + '*\n' : '') + '\n--- PLAN ENROLLED ---\n*' + cleanPlan + '*\n\n--- FEE BREAKDOWN ---\n' + breakdown + '\n-------------------------\n*💵 Net Amount Received: ' + money(p.final) + '*\n\n--- PAYMENT INFO ---\n• Method: ' + payMethod + '\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\nKindly verify and send me the receipt.\n\nThank you 🙏';
+        var msg = '✅ *PAYMENT COMPLETED — English Spur*\n\n*🆔 ORDER ID: ' + orderId + '*\n\nRespected Sovan Kapri Sir,\n\nI have completed the payment and submitted my order.\n\n--- STUDENT DETAILS ---\n• Name: *' + currentStudent.name + '*\n• Unique ID: *' + (currentStudent.uniqueId || '—') + '*\n' + (currentStudent.studentCode ? '• Student Code: *' + currentStudent.studentCode + '*\n' : '') + '\n--- PLAN ENROLLED ---\n*' + cleanPlan + '*\n' + (order.selectedSlots && order.selectedSlots.length > 0 ? '\n--- SELECTED CLASS TIME ---\n(Please check order in admin panel)\n' : '') + '\n--- FEE BREAKDOWN ---\n' + breakdown + '\n-------------------------\n*💵 Net Amount Received: ' + money(p.final) + '*\n\n--- PAYMENT INFO ---\n• Method: ' + payMethod + '\n• 📸 Screenshot: Auto-downloaded — I will attach it here\n\nKindly verify and send me the receipt.\n\nThank you 🙏';
         window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(msg), '_blank');
         document.getElementById('stage5OrderId').textContent = orderId;
         selectedPlan = null;
+        selectedSlotsForBooking = []; // Clear selected slots
         appliedCoupons = [];
         saveSelectedPlan();
         [1, 2, 3, 4, 5].forEach(function(n) {
@@ -2751,6 +2941,7 @@ async function submitPurchase() {
 
 function backToDashboard() {
     appliedCoupons = [];
+    selectedSlotsForBooking = [];
     saveSelectedPlan();
     screenshotBase64 = null;
     if (currentStudent && currentStudent.id) {
@@ -2780,6 +2971,7 @@ async function refreshDashboard() {
         await loadCurrentPlan();
         renderDynamicPlans();
         updateCourseFilterBanner();
+        renderAvailableSlots();
         showToast('✅ Dashboard updated!', 'success');
     } catch (err) {
         console.error('Refresh error:', err);
@@ -2828,6 +3020,13 @@ function loadHistory() {
             inner += '<div class="bg-white rounded-xl p-3 mb-2 space-y-1.5">';
             inner += '<div class="flex justify-between items-center text-[11px] gap-2 bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl px-3 py-2 mb-1"><span class="text-blue-700 font-black text-[10px] uppercase tracking-wide">🆔 Order ID</span><strong class="text-blue-800 text-right font-mono font-black text-[15px] tracking-widest">' + (p.orderId || '—') + '</strong></div>';
             inner += '<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">📅 Date:</span><strong class="text-slate-700 text-right">' + formatFullTimestamp(p.createdAt) + '</strong></div>';
+            // Slots Info
+            if (p.selectedSlots && p.selectedSlots.length > 0) {
+                var slotNames = p.selectedSlots.map(function(s) { 
+                    return (s.dayOfWeek || '') + ' (' + formatTimeAMPM(s.startTime) + ' - ' + formatTimeAMPM(s.endTime) + ')'; 
+                }).join(', ');
+                inner += '<div class="bg-green-50 rounded-lg p-2 mt-1 border border-green-200"><p class="text-[10px] text-green-800 font-bold">🗓️ Slots: ' + slotNames + '</p></div>';
+            }
             if (p.admissionFee > 0) inner += '<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">➕ Admission:</span><strong class="text-slate-700 text-right">' + money(p.admissionFee) + '</strong></div>';
             if (p.courseFee > 0) inner += '<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">📘 Course Fee:</span><strong class="text-slate-700 text-right">' + money(p.courseFee) + '</strong></div>';
             inner += '<div class="flex justify-between text-[11px] gap-2"><span class="text-slate-500 font-semibold">💰 Net Amount:</span><strong class="text-orange-600 text-sm">' + money(p.finalAmount) + '</strong></div>';
@@ -3230,6 +3429,169 @@ window.addEventListener('beforeunload', function() {
         } catch (e) {}
     }
 });
+
+/* ============ CLASS SLOT BOOKING (1-on-1 students only) ============ */
+function isOneOnOneStudent() {
+    if (!currentStudent) return false;
+    // Check if approved plan is 1-on-1
+    if (currentPlanData && currentPlanData.status === 'approved' && currentPlanData.planCategory === 'oneOnOne') return true;
+    return false;
+}
+
+function updateBookSlotButtonVisibility() {
+    var btn = document.getElementById('bookSlotBtn');
+    if (!btn) return;
+    if (isOneOnOneStudent()) btn.classList.remove('hidden');
+    else btn.classList.add('hidden');
+}
+
+function startSlotsListener() {
+    if (!currentStudent || !currentStudent.id) return;
+    if (slotsUnsubscribe) slotsUnsubscribe();
+    slotsUnsubscribe = db.collection('classSlots').onSnapshot(function(snap) {
+        availableSlotsCache = [];
+        myBookedSlots = [];
+        snap.forEach(function(doc) {
+            var s = Object.assign({ id: doc.id }, doc.data());
+            availableSlotsCache.push(s);
+            if (s.bookedBy === currentStudent.id) myBookedSlots.push(s);
+        });
+        var view = document.getElementById('view-slots');
+        if (view && !view.classList.contains('hidden')) {
+            renderAvailableSlots();
+        }
+        // Also refresh dynamic plans to show slots below plans
+        if (document.getElementById('viewExplorePlans') && !document.getElementById('viewExplorePlans').classList.contains('hidden')) {
+            renderDynamicPlans();
+        }
+    }, function(err) {
+        console.warn('Slots listener:', err.message);
+    });
+}
+
+function loadAvailableSlots() {
+    renderAvailableSlots();
+}
+
+function renderAvailableSlots() {
+    var list = document.getElementById('availableSlotsList');
+    var myBanner = document.getElementById('myUpcomingSlotBanner');
+    var selectedList = document.getElementById('selectedSlotsList');
+    var selectedBanner = document.getElementById('selectedSlotsBanner');
+    if (!list) return;
+
+    // Show my booked slots banner
+    var myUpcoming = myBookedSlots.filter(function(s) { return s.status === 'booked'; });
+    if (myBanner) {
+        if (myUpcoming.length > 0) {
+            var bhtml = '<div class="flex items-start gap-3"><div class="text-3xl flex-shrink-0">✅</div><div class="flex-1"><p class="text-[11px] font-black text-green-900 uppercase tracking-wide mb-1">Your Booked Slot(s)</p>';
+            myUpcoming.forEach(function(s) {
+                bhtml += '<p class="text-[12px] font-bold text-green-800">📅 ' + (s.dayOfWeek || '') + ' · ⏰ ' + formatTimeAMPM(s.startTime) + '–' + formatTimeAMPM(s.endTime) + '</p>';
+                bhtml += '<p class="text-[10px] text-green-700 mb-1">📘 ' + (s.subCategoryDisplay || '—') + (s.teacher ? ' · 👨‍🏫 ' + s.teacher : '') + '</p>';
+            });
+            bhtml += '</div></div>';
+            myBanner.innerHTML = bhtml;
+            myBanner.classList.remove('hidden');
+        } else {
+            myBanner.classList.add('hidden');
+        }
+    }
+
+    // Show currently selected slots (from this session)
+    if (selectedBanner) {
+        if (selectedSlotsForBooking.length > 0) {
+            var sHtml = '<div class="flex items-start gap-3"><div class="text-3xl flex-shrink-0">☑️</div><div class="flex-1"><p class="text-[11px] font-black text-green-900 uppercase tracking-wide mb-1">Slots Selected for this Plan</p>';
+            selectedSlotsForBooking.forEach(function(sId) {
+                var slot = availableSlotsCache.find(function(s) { return s.id === sId; });
+                if (slot) {
+                    sHtml += '<div class="flex justify-between items-center mb-1"><div><p class="text-[12px] font-bold text-green-800">📅 ' + (slot.dayOfWeek || '') + ' · ⏰ ' + formatTimeAMPM(slot.startTime) + '–' + formatTimeAMPM(slot.endTime) + '</p>';
+                    sHtml += '<p class="text-[10px] text-green-700">📘 ' + (slot.subCategoryDisplay || '—') + '</p></div>';
+                    sHtml += '<button onclick="toggleSlotSelection(\'' + slot.id + '\')" class="text-red-600 text-[10px] underline">Remove</button></div>';
+                }
+            });
+            sHtml += '</div></div>';
+            selectedBanner.innerHTML = sHtml;
+            selectedBanner.classList.remove('hidden');
+        } else {
+            selectedBanner.classList.add('hidden');
+        }
+    }
+
+    // Filter slots: available only
+    var filtered = availableSlotsCache.filter(function(s) {
+        return s.status === 'available';
+    });
+
+    // Sort by Day
+    var dayOrder = { 'Monday': 1, 'Tuesday': 2, 'Wednesday': 3, 'Thursday': 4, 'Friday': 5, 'Saturday': 6, 'Sunday': 7 };
+    filtered.sort(function(a, b) {
+        return (dayOrder[a.dayOfWeek] || 99) - (dayOrder[b.dayOfWeek] || 99);
+    });
+
+    if (filtered.length === 0) {
+        list.innerHTML = '<div class="pro-card p-6 text-center border-2 border-slate-200"><p class="text-3xl mb-2">📭</p><p class="text-slate-600 font-bold text-sm">No available slots right now.</p><p class="text-[11px] text-slate-500 mt-1">Admin will add new slots soon. Check back later.</p></div>';
+        return;
+    }
+
+    list.innerHTML = '';
+    filtered.forEach(function(s) {
+        var isSelected = selectedSlotsForBooking.indexOf(s.id) !== -1;
+        var div = document.createElement('div');
+        div.className = 'border-2 rounded-2xl p-4 transition-all ' + (isSelected ? 'bg-green-50 border-green-500' : 'bg-white border-cyan-300 hover:shadow-lg');
+        div.innerHTML =
+            '<div class="flex justify-between items-start gap-3 flex-wrap mb-2">' +
+                '<div class="min-w-0 flex-1">' +
+                    '<p class="font-black text-cyan-900 text-sm">📅 ' + (s.dayOfWeek || '—') + '</p>' +
+                    '<p class="text-[11px] text-slate-600 font-bold mt-0.5">⏰ ' + formatTimeAMPM(s.startTime) + ' – ' + formatTimeAMPM(s.endTime) + '</p>' +
+                    '<p class="text-[10px] text-slate-500 mt-1">📘 ' + (s.subCategoryDisplay || '—') + '</p>' +
+                    (s.teacher ? '<p class="text-[10px] text-slate-500">👨‍🏫 ' + s.teacher + '</p>' : '') +
+                '</div>' +
+                '<button type="button" onclick="toggleSlotSelection(\'' + s.id + '\')" class="' + (isSelected ? 'bg-green-600 text-white' : 'bg-slate-100 text-slate-700') + ' font-bold text-xs px-4 py-2 rounded-xl transition-all">' + (isSelected ? '✅ Selected' : '➕ Select') + '</button>' +
+            '</div>';
+        list.appendChild(div);
+    });
+}
+
+function toggleSlotSelection(slotId) {
+    var index = selectedSlotsForBooking.indexOf(slotId);
+    if (index !== -1) {
+        // Remove
+        selectedSlotsForBooking.splice(index, 1);
+        showToast('🗑️ Slot removed', 'info');
+        renderAvailableSlots(); 
+        return;
+    }
+
+    // Add
+    if (selectedSlotsForBooking.length >= 2) {
+        showToast('⚠️ You can only select maximum 2 slots', 'error');
+        return;
+    }
+
+    // Check if same day is already selected
+    var newSlot = availableSlotsCache.find(function(s) { return s.id === slotId; });
+    if (newSlot) {
+        var isSameDaySelected = false;
+        for (var i = 0; i < selectedSlotsForBooking.length; i++) {
+            var existingSlot = availableSlotsCache.find(function(s) { return s.id === selectedSlotsForBooking[i]; });
+            if (existingSlot && existingSlot.dayOfWeek === newSlot.dayOfWeek) {
+                isSameDaySelected = true;
+                break;
+            }
+        }
+        if (isSameDaySelected) {
+            showToast('⚠️ আপনি একই দিনে দুটি স্লট সিলেক্ট করতে পারবেন না! ভিন্ন দিনের স্লট বেছে নিন।', 'error');
+            return;
+        }
+    }
+
+    selectedSlotsForBooking.push(slotId);
+    showToast('✅ Slot selected', 'success');
+    
+    renderAvailableSlots(); // Refresh UI
+}
+
 </script>
+<script src="slot-override.js"></script>
 </body>
 </html>
