@@ -2737,32 +2737,23 @@ function renderSlotsList() {
         return true;
     });
 
- 
-    // 🎯 এখান থেকে নতুন সর্টিং কোডটা শুরু হবে
+    // 🎯 সর্টিং কোড
     var dayOrder = { 'Monday': 1, 'Tuesday': 2, 'Wednesday': 3, 'Thursday': 4, 'Friday': 5, 'Saturday': 6, 'Sunday': 7 };
     filtered.sort(function(a, b) {
         var dayA = dayOrder[a.dayOfWeek] || 99;
         var dayB = dayOrder[b.dayOfWeek] || 99;
-        if (dayA !== dayB) {
-            return dayA - dayB; // প্রথমে সোম থেকে রবি
-        }
+        if (dayA !== dayB) return dayA - dayB;
         var timeA = a.startTime || "00:00";
         var timeB = b.startTime || "00:00";
-        return timeA.localeCompare(timeB); // এরপর সময় অনুযায়ী সকাল থেকে রাত
+        return timeA.localeCompare(timeB);
     });
-    // 🎯 সর্টিং শেষ
 
     if (filtered.length === 0) {
         list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No slots match.</p>';
         return;
     }
     list.innerHTML = '';
-    
-    if (filtered.length === 0) {
-        list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No slots match.</p>';
-        return;
-    }
-    list.innerHTML = '';
+
     filtered.forEach(function(s) {
         var statusClass = 'bg-white border-slate-300';
         var statusBadge = '';
@@ -2788,7 +2779,36 @@ function renderSlotsList() {
             bookingInfo = '<div class="bg-white rounded-lg p-2 mt-2 border border-red-200"><p class="text-[10px] font-bold text-slate-700">👤 Booked by: <strong>' + s.bookedByName + '</strong></p>' +
                 '<button onclick="cancelSlotBooking(\'' + s.id + '\')" class="mt-1 bg-orange-500 hover:bg-orange-600 text-white font-bold text-[9px] px-2 py-1 rounded">❌ Cancel Booking</button></div>';
         } else if (s.status === 'pending' && s.bookedByName) {
-            bookingInfo = '<div class="bg-white rounded-lg p-2 mt-2 border border-yellow-300"><p class="text-[10px] font-bold text-slate-700">👤 Requested by: <strong>' + s.bookedByName + '</strong></p>' +
+            
+            // 🎯 লাইভ টাইমার লজিক
+            var pendingDurationText = '';
+            var pendingStartMs = 0;
+            
+            if (s.reservedAt) {
+                pendingStartMs = Number(s.reservedAt);
+            } else if (s.bookedAt) {
+                pendingStartMs = s.bookedAt.toDate ? s.bookedAt.toDate().getTime() : new Date(s.bookedAt).getTime();
+            }
+
+            if (pendingStartMs > 0) {
+                var diffMs = Date.now() - pendingStartMs;
+                var diffMins = Math.floor(diffMs / 60000);
+                
+                if (diffMins < 1) {
+                    pendingDurationText = '<span class="bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded text-[10px]">⏳ Just now</span>';
+                } else if (diffMins < 60) {
+                    pendingDurationText = '<span class="bg-amber-100 text-amber-700 font-bold px-2 py-0.5 rounded text-[10px]">⏳ ' + diffMins + ' mins pending</span>';
+                } else {
+                    var diffHours = Math.floor(diffMins / 60);
+                    pendingDurationText = '<span class="bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded text-[10px]">⏳ ' + diffHours + ' hours pending</span>';
+                }
+            }
+
+            bookingInfo = '<div class="bg-white rounded-lg p-2 mt-2 border border-yellow-300">' +
+                '<div class="flex justify-between items-center mb-1">' +
+                    '<p class="text-[10px] font-bold text-slate-700">👤 Requested by: <strong>' + s.bookedByName + '</strong></p>' + 
+                    pendingDurationText + 
+                '</div>' +
                 '<p class="text-[10px] text-slate-500">🏷️ ' + (s.bookedByCode || '—') + ' · 🆔 ' + (s.bookedByUniqueId || '—') + '</p>' +
                 '<div class="flex gap-2 mt-2">' +
                 '<button onclick="approveSlotBooking(\'' + s.id + '\')" class="bg-green-600 hover:bg-green-700 text-white font-bold text-[9px] px-3 py-1.5 rounded flex-1">✅ Approve</button>' +
@@ -2815,7 +2835,6 @@ function renderSlotsList() {
         list.appendChild(div);
     });
 }
-
 function openAddSlotModal() {
     editingSlotId = null;
     document.getElementById('slotModalTitle').textContent = '➕ Add Class Slot';
