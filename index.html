@@ -823,6 +823,48 @@ function isCouponGrantedToStudent(code) {
 }
 function allowMultipleCoupons() { return currentStudent && currentStudent.allowMultipleCoupons === true; }
 
+/* ============ COUPON MATCHING HELPERS (FIXED) ============ */
+/* Build all acceptable plan keys for the currently selected plan.
+   1-on-1 → "3m"/"6m"/"9m"/"12m" AND legacy "90d"/"180d"/"270d"/"360d"
+   Group  → "8d"/"16d"/... */
+function getSelectedPlanMatchKeys() {
+    if (!selectedPlan) return [];
+    var keys = [];
+    var days = Number(selectedPlan.plan && selectedPlan.plan.days) || 0;
+    if (selectedPlan.category === 'oneOnOne') {
+        var months = Math.round(days / 30);
+        if (months > 0) keys.push(months + 'm');
+        if (days > 0) keys.push(days + 'd');
+    } else {
+        if (days > 0) keys.push(days + 'd');
+    }
+    return keys;
+}
+
+function normalizeCouponPlanValue(v) {
+    if (!v) return '';
+    var s = String(v).trim().toLowerCase();
+    var legacyMap = { '90d': '3m', '180d': '6m', '270d': '9m', '360d': '12m' };
+    return legacyMap[s] || s;
+}
+
+function couponPlanMatches(couponAllowedPlans) {
+    if (!couponAllowedPlans || couponAllowedPlans.length === 0) return true;
+    var allowedNorm = couponAllowedPlans.map(function(v) { return normalizeCouponPlanValue(v); });
+    var myKeys = getSelectedPlanMatchKeys().map(function(v) { return normalizeCouponPlanValue(v); });
+    return myKeys.some(function(k) { return allowedNorm.indexOf(k) !== -1; });
+}
+
+/* Sub-category matching — CRITICAL FIX.
+   A coupon granted for "Power Speak for Adults — One on One" must NOT apply
+   when the student selects a "Fearless English for Kids — One on One" plan. */
+function couponSubCategoryMatches(couponSubCategory) {
+    if (!couponSubCategory) return true;                 // no sub-category restriction
+    if (!selectedPlan) return false;
+    var mySubId = selectedPlan.subCategoryId || '';
+    return String(couponSubCategory).toLowerCase() === String(mySubId).toLowerCase();
+}
+
 function showToast(message, type) {
     var existing = document.querySelector('.toast');
     if (existing) existing.remove();
@@ -2276,12 +2318,13 @@ function renderCheckoutPlanCard(colorFrom, colorTo) {
     card.style.borderColor = colorFrom;
 }
 
-/* ============ COUPONS ============ */
+/* ============ COUPONS (FULLY FIXED — subCategory enforced) ============ */
 function renderCheckoutCoupons() {
     var section = document.getElementById('checkoutCouponSection');
     if (!section) return;
     if (!selectedPlan) { section.classList.add('hidden'); return; }
-    var grantedCount = getGrantedCouponIds().length;
+    var granted = (currentStudent && currentStudent.grantedCoupons) ? currentStudent.grantedCoupons : [];
+    var grantedCount = granted.length;
     if (!hasCouponAccess() || grantedCount === 0) { section.classList.add('hidden'); return; }
     section.classList.remove('hidden');
 
@@ -2290,7 +2333,6 @@ function renderCheckoutCoupons() {
     if (limitEl) limitEl.textContent = '(Max ' + maxAllowed + ')';
 
     var wrap = document.getElementById('checkoutAvailableCoupons');
-    var granted = (currentStudent && currentStudent.grantedCoupons) ? currentStudent.grantedCoupons : [];
     var appliedCodes = appliedCoupons.map(function(c) { return c.code; });
     var atLimit = appliedCoupons.length >= maxAllowed;
 
@@ -2301,20 +2343,27 @@ function renderCheckoutCoupons() {
         var isExpired = g.expiresAt && new Date(g.expiresAt).getTime() < Date.now();
         var cat = g.category || g.appliesTo || '';
         var catMatches = !cat || cat === selectedPlan.category;
+        var subMatches = couponSubCategoryMatches(g.subCategory);
+        var planMatches = couponPlanMatches(g.allowedPlans);
         var catLabel = cat === 'oneOnOne' ? '👑 1-on-1' : cat === 'group' ? '👥 Group' : '🌟 All';
         var discLabel = g.type === 'flat' ? '₹' + g.value + ' OFF' : g.value + '% OFF';
+        var subLabel = g.subCategoryDisplay ? ' · ' + g.subCategoryDisplay : '';
         var statusText = '';
         if (isApplied) statusText = '✅ APPLIED';
         else if (isExpired) statusText = '⛔ EXPIRED';
         else if (atLimit) statusText = '⚠️ LIMIT';
         else if (!catMatches) statusText = '❌ WRONG CATEGORY';
+        else if (!subMatches) statusText = '❌ NOT FOR THIS COURSE';
+        else if (!planMatches) statusText = '❌ NOT FOR THIS PLAN';
         else statusText = '👆 TAP TO APPLY';
-        var isDisabled = isApplied || isExpired || atLimit || !catMatches;
+        var isDisabled = isApplied || isExpired || atLimit || !catMatches || !subMatches || !planMatches;
         var cls = isApplied ? 'bg-gradient-to-r from-green-50 to-emerald-50 border-green-400'
             : isExpired ? 'bg-slate-100 border-slate-300 opacity-60'
             : !catMatches ? 'bg-red-50 border-red-200 opacity-70'
+            : !subMatches ? 'bg-red-50 border-red-200 opacity-70'
+            : !planMatches ? 'bg-amber-50 border-amber-300 opacity-80'
             : 'bg-white border-purple-300 hover:border-purple-500 hover:shadow-md cursor-pointer';
-        html += '<div class="border-2 rounded-xl p-3 transition ' + cls + '"' + (!isDisabled ? ' onclick="applyCheckoutCoupon(\'' + code + '\')"' : '') + '><div class="flex justify-between items-center gap-2 mb-1 flex-wrap"><div class="flex items-center gap-2 min-w-0 flex-wrap"><span class="coupon-badge">🎟️ ' + code + '</span><span class="text-[10px] font-black text-orange-600">' + discLabel + '</span></div><span class="text-[9px] font-black whitespace-nowrap ' + (isApplied ? 'text-green-700' : isExpired ? 'text-red-600' : 'text-purple-700') + '">' + statusText + '</span></div><p class="text-[10px] text-slate-600 font-medium leading-snug"><strong class="text-purple-800">For:</strong> ' + catLabel + ' · ' + ((g.allowedPlans && g.allowedPlans.length > 0) ? g.allowedPlans.join('/') : 'All Plans') + '</p></div>';
+        html += '<div class="border-2 rounded-xl p-3 transition ' + cls + '"' + (!isDisabled ? ' onclick="applyCheckoutCoupon(\'' + code + '\')"' : '') + '><div class="flex justify-between items-center gap-2 mb-1 flex-wrap"><div class="flex items-center gap-2 min-w-0 flex-wrap"><span class="coupon-badge">🎟️ ' + code + '</span><span class="text-[10px] font-black text-orange-600">' + discLabel + '</span></div><span class="text-[9px] font-black whitespace-nowrap ' + (isApplied ? 'text-green-700' : isExpired ? 'text-red-600' : 'text-purple-700') + '">' + statusText + '</span></div><p class="text-[10px] text-slate-600 font-medium leading-snug"><strong class="text-purple-800">For:</strong> ' + catLabel + subLabel + ' · ' + ((g.allowedPlans && g.allowedPlans.length > 0) ? g.allowedPlans.join('/') : 'All Plans') + '</p></div>';
     });
     wrap.innerHTML = html;
 
@@ -2352,10 +2401,8 @@ async function applyCheckoutCoupon(code) {
     if (!c) { showToast('❌ Coupon not found', 'error'); return; }
     var couponCat = c.category || c.appliesTo;
     if (couponCat && couponCat !== selectedPlan.category) { showToast('❌ Wrong category', 'error'); return; }
-    if (c.allowedPlans && c.allowedPlans.length > 0) {
-        var planKey = selectedPlan.plan.days + 'd';
-        if (c.allowedPlans.indexOf(planKey) === -1) { showToast('❌ Not valid for this plan', 'error'); return; }
-    }
+    if (!couponSubCategoryMatches(c.subCategory)) { showToast('❌ Not valid for this course', 'error'); return; }
+    if (!couponPlanMatches(c.allowedPlans)) { showToast('❌ Not valid for this plan', 'error'); return; }
     appliedCoupons.push(Object.assign({}, c, { appliesTo: c.category || c.appliesTo }));
     saveSelectedPlan();
     renderCheckoutCoupons();
@@ -2436,7 +2483,7 @@ function confirmCheckoutAndPay() {
     proceedToPayment();
 }
 
-/* ============ CALCULATE PRICING ============ */
+/* ============ CALCULATE PRICING (FIXED — subCategory enforced) ============ */
 function calculateSelectedPlanPricing() {
     if (!selectedPlan) return null;
     var plan = selectedPlan.plan;
@@ -2478,7 +2525,8 @@ function calculateSelectedPlanPricing() {
             var cc = c.category || c.appliesTo;
             var matchesCat = (selectedPlan.category === 'oneOnOne' && cc === 'oneOnOne') || (selectedPlan.category === 'group' && cc === 'group');
             if (!matchesCat) return;
-            if (c.allowedPlans && c.allowedPlans.indexOf(days + 'd') === -1) return;
+            if (!couponSubCategoryMatches(c.subCategory)) return;
+            if (!couponPlanMatches(c.allowedPlans)) return;
             var disc = c.type === 'percent' ? Math.round(subtotal * c.value / 100) : c.value;
             couponDisc += disc;
             usedCoupons.push({ code: c.code, type: c.type, value: c.value, disc: disc });
