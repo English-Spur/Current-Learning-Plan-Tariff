@@ -363,10 +363,10 @@
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
-            <button type="button" onclick="switchTab('all')" id="tab-all" class="text-[10px] sm:text-[11px] font-bold py-3 px-1.5 rounded-xl tab-active transition-all">🌟 All Plans</button>
-            <button type="button" onclick="switchTab('1on1-adult')" id="tab-1on1-adult" class="text-[10px] sm:text-[11px] font-bold py-3 px-1.5 rounded-xl tab-inactive transition-all">👑 1-on-1 Adult</button>
+            <button type="button" onclick="switchTab('1on1-adult')" id="tab-1on1-adult" class="text-[10px] sm:text-[11px] font-bold py-3 px-1.5 rounded-xl tab-active transition-all">👑 1-on-1 Adult</button>
             <button type="button" onclick="switchTab('1on1-kids')" id="tab-1on1-kids" class="text-[10px] sm:text-[11px] font-bold py-3 px-1.5 rounded-xl tab-inactive transition-all">👶 1-on-1 Kids</button>
-            <button type="button" onclick="switchTab('group')" id="tab-group" class="text-[10px] sm:text-[11px] font-bold py-3 px-1.5 rounded-xl tab-inactive transition-all">👥 Group</button>
+            <button type="button" onclick="switchTab('group-adult')" id="tab-group-adult" class="text-[10px] sm:text-[11px] font-bold py-3 px-1.5 rounded-xl tab-inactive transition-all">👥 Group Adults</button>
+            <button type="button" onclick="switchTab('group-kids')" id="tab-group-kids" class="text-[10px] sm:text-[11px] font-bold py-3 px-1.5 rounded-xl tab-inactive transition-all">🧸 Group Kids</button>
         </div>
 
         <div id="courseFilterBanner" class="hidden bg-gradient-to-r from-indigo-50 to-blue-50 border-2 border-indigo-200 rounded-2xl p-3 mb-3">
@@ -737,7 +737,7 @@ var pricing = {
     groupAdmissionRegular: 2500, groupAdmissionDiscounted: 2000, groupAdmissionSpecial: 1500
 };
 var dynamicCategories = { oneOnOne: {}, group: {} };
-var currentTab = 'all';
+var currentTab = '1on1-adult';
 var coupons = {};
 var offerDeadline = 0;
 var timerInterval = null;
@@ -987,7 +987,7 @@ function showExplorePlans() {
 /* ============ TAB SWITCHER ============ */
 function switchTab(tab) {
     currentTab = tab;
-    var tabs = ['all', '1on1-adult', '1on1-kids', 'group'];
+    var tabs = ['1on1-adult', '1on1-kids', 'group-adult', 'group-kids'];
     tabs.forEach(function(t) {
         var btn = document.getElementById('tab-' + t);
         if (!btn) return;
@@ -1928,22 +1928,32 @@ function renderDynamicPlans() {
     }
 
     var html = '';
-    var showOneOnOne = (currentTab === 'all' || currentTab === '1on1-adult' || currentTab === '1on1-kids');
-    var showGroup = (currentTab === 'all' || currentTab === 'group');
 
-    if (showOneOnOne && hasOneOnOne) {
+    if (currentTab === '1on1-adult' && hasOneOnOne) {
         Object.keys(dynamicCategories.oneOnOne).forEach(function(key) {
             var sub = dynamicCategories.oneOnOne[key];
-            if (currentTab === '1on1-adult' && key.toLowerCase().indexOf('adult') === -1) return;
-            if (currentTab === '1on1-kids' && key.toLowerCase().indexOf('kid') === -1) return;
+            if (key.toLowerCase().indexOf('adult') === -1) return;
             if (!filterPlansByCourse('oneOnOne', key, sub)) return;
             html += renderSubCategoryBlock('oneOnOne', key, sub);
         });
-    }
-
-    if (showGroup && hasGroup) {
+    } else if (currentTab === '1on1-kids' && hasOneOnOne) {
+        Object.keys(dynamicCategories.oneOnOne).forEach(function(key) {
+            var sub = dynamicCategories.oneOnOne[key];
+            if (key.toLowerCase().indexOf('kid') === -1) return;
+            if (!filterPlansByCourse('oneOnOne', key, sub)) return;
+            html += renderSubCategoryBlock('oneOnOne', key, sub);
+        });
+    } else if (currentTab === 'group-adult' && hasGroup) {
         Object.keys(dynamicCategories.group).forEach(function(key) {
             var sub = dynamicCategories.group[key];
+            if (key.toLowerCase().indexOf('adult') === -1) return;
+            if (!filterPlansByCourse('group', key, sub)) return;
+            html += renderSubCategoryBlock('group', key, sub);
+        });
+    } else if (currentTab === 'group-kids' && hasGroup) {
+        Object.keys(dynamicCategories.group).forEach(function(key) {
+            var sub = dynamicCategories.group[key];
+            if (key.toLowerCase().indexOf('kid') === -1) return;
             if (!filterPlansByCourse('group', key, sub)) return;
             html += renderSubCategoryBlock('group', key, sub);
         });
