@@ -10,6 +10,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <style>
     * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+    /* ✅ STICKY FIX: overflow-x: hidden ke badle clip use kiya gaya hai */
     html, body { overflow-x: clip; } 
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; margin: 0; padding: 10px; min-height: 100vh; color: #1e293b; }
     .tab-btn { padding: 9px 14px; font-weight: 700; font-size: 12px; border-radius: 10px; cursor: pointer; border: none; transition: all 0.2s; white-space: nowrap; }
@@ -46,34 +47,135 @@
     .stat-card .stat-value { font-size: 24px; font-weight: 900; line-height: 1; }
     .stat-card .stat-label { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
     
-    .section-hero { border-radius: 16px; padding: 16px 18px; margin-bottom: 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-    .section-hero-1on1 { background: linear-gradient(135deg, #1e40af, #1d4ed8, #3b82f6); color: white; }
-    .section-hero-group { background: linear-gradient(135deg, #047857, #059669, #10b981); color: white; }
-    .section-hero-icon { font-size: 32px; display: inline-block; }
-    .section-hero-title { font-size: 20px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
-    .section-hero-subtitle { font-size: 11px; font-weight: 600; opacity: 0.9; }
+    /* Big Section Headers */
+    .section-hero {
+        border-radius: 16px;
+        padding: 16px 18px;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .section-hero-1on1 {
+        background: linear-gradient(135deg, #1e40af, #1d4ed8, #3b82f6);
+        color: white;
+    }
+    .section-hero-group {
+        background: linear-gradient(135deg, #047857, #059669, #10b981);
+        color: white;
+    }
+    .section-hero-icon {
+        font-size: 32px;
+        display: inline-block;
+    }
+    .section-hero-title {
+        font-size: 20px;
+        font-weight: 900;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+    .section-hero-subtitle {
+        font-size: 11px;
+        font-weight: 600;
+        opacity: 0.9;
+    }
     
-    .section-container-1on1 { background: linear-gradient(180deg, #eff6ff, #dbeafe); border: 3px solid #3b82f6; border-radius: 16px; padding: 16px; box-shadow: 0 4px 20px rgba(59,130,246,0.15); }
-    .section-container-group { background: linear-gradient(180deg, #f0fdf4, #dcfce7); border: 3px solid #10b981; border-radius: 16px; padding: 16px; box-shadow: 0 4px 20px rgba(16,185,129,0.15); }
+    /* Section Containers */
+    .section-container-1on1 {
+        background: linear-gradient(180deg, #eff6ff, #dbeafe);
+        border: 3px solid #3b82f6;
+        border-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 4px 20px rgba(59,130,246,0.15);
+    }
+    .section-container-group {
+        background: linear-gradient(180deg, #f0fdf4, #dcfce7);
+        border: 3px solid #10b981;
+        border-radius: 16px;
+        padding: 16px;
+        box-shadow: 0 4px 20px rgba(16,185,129,0.15);
+    }
     
-    .sub-block-1on1 { background: #fff; border: 2px solid #93c5fd; border-radius: 12px; padding: 14px; margin-bottom: 14px; }
-    .sub-block-group { background: #fff; border: 2px solid #86efac; border-radius: 12px; padding: 14px; margin-bottom: 14px; }
+    /* Sub-blocks inside sections */
+    .sub-block-1on1 {
+        background: #fff;
+        border: 2px solid #93c5fd;
+        border-radius: 12px;
+        padding: 14px;
+        margin-bottom: 14px;
+    }
+    .sub-block-group {
+        background: #fff;
+        border: 2px solid #86efac;
+        border-radius: 12px;
+        padding: 14px;
+        margin-bottom: 14px;
+    }
     
-    .sub-block-title { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px dashed #cbd5e1; }
+    .sub-block-title {
+        font-size: 13px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 2px dashed #cbd5e1;
+    }
     .sub-block-title-1on1 { color: #1e40af; }
     .sub-block-title-group { color: #047857; }
     
-    .course-block { background: #fff; border: 2px solid #bfdbfe; border-radius: 12px; padding: 14px; margin-bottom: 12px; }
-    .course-block-title { font-size: 13px; font-weight: 900; color: #1e40af; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-    .month-highlight { display: inline-block; font-size: 10px; font-weight: 900; padding: 3px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; margin-left: 6px; }
+    .course-block {
+        background: #fff;
+        border: 2px solid #bfdbfe;
+        border-radius: 12px;
+        padding: 14px;
+        margin-bottom: 12px;
+    }
+    .course-block-title {
+        font-size: 13px;
+        font-weight: 900;
+        color: #1e40af;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .month-highlight {
+        display: inline-block;
+        font-size: 10px;
+        font-weight: 900;
+        padding: 3px 10px;
+        border-radius: 999px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-left: 6px;
+    }
     .month-basic { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; }
     .month-intermediate { background: linear-gradient(135deg, #8b5cf6, #7c3aed); color: #fff; }
     .month-advanced { background: linear-gradient(135deg, #f59e0b, #ea580c); color: #fff; }
     .month-master { background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; }
     
-    .big-divider { height: 60px; display: flex; align-items: center; justify-content: center; margin: 30px 0; position: relative; }
-    .big-divider::before, .big-divider::after { content: ''; flex: 1; height: 3px; background: linear-gradient(90deg, transparent, #cbd5e1, transparent); }
-    .big-divider span { padding: 0 20px; font-size: 11px; font-weight: 900; color: #64748b; text-transform: uppercase; letter-spacing: 2px; }
+    /* Divider between sections */
+    .big-divider {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 30px 0;
+        position: relative;
+    }
+    .big-divider::before, .big-divider::after {
+        content: '';
+        flex: 1;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
+    }
+    .big-divider span {
+        padding: 0 20px;
+        font-size: 11px;
+        font-weight: 900;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
     
     @media print { .noprint { display: none !important; } }
     @media (max-width: 640px) {
@@ -120,6 +222,7 @@
 <div id="adminPanel" class="max-w-6xl mx-auto hidden">
     <div class="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 mb-4">
         
+        <!-- NORMAL HEADER (Logo & Logout) -->
         <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
             <div class="flex items-center gap-3 min-w-0">
                 <img src="logo.png" alt="English Spur" class="brand-logo-sm flex-shrink-0" onerror="this.style.display='none'">
@@ -131,7 +234,7 @@
             <button onclick="adminLogout()" class="bg-red-500 hover:bg-red-600 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-bold">🚪 Logout</button>
         </div>
 
-        <!-- TABS -->
+        <!-- ✅ FIXED TABS (STICKY) -->
         <div class="sticky top-0 z-50 bg-white/95 backdrop-blur-md -mx-4 sm:-mx-6 px-4 sm:px-6 py-3 mb-4 border-b-2 border-slate-100 rounded-t-2xl shadow-sm">
             <div class="flex flex-wrap gap-2">
                 <button onclick="switchTab('dashboard')" id="tab-dashboard" class="tab-btn active">📊 Dashboard</button>
@@ -142,13 +245,12 @@
                 <button onclick="switchTab('all')" id="tab-all" class="tab-btn inactive">📋 Purchases</button>
                 <button onclick="switchTab('students')" id="tab-students" class="tab-btn inactive">👥 Students <span id="studentsBadge"></span></button>
                 <button onclick="switchTab('agreements')" id="tab-agreements" class="tab-btn inactive">📋 Agreements <span id="agreementsBadge"></span></button>
-                <button onclick="switchTab('slots')" id="tab-slots" class="tab-btn inactive">🗓️ Class Slots <span id="slotsBadge"></span></button>
                 <button onclick="switchTab('logs')" id="tab-logs" class="tab-btn inactive">📊 Logs</button>
                 <button onclick="switchTab('tools')" id="tab-tools" class="tab-btn inactive">🛠️ System Tools</button>
             </div>
         </div>
 
-        <!-- DASHBOARD TAB -->
+        <!-- ============ DASHBOARD TAB ============ -->
         <div id="content-dashboard" class="tab-content fade-in">
             <h2 class="text-base sm:text-lg font-black text-blue-900 mb-4">📊 Business Overview</h2>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
@@ -161,23 +263,27 @@
                 <div class="stat-card"><div class="stat-value text-indigo-600" id="statCoupons">0</div><div class="stat-label">Total Coupons</div></div>
                 <div class="stat-card"><div class="stat-value text-amber-600" id="statGrants">0</div><div class="stat-label">Coupon Grants</div></div>
             </div>
+
             <div class="bg-gradient-to-br from-blue-50 to-white border-2 border-blue-200 rounded-xl p-4 mb-4">
                 <h3 class="text-sm font-black text-blue-900 mb-3">🕒 Recent Purchases (Last 5)</h3>
                 <div id="recentPurchases" class="space-y-2"></div>
             </div>
+
             <div class="bg-gradient-to-br from-purple-50 to-white border-2 border-purple-200 rounded-xl p-4">
                 <h3 class="text-sm font-black text-purple-900 mb-3">🎟️ Top Used Coupons</h3>
                 <div id="topCoupons" class="space-y-2"></div>
             </div>
         </div>
 
-        <!-- OFFER TAB -->
+        <!-- ============ OFFER TAB ============ -->
         <div id="content-offer" class="tab-content hidden fade-in">
+            <!-- Offer Basic Settings -->
             <div class="bg-gradient-to-br from-slate-50 to-white border-2 border-slate-200 rounded-xl p-4 sm:p-5 mb-6">
                 <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                     <h2 class="text-base sm:text-lg font-black text-slate-900">🎯 Offer & Pricing Control</h2>
                     <span id="offerStatusBadge" class="text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full bg-slate-200 text-slate-700">Loading...</span>
                 </div>
+
                 <label class="flex items-center gap-3 mb-4 p-3 bg-white rounded-lg border-2 border-slate-200 cursor-pointer">
                     <input type="checkbox" id="offerActive" class="w-5 h-5 accent-blue-700">
                     <div>
@@ -185,6 +291,7 @@
                         <p class="text-[10px] text-slate-500">Uncheck to stop offer for everyone</p>
                     </div>
                 </label>
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
                     <div>
                         <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">⏰ Offer End Date & Time</label>
@@ -205,6 +312,7 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <label class="text-[10px] sm:text-xs font-bold text-slate-600 uppercase">Offer Title</label>
@@ -216,6 +324,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- SECTION 1: ONE ON ONE -->
             <div class="section-hero section-hero-1on1">
                 <div class="flex items-center gap-3">
                     <span class="section-hero-icon">👑</span>
@@ -225,17 +335,31 @@
                     </div>
                 </div>
             </div>
+
             <div class="section-container-1on1 mb-8">
+                <!-- Admission Fee Block -->
                 <div class="sub-block-1on1">
                     <p class="sub-block-title sub-block-title-1on1">🎓 Admission Fee (One Time) — 1-on-1 Only</p>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfg1on1AdmissionRegular" value="2500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
-                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfg1on1AdmissionDiscounted" value="2000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
-                        <div><label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special ₹</label><input type="number" id="cfg1on1AdmissionSpecial" value="1500" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm"></div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹</label>
+                            <input type="number" id="cfg1on1AdmissionRegular" value="2500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹</label>
+                            <input type="number" id="cfg1on1AdmissionDiscounted" value="2000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special ₹</label>
+                            <input type="number" id="cfg1on1AdmissionSpecial" value="1500" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm">
+                        </div>
                     </div>
                 </div>
+
+                <!-- Course Packages Block -->
                 <div class="sub-block-1on1">
                     <p class="sub-block-title sub-block-title-1on1">📅 Complete Course Packages — 1-on-1 Only</p>
+
                     <div class="course-block">
                         <div class="course-block-title">🔵 3 Months Course <span class="month-highlight month-basic">Basic</span></div>
                         <div class="grid grid-cols-3 gap-2 mb-3">
@@ -247,12 +371,19 @@
                             <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_3m_classes" value="30" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
                             <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_3m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
                         </div>
-                        <div class="mb-2"><label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label><input type="text" id="cfg1on1_3m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                        <div><label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label><textarea id="cfg1on1_3m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
+                        <div class="mb-2">
+                            <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
+                            <input type="text" id="cfg1on1_3m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
+                            <textarea id="cfg1on1_3m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
 Class recording provided
 PDF notes & materials
-WhatsApp support</textarea></div>
+WhatsApp support</textarea>
+                        </div>
                     </div>
+
                     <div class="course-block">
                         <div class="course-block-title">🟣 6 Months Course <span class="month-highlight month-intermediate">Intermediate</span></div>
                         <div class="grid grid-cols-3 gap-2 mb-3">
@@ -264,13 +395,20 @@ WhatsApp support</textarea></div>
                             <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_6m_classes" value="60" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
                             <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_6m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
                         </div>
-                        <div class="mb-2"><label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label><input type="text" id="cfg1on1_6m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                        <div><label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label><textarea id="cfg1on1_6m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
+                        <div class="mb-2">
+                            <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
+                            <input type="text" id="cfg1on1_6m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
+                            <textarea id="cfg1on1_6m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
 Class recording provided
 PDF notes & materials
 WhatsApp support
-Monthly progress report</textarea></div>
+Monthly progress report</textarea>
+                        </div>
                     </div>
+
                     <div class="course-block">
                         <div class="course-block-title">🟠 9 Months Course <span class="month-highlight month-advanced">Advanced</span></div>
                         <div class="grid grid-cols-3 gap-2 mb-3">
@@ -282,14 +420,21 @@ Monthly progress report</textarea></div>
                             <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_9m_classes" value="90" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
                             <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_9m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
                         </div>
-                        <div class="mb-2"><label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label><input type="text" id="cfg1on1_9m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                        <div><label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label><textarea id="cfg1on1_9m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
+                        <div class="mb-2">
+                            <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
+                            <input type="text" id="cfg1on1_9m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
+                            <textarea id="cfg1on1_9m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
 Class recording provided
 PDF notes & materials
 WhatsApp support
 Monthly progress report
-Mock tests & feedback</textarea></div>
+Mock tests & feedback</textarea>
+                        </div>
                     </div>
+
                     <div class="course-block">
                         <div class="course-block-title">🟢 12 Months Course <span class="month-highlight month-master">Master</span></div>
                         <div class="grid grid-cols-3 gap-2 mb-3">
@@ -301,22 +446,36 @@ Mock tests & feedback</textarea></div>
                             <div><label class="text-[9px] font-bold text-slate-600 uppercase">Total Classes</label><input type="number" id="cfg1on1_12m_classes" value="120" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
                             <div><label class="text-[9px] font-bold text-slate-600 uppercase">Class Duration</label><input type="text" id="cfg1on1_12m_duration" value="60 mins" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
                         </div>
-                        <div class="mb-2"><label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label><input type="text" id="cfg1on1_12m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs"></div>
-                        <div><label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label><textarea id="cfg1on1_12m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
+                        <div class="mb-2">
+                            <label class="text-[9px] font-bold text-slate-600 uppercase">Platform / App</label>
+                            <input type="text" id="cfg1on1_12m_platform" value="Google Meet" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-bold text-xs">
+                        </div>
+                        <div>
+                            <label class="text-[9px] font-bold text-slate-600 uppercase mb-1 block">Facilities (one per line)</label>
+                            <textarea id="cfg1on1_12m_facilities" rows="4" class="w-full border-2 border-slate-200 rounded-lg p-2 bg-white font-semibold text-xs">Live 1-on-1 class with expert teacher
 Class recording provided
 PDF notes & materials
 WhatsApp support
 Monthly progress report
 Mock tests & feedback
-Certificate on completion</textarea></div>
+Certificate on completion</textarea>
+                        </div>
                     </div>
                 </div>
+
+                <!-- 1-on-1 Categories -->
                 <div class="sub-block-1on1">
                     <p class="sub-block-title sub-block-title-1on1">👑 1-on-1 Courses (Adults & Kids)</p>
                     <div id="oneOnOneCategories" class="space-y-3"></div>
                 </div>
             </div>
-            <div class="big-divider"><span>🔷 1-ON-1 ENDS HERE · GROUP STARTS HERE 🔷</span></div>
+
+            <!-- DIVIDER -->
+            <div class="big-divider">
+                <span>🔷 1-ON-1 ENDS HERE · GROUP STARTS HERE 🔷</span>
+            </div>
+
+            <!-- SECTION 2: GROUP CLASS -->
             <div class="section-hero section-hero-group">
                 <div class="flex items-center gap-3">
                     <span class="section-hero-icon">👥</span>
@@ -326,37 +485,58 @@ Certificate on completion</textarea></div>
                     </div>
                 </div>
             </div>
+
             <div class="section-container-group mb-6">
+                <!-- Group Admission Fee Block -->
                 <div class="sub-block-group">
                     <p class="sub-block-title sub-block-title-group">🎓 Admission Fee (New Students) — Group Only</p>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹</label><input type="number" id="cfgGroupAdmissionRegular" value="2500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
-                        <div><label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹</label><input type="number" id="cfgGroupAdmissionDiscounted" value="2000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm"></div>
-                        <div><label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special Offer ₹</label><input type="number" id="cfgGroupAdmissionSpecial" value="1500" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm"></div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">Regular ₹</label>
+                            <input type="number" id="cfgGroupAdmissionRegular" value="2500" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase">Discounted ₹</label>
+                            <input type="number" id="cfgGroupAdmissionDiscounted" value="2000" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-white font-bold text-sm">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-amber-700 uppercase">🌟 Special Offer ₹</label>
+                            <input type="number" id="cfgGroupAdmissionSpecial" value="1500" class="w-full border-2 border-amber-400 rounded-lg p-2.5 bg-amber-50 font-bold text-sm">
+                        </div>
+                    </div>
+                    <div class="bg-white border-2 border-dashed border-emerald-400 rounded-lg p-3 mt-3">
+                        <p class="text-[11px] font-bold text-emerald-900">ℹ️ Per-class rate নেই</p>
+                        <p class="text-[10px] text-slate-600 mt-1">প্রতিটি plan এর জন্য সরাসরি lumpsum amount (Regular / Discounted / Special) নিচের "Group Class Plans" section এ বসাবেন।</p>
                     </div>
                 </div>
+
+                <!-- Group Plans Block -->
                 <div class="sub-block-group">
                     <p class="sub-block-title sub-block-title-group">📚 Group Class Plans — Lumpsum Amounts</p>
                     <div id="groupCategories" class="space-y-3"></div>
                 </div>
             </div>
+
+            <!-- SAVE BUTTON -->
             <button onclick="saveOffer()" class="w-full bg-gradient-to-r from-blue-700 to-emerald-600 hover:from-blue-800 hover:to-emerald-700 text-white font-black p-4 rounded-2xl text-base shadow-lg uppercase tracking-wider transition-all">💾 Save All Settings</button>
             <p id="offerSaveMsg" class="text-green-700 text-sm text-center mt-3 hidden font-bold p-2 bg-green-50 rounded-lg">✅ Saved!</p>
         </div>
 
-        <!-- COUPONS TAB -->
+        <!-- ============ COUPONS TAB ============ -->
         <div id="content-coupons" class="tab-content hidden fade-in">
             <div class="bg-gradient-to-br from-amber-50 to-white border-2 border-amber-200 rounded-xl p-4 sm:p-5">
                 <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                     <h2 class="text-base sm:text-lg font-black text-amber-900">🎟️ Coupon Management</h2>
                     <button onclick="showCouponForm()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs px-4 py-2 rounded-lg">➕ Add New Coupon</button>
                 </div>
+
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
                     <div class="stat-card"><div class="stat-value text-blue-700 text-lg" id="coupStatTotal">0</div><div class="stat-label">Total</div></div>
                     <div class="stat-card"><div class="stat-value text-green-600 text-lg" id="coupStatActive">0</div><div class="stat-label">Active</div></div>
                     <div class="stat-card"><div class="stat-value text-red-600 text-lg" id="coupStatExpired">0</div><div class="stat-label">Expired</div></div>
                     <div class="stat-card"><div class="stat-value text-purple-600 text-lg" id="coupStatGrants">0</div><div class="stat-label">Total Grants</div></div>
                 </div>
+
                 <div class="bg-white border-2 border-slate-200 rounded-xl p-3 mb-3">
                     <p class="text-[10px] font-black text-slate-600 uppercase mb-2">🔍 Filter Coupons</p>
                     <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2">
@@ -384,15 +564,17 @@ Certificate on completion</textarea></div>
                         <span id="couponFilterCount" class="text-[10px] text-slate-500 font-bold ml-auto"></span>
                     </div>
                 </div>
+
                 <div id="couponsList" class="space-y-2"></div>
             </div>
         </div>
 
-        <!-- GRANT MANAGER TAB -->
+        <!-- ============ GRANT MANAGER TAB ============ -->
         <div id="content-grant" class="tab-content hidden fade-in">
             <div class="bg-gradient-to-br from-purple-50 to-white border-2 border-purple-200 rounded-xl p-4 sm:p-5">
                 <h2 class="text-base sm:text-lg font-black text-purple-900 mb-2">🎫 Coupon Grant Manager</h2>
                 <p class="text-[11px] text-slate-600 font-semibold mb-4">কোন coupon কে কত জন student পেয়েছে তা দেখুন, এবং reverse view এ manage করুন</p>
+
                 <div class="bg-white border-2 border-slate-200 rounded-xl p-3 mb-3">
                     <p class="text-[10px] font-black text-slate-600 uppercase mb-2">🔍 Select Coupon to View / Manage</p>
                     <select id="grantCouponSelect" onchange="renderGrantView()" class="w-full border-2 border-slate-200 rounded-lg p-2.5 text-sm font-bold bg-white">
@@ -400,11 +582,12 @@ Certificate on completion</textarea></div>
                     </select>
                     <div id="grantStats" class="mt-2 hidden"></div>
                 </div>
+
                 <div id="grantStudentList" class="space-y-2"></div>
             </div>
         </div>
 
-        <!-- PENDING TAB -->
+        <!-- ============ PENDING TAB ============ -->
         <div id="content-pending" class="tab-content hidden fade-in">
             <h2 class="text-base sm:text-lg font-black text-blue-900 mb-4">⏳ Pending Payments</h2>
             <div class="bg-blue-50 border-l-4 border-blue-600 p-3 rounded-r-lg mb-4">
@@ -413,13 +596,13 @@ Certificate on completion</textarea></div>
             <div id="pendingList" class="space-y-3"></div>
         </div>
 
-        <!-- ALL PURCHASES TAB -->
+        <!-- ============ ALL PURCHASES TAB ============ -->
         <div id="content-all" class="tab-content hidden fade-in">
             <h2 class="text-base sm:text-lg font-black text-blue-900 mb-4">📋 All Purchases</h2>
             <div id="allPurchasesList" class="space-y-3"></div>
         </div>
 
-        <!-- STUDENTS TAB -->
+        <!-- ============ STUDENTS TAB ============ -->
         <div id="content-students" class="tab-content hidden fade-in">
             <div class="flex justify-between items-center mb-3 flex-wrap gap-2">
                 <h2 class="text-base sm:text-lg font-black text-blue-900">👥 Students</h2>
@@ -428,6 +611,7 @@ Certificate on completion</textarea></div>
                     <button onclick="openAddStudentModal()" class="bg-green-600 hover:bg-green-700 text-white text-xs font-bold px-3 py-2 rounded-lg">➕ Add Student</button>
                 </div>
             </div>
+
             <div class="bg-white border-2 border-slate-200 rounded-xl p-3 mb-3">
                 <p class="text-[10px] font-black text-slate-600 uppercase mb-2">🔍 Filter Students</p>
                 <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 mb-2">
@@ -453,10 +637,11 @@ Certificate on completion</textarea></div>
                     <span id="studentFilterCount" class="text-[10px] text-slate-500 font-bold ml-auto"></span>
                 </div>
             </div>
+
             <div id="studentsList" class="space-y-2"></div>
         </div>
 
-        <!-- AGREEMENTS TAB -->
+        <!-- ============ AGREEMENTS TAB ============ -->
         <div id="content-agreements" class="tab-content hidden fade-in">
             <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                 <h2 class="text-base sm:text-lg font-black text-blue-900">📋 Student Agreement Records</h2>
@@ -476,49 +661,7 @@ Certificate on completion</textarea></div>
             <div id="agreementsList" class="space-y-3"></div>
         </div>
 
-        <!-- CLASS SLOTS TAB -->
-        <div id="content-slots" class="tab-content hidden fade-in">
-            <div class="bg-gradient-to-br from-cyan-50 to-white border-2 border-cyan-200 rounded-xl p-4 sm:p-5 mb-4">
-                <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
-                    <div>
-                        <h2 class="text-base sm:text-lg font-black text-cyan-900">🗓️ 1-on-1 Class Slot Manager</h2>
-                        <p class="text-[11px] text-slate-600 font-semibold mt-1">Create available time slots for 1-on-1 students to book</p>
-                    </div>
-                    <button onclick="openAddSlotModal()" class="bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-xs px-4 py-2 rounded-lg">➕ Add New Slot</button>
-                </div>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
-                    <div class="stat-card"><div class="stat-value text-cyan-700 text-lg" id="slotStatTotal">0</div><div class="stat-label">Total Slots</div></div>
-                    <div class="stat-card"><div class="stat-value text-green-600 text-lg" id="slotStatAvailable">0</div><div class="stat-label">Available</div></div>
-                    <div class="stat-card"><div class="stat-value text-yellow-500 text-lg" id="slotStatPending">0</div><div class="stat-label">Pending</div></div>
-                    <div class="stat-card"><div class="stat-value text-red-600 text-lg" id="slotStatBooked">0</div><div class="stat-label">Booked</div></div>
-                </div>
-                <div class="bg-white border-2 border-slate-200 rounded-xl p-3 mb-3">
-                    <p class="text-[10px] font-black text-slate-600 uppercase mb-2">🔍 Filter Slots</p>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                        <select id="slotFilterDate" onchange="renderSlotsList()" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white">
-                            <option value="">All Days</option>
-                            <option value="Monday">Monday</option>
-                            <option value="Tuesday">Tuesday</option>
-                            <option value="Wednesday">Wednesday</option>
-                            <option value="Thursday">Thursday</option>
-                            <option value="Friday">Friday</option>
-                            <option value="Saturday">Saturday</option>
-                            <option value="Sunday">Sunday</option>
-                        </select>
-                        <select id="slotFilterStatus" onchange="renderSlotsList()" class="border-2 border-slate-200 rounded-lg p-2 text-xs font-bold bg-white">
-                            <option value="">All Status</option>
-                            <option value="available">🟢 Available Only</option>
-                            <option value="pending">⏳ Pending Only</option>
-                            <option value="booked">🔴 Booked Only</option>
-                        </select>
-                        <button onclick="resetSlotFilters()" class="text-[11px] font-bold text-cyan-600 hover:text-cyan-800 underline text-left">↺ Reset Filters</button>
-                    </div>
-                </div>
-                <div id="slotsList" class="space-y-2"></div>
-            </div>
-        </div>
-
-        <!-- LOGS TAB -->
+        <!-- ============ LOGS TAB ============ -->
         <div id="content-logs" class="tab-content hidden fade-in">
             <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                 <h2 class="text-base sm:text-lg font-black text-blue-900">📊 Activity Logs</h2>
@@ -535,11 +678,12 @@ Certificate on completion</textarea></div>
             <div id="logsList" class="space-y-2"></div>
         </div>
 
-        <!-- SYSTEM TOOLS TAB -->
+        <!-- ============ SYSTEM TOOLS TAB ============ -->
         <div id="content-tools" class="tab-content hidden fade-in">
             <div class="bg-gradient-to-br from-rose-50 to-white border-2 border-rose-200 rounded-xl p-4 sm:p-5 mb-4">
                 <h2 class="text-base sm:text-lg font-black text-rose-900 mb-2">🛠️ System Tools</h2>
                 <p class="text-[11px] text-slate-600 font-semibold mb-4">Backup / Restore / Reset — carefully use these tools</p>
+
                 <div class="bg-white border-2 border-slate-200 rounded-xl p-4 mb-4">
                     <p class="text-[11px] font-black text-slate-700 uppercase mb-3">📊 Live Data Count</p>
                     <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
@@ -551,6 +695,7 @@ Certificate on completion</textarea></div>
                     </div>
                     <button onclick="refreshToolCounts()" class="mt-3 text-[11px] font-bold text-blue-600 hover:text-blue-800 underline">🔄 Refresh Counts</button>
                 </div>
+
                 <div class="bg-white border-2 border-emerald-300 rounded-xl p-4 mb-4">
                     <div class="flex items-start gap-3 mb-3">
                         <span class="text-3xl">📥</span>
@@ -564,6 +709,7 @@ Certificate on completion</textarea></div>
                     </button>
                     <p id="backupMsg" class="text-emerald-700 text-xs text-center mt-2 font-bold hidden p-2 bg-emerald-50 rounded-lg"></p>
                 </div>
+
                 <div class="bg-white border-2 border-blue-300 rounded-xl p-4 mb-4">
                     <div class="flex items-start gap-3 mb-3">
                         <span class="text-3xl">📤</span>
@@ -582,6 +728,7 @@ Certificate on completion</textarea></div>
                     </button>
                     <p id="restoreMsg" class="text-blue-700 text-xs text-center mt-2 font-bold hidden p-2 bg-blue-50 rounded-lg"></p>
                 </div>
+
                 <div class="bg-white border-2 border-red-400 rounded-xl p-4">
                     <div class="flex items-start gap-3 mb-3">
                         <span class="text-3xl">🔴</span>
@@ -618,6 +765,7 @@ Certificate on completion</textarea></div>
             </div>
             <button onclick="closeCouponForm()" class="text-slate-400 hover:text-red-600 text-2xl font-bold leading-none">&times;</button>
         </div>
+
         <div id="editModeBanner" class="hidden bg-gradient-to-r from-amber-100 to-orange-100 border-2 border-amber-400 rounded-lg p-3 mb-3">
             <div class="flex items-center justify-between gap-2 flex-wrap">
                 <div class="flex items-center gap-2">
@@ -629,6 +777,7 @@ Certificate on completion</textarea></div>
                 <button onclick="cancelEditCoupon()" class="bg-red-500 hover:bg-red-600 text-white font-bold text-[10px] px-3 py-1.5 rounded-lg">✕ Cancel Edit</button>
             </div>
         </div>
+
         <div class="space-y-3">
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 <div>
@@ -647,6 +796,7 @@ Certificate on completion</textarea></div>
                     <input type="text" id="newCouponCode" placeholder="CODE" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm uppercase">
                 </div>
             </div>
+
             <div class="grid grid-cols-2 gap-2">
                 <div>
                     <label class="text-[10px] font-bold text-slate-600 uppercase">Type</label>
@@ -660,6 +810,7 @@ Certificate on completion</textarea></div>
                     <input type="number" id="newCouponValue" placeholder="Value" class="w-full border-2 border-slate-200 rounded-lg p-2.5 bg-slate-50 font-bold text-sm">
                 </div>
             </div>
+
             <div class="bg-amber-50 border-2 border-amber-300 rounded-lg p-3">
                 <label class="flex items-center gap-2 mb-2 cursor-pointer">
                     <input type="checkbox" id="enableCouponValidity" onchange="toggleCouponValidity()" class="w-4 h-4 accent-amber-600">
@@ -684,10 +835,12 @@ Certificate on completion</textarea></div>
                     </div>
                 </div>
             </div>
+
             <div id="couponPlansRow" class="bg-blue-50 rounded-lg p-3">
                 <p class="text-[10px] sm:text-xs font-bold text-blue-900 mb-2">Allowed Courses (leave empty = all):</p>
                 <div id="couponPlansCheckboxes" class="grid grid-cols-2 md:grid-cols-4 gap-2"></div>
             </div>
+
             <button id="addCouponBtn" onclick="saveCoupon()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold p-3 rounded-xl text-sm">➕ Add Coupon</button>
         </div>
     </div>
@@ -794,59 +947,6 @@ Certificate on completion</textarea></div>
     </div>
 </div>
 
-<!-- ADD/EDIT CLASS SLOT MODAL -->
-<div id="slotModal" class="modal-overlay">
-    <div class="max-w-lg mx-auto bg-white rounded-2xl p-5 my-8 w-full">
-        <div class="flex justify-between items-center mb-4 pb-3 border-b-2 border-slate-100">
-            <h3 id="slotModalTitle" class="text-lg font-black text-cyan-900">➕ Add Class Slot</h3>
-            <button onclick="closeSlotModal()" class="text-slate-400 hover:text-red-600 text-2xl font-bold leading-none">&times;</button>
-        </div>
-        <div class="space-y-3">
-            <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Day of Week *</label>
-                <select id="newSlotDay" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-bold text-sm">
-                    <option value="Monday">Monday</option>
-                    <option value="Tuesday">Tuesday</option>
-                    <option value="Wednesday">Wednesday</option>
-                    <option value="Thursday">Thursday</option>
-                    <option value="Friday">Friday</option>
-                    <option value="Saturday">Saturday</option>
-                    <option value="Sunday">Sunday</option>
-                </select>
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Start Time *</label>
-                    <input type="time" id="newSlotStart" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
-                </div>
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">End Time *</label>
-                    <input type="time" id="newSlotEnd" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
-                </div>
-            </div>
-            <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Course / Sub-Category *</label>
-                <select id="newSlotSubCategory" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-bold text-sm">
-                    <option value="OPEN_FOR_ALL|open_for_all">🌟 Open for All (Adults & Kids)</option>
-                    <option value="Power Speak for Adults|power_speak_adults_1on1">👑 Power Speak for Adults — One on One</option>
-                    <option value="Fearless English for Kids|fearless_kids_1on1">👶 Fearless English for Kids — One on One</option>
-                </select>
-            </div>
-            <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Teacher Name (optional)</label>
-                <input type="text" id="newSlotTeacher" placeholder="e.g. Sovan Kapri" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
-            </div>
-            <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5">Max Students (default 1)</label>
-                <input type="number" id="newSlotMax" value="1" min="1" max="1" class="w-full border-2 border-slate-200 rounded-xl p-3 bg-slate-50 font-semibold text-sm">
-                <p class="text-[10px] text-slate-500 mt-1">1-on-1 slots are always 1 student max.</p>
-            </div>
-            <p id="slotModalError" class="text-red-600 text-xs font-semibold hidden p-2 bg-red-50 rounded-lg"></p>
-            <button onclick="saveSlot()" class="w-full bg-cyan-700 hover:bg-cyan-800 text-white font-black p-3.5 rounded-xl text-xs uppercase">💾 Save Slot</button>
-        </div>
-    </div>
-</div>
-
 <script>
 /* ============ FIREBASE ============ */
 var firebaseConfig = {
@@ -862,23 +962,10 @@ var db = firebase.firestore();
 var auth = firebase.auth();
 var ADMIN_EMAIL = 'englishspur2020@gmail.com';
 
-var ALL_COLLECTIONS = ['students', 'purchases', 'coupons', 'logs', 'config', 'classSlots'];
+var ALL_COLLECTIONS = ['students', 'purchases', 'coupons', 'logs', 'config'];
 
 /* ============ HELPERS ============ */
 function money(n) { return '₹' + Number(n || 0).toLocaleString('en-IN'); }
-
-function formatTimeAMPM(timeStr) {
-    if (!timeStr) return '—';
-    var parts = timeStr.split(':');
-    if (parts.length < 2) return timeStr;
-    var hours = parseInt(parts[0], 10);
-    var minutes = parts[1];
-    var ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    return (hours < 10 ? '0' + hours : hours) + ':' + minutes + ' ' + ampm;
-}
-
 function formatDT(ts) {
     if (!ts) return '—';
     try {
@@ -1013,7 +1100,7 @@ function adminLogout() { if (confirm('Logout?')) auth.signOut(); }
 function switchTab(tab) {
     document.querySelectorAll('.tab-content').forEach(function(el) { el.classList.add('hidden'); });
     document.getElementById('content-' + tab).classList.remove('hidden');
-    ['dashboard','offer','coupons','grant','pending','all','students','agreements','slots','logs','tools'].forEach(function(t) {
+    ['dashboard','offer','coupons','grant','pending','all','students','agreements','logs','tools'].forEach(function(t) {
         var el = document.getElementById('tab-' + t);
         if (el) el.className = (t === tab) ? 'tab-btn active' : 'tab-btn inactive';
     });
@@ -1026,7 +1113,6 @@ function switchTab(tab) {
     if (tab === 'dashboard') loadDashboardStats();
     if (tab === 'agreements') renderAgreements();
     if (tab === 'tools') refreshToolCounts();
-    if (tab === 'slots') loadSlots();
 }
 
 function loadAll() {
@@ -1039,7 +1125,6 @@ function loadAll() {
     loadLogs();
     initCouponSubCategoryDropdown();
     refreshToolCounts();
-    loadSlots();
 }
 
 /* ============ DASHBOARD STATS ============ */
@@ -1929,21 +2014,6 @@ function loadPending() {
             var isReuploaded = !!(p.reuploadCount && p.reuploadCount > 0);
             var div = document.createElement('div');
             div.className = isReuploaded ? 'bg-orange-50 border-2 border-orange-400 rounded-xl p-3.5 shadow-md' : 'bg-yellow-50 border-2 border-yellow-300 rounded-xl p-3.5';
-            
-            // Build selected slots info if exists
-            var slotsHtml = '';
-            if (p.selectedSlots && p.selectedSlots.length > 0) {
-                slotsHtml = '<div class="bg-green-50 border-2 border-green-300 rounded-lg p-2.5 mb-3"><p class="text-[10px] font-black text-green-800 uppercase mb-1">🗓️ Selected Class Slots</p>';
-                slotsHtml += '<div class="flex flex-wrap gap-2">';
-                p.selectedSlots.forEach(function(slot) {
-                    var day = slot.dayOfWeek || '';
-                    var start = formatTimeAMPM(slot.startTime) || '';
-                    var end = formatTimeAMPM(slot.endTime) || '';
-                    slotsHtml += '<span class="bg-white border border-green-300 text-[10px] font-bold text-green-700 px-2 py-1 rounded-md">' + day + ' (' + start + ' - ' + end + ')</span>';
-                });
-                slotsHtml += '</div></div>';
-            }
-
             div.innerHTML =
                 '<div class="flex justify-between items-start flex-wrap gap-2 mb-3">' +
                     '<div class="min-w-0">' +
@@ -1955,7 +2025,6 @@ function loadPending() {
                     (isReuploaded ? '<span class="bg-orange-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full animate-pulse">🔄 RE-UPLOADED #' + p.reuploadCount + '</span>' : '<span class="bg-yellow-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">⏳ PENDING</span>') +
                 '</div>' +
                 (isReuploaded ? '<div class="bg-white border-2 border-orange-300 rounded-lg p-2.5 mb-3"><p class="text-[11px] font-black text-orange-800">🔄 Re-uploaded (Attempt #' + (p.reuploadCount + 1) + ')</p>' + (p.previousRejectionReason ? '<p class="text-[10px] text-orange-700 font-semibold mt-1">📌 Previous: <strong>' + p.previousRejectionReason + '</strong></p>' : '') + '</div>' : '') +
-                slotsHtml + // << Insert Slots Here
                 '<div class="bg-white rounded-lg p-3 mb-3">' +
                     '<p class="text-sm font-bold text-slate-800">📘 ' + (p.planName || '—') + '</p>' +
                     '<p class="text-[11px] text-slate-500 mt-1">Amount: <strong class="text-orange-600">' + money(p.finalAmount) + '</strong>' + (p.couponCode ? ' · Coupon: <strong>' + p.couponCode + '</strong>' : '') + '</p>' +
@@ -1971,89 +2040,23 @@ function loadPending() {
     });
 }
 
-async function approvePurchase(id) {
-    if (!confirm('✅ Approve this payment? (Slots will be booked automatically)')) return;
+function approvePurchase(id) {
+    if (!confirm('✅ Approve this payment?')) return;
     var receiptNo = 'PCS-' + Date.now().toString().slice(-8);
-    
-    try {
-        var docSnap = await db.collection('purchases').doc(id).get();
-        if (!docSnap.exists) { alert('❌ Purchase not found.'); return; }
-        var orderData = docSnap.data();
-
-           // 🎯 ১. স্লটগুলো 'booked' করে দাও
-        if (orderData.selectedSlots && orderData.selectedSlots.length > 0) {
-            for (var i = 0; i < orderData.selectedSlots.length; i++) {
-                var slotId = orderData.selectedSlots[i].id;
-                if (!slotId) continue;
-                try {
-                    await db.collection('classSlots').doc(slotId).update({
-                        status: 'booked',
-                        approvedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                        pendingOrderId: id,
-                        bookedBy: orderData.studentId,
-                        bookedByName: orderData.studentName,
-                        bookedByUniqueId: orderData.studentUniqueId || '',
-                        bookedByCode: orderData.studentCode || ''
-                    });
-                } catch (slotErr) { console.error("Slot update error: ", slotErr); }
-            }
-        }
-
-        // 🎯 ২. পেমেন্ট 'approved' করো
-        await db.collection('purchases').doc(id).update({
-            status: 'approved', 
-            receiptNo: receiptNo,
-            slotApprovalStatus: 'approved',
-            verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-        
-        alert('✅ Payment Approved & Slots Booked!\nPCS No.: ' + receiptNo);
-    } catch (err) {
-        alert('❌ Error: ' + err.message);
-    }
+    db.collection('purchases').doc(id).update({
+        status: 'approved', receiptNo: receiptNo,
+        verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function() { alert('✅ Approved!\nPCS No.: ' + receiptNo); }).catch(function(err) { alert('❌ Error: ' + err.message); });
 }
 
-async function rejectPurchase(id) {
+function rejectPurchase(id) {
     var reason = prompt('❌ Why reject?', 'Screenshot not clear. Please re-upload.');
     if (reason === null) return;
     if (!reason.trim()) reason = 'Payment could not be verified.';
-
-    try {
-        var docSnap = await db.collection('purchases').doc(id).get();
-        if (!docSnap.exists) { alert('❌ Purchase not found.'); return; }
-        var orderData = docSnap.data();
-
-        // 🎯 ১. স্লটগুলো আবার 'available' করে দাও
-        if (orderData.selectedSlots && orderData.selectedSlots.length > 0) {
-            for (var i = 0; i < orderData.selectedSlots.length; i++) {
-                var slotId = orderData.selectedSlots[i].id;
-                if (!slotId) continue;
-                try {
-                    await db.collection('classSlots').doc(slotId).update({
-                        status: 'available',
-                        bookedBy: firebase.firestore.FieldValue.delete(),
-                        bookedByName: firebase.firestore.FieldValue.delete(),
-                        bookedByUniqueId: firebase.firestore.FieldValue.delete(),
-                        bookedAt: firebase.firestore.FieldValue.delete(),
-                        pendingOrderId: firebase.firestore.FieldValue.delete(),
-                        reservedAt: firebase.firestore.FieldValue.delete()
-                    });
-                } catch (slotErr) { console.error("Slot reset error: ", slotErr); }
-            }
-        }
-
-        // 🎯 ২. পেমেন্ট 'rejected' করো
-        await db.collection('purchases').doc(id).update({
-            status: 'rejected', 
-            rejectionReason: reason.trim(),
-            slotApprovalStatus: 'rejected',
-            verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-
-        alert('❌ Rejected & Slots released!');
-    } catch (err) {
-        alert('❌ Error: ' + err.message);
-    }
+    db.collection('purchases').doc(id).update({
+        status: 'rejected', rejectionReason: reason.trim(),
+        verifiedAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function() { alert('❌ Rejected.'); }).catch(function(err) { alert('❌ Error: ' + err.message); });
 }
 
 /* ============ ALL PURCHASES ============ */
@@ -2224,7 +2227,7 @@ function renderStudents(students) {
         html += '<button onclick="toggleBlock(\'' + s.id + '\', ' + isBlocked + ')" class="flex-1 min-w-[90px] ' + (isBlocked ? 'bg-green-600 hover:bg-green-700' : 'bg-orange-600 hover:bg-orange-700') + ' text-white font-bold py-2 rounded-lg text-[11px]">' + (isBlocked ? '✅ Unblock' : '🚫 Block') + '</button>';
         html += '<button onclick="manageGrantedCoupons(\'' + s.id + '\', \'' + (s.name || '').replace(/'/g, "\\'") + '\')" class="flex-1 min-w-[110px] bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 rounded-lg text-[11px]">🎫 Coupons</button>';
         html += '<button onclick="toggleMultiCoupon(\'' + s.id + '\', ' + multiCoupon + ')" class="flex-1 min-w-[130px] ' + (multiCoupon ? 'bg-fuchsia-600 hover:bg-fuchsia-700' : 'bg-slate-500 hover:bg-slate-600') + ' text-white font-bold py-2 rounded-lg text-[11px]">' + (multiCoupon ? '🎟️ Multi ON' : '🎟️ Multi OFF') + '</button>';
-        html += '<button onclick="deleteStudentAndAllData(\'' + s.id + '\')" class="flex-1 min-w-[100px] bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg text-[11px]">🗑️ Delete</button>';
+        html += '<button onclick="deleteStudent(\'' + s.id + '\', \'' + (s.name || '').replace(/'/g, "\\'") + '\')" class="flex-1 min-w-[90px] bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg text-[11px]">🗑️ Delete</button>';
         html += '</div>';
 
         div.innerHTML = html;
@@ -2676,296 +2679,6 @@ function exportAgreements() {
     setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
 }
 
-/* ============ CLASS SLOTS MANAGER ============ */
-var allSlots = [];
-var editingSlotId = null;
-
-function loadSlots() {
-    db.collection('classSlots').onSnapshot(function(snap) {
-        allSlots = [];
-        snap.forEach(function(doc) {
-            allSlots.push(Object.assign({ id: doc.id }, doc.data()));
-        });
-        updateSlotStats();
-        renderSlotsList();
-        var badge = document.getElementById('slotsBadge');
-        if (badge) {
-            var pending = allSlots.filter(function(s) { return s.status === 'pending'; }).length;
-            badge.textContent = pending > 0 ? '(' + pending + ')' : '';
-            badge.className = pending > 0 ? 'bg-yellow-500 text-white text-[9px] rounded-full px-1.5 py-0.5 ml-1 inline-block' : '';
-        }
-    }, function(err) {
-        console.warn('Slots listener error:', err.message);
-    });
-}
-
-function updateSlotStats() {
-    var total = allSlots.length;
-    var available = 0, booked = 0, pending = 0;
-    allSlots.forEach(function(s) {
-        if (s.status === 'available') available++;
-        else if (s.status === 'booked') booked++;
-        else if (s.status === 'pending') pending++;
-    });
-    var elT = document.getElementById('slotStatTotal');
-    var elA = document.getElementById('slotStatAvailable');
-    var elB = document.getElementById('slotStatBooked');
-    var elP = document.getElementById('slotStatPending');
-    if (elT) elT.textContent = total;
-    if (elA) elA.textContent = available;
-    if (elB) elB.textContent = booked;
-    if (elP) elP.textContent = pending;
-}
-
-function resetSlotFilters() {
-    document.getElementById('slotFilterDate').value = '';
-    document.getElementById('slotFilterStatus').value = '';
-    renderSlotsList();
-}
-
-function renderSlotsList() {
-    var list = document.getElementById('slotsList');
-    if (!list) return;
-    var dayFilter = document.getElementById('slotFilterDate').value;
-    var statusFilter = document.getElementById('slotFilterStatus').value;
-    
-    var filtered = allSlots.filter(function(s) {
-        if (dayFilter && s.dayOfWeek !== dayFilter) return false;
-        if (statusFilter === 'available' && s.status !== 'available') return false;
-        if (statusFilter === 'booked' && s.status !== 'booked') return false;
-        if (statusFilter === 'pending' && s.status !== 'pending') return false;
-        return true;
-    });
-
-    // 🎯 সর্টিং কোড
-    var dayOrder = { 'Monday': 1, 'Tuesday': 2, 'Wednesday': 3, 'Thursday': 4, 'Friday': 5, 'Saturday': 6, 'Sunday': 7 };
-    filtered.sort(function(a, b) {
-        var dayA = dayOrder[a.dayOfWeek] || 99;
-        var dayB = dayOrder[b.dayOfWeek] || 99;
-        if (dayA !== dayB) return dayA - dayB;
-        var timeA = a.startTime || "00:00";
-        var timeB = b.startTime || "00:00";
-        return timeA.localeCompare(timeB);
-    });
-
-    if (filtered.length === 0) {
-        list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No slots match.</p>';
-        return;
-    }
-    list.innerHTML = '';
-
-    filtered.forEach(function(s) {
-        var statusClass = 'bg-white border-slate-300';
-        var statusBadge = '';
-        
-        if (s.status === 'booked') {
-            statusClass = 'bg-red-50 border-red-300';
-            statusBadge = '<span class="bg-red-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">🔴 BOOKED</span>';
-        } else if (s.status === 'pending') {
-            statusClass = 'bg-yellow-50 border-yellow-300';
-            statusBadge = '<span class="bg-yellow-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">⏳ PENDING APPROVAL</span>';
-        } else {
-            statusClass = 'bg-green-50 border-green-300';
-            statusBadge = '<span class="bg-green-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">🟢 AVAILABLE</span>';
-        }
-        
-        var timeStr = formatTimeAMPM(s.startTime) + ' – ' + formatTimeAMPM(s.endTime);
-
-        var div = document.createElement('div');
-        div.className = 'border-2 rounded-xl p-3 ' + statusClass;
-        var bookingInfo = '';
-        
-        if (s.status === 'booked' && s.bookedByName) {
-            bookingInfo = '<div class="bg-white rounded-lg p-2 mt-2 border border-red-200"><p class="text-[10px] font-bold text-slate-700">👤 Booked by: <strong>' + s.bookedByName + '</strong></p>' +
-                '<button onclick="cancelSlotBooking(\'' + s.id + '\')" class="mt-1 bg-orange-500 hover:bg-orange-600 text-white font-bold text-[9px] px-2 py-1 rounded">❌ Cancel Booking</button></div>';
-        } else if (s.status === 'pending' && s.bookedByName) {
-            
-            // 🎯 লাইভ টাইমার লজিক
-            var pendingDurationText = '';
-            var pendingStartMs = 0;
-            
-            if (s.reservedAt) {
-                pendingStartMs = Number(s.reservedAt);
-            } else if (s.bookedAt) {
-                pendingStartMs = s.bookedAt.toDate ? s.bookedAt.toDate().getTime() : new Date(s.bookedAt).getTime();
-            }
-
-            if (pendingStartMs > 0) {
-                var diffMs = Date.now() - pendingStartMs;
-                var diffMins = Math.floor(diffMs / 60000);
-                
-                if (diffMins < 1) {
-                    pendingDurationText = '<span class="bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded text-[10px]">⏳ Just now</span>';
-                } else if (diffMins < 60) {
-                    pendingDurationText = '<span class="bg-amber-100 text-amber-700 font-bold px-2 py-0.5 rounded text-[10px]">⏳ ' + diffMins + ' mins pending</span>';
-                } else {
-                    var diffHours = Math.floor(diffMins / 60);
-                    pendingDurationText = '<span class="bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded text-[10px]">⏳ ' + diffHours + ' hours pending</span>';
-                }
-            }
-
-            bookingInfo = '<div class="bg-white rounded-lg p-2 mt-2 border border-yellow-300">' +
-                '<div class="flex justify-between items-center mb-1">' +
-                    '<p class="text-[10px] font-bold text-slate-700">👤 Requested by: <strong>' + s.bookedByName + '</strong></p>' + 
-                    pendingDurationText + 
-                '</div>' +
-                '<p class="text-[10px] text-slate-500">🏷️ ' + (s.bookedByCode || '—') + ' · 🆔 ' + (s.bookedByUniqueId || '—') + '</p>' +
-                '<div class="flex gap-2 mt-2">' +
-                '<button onclick="approveSlotBooking(\'' + s.id + '\')" class="bg-green-600 hover:bg-green-700 text-white font-bold text-[9px] px-3 py-1.5 rounded flex-1">✅ Approve</button>' +
-                '<button onclick="cancelSlotBooking(\'' + s.id + '\')" class="bg-red-500 hover:bg-red-600 text-white font-bold text-[9px] px-3 py-1.5 rounded flex-1">❌ Reject</button>' +
-                '</div></div>';
-        }
-        
-        div.innerHTML =
-            '<div class="flex justify-between items-start gap-2 flex-wrap">' +
-                '<div class="min-w-0 flex-1">' +
-                    '<div class="flex items-center gap-2 flex-wrap mb-1">' +
-                        '<p class="font-black text-slate-800 text-sm">📅 ' + (s.dayOfWeek || 'Unknown Day') + '</p>' +
-                        '<span class="bg-cyan-100 text-cyan-800 text-[10px] font-bold px-2 py-0.5 rounded-full">⏰ ' + timeStr + '</span>' +
-                        statusBadge +
-                    '</div>' +
-                    '<p class="text-[11px] text-slate-600">📘 ' + (s.subCategoryDisplay || s.subCategory || '—') + '</p>' +
-                    bookingInfo +
-                '</div>' +
-                '<div class="flex items-center gap-1 flex-shrink-0">' +
-                    (s.status === 'available' ? '<button onclick="editSlot(\'' + s.id + '\')" class="text-blue-600 hover:text-blue-800 font-bold text-xs px-2 py-1.5 rounded-lg hover:bg-blue-50">✏️</button>' : '') +
-                    (s.status !== 'booked' ? '<button onclick="deleteSlot(\'' + s.id + '\')" class="text-red-600 hover:text-red-800 font-bold text-xs px-2.5 py-1.5 rounded-lg hover:bg-red-50">🗑️</button>' : '') +
-                '</div>' +
-            '</div>';
-        list.appendChild(div);
-    });
-}
-function openAddSlotModal() {
-    editingSlotId = null;
-    document.getElementById('slotModalTitle').textContent = '➕ Add Class Slot';
-    document.getElementById('newSlotDay').value = 'Monday';
-    document.getElementById('newSlotStart').value = '';
-    document.getElementById('newSlotEnd').value = '';
-    document.getElementById('newSlotSubCategory').value = 'OPEN_FOR_ALL|open_for_all';
-    document.getElementById('newSlotTeacher').value = '';
-    document.getElementById('newSlotMax').value = '1';
-    document.getElementById('slotModalError').classList.add('hidden');
-    document.getElementById('slotModal').classList.add('show');
-}
-
-function closeSlotModal() {
-    document.getElementById('slotModal').classList.remove('show');
-    editingSlotId = null;
-}
-
-function editSlot(id) {
-    var s = null;
-    allSlots.forEach(function(x) { if (x.id === id) s = x; });
-    if (!s) return;
-    editingSlotId = id;
-    document.getElementById('slotModalTitle').textContent = '✏️ Edit Class Slot';
-    
-    var dayVal = s.dayOfWeek || 'Monday';
-    document.getElementById('newSlotDay').value = dayVal;
-    
-    document.getElementById('newSlotStart').value = s.startTime || '';
-    document.getElementById('newSlotEnd').value = s.endTime || '';
-    var subVal = (s.subCategory || '') + '|' + (s.subCategoryId || '');
-    
-    if (s.subCategoryId === 'open_for_all') subVal = 'OPEN_FOR_ALL|open_for_all';
-    document.getElementById('newSlotSubCategory').value = subVal;
-    
-    document.getElementById('newSlotTeacher').value = s.teacher || '';
-    document.getElementById('newSlotMax').value = String(s.maxStudents || 1);
-    document.getElementById('slotModalError').classList.add('hidden');
-    document.getElementById('slotModal').classList.add('show');
-}
-
-function saveSlot() {
-    var day = document.getElementById('newSlotDay').value;
-    var start = document.getElementById('newSlotStart').value;
-    var end = document.getElementById('newSlotEnd').value;
-    var subVal = document.getElementById('newSlotSubCategory').value;
-    var teacher = document.getElementById('newSlotTeacher').value.trim();
-    var max = Number(document.getElementById('newSlotMax').value) || 1;
-    var errEl = document.getElementById('slotModalError');
-    errEl.classList.add('hidden');
-
-    if (!day || !start || !end) {
-        errEl.textContent = '❌ Day, start time, and end time are required.';
-        errEl.classList.remove('hidden');
-        return;
-    }
-    if (end <= start) {
-        errEl.textContent = '❌ End time must be after start time.';
-        errEl.classList.remove('hidden');
-        return;
-    }
-
-    var parts = subVal.split('|');
-    var subCategory = parts[0];
-    var subCategoryId = parts[1];
-    var subCategoryDisplay = subCategoryId === 'open_for_all' ? '🌟 Open for All (Adults & Kids)' : subCategory + ' — One on One';
-
-    var data = {
-        dayOfWeek: day,
-        startTime: start,
-        endTime: end,
-        subCategory: subCategory,
-        subCategoryId: subCategoryId,
-        subCategoryDisplay: subCategoryDisplay,
-        teacher: teacher,
-        maxStudents: max,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
-
-    if (editingSlotId) {
-        db.collection('classSlots').doc(editingSlotId).update(data).then(function() {
-            alert('✅ Slot updated!');
-            closeSlotModal();
-        }).catch(function(err) { alert('❌ Error: ' + err.message); });
-    } else {
-        data.status = 'available';
-        data.bookedBy = null;
-        data.bookedByName = null;
-        data.bookedByCode = null;
-        data.bookedByUniqueId = null;
-        data.bookedAt = null;
-        data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-        db.collection('classSlots').add(data).then(function() {
-            alert('✅ Slot created!');
-            closeSlotModal();
-        }).catch(function(err) { alert('❌ Error: ' + err.message); });
-    }
-}
-
-function deleteSlot(id) {
-    if (!confirm('⚠️ Delete this slot?')) return;
-    db.collection('classSlots').doc(id).delete().then(function() {
-        toast('🗑️ Slot deleted');
-    }).catch(function(err) { alert('❌ Error: ' + err.message); });
-}
-
-function cancelSlotBooking(id) {
-    if (!confirm('⚠️ Cancel/Reject this slot? It will become available again.')) return;
-    db.collection('classSlots').doc(id).update({
-        status: 'available',
-        bookedBy: firebase.firestore.FieldValue.delete(),
-        bookedByName: firebase.firestore.FieldValue.delete(),
-        bookedByCode: firebase.firestore.FieldValue.delete(),
-        bookedByUniqueId: firebase.firestore.FieldValue.delete(),
-        bookedAt: firebase.firestore.FieldValue.delete(),
-        cancelledAt: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(function() {
-        toast('✅ Slot available again');
-    }).catch(function(err) { alert('❌ Error: ' + err.message); });
-}
-
-function approveSlotBooking(id) {
-    if (!confirm('✅ Approve this slot booking?')) return;
-    db.collection('classSlots').doc(id).update({
-        status: 'booked',
-        approvedAt: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(function() {
-        toast('✅ Slot approved & booked!');
-    }).catch(function(err) { alert('❌ Error: ' + err.message); });
-}
-
 /* ============ LOGS ============ */
 function loadLogs() {
     var limit = Number(document.getElementById('logFilter').value) || 100;
@@ -2973,7 +2686,7 @@ function loadLogs() {
         var list = document.getElementById('logsList');
         list.innerHTML = '';
         if (snap.empty) { list.innerHTML = '<p class="text-center text-slate-500 py-6 bg-slate-50 rounded-lg text-sm">No logs.</p>'; return; }
-        var icons = { login: '🔓', logout: '🔒', first_visit: '🆕', page_close: '📄', purchase_placed: '🛒', consent_given: '📋', slot_booked: '🗓️' };
+        var icons = { login: '🔓', logout: '🔒', first_visit: '🆕', page_close: '📄', purchase_placed: '🛒', consent_given: '📋' };
         snap.forEach(function(doc) {
             var log = doc.data();
             var div = document.createElement('div');
@@ -3154,48 +2867,6 @@ function toast(msg, type) {
     document.body.appendChild(t);
     setTimeout(function() { t.style.transition = 'opacity 0.3s'; t.style.opacity = '0'; setTimeout(function() { t.remove(); }, 300); }, 1800);
 }
-
-// ==========================================
-// 🚀 অটো-ডিলিট সিস্টেম (Admin Panel-এর জন্য)
-// ==========================================
-window.deleteStudentAndAllData = async function(studentId) {
-    if (!confirm('⚠️ আপনি কি নিশ্চিত?\n\nএই স্টুডেন্টের সব ডাটা (পেমেন্ট, স্লট, লগ) স্থায়ীভাবে মুছে যাবে!')) return;
-
-    try {
-        const batch = db.batch();
-
-        // ১. সব পেমেন্ট ডিলিট
-        const purchasesSnap = await db.collection('purchases').where('studentId', '==', studentId).get();
-        purchasesSnap.forEach((doc) => { batch.delete(doc.ref); });
-
-              // ২. সব স্লট খালি করা
-        const slotsSnap = await db.collection('classSlots').where('bookedBy', '==', studentId).get();
-        slotsSnap.forEach((doc) => {
-            batch.update(doc.ref, {
-                status: 'available', bookedBy: null, bookedByName: null, 
-                bookedByUniqueId: null, bookedByCode: null, bookedAt: null, 
-                reservedAt: null, pendingOrderId: null
-            });
-        });
-
-        // ৩. সব লগ ডিলিট
-        const logsSnap = await db.collection('logs').where('studentId', '==', studentId).get();
-        logsSnap.forEach((doc) => { batch.delete(doc.ref); });
-
-        // ৪. স্টুডেন্ট ডিলিট
-        batch.delete(db.collection('students').doc(studentId));
-
-        // সব একসাথে সেভ
-        await batch.commit();
-        
-        alert('✅ স্টুডেন্টের সম্পূর্ণ ডাটা সফলভাবে ডিলিট হয়েছে!');
-        location.reload(); 
-
-    } catch (error) {
-        console.error("Error:", error);
-        alert('❌ ডিলিট করতে সমস্যা হয়েছে: ' + error.message);
-    }
-};
 </script>
 </body>
 </html>
