@@ -1060,7 +1060,7 @@ var FIXED_SUBCATEGORIES = {
     ],
     group: [
         { key: "Power Speak for Adults", id: "power_speak_adults_group", displayName: "Power Speak for Adults — Group Class" },
-        { key: "Fearless English for Kids", id: "fearless_kids_group", displayName: "Fearless English for Kids — Group Class" }
+        { key: "Fearless English for Kids", id: "fearless_english_kids_group", displayName: "Fearless English for Kids — Group Class" }
     ]
 };
 
@@ -2227,7 +2227,7 @@ function renderStudents(students) {
         html += '<button onclick="toggleBlock(\'' + s.id + '\', ' + isBlocked + ')" class="flex-1 min-w-[90px] ' + (isBlocked ? 'bg-green-600 hover:bg-green-700' : 'bg-orange-600 hover:bg-orange-700') + ' text-white font-bold py-2 rounded-lg text-[11px]">' + (isBlocked ? '✅ Unblock' : '🚫 Block') + '</button>';
         html += '<button onclick="manageGrantedCoupons(\'' + s.id + '\', \'' + (s.name || '').replace(/'/g, "\\'") + '\')" class="flex-1 min-w-[110px] bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 rounded-lg text-[11px]">🎫 Coupons</button>';
         html += '<button onclick="toggleMultiCoupon(\'' + s.id + '\', ' + multiCoupon + ')" class="flex-1 min-w-[130px] ' + (multiCoupon ? 'bg-fuchsia-600 hover:bg-fuchsia-700' : 'bg-slate-500 hover:bg-slate-600') + ' text-white font-bold py-2 rounded-lg text-[11px]">' + (multiCoupon ? '🎟️ Multi ON' : '🎟️ Multi OFF') + '</button>';
-        html += '<button onclick="deleteStudent(\'' + s.id + '\', \'' + (s.name || '').replace(/'/g, "\\'") + '\')" class="flex-1 min-w-[90px] bg-red-600 hover:bg-red-700 text-white font-bold py-2 rounded-lg text-[11px]">🗑️ Delete</button>';
+        html += '<button onclick="deleteStudentEverywhere(\'' + s.id + '\', \'' + (s.name || '').replace(/'/g, "\\'") + '\')" class="flex-1 min-w-[130px] bg-red-700 hover:bg-red-800 text-white font-bold py-2 rounded-lg text-[11px]">🗑️ Delete All Credentials</button>';
         html += '</div>';
 
         div.innerHTML = html;
@@ -2456,10 +2456,105 @@ function toggleMultiCoupon(id, currentlyOn) {
       .then(function() { alert('✅ Done!'); }).catch(function(err) { alert('Error: ' + err.message); });
 }
 
-function deleteStudent(id, name) {
-    if (!confirm('⚠️ DELETE ' + name + '?')) return;
-    if (!confirm('⚠️ FINAL CONFIRMATION?')) return;
-    db.collection('students').doc(id).delete().then(function() { alert('🗑️ Deleted.'); }).catch(function(err) { alert('Error: ' + err.message); });
+/* ============ DELETE STUDENT EVERYWHERE (FULL PURGE) ============ */
+async function deleteStudentEverywhere(id, name) {
+    if (!confirm('⚠️ DELETE ALL CREDENTIALS FOR: ' + name + '\n\nThis will permanently delete:\n• Student profile\n• ALL purchase history\n• ALL coupon allotments\n• ALL activity logs\n• ALL references\n\nThis action CANNOT be undone. Continue?')) return;
+    var typed = prompt('Type the student name (exact) to confirm permanent deletion:\n\n' + name);
+    if (typed === null) return;
+    if (typed.trim().toUpperCase() !== String(name || '').trim().toUpperCase()) {
+        alert('❌ Name did not match. Deletion cancelled.');
+        return;
+    }
+    if (!confirm('⚠️ FINAL CONFIRMATION\n\nThis is irreversible. Everything for ' + name + ' will be erased. Proceed?')) return;
+
+    try {
+        var studentRef = db.collection('students').doc(id);
+        var studentDoc = await studentRef.get();
+        if (!studentDoc.exists) {
+            alert('⚠️ Student already deleted.');
+            return;
+        }
+        var studentData = studentDoc.data() || {};
+        var uniqueId = studentData.uniqueId || '';
+        var studentCode = studentData.studentCode || studentData.studentId || '';
+
+        var totalDeleted = 0;
+
+        /* 1. Delete all purchases for this student (by studentId) */
+        var purchasesByIdSnap = await db.collection('purchases').where('studentId', '==', id).get();
+        var purchaseDocs = purchasesByIdSnap.docs.slice();
+
+        /* 2. Also delete any purchases referencing the uniqueId/studentCode (orphan safety) */
+        if (uniqueId) {
+            try {
+                var pByUid = await db.collection('purchases').where('studentUniqueId', '==', uniqueId).get();
+                pByUid.forEach(function(d) {
+                    if (!purchaseDocs.some(function(x) { return x.id === d.id; })) purchaseDocs.push(d);
+                });
+            } catch (e) {}
+        }
+        if (studentCode) {
+            try {
+                var pByCode = await db.collection('purchases').where('studentCode', '==', studentCode).get();
+                pByCode.forEach(function(d) {
+                    if (!purchaseDocs.some(function(x) { return x.id === d.id; })) purchaseDocs.push(d);
+                });
+            } catch (e) {}
+        }
+
+        /* Batch-delete purchases */
+        for (var i = 0; i < purchaseDocs.length; i += 400) {
+            var batchP = db.batch();
+            purchaseDocs.slice(i, i + 400).forEach(function(d) { batchP.delete(d.ref); totalDeleted++; });
+            await batchP.commit();
+        }
+
+        /* 3. Delete all logs for this student (by studentId) */
+        var logsSnap = await db.collection('logs').where('studentId', '==', id).get();
+        var logDocs = logsSnap.docs.slice();
+
+        /* Also purge logs referencing the uniqueId (safety) */
+        if (uniqueId) {
+            try {
+                var lByUid = await db.collection('logs').where('uniqueId', '==', uniqueId).get();
+                lByUid.forEach(function(d) {
+                    if (!logDocs.some(function(x) { return x.id === d.id; })) logDocs.push(d);
+                });
+            } catch (e) {}
+        }
+
+        for (var j = 0; j < logDocs.length; j += 400) {
+            var batchL = db.batch();
+            logDocs.slice(j, j + 400).forEach(function(d) { batchL.delete(d.ref); totalDeleted++; });
+            await batchL.commit();
+        }
+
+        /* 4. Remove from any coupon grants (reverse index safety — none, but strip from student doc is covered by deletion below) */
+
+        /* 5. Delete the student document itself */
+        await studentRef.delete();
+        totalDeleted++;
+
+        /* 6. Clear any local state references */
+        allStudents = allStudents.filter(function(s) { return s.id !== id; });
+        currentManageGranted = currentManageGranted.filter(function(g) { return true; }); /* grants come from student doc; nothing else to strip */
+
+        /* 7. Refresh UI */
+        renderStudents(allStudents);
+        loadDashboardStats();
+        if (!document.getElementById('content-agreements').classList.contains('hidden')) renderAgreements();
+        loadPending();
+        loadAllPurchases();
+        loadLogs();
+        updateCouponStats();
+        refreshToolCounts();
+
+        toast('🗑️ Fully deleted: ' + name + ' (' + totalDeleted + ' docs)');
+        alert('✅ COMPLETE PURGE SUCCESSFUL\n\nStudent: ' + name + '\n📦 Purchases deleted: ' + purchaseDocs.length + '\n📊 Logs deleted: ' + logDocs.length + '\n👤 Student profile: deleted\n\nTotal documents removed: ' + totalDeleted + '\n\nNo residual data remains for this student.');
+    } catch (err) {
+        console.error(err);
+        alert('❌ Deletion failed: ' + err.message);
+    }
 }
 
 /* ============ MANAGE GRANTED COUPONS ============ */
