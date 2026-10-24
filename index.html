@@ -144,7 +144,7 @@
                 <span class="transition-transform group-hover:translate-x-1">→</span>
             </button>
             <button type="button" onclick="showScreen('oldStudent')" class="w-full group bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-bold p-4 rounded-2xl transition-all duration-200 shadow-lg hover:shadow-xl text-sm flex items-center justify-between">
-                <span class="flex items-center gap-2"><span class="text-lg">👤</span> Existing Student — Login & Renew</span>
+                <span class="flex items-center gap-2"><span class="text-lg">👤</span> Registered Student — Login</span>
                 <span class="transition-transform group-hover:translate-x-1">→</span>
             </button>
             <button type="button" onclick="showScreen('trackStatus')" class="w-full group bg-gradient-to-r from-purple-600 to-fuchsia-700 hover:from-purple-700 hover:to-fuchsia-800 text-white font-bold p-4 rounded-2xl transition-all duration-200 shadow-lg hover:shadow-xl text-sm flex items-center justify-between">
@@ -219,15 +219,15 @@
         <div class="pro-header-green p-4 flex items-center gap-3">
             <button type="button" onclick="showScreen('welcome')" aria-label="Back" class="text-white text-2xl font-bold leading-none glass-btn w-9 h-9 rounded-full flex items-center justify-center">←</button>
             <div>
-                <h2 class="text-base font-black text-white">Existing Student Login</h2>
-                <p class="text-green-100 text-[10px] font-medium">Login using your Student Code</p>
+                <h2 class="text-base font-black text-white">Registered Student Login</h2>
+                <p class="text-green-100 text-[10px] font-medium">Login using your Student Code or Unique ID</p>
             </div>
         </div>
         <div class="p-5 space-y-3">
             <div>
-                <label for="loginCode" class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Student Code <span class="text-red-500">*</span></label>
-                <input type="text" id="loginCode" placeholder="e.g. ES2026-0001" class="w-full border-2 border-slate-200 rounded-xl p-4 bg-slate-50 font-bold text-base uppercase tracking-widest text-center focus:bg-white transition" onkeydown="if(event.key==='Enter')existingStudentLogin()" autocomplete="off">
-                <p class="text-[10px] text-slate-500 mt-2 text-center">🔖 Code is provided by the office. If you don't have one, call <strong>+91 9875340842</strong>.</p>
+                <label for="loginCode" class="block text-[11px] font-bold text-slate-700 uppercase mb-1.5 tracking-wide">Student Code / Unique ID <span class="text-red-500">*</span></label>
+                <input type="text" id="loginCode" placeholder="e.g. ES2026-0001 or ES_171234567890" class="w-full border-2 border-slate-200 rounded-xl p-4 bg-slate-50 font-bold text-base uppercase tracking-widest text-center focus:bg-white transition" onkeydown="if(event.key==='Enter')existingStudentLogin()" autocomplete="off">
+                <p class="text-[10px] text-slate-500 mt-2 text-center">🔖 Use your <strong>Student Code</strong> or <strong>Unique ID</strong> to login. If you don't have one, call <strong>+91 9875340842</strong>.</p>
             </div>
             <p id="loginError" class="text-red-600 text-xs font-semibold hidden p-2.5 bg-red-50 rounded-lg"></p>
             <button type="button" onclick="existingStudentLogin()" class="w-full bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-black p-4 rounded-2xl text-xs uppercase tracking-widest transition-all shadow-lg hover:shadow-xl">
@@ -920,7 +920,7 @@ function formatDuration(duration) {
     return d + '/class';
 }
 
-/* ============ PLAN DISPLAY NAME ============ */
+/* ============ PLAN DISPLAY NAME (months instead of days for 1-on-1) ============ */
 function getPlanDisplayName() {
     if (!selectedPlan) return '—';
     if (selectedPlan.category === 'oneOnOne') {
@@ -1321,17 +1321,20 @@ async function registerNewStudent() {
     }
 }
 
-/* ============ EXISTING LOGIN ============ */
+/* ============ EXISTING LOGIN (Support Student Code OR Unique ID) ============ */
 async function existingStudentLogin() {
-    var code = document.getElementById('loginCode').value.trim().toUpperCase();
+    var input = document.getElementById('loginCode').value.trim().toUpperCase();
     var errEl = document.getElementById('loginError');
     errEl.classList.add('hidden');
-    if (!code) { errEl.textContent = '❌ Please enter your Student Code.'; errEl.classList.remove('hidden'); return; }
+    if (!input) { errEl.textContent = '❌ Please enter your Student Code or Unique ID.'; errEl.classList.remove('hidden'); return; }
 
     try {
-        var snap = await db.collection('students').where('studentCode', '==', code).limit(1).get();
+        var snap = await db.collection('students').where('studentCode', '==', input).limit(1).get();
         if (snap.empty) {
-            errEl.innerHTML = '❌ Student Code not found.<br><span class="text-[10px]">Example: <strong>ES2026-0001</strong></span>';
+            snap = await db.collection('students').where('uniqueId', '==', input).limit(1).get();
+        }
+        if (snap.empty) {
+            errEl.innerHTML = '❌ Student not found.<br><span class="text-[10px]">Use your <strong>Student Code</strong> (e.g. ES2026-0001) or <strong>Unique ID</strong> (e.g. ES_171234567890).</span>';
             errEl.classList.remove('hidden');
             return;
         }
@@ -2488,7 +2491,15 @@ function calculateSelectedPlanPricing() {
 
 /* ============ CONTACT ============ */
 function contactViaWhatsApp() {
-    var cleanPlan = selectedPlan ? cleanPlanName(selectedPlan.subCategoryDisplay + ' - ' + selectedPlan.plan.days + ' Classes') : '';
+    var cleanPlan = '';
+    if (selectedPlan) {
+        if (selectedPlan.category === 'oneOnOne') {
+            var m = Math.round((selectedPlan.plan.days || 0) / 30);
+            cleanPlan = cleanPlanName(selectedPlan.subCategoryDisplay + ' - ' + getOneOnOneCourseLabel(m) + ' - ' + (selectedPlan.classes || 0) + ' Classes');
+        } else {
+            cleanPlan = cleanPlanName(selectedPlan.subCategoryDisplay + ' - ' + selectedPlan.plan.days + ' Classes');
+        }
+    }
     var planLine = cleanPlan ? '\n*Interested Plan:*\n*' + cleanPlan + '*\n' : '';
     var studentName = currentStudent ? (currentStudent.name || 'Student') : 'Guest';
     var uid = currentStudent ? (currentStudent.uniqueId || '') : '';
