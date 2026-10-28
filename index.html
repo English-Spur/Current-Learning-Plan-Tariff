@@ -205,6 +205,10 @@
             <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 p-3 rounded-r-xl">
                 <p class="text-[10px] text-blue-900 font-semibold leading-relaxed">ℹ️ আপনার Unique ID অটোমেটিক তৈরি হবে। আপনার Student Code পরবর্তীতে অফিস থেকে দেওয়া হবে।</p>
             </div>
+            <div class="bg-gradient-to-r from-amber-50 to-orange-50 border-l-4 border-amber-500 p-3 rounded-r-xl">
+                <p class="text-[10px] text-amber-900 font-black uppercase tracking-wide mb-1">🔒 Age Rule</p>
+                <p class="text-[10px] text-amber-800 font-semibold leading-relaxed">Below 18 → Kids plans only · 18+ → Adult plans only. (Auto-applied based on your DOB.)</p>
+            </div>
             <p id="regError" class="text-red-600 text-xs font-semibold hidden p-2.5 bg-red-50 rounded-lg"></p>
             <button type="button" onclick="registerNewStudent()" class="w-full bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white font-black p-4 rounded-2xl text-xs uppercase tracking-widest transition-all shadow-lg hover:shadow-xl">
                 🚀 Register & Get Unique ID
@@ -361,6 +365,8 @@
             <button type="button" onclick="showCurrentPlanView()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-3 py-2 rounded-xl text-xs transition">← Back</button>
             <p class="text-[11px] font-black text-slate-700 uppercase tracking-wide">🔍 All Available Plans</p>
         </div>
+
+        <div id="ageRestrictionBanner" class="hidden mb-3 rounded-2xl p-3.5 border-2"></div>
 
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
             <button type="button" onclick="switchTab('1on1-adult')" id="tab-1on1-adult" class="text-[10px] sm:text-[11px] font-bold py-3 px-1.5 rounded-xl tab-active transition-all">👑 1-on-1 Adult</button>
@@ -728,6 +734,7 @@ var PLAN_KEY = 'englishSpurSelectedPlan';
 var COUPON_KEY = 'englishSpurAppliedCoupons';
 var LOGOUT_FLAG = 'englishSpurLoggedOut';
 var MAX_COUPONS = 3;
+var ADULT_MIN_AGE = 18;
 
 /* ============ STATE ============ */
 var offerConfig = null;
@@ -823,10 +830,61 @@ function isCouponGrantedToStudent(code) {
 }
 function allowMultipleCoupons() { return currentStudent && currentStudent.allowMultipleCoupons === true; }
 
-/* ============ COUPON MATCHING HELPERS (FIXED) ============ */
-/* Build all acceptable plan keys for the currently selected plan.
-   1-on-1 → "3m"/"6m"/"9m"/"12m" AND legacy "90d"/"180d"/"270d"/"360d"
-   Group  → "8d"/"16d"/... */
+/* ============ AGE RESTRICTION HELPERS ============ */
+function getStudentAge() {
+    if (!currentStudent) return null;
+    if (typeof currentStudent.age === 'number' && currentStudent.age > 0) return currentStudent.age;
+    if (currentStudent.dateOfBirth) {
+        try {
+            var parts = String(currentStudent.dateOfBirth).split('-');
+            if (parts.length === 3) {
+                var dd = parseInt(parts[0], 10), mm = parseInt(parts[1], 10), yy = parseInt(parts[2], 10);
+                if (!isNaN(dd) && !isNaN(mm) && !isNaN(yy)) {
+                    var dob = new Date(yy, mm - 1, dd);
+                    if (!isNaN(dob.getTime())) {
+                        var today = new Date();
+                        var age = today.getFullYear() - dob.getFullYear();
+                        var mDiff = today.getMonth() - dob.getMonth();
+                        if (mDiff < 0 || (mDiff === 0 && today.getDate() < dob.getDate())) age--;
+                        if (age >= 0 && age <= 120) return age;
+                    }
+                }
+            }
+        } catch (e) {}
+    }
+    return null;
+}
+
+function isStudentAdult() {
+    var age = getStudentAge();
+    if (age === null) return null;
+    return age >= ADULT_MIN_AGE;
+}
+
+function isKidsCategoryKey(key) {
+    return String(key || '').toLowerCase().indexOf('kid') !== -1;
+}
+
+function isSubCategoryAllowedForStudent(subKey) {
+    var adult = isStudentAdult();
+    if (adult === null) return { allowed: true, reason: '' };
+    var isKids = isKidsCategoryKey(subKey);
+    if (adult && isKids) {
+        return { allowed: false, reason: '🔞 This is a Kids plan. Your age (' + getStudentAge() + ') restricts you to Adult plans only.' };
+    }
+    if (!adult && !isKids) {
+        return { allowed: false, reason: '👶 This is an Adult plan. Your age (' + getStudentAge() + ') restricts you to Kids plans only.' };
+    }
+    return { allowed: true, reason: '' };
+}
+
+function getStudentAgeGroupLabel() {
+    var adult = isStudentAdult();
+    if (adult === null) return 'Unknown';
+    return adult ? 'Adult (18+)' : 'Kids (Below 18)';
+}
+
+/* ============ COUPON MATCHING HELPERS ============ */
 function getSelectedPlanMatchKeys() {
     if (!selectedPlan) return [];
     var keys = [];
@@ -855,11 +913,8 @@ function couponPlanMatches(couponAllowedPlans) {
     return myKeys.some(function(k) { return allowedNorm.indexOf(k) !== -1; });
 }
 
-/* Sub-category matching — CRITICAL FIX.
-   A coupon granted for "Power Speak for Adults — One on One" must NOT apply
-   when the student selects a "Fearless English for Kids — One on One" plan. */
 function couponSubCategoryMatches(couponSubCategory) {
-    if (!couponSubCategory) return true;                 // no sub-category restriction
+    if (!couponSubCategory) return true;
     if (!selectedPlan) return false;
     var mySubId = selectedPlan.subCategoryId || '';
     return String(couponSubCategory).toLowerCase() === String(mySubId).toLowerCase();
@@ -962,7 +1017,6 @@ function formatDuration(duration) {
     return d + '/class';
 }
 
-/* ============ PLAN DISPLAY NAME (months instead of days for 1-on-1) ============ */
 function getPlanDisplayName() {
     if (!selectedPlan) return '—';
     if (selectedPlan.category === 'oneOnOne') {
@@ -1008,6 +1062,7 @@ function showView(v) {
     if (v === 'explorePlans') {
         renderDynamicPlans();
         updateCourseFilterBanner();
+        updateAgeRestrictionBanner();
     }
     if (v === 'currentPlan') {
         var hBadge = document.getElementById('historyBadge');
@@ -1026,20 +1081,77 @@ function showExplorePlans() {
     showView('explorePlans');
 }
 
-/* ============ TAB SWITCHER ============ */
+/* ============ TAB SWITCHER (with AGE GUARD) ============ */
 function switchTab(tab) {
+    var adult = isStudentAdult();
+    var isKidsTab = (tab === '1on1-kids' || tab === 'group-kids');
+    var isAdultTab = (tab === '1on1-adult' || tab === 'group-adult');
+    if (adult === true && isKidsTab) {
+        showToast('🔞 Your age (' + getStudentAge() + ') restricts you to Adult plans only.', 'error');
+        return;
+    }
+    if (adult === false && isAdultTab) {
+        showToast('👶 Your age (' + getStudentAge() + ') restricts you to Kids plans only.', 'error');
+        return;
+    }
+
     currentTab = tab;
     var tabs = ['1on1-adult', '1on1-kids', 'group-adult', 'group-kids'];
     tabs.forEach(function(t) {
         var btn = document.getElementById('tab-' + t);
         if (!btn) return;
+        var locked = false;
+        var tIsKids = (t === '1on1-kids' || t === 'group-kids');
+        var tIsAdult = (t === '1on1-adult' || t === 'group-adult');
+        if (adult === true && tIsKids) locked = true;
+        if (adult === false && tIsAdult) locked = true;
+
         if (t === tab) {
             btn.className = 'text-[10px] sm:text-[11px] font-bold py-3 px-1.5 rounded-xl tab-active transition-all';
+            btn.innerHTML = btn.innerHTML.replace(' 🔒', '');
+        } else if (locked) {
+            btn.className = 'text-[10px] sm:text-[11px] font-bold py-3 px-1.5 rounded-xl tab-inactive transition-all opacity-40 cursor-not-allowed';
+            if (btn.innerHTML.indexOf('🔒') === -1) btn.innerHTML = btn.innerHTML + ' 🔒';
         } else {
             btn.className = 'text-[10px] sm:text-[11px] font-bold py-3 px-1.5 rounded-xl tab-inactive transition-all';
+            btn.innerHTML = btn.innerHTML.replace(' 🔒', '');
         }
     });
     renderDynamicPlans();
+}
+
+function applyTabLocks() {
+    var adult = isStudentAdult();
+    ['1on1-adult', '1on1-kids', 'group-adult', 'group-kids'].forEach(function(t) {
+        var btn = document.getElementById('tab-' + t);
+        if (!btn) return;
+        var tIsKids = (t === '1on1-kids' || t === 'group-kids');
+        var tIsAdult = (t === '1on1-adult' || t === 'group-adult');
+        var locked = (adult === true && tIsKids) || (adult === false && tIsAdult);
+        if (locked) {
+            btn.classList.add('opacity-40', 'cursor-not-allowed');
+            if (btn.innerHTML.indexOf('🔒') === -1) btn.innerHTML = btn.innerHTML + ' 🔒';
+        } else {
+            btn.classList.remove('opacity-40', 'cursor-not-allowed');
+            btn.innerHTML = btn.innerHTML.replace(' 🔒', '');
+        }
+    });
+}
+
+function updateAgeRestrictionBanner() {
+    var banner = document.getElementById('ageRestrictionBanner');
+    if (!banner) return;
+    var adult = isStudentAdult();
+    if (adult === null) { banner.classList.add('hidden'); return; }
+    banner.classList.remove('hidden');
+    var age = getStudentAge();
+    if (adult) {
+        banner.className = 'mb-3 rounded-2xl p-3.5 border-2 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-400';
+        banner.innerHTML = '<div class="flex items-center gap-2"><span class="text-2xl">🔞</span><div><p class="text-[11px] font-black text-blue-900 uppercase tracking-wide">Adult Account (' + age + ' yrs)</p><p class="text-[10px] text-blue-700 font-semibold mt-0.5">You can only select <b>Adult plans</b> (1-on-1 Adult & Group Adults). Kids plans are locked.</p></div></div>';
+    } else {
+        banner.className = 'mb-3 rounded-2xl p-3.5 border-2 bg-gradient-to-r from-pink-50 to-fuchsia-50 border-pink-400';
+        banner.innerHTML = '<div class="flex items-center gap-2"><span class="text-2xl">👶</span><div><p class="text-[11px] font-black text-pink-900 uppercase tracking-wide">Kids Account (' + age + ' yrs)</p><p class="text-[10px] text-pink-700 font-semibold mt-0.5">You can only select <b>Kids plans</b> (1-on-1 Kids & Group Kids). Adult plans are locked.</p></div></div>';
+    }
 }
 
 /* ============ CONSENT MODAL ============ */
@@ -1159,6 +1271,13 @@ function enterDashboard() {
     if (isLoggingOut) return;
     isExistingStudent = !!(currentStudent.studentCode);
     showAllCourses = false;
+
+    // Age-based default tab
+    var adult = isStudentAdult();
+    if (adult === true) currentTab = '1on1-adult';
+    else if (adult === false) currentTab = '1on1-kids';
+    else currentTab = '1on1-adult';
+
     updateStudentInfo();
     startStudentListener();
     startOrdersListener();
@@ -1167,7 +1286,13 @@ function enterDashboard() {
     updateCourseFilterBanner();
     showScreen('dashboard');
     showCurrentPlanView();
-    setTimeout(function() { checkAndShowConsent(); }, 500);
+    setTimeout(function() {
+        applyTabLocks();
+        checkAndShowConsent();
+        var _ag = isStudentAdult();
+        if (_ag === true) showToast('🔞 Age ' + getStudentAge() + ' → Adult plans only', 'info');
+        else if (_ag === false) showToast('👶 Age ' + getStudentAge() + ' → Kids plans only', 'info');
+    }, 700);
 }
 
 function updateStudentInfo() {
@@ -1199,7 +1324,13 @@ function updateStudentBadges() {
         badges.innerHTML += '<span class="' + courseClass + ' text-[9px] font-bold px-2 py-0.5 rounded-full">📚 ' + currentStudent.courseEnrolled + '</span>';
     }
 
-    if (currentStudent.age) badges.innerHTML += '<span class="bg-amber-100 text-amber-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🎂 ' + currentStudent.age + ' yrs</span>';
+    var _age = getStudentAge();
+    if (_age !== null) {
+        var ageGroupBadge = _age >= ADULT_MIN_AGE
+            ? '<span class="bg-blue-100 text-blue-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🔞 Adult (' + _age + ' yrs)</span>'
+            : '<span class="bg-pink-100 text-pink-800 text-[9px] font-bold px-2 py-0.5 rounded-full">👶 Kids (' + _age + ' yrs)</span>';
+        badges.innerHTML += ageGroupBadge;
+    }
 
     if (currentStudent.batchName) badges.innerHTML += '<span class="bg-teal-100 text-teal-800 text-[9px] font-bold px-2 py-0.5 rounded-full">🎓 ' + currentStudent.batchName + '</span>';
 
@@ -1263,7 +1394,7 @@ function renderWelcomeBackPanel() {
     }
 }
 
-/* ============ REGISTER (NO MOBILE) ============ */
+/* ============ REGISTER ============ */
 async function registerNewStudent() {
     var name = document.getElementById('regName').value.trim().toUpperCase();
     var errEl = document.getElementById('regError');
@@ -1294,7 +1425,6 @@ async function registerNewStudent() {
     var uniqueId = generateUniqueId();
     var dobString = dob.day + '-' + dob.month + '-' + dob.year;
 
-    /* Check for duplicate name+dob */
     try {
         var dup = await db.collection('students')
             .where('name', '==', name)
@@ -1305,7 +1435,7 @@ async function registerNewStudent() {
             errEl.classList.remove('hidden');
             return;
         }
-    } catch (e) { /* Skip dup check if query fails */ }
+    } catch (e) {}
 
     try {
         var student = {
@@ -1345,12 +1475,16 @@ async function registerNewStudent() {
 
         showToast('✅ Registration complete!', 'success');
 
-        /* Show Unique ID to student */
+        var ageGroupMsg = age >= ADULT_MIN_AGE
+            ? '🔞 Age ' + age + ' → Adult plans only'
+            : '👶 Age ' + age + ' → Kids plans only';
+
         setTimeout(function() {
             alert(
                 '✅ REGISTRATION SUCCESSFUL!\n\n' +
                 '🆔 YOUR UNIQUE ID:\n' + uniqueId + '\n\n' +
                 '📌 IMPORTANT: Save this Unique ID!\n\n' +
+                ageGroupMsg + '\n\n' +
                 '👉 Admin will contact you soon to provide your Student Code.\n\n' +
                 '👉 You can now browse plans and purchase.'
             );
@@ -1363,7 +1497,7 @@ async function registerNewStudent() {
     }
 }
 
-/* ============ EXISTING LOGIN (Support Student Code OR Unique ID) ============ */
+/* ============ EXISTING LOGIN ============ */
 async function existingStudentLogin() {
     var input = document.getElementById('loginCode').value.trim().toUpperCase();
     var errEl = document.getElementById('loginError');
@@ -1975,6 +2109,7 @@ function renderDynamicPlans() {
         Object.keys(dynamicCategories.oneOnOne).forEach(function(key) {
             var sub = dynamicCategories.oneOnOne[key];
             if (key.toLowerCase().indexOf('adult') === -1) return;
+            if (!isSubCategoryAllowedForStudent(key).allowed) return;
             if (!filterPlansByCourse('oneOnOne', key, sub)) return;
             html += renderSubCategoryBlock('oneOnOne', key, sub);
         });
@@ -1982,6 +2117,7 @@ function renderDynamicPlans() {
         Object.keys(dynamicCategories.oneOnOne).forEach(function(key) {
             var sub = dynamicCategories.oneOnOne[key];
             if (key.toLowerCase().indexOf('kid') === -1) return;
+            if (!isSubCategoryAllowedForStudent(key).allowed) return;
             if (!filterPlansByCourse('oneOnOne', key, sub)) return;
             html += renderSubCategoryBlock('oneOnOne', key, sub);
         });
@@ -1989,6 +2125,7 @@ function renderDynamicPlans() {
         Object.keys(dynamicCategories.group).forEach(function(key) {
             var sub = dynamicCategories.group[key];
             if (key.toLowerCase().indexOf('adult') === -1) return;
+            if (!isSubCategoryAllowedForStudent(key).allowed) return;
             if (!filterPlansByCourse('group', key, sub)) return;
             html += renderSubCategoryBlock('group', key, sub);
         });
@@ -1996,6 +2133,7 @@ function renderDynamicPlans() {
         Object.keys(dynamicCategories.group).forEach(function(key) {
             var sub = dynamicCategories.group[key];
             if (key.toLowerCase().indexOf('kid') === -1) return;
+            if (!isSubCategoryAllowedForStudent(key).allowed) return;
             if (!filterPlansByCourse('group', key, sub)) return;
             html += renderSubCategoryBlock('group', key, sub);
         });
@@ -2164,8 +2302,14 @@ function renderPlanRow(cat, subKey, subData, plan, idx) {
     return html;
 }
 
-/* ============ SELECT PLAN ============ */
+/* ============ SELECT PLAN (with AGE GUARD) ============ */
 function selectPlanRow(cat, subKey, subCategoryId, subCategoryDisplay, planIndex) {
+    var ageCheck = isSubCategoryAllowedForStudent(subKey);
+    if (!ageCheck.allowed) {
+        showToast(ageCheck.reason, 'error');
+        return;
+    }
+
     var subData = dynamicCategories[cat][subKey];
     if (!subData) return;
     var plan = subData.plans[planIndex];
@@ -2318,7 +2462,7 @@ function renderCheckoutPlanCard(colorFrom, colorTo) {
     card.style.borderColor = colorFrom;
 }
 
-/* ============ COUPONS (FULLY FIXED — subCategory enforced) ============ */
+/* ============ COUPONS ============ */
 function renderCheckoutCoupons() {
     var section = document.getElementById('checkoutCouponSection');
     if (!section) return;
@@ -2483,7 +2627,7 @@ function confirmCheckoutAndPay() {
     proceedToPayment();
 }
 
-/* ============ CALCULATE PRICING (FIXED — subCategory enforced) ============ */
+/* ============ CALCULATE PRICING ============ */
 function calculateSelectedPlanPricing() {
     if (!selectedPlan) return null;
     var plan = selectedPlan.plan;
@@ -2720,7 +2864,7 @@ function fallbackCopyUpi() {
     document.body.removeChild(ta);
 }
 
-/* ============ SUBMIT PURCHASE (NO MOBILE) ============ */
+/* ============ SUBMIT PURCHASE ============ */
 async function submitPurchase() {
     if (!screenshotBase64) { alert('⚠️ Please upload payment screenshot!'); return; }
     if (!selectedPlan) { alert('⚠️ Plan missing.'); return; }
